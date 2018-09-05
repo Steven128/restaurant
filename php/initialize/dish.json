@@ -1,0 +1,13 @@
+[
+    { "dish_name": "罐焖牛肉", "dish_price": 56, "dish_type": 1 },
+    { "dish_name": "红鱼籽", "dish_price": 30, "dish_type": 1 },
+    { "dish_name": "红菜汤", "dish_price": 28, "dish_type": 1 },
+    { "dish_name": "金枪鱼沙拉", "dish_price": 28, "dish_type": 1 },
+    { "dish_name": "基辅鸡卷", "dish_price": 48, "dish_type": 1 },
+    { "dish_name": "烤三文鱼排", "dish_price": 52, "dish_type": 1 },
+    { "dish_name": "烤面包", "dish_price": 16, "dish_type": 1 },
+    { "dish_name": "焖牛肉", "dish_price": 80, "dish_type": 1 },
+    { "dish_name": "奶油蘑菇汤", "dish_price": 38, "dish_type": 1 },
+    { "dish_name": "牛排", "dish_price": 68, "dish_type": 1 },
+    { "dish_name": "培根牛排", "dish_price": 72, "dish_type": 1 }
+]
