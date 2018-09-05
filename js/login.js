@@ -26,39 +26,37 @@ var name = "";
 var isManager = "";
 
 
-$(document).ready(function() {
+$(document).ready(() => {
     //检查用户是否已经登录
-    // $.ajax({
-    //     type: "POST",
-    //     url: "../php/check_login.php",
-    //     dataType: "JSON",
-    //     data: {
-    //         "request": "getname"
-    //     },
-    //     success: function(e) {
-    //         if (e.name != '' && e.name != null) {
-    //             if (!getReferer()) {
-    //                 goTo('?x=3&r=' + Math.random());
-    //             } else {
-    //                 var pre = "47.95.212.18";
-    //                 if (getReferer().indexOf(pre) < 0) {
-    //                     window.location.href = getReferer();
-    //                     window.event.returnValue = false;
-    //                 } else {
-    //                     window.location.href = "../";
-    //                     window.event.returnValue = false;
-    //                 }
-    //             }
-    //             window.location.href = "../user/";
-    //             window.event.returnValue = false;
-    //         } else {
+    $.ajax({
+        type: "GET",
+        url: "../php/check_login.php?request=check",
+        dataType: "JSON",
+        success: (e) => {
+            console.log(e)
+            if (e.message == "online") {
+                if (!getReferer()) {
+                    goTo('?x=3&r=' + Math.random());
+                } else {
+                    var pre = "localhost";
+                    if (getReferer().indexOf(pre) < 0) {
+                        window.location.href = getReferer();
+                        window.event.returnValue = false;
+                    } else {
+                        console.log(e.admin_type);
+                        window.location.href = "../";
+                        window.event.returnValue = false;
+                    }
+                }
 
-    //         }
-    //     },
-    //     error: function(err) {
+            } else {
 
-    //     }
-    // });
+            }
+        },
+        error: (err) => {
+
+        }
+    });
 
     var width = $(window).width();
     var height = $(window).height();
@@ -95,19 +93,24 @@ $(document).ready(function() {
             var name = $("#name").val();
             var password = $("#password").val();
             password = "restaurant" + name + password;
+            console.log(password);
             password = hex_md5(password);
+            console.log(name);
+
+            console.log(password);
             $.ajax({
                 type: "POST",
-                url: "",
+                url: "../php/login.php",
                 dataType: "JSON",
                 data: {
                     "name": name,
                     "password": password,
                 },
                 success: function(e) {
-                    if (e.message == "wrong passwd") {
+                    console.log(e);
+                    if (e.message == "wrong_password") {
                         window.wxc.xcConfirm("密码输入错误！", window.wxc.xcConfirm.typeEnum.error);
-                    } else if (e.message == "does_not_exist") {
+                    } else if (e.message == "admin_not_found") {
                         window.wxc.xcConfirm("该用户不存在！", window.wxc.xcConfirm.typeEnum.error, {
                             onOk: function() {
                                 window.location.reload();
@@ -116,29 +119,28 @@ $(document).ready(function() {
                                 window.location.reload();
                             }
                         });
-                    } else {
+                    } else if (e.message == "success_login") {
 
-                        name = e.name;
-                        name = e.name;
-                        if (!getReferer()) {
-                            goTo('?x=3&r=' + Math.random());
-                        } else {
-                            if (getReferer() == '') {
-                                location.href = '../';
-                            } else {
-                                if (getReferer().indexOf('47.95.212.18') == -1) { //来自其它站点  
-                                    location.href = '../';
-                                } else if (getReferer().indexOf('') != -1) { //来自用户页面  
-                                    location.href = '../';
-                                } else if (getReferer().indexOf('') != -1) { //来自管理员页面  
-                                    location.href = '../';
-                                } else if (getReferer().indexOf('') != -1) { //新注册的用户
-                                    location.href = '../';
-                                } else {
-                                    location.href = getReferer();
-                                }
-                            }
-                        }
+                        alert("登录成功");
+                        // if (!getReferer()) {
+                        //     goTo('?x=3&r=' + Math.random());
+                        // } else {
+                        //     if (getReferer() == '') {
+                        //         location.href = '../';
+                        //     } else {
+                        //         if (getReferer().indexOf('47.95.212.18') == -1) { //来自其它站点  
+                        //             location.href = '../';
+                        //         } else if (getReferer().indexOf('') != -1) { //来自用户页面  
+                        //             location.href = '../';
+                        //         } else if (getReferer().indexOf('') != -1) { //来自管理员页面  
+                        //             location.href = '../';
+                        //         } else if (getReferer().indexOf('') != -1) { //新注册的用户
+                        //             location.href = '../';
+                        //         } else {
+                        //             location.href = getReferer();
+                        //         }
+                        //     }
+                        // }
                     }
                 },
                 error: function(err) {
