@@ -18,7 +18,7 @@ $.sidebarMenu = function(menu) {
                             $(this).removeClass("outerActive");
                             $(this).removeClass("innerActive");
                         });
-                        if ($this.attr("id") == "menu-overview-item") {
+                        if ($this.attr("id") == "menu-employeeList-item") {
                             $this.addClass("outerActive");
                         } else {
                             $this.addClass("innerActive");

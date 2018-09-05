@@ -3,17 +3,23 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>餐饮店管理系统</title>
     <link type="text/css" rel="stylesheet" href="../css/bootstrap.css" />
     <link type="text/css" rel="stylesheet" href="../css/page.css" />
     <link type="text/css" rel="stylesheet" href="../css/admin.css" />
     <link type="text/css" rel="stylesheet" href="../css/sidebar-menu.css" />
+    <link type="text/css" rel="stylesheet" href="../css/tablesorter.css" />
+    <link type="text/css" rel="stylesheet" href="//at.alicdn.com/t/font_824519_h1b8xsjubr6.css" />
 
     <script type="text/javascript" src="../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../js/admin.js"></script>
+    <script type="text/javascript" src="../js/admin-page.js"></script>
+    <script type="text/javascript" src="../js/emp-mgment.js"></script>
     <script type="text/javascript" src="../js/sidebar-menu.js"></script>
     <script type="text/javascript" src="../js/xcConfirm.js"></script>
+    <script type="text/javascript" src="../js/jquery.tablesorter.min.js"></script>
 
 </head>
 
@@ -45,52 +51,55 @@
                         <ul class="sidebar-menu">
                             <!-- <li class="header">导航</li> -->
                             <li class="treeview">
-                                <a id="menu-overview-item" href="#overview" class="outerActive">
-                                    <i class="iconfont-admin-menu icon-overview"></i>
-                                    <span>1</span>
-                                    <span class="pull-right">
-                                        <img src="../src/icon/right-white.png" width="12px" />
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu" style="display: none;"></ul>
-                            </li>
-                            <li class="treeview">
                                 <a href="#">
                                     <i class="iconfont-admin-menu icon-member"></i>
-                                    <span>2</span>
+                                    <span>员工管理</span>
                                     <span class="pull-right">
                                         <img src="../src/icon/down-white.png" width="12px" />
                                     </span>
                                 </a>
                                 <ul class="treeview-menu" style="display: none;">
                                     <li>
-                                        <a id="menu-memberList-item" href="#memberList">
-                                            <i class="iconfont-admin-menu icon-list"></i> 2.1</a>
+                                        <a id="menu-employeeList-item" href="#employeeList">
+                                            <i class="iconfont-admin-menu icon-list"></i>员工列表</a>
                                     </li>
                                     <li>
                                         <a id="menu-displayMember-item" href="#displayMember">
-                                            <i class="iconfont-admin-menu icon-display"></i>2.2</a>
+                                            <i class="iconfont-admin-menu icon-display"></i>查看员工信息</a>
                                     </li>
                                     <li>
                                         <a id="menu-updateMember-item" href="#updateMember">
-                                            <i class="iconfont-admin-menu icon-update"></i>2.3</a>
+                                            <i class="iconfont-admin-menu icon-update"></i>更新员工信息</a>
+                                    </li>
+                                    <li>
+                                        <a id="menu-updateMember-item" href="#updateMember">
+                                            <i class="iconfont-admin-menu icon-update"></i>增加员工</a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="treeview">
                                 <a href="#">
                                     <i class="iconfont-admin-menu icon-group"></i>
-                                    <span>3</span>
+                                    <span>财务管理</span>
                                     <span class="pull-right">
                                         <img src="../src/icon/down-white.png" width="12px" />
                                     </span>
                                 </a>
-                                <ul class="treeview-menu group-menu" style="display: none;"></ul>
+                                <ul class="treeview-menu group-menu" style="display: none;">
+                                    <li>
+                                        <a id="menu-activityList-item" href="#activityList">
+                                            <i class="iconfont-admin-menu icon-list"></i>查看财务信息</a>
+                                    </li>
+                                    <li>
+                                        <a id="menu-activityList-item" href="#activityList">
+                                            <i class="iconfont-admin-menu icon-list"></i>查询历史财务</a>
+                                    </li>
+                                </ul>
                             </li>
                             <li class="treeview">
                                 <a href="#">
                                     <i class="iconfont-admin-menu icon-activity"></i>
-                                    <span>4</span>
+                                    <span>仓库管理</span>
                                     <span class="pull-right">
                                         <img src="../src/icon/down-white.png" width="12px" />
                                     </span>
@@ -98,30 +107,22 @@
                                 <ul class="treeview-menu" style="display: none;">
                                     <li>
                                         <a id="menu-activityList-item" href="#activityList">
-                                            <i class="iconfont-admin-menu icon-list"></i>4.1</a>
+                                            <i class="iconfont-admin-menu icon-list"></i>查看仓库信息</a>
                                     </li>
                                     <li>
                                         <a id="menu-newActivity-item" href="#newActivity">
-                                            <i class="iconfont-admin-menu icon-new"></i>4.2</a>
+                                            <i class="iconfont-admin-menu icon-new"></i>查看进货信息</a>
                                     </li>
                                     <li>
                                         <a id="menu-updateActivity-item" href="#updateActivity">
-                                            <i class="iconfont-admin-menu icon-update"></i>4.3 </a>
-                                    </li>
-                                    <li>
-                                        <a id="menu-displayActivity-item" href="#displayActivity">
-                                            <i class="iconfont-admin-menu icon-display"></i>4.4</a>
-                                    </li>
-                                    <li>
-                                        <a id="menu-signUp-item" href="#signUp">
-                                            <i class="iconfont-admin-menu icon-sign"></i>4.5</a>
+                                            <i class="iconfont-admin-menu icon-update"></i>查看损耗信息 </a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="treeview">
                                 <a href="#">
                                     <i class="iconfont-admin-menu icon-enroll"></i>
-                                    <span>5</span>
+                                    <span>菜单管理</span>
                                     <span class="pull-right">
                                         <img src="../src/icon/down-white.png" width="12px" />
                                     </span>
@@ -129,19 +130,38 @@
                                 <ul class="treeview-menu" style="display: none;">
                                     <li>
                                         <a id="menu-enrollList-item" href="#enrollList">
-                                            <i class="iconfont-admin-menu icon-list"></i>5.1</a>
+                                            <i class="iconfont-admin-menu icon-list"></i>查看菜单</a>
                                     </li>
                                     <li>
                                         <a id="menu-newEnroll-item" href="#newEnroll">
-                                            <i class="iconfont-admin-menu icon-new"></i>5.2</a>
+                                            <i class="iconfont-admin-menu icon-new"></i>更新菜品信息</a>
                                     </li>
                                     <li>
                                         <a id="menu-updateEnroll-item" href="#updateEnroll">
-                                            <i class="iconfont-admin-menu icon-update"></i>5.3</a>
+                                            <i class="iconfont-admin-menu icon-update"></i>增加菜品</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="iconfont-admin-menu icon-enroll"></i>
+                                    <span>餐桌管理</span>
+                                    <span class="pull-right">
+                                            <img src="../src/icon/down-white.png" width="12px" />
+                                        </span>
+                                </a>
+                                <ul class="treeview-menu" style="display: none;">
+                                    <li>
+                                        <a id="menu-enrollList-item" href="#enrollList">
+                                            <i class="iconfont-admin-menu icon-list"></i>查看餐桌信息</a>
                                     </li>
                                     <li>
-                                        <a id="menu-displayEnroll-item" href="#displayEnroll">
-                                            <i class="iconfont-admin-menu icon-display"></i>5.4</a>
+                                        <a id="menu-newEnroll-item" href="#newEnroll">
+                                            <i class="iconfont-admin-menu icon-new"></i>更新餐桌信息</a>
+                                    </li>
+                                    <li>
+                                        <a id="menu-updateEnroll-item" href="#updateEnroll">
+                                            <i class="iconfont-admin-menu icon-update"></i>增加餐桌</a>
                                     </li>
                                 </ul>
                             </li>
@@ -154,8 +174,31 @@
                 </aside>
                 <div class="mask"></div>
                 <div class="main-bar">
-                    <a name="overview"></a>
-                    <div id="overview-tab" class="box col-xs-12 box-active">
+                    <a name="#"></a>
+                    <div id="employeeList-tab" class="box box-active">
+                        <div class="title col-xs-12">
+                            <h4 class="title-left">员工列表</h4>
+                        </div>
+                        <div class="inner-box">
+                            <table class="employeeListTable tablesorter result">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>姓名</th>
+                                        <th>性别</th>
+                                        <th>工龄（年）</th>
+                                        <th>年龄</th>
+                                        <th>工资</th>
+                                        <th>手机号</th>
+                                        <th>类别</th>
+                                        <th>聘用日期</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="employeeListTableBody">
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <a name="memberList"></a>
                     <div id="memberList-tab" class="box col-xs-12">
@@ -246,7 +289,9 @@
             </div>
         </div>
         <footer class="foot-content">
-
+            <div class="copyright">
+                <h5 class="copyright-text">&copy;&nbsp;餐饮店管理系统&nbsp;&nbsp;2018</h5>
+            </div>
         </footer>
     </div>
 </body>
