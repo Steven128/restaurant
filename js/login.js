@@ -123,27 +123,23 @@ $(document).ready(() => {
                             }
                         });
                     } else if (e.message == "success_login") {
-
-                        alert("登录成功");
-                        // if (!getReferer()) {
-                        //     goTo('?x=3&r=' + Math.random());
-                        // } else {
-                        //     if (getReferer() == '') {
-                        //         location.href = '../';
-                        //     } else {
-                        //         if (getReferer().indexOf('47.95.212.18') == -1) { //来自其它站点  
-                        //             location.href = '../';
-                        //         } else if (getReferer().indexOf('') != -1) { //来自用户页面  
-                        //             location.href = '../';
-                        //         } else if (getReferer().indexOf('') != -1) { //来自管理员页面  
-                        //             location.href = '../';
-                        //         } else if (getReferer().indexOf('') != -1) { //新注册的用户
-                        //             location.href = '../';
-                        //         } else {
-                        //             location.href = getReferer();
-                        //         }
-                        //     }
-                        // }
+                        if (!getReferer()) {
+                            goTo('?x=3&r=' + num);
+                        } else {
+                            if (getReferer() == '') {
+                                location.href = '../';
+                            } else {
+                                if (getReferer().indexOf('localhost') == -1) { //来自其它站点  
+                                    location.href = '../';
+                                } else if (getReferer().indexOf('dashboard') != -1) { //来自用户页面  
+                                    location.href = '../dashboard/';
+                                } else if (getReferer().indexOf('admin') != -1) { //来自管理员页面  
+                                    location.href = '../admin/';
+                                } else {
+                                    location.href = getReferer();
+                                }
+                            }
+                        }
                     }
                 },
                 error: function(err) {

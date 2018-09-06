@@ -28,6 +28,11 @@ function GetRandomNum(Min, Max) {
 }
 var num = GetRandomNum(10000, 99999);
 
+//返回主页
+function goBack() {
+    window.location.href = "../dashboard/";
+}
+
 $(document).ready(() => {
     //首先检查有无权限（用户是否登录及是否有管理员权限）
     $.ajax({
@@ -69,10 +74,6 @@ $(document).ready(() => {
                                 $(".online-user").html(userName);
                                 $(".user-type").html(userType);
                             }
-                            if (e.admin_type == 1) {
-                                //是超级管理员，加载修改管理员信息的功能
-                                addAdminMgment();
-                            }
                             getEmployeeList();
                         }
                     }
@@ -88,13 +89,6 @@ $(document).ready(() => {
         }
     });
 });
-
-function addAdminMgment() {
-    var append_text = "<li class=\"treeview\"><a href=\"#\"><i class=\"iconfont icon-admin\"></i><span>管理员信息</span><span class=\"pull-right\"><i class=\"iconfont icon-down-arrow\" style=\"font-size:12px;\"></i></span></a><ul class=\"treeview-menu\" style=\"display: none;\"><li><a id=\"menu-adminList-item\" href=\"#adminList\"><i class=\"iconfont icon-list\"></i>管理员列表</a></li><li class=\"li-not-allowed\"><a id=\"menu-updateAdmin-item\" href=\"#updateAdmin\"><i class=\"iconfont icon-update-round\"></i>更新信息<i class=\"iconfont icon-not-allowed\"></i></a></li><li><a id=\"menu-addAdmin-item\" href=\"#addAdmin\"><i class=\"iconfont icon-add-paper\"></i>增加管理员</a></li></ul></li>";
-    $(".employee-treeview").after(append_text);
-    append_text = "<a name=\"#\"></a><div id=\"adminList-tab\" class=\"box\"><div class=\"title col-xs-12\"><h4 class=\"title-left\">查看管理员信息</h4></div></div><a name=\"#\"></a><div id=\"updateAdmin-tab\" class=\"box\"><div class=\"title col-xs-12\"><h4 class=\"title-left\">更新管理员信息</h4></div></div><a name=\"#\"></a><div id=\"addAdmin-tab\" class=\"box\"><div class=\"title col-xs-12\"><h4 class=\"title-left\">增加管理员</h4></div></div>"
-    $("#addEmployee-tab").after(append_text);
-}
 
 
 function getEmployeeList() { //获得员工列表

@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>管理员系统-餐饮店管理系统</title>
     <link type="text/css" rel="stylesheet" href="../css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="../css/iconfont.css" />
     <link type="text/css" rel="stylesheet" href="../css/page.css" />
     <link type="text/css" rel="stylesheet" href="../css/admin.css" />
     <link type="text/css" rel="stylesheet" href="../css/sidebar-menu.css" />
     <link type="text/css" rel="stylesheet" href="../css/tablesorter.css" />
-    <link type="text/css" rel="stylesheet" href="../css/iconfont.css" />
+
 
     <script type="text/javascript" src="../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../js/bootstrap.min.js"></script>
@@ -50,7 +51,7 @@
                     <section class="sidebar">
                         <ul class="sidebar-menu">
                             <!-- <li class="header">导航</li> -->
-                            <li class="treeview employee-treeview">
+                            <li class="treeview employee-treeview active">
                                 <a href="#">
                                     <i class="iconfont icon-employee"></i>
                                     <span>员工管理</span>
@@ -58,9 +59,9 @@
                                         <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu" style="display: none;">
+                                <ul class="treeview-menu menu-open" style="display: block;">
                                     <li>
-                                        <a id="menu-employeeList-item" href="#employeeList">
+                                        <a id="menu-employeeList-item" href="#employeeList" class="innerActive">
                                             <i class="iconfont icon-list"></i>员工列表</a>
                                     </li>
                                     <li class="li-not-allowed">
@@ -169,6 +170,12 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li class="treeview">
+                                <a href="javascript:void(0);" onclick="goBack()">
+                                    <i class="iconfont icon-back"></i>
+                                    <span>返回主页</span>
+                                </a>
+                            </li>
                         </ul>
                     </section>
                     <script src="../js/sidebar-menu.js"></script>
@@ -180,7 +187,7 @@
                 <div class="main-bar">
                     <a name="#"></a>
                     <div id="employeeList-tab" class="box box-active">
-                        <div class="title col-xs-12">
+                        <div class="title">
                             <h4 class="title-left">员工列表</h4>
                         </div>
                         <div class="inner-box">
@@ -206,86 +213,86 @@
                     </div>
                     <a name="#"></a>
                     <div id="displayEmployee-tab" class="box col-xs-12">
-                        <div class="title col-xs-12">
+                        <div class="title">
                             <h4 class="title-left">查看员工信息</h4>
                         </div>
                     </div>
                     <a name="#"></a>
                     <div id="updateEmployee-tab" class="box">
-                        <div class="title col-xs-12">
+                        <div class="title">
                             <h4 class="title-left">更新员工信息</h4>
                         </div>
                     </div>
                     <a name="#"></a>
                     <div id="addEmployee-tab" class="box">
-                        <div class="title col-xs-12">
+                        <div class="title">
                             <h4 class="title-left">增加员工</h4>
                         </div>
                     </div>
                     <a name="#"></a>
                     <div id="financeList-tab" class="box">
-                        <div class="title col-xs-12">
+                        <div class="title">
                             <h4 class="title-left">查看财务信息</h4>
                         </div>
                     </div>
                     <a name="#"></a>
                     <div id="financeHistory-tab" class="box">
-                        <div class="title col-xs-12">
+                        <div class="title">
                             <h4 class="title-left">查询历史财务</h4>
                         </div>
                     </div>
                     <a name="#"></a>
                     <div id="inventoryList-tab" class="box">
-                        <div class="title col-xs-12">
+                        <div class="title">
                             <h4 class="title-left">查看仓库信息</h4>
                         </div>
                     </div>
                     <a name="#"></a>
                     <div id="purchaseList-tab" class="box">
-                        <div class="title col-xs-12">
+                        <div class="title">
                             <h4 class="title-left">查看进货信息</h4>
                         </div>
                     </div>
                     <a name="#"></a>
                     <div id="lossList-tab" class="box">
-                        <div class="title col-xs-12">
+                        <div class="title">
                             <h4 class="title-left">查看损耗信息</h4>
                         </div>
                     </div>
                     <a name="#"></a>
                     <div id="dishList-tab" class="box">
-                        <div class="title col-xs-12">
+                        <div class="title">
                             <h4 class="title-left">查看菜单</h4>
                         </div>
                     </div>
                     <a name="#"></a>
                     <div id="updateDish-tab" class="box">
-                        <div class="title col-xs-12">
+                        <div class="title">
                             <h4 class="title-left">更新菜品信息</h4>
                         </div>
                     </div>
                     <!--  -->
                     <a name="#"></a>
                     <div id="addDisht-tab" class="box">
-                        <div class="title col-xs-12">
+                        <div class="title">
                             <h4 class="title-left">增加菜品</h4>
                         </div>
                     </div>
                     <a name="#"></a>
                     <div id="tableList-tab" class="box">
-                        <div class="title col-xs-12">
+                        <div class="title">
                             <h4 class="title-left">查看餐桌信息</h4>
                         </div>
                     </div>
                     <a name="#"></a>
                     <div id="updateTable-tab" class="box">
-                        <div class="title col-xs-12">
+                        <div class="title">
                             <h4 class="title-left">更新餐桌信息</h4>
                         </div>
                     </div>
                     <a name="#"></a>
                     <div id="addTable-tab" class="box">
-                        <div class="title col-xs-12">
+                        <div class="title">
                             <h4 class="title-left">增加餐桌</h4>
                         </div>
                     </div>

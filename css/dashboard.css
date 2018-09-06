@@ -1,0 +1,125 @@
+.user-box:link {
+    position: absolute;
+    top: 0;
+    right: 12px;
+    padding: 8px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.user-pic-wrap {
+    width: 35px;
+    height: 35px;
+    padding: 1px;
+    background-color: #fff;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.userPic {
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+}
+
+.user-name {
+    display: none;
+    padding: 0 10px;
+    font-weight: 300;
+    position: relative;
+    top: -12px;
+}
+
+.info-box {
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    color: #000;
+    display: none;
+}
+
+.info-box-block {
+    background-color: #fff;
+    width: 230px;
+    height: 130px;
+    position: relative;
+    z-index: 10;
+    padding: 0 20px;
+}
+
+.info-box-block .info-box-arrow {
+    border-width: 0 7px 20px;
+    border-color: #fff transparent;
+    border-style: solid;
+    width: 0;
+    height: 0;
+    font-size: 0;
+    position: relative;
+    left: 183px;
+    top: -20px;
+    z-index: 10;
+}
+
+.info-box .user-pic-wrap {
+    width: 54px;
+    height: 54px;
+    border: 1px solid #303a4d;
+    background-color: #fff;
+}
+
+.info-box .userPic {
+    width: 50px;
+    height: 50px;
+}
+
+.info-box .user-info-wrap {
+    display: inline-block;
+    padding-left: 10px;
+    position: relative;
+    top: -10px;
+}
+
+.info-box .user-name {
+    display: block;
+    position: static;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 0;
+}
+
+.info-box .user-type {
+    font-weight: 300;
+    font-size: 12px;
+    padding-left: 10px;
+}
+
+.info-box .logout-wrap {
+    text-align: right;
+    padding: 0 10px;
+}
+
+.info-box .logout:link {
+    text-decoration: none;
+}
+
+.shelter {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 768px) {
+    .info-box {
+        right: 40px;
+    }
+    .user-box {
+        right: 22px;
+    }
+    .user-name {
+        display: inline-block;
+    }
+}
+
+@media (min-width: 992px) {
+    .user-box {
+        right: 52px;
+    }
+}

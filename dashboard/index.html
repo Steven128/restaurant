@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>管理员系统-餐饮店管理系统</title>
     <link type="text/css" rel="stylesheet" href="../css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="../css/iconfont.css" />
     <link type="text/css" rel="stylesheet" href="../css/page.css" />
     <link type="text/css" rel="stylesheet" href="../css/dashboard.css" />
     <link type="text/css" rel="stylesheet" href="../css/sidebar-menu.css" />
-    <link type="text/css" rel="stylesheet" href="../css/iconfont.css" />
 
     <script type="text/javascript" src="../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../js/bootstrap.min.js"></script>
@@ -35,257 +35,95 @@
                     <h5>主页</h5>
                 </div>
             </div>
+            <a class="user-box" href="javascript:void(0);" onclick="showInfoBox()">
+                <div class="user-pic-wrap">
+                    <img class="userPic" src="" />
+                </div>
+                <div class="user-name"></div>
+            </a>
+            <div class="info-box">
+                <div class="info-box-block">
+                    <div class="info-box-arrow"></div>
+                    <div class="user-pic-wrap">
+                        <img class="userPic" src="" />
+                    </div>
+                    <div class="user-info-wrap">
+                        <div class="user-name"></div>
+                        <div class="user-type"></div>
+                    </div>
+                    <div class="logout-wrap">
+                        <a class="logout" href="javascript:void(0);" onclick="logout()"><i class="iconfont icon-logout"></i>退出登录</a>
+                    </div>
+                </div>
+            </div>
+            <a class="shelter" href="javascript:void(0);" onclick="hideShelter()"></a>
         </header>
         <div class="main-content">
             <div class="bar-box">
                 <aside class="left-bar">
                     <section class="sidebar">
                         <ul class="sidebar-menu">
-                            <li class="treeview employee-treeview">
-                                <a href="#">
-                                    <i class="iconfont icon-employee"></i>
-                                    <span>员工管理</span>
-                                    <span class="pull-right">
-                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                            <li class="treeview overview-treeview active">
+                                <a id="menu-overview-item" href="#overview">
+                                    <i class="iconfont icon-overview "></i>
+                                    <span>总览</span>
+                                    <span class="dash-pull-right ">
+                                        <i class="iconfont icon-right-arrow " style="font-size:12px; "></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu" style="display: none;">
-                                    <li>
-                                        <a id="menu-employeeList-item" href="#employeeList">
-                                            <i class="iconfont icon-list"></i>员工列表</a>
-                                    </li>
-                                    <li class="li-not-allowed">
-                                        <a id="menu-displayEmployee-item" href="#displayEmployee">
-                                            <i class="iconfont icon-display"></i>查看员工信息<i class="iconfont icon-not-allowed"></i>
-                                        </a>
-                                    </li>
-                                    <li class="li-not-allowed">
-                                        <a id="menu-updateEmployee-item" href="#updateEmployee">
-                                            <i class="iconfont icon-update-round"></i>更新员工信息<i class="iconfont icon-not-allowed"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a id="menu-addEmployee-item" href="#addEmployee">
-                                            <i class="iconfont icon-add-paper"></i>增加员工</a>
-                                    </li>
-                                </ul>
+                                <ul class="treeview-menu menu-open " style="display: none; "></ul>
                             </li>
                             <li class="treeview">
-                                <a href="#">
-                                    <i class="iconfont icon-finance"></i>
-                                    <span>财务管理</span>
-                                    <span class="pull-right">
-                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                <a id="menu-userUpdate-item " href="#userUpdate ">
+                                    <i class="iconfont icon-user "></i>
+                                    <span>个人信息</span>
+                                    <span class="dash-pull-right ">
+                                            <i class="iconfont icon-right-arrow " style="font-size:12px; "></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu group-menu" style="display: none;">
-                                    <li>
-                                        <a id="menu-financeList-item" href="#financeList">
-                                            <i class="iconfont icon-list"></i>查看财务信息</a>
-                                    </li>
-                                    <li>
-                                        <a id="menu-financeHistory-item" href="#financeHistory">
-                                            <i class="iconfont icon-list-search"></i>查询历史财务</a>
-                                    </li>
-                                </ul>
+                                <ul class="treeview-menu " style="display: none; "></ul>
                             </li>
-                            <li class="treeview">
-                                <a href="#">
-                                    <i class="iconfont icon-inventory"></i>
-                                    <span>仓库管理</span>
-                                    <span class="pull-right">
-                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu" style="display: none;">
-                                    <li>
-                                        <a id="menu-inventoryList-item" href="#inventoryList">
-                                            <i class="iconfont icon-list"></i>查看仓库信息</a>
-                                    </li>
-                                    <li>
-                                        <a id="menu-purchaseList-item" href="#purchaseList">
-                                            <i class="iconfont icon-display"></i>查看进货信息</a>
-                                    </li>
-                                    <li>
-                                        <a id="menu-lossList-item" href="#lossList">
-                                            <i class="iconfont icon-display"></i>查看损耗信息 </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="treeview">
-                                <a href="#">
-                                    <i class="iconfont icon-dish"></i>
-                                    <span>菜单管理</span>
-                                    <span class="pull-right">
-                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu" style="display: none;">
-                                    <li>
-                                        <a id="menu-dishList-item" href="#dishList">
-                                            <i class="iconfont icon-list"></i>查看菜单</a>
-                                    </li>
-                                    <li class="li-not-allowed">
-                                        <a id="menu-updateDish-item" href="#updateDish">
-                                            <i class="iconfont icon-update-round"></i>更新菜品信息<i class="iconfont icon-not-allowed"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a id="menu-addDish-item" href="#addDish">
-                                            <i class="iconfont icon-add"></i>增加菜品</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="treeview">
-                                <a href="#">
-                                    <i class="iconfont icon-table"></i>
-                                    <span>餐桌管理</span>
-                                    <span class="pull-right">
-                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                            <li class="treeview ">
+                                <a id="menu-settings-item " href="#settings ">
+                                    <i class="iconfont icon-settings "></i>
+                                    <span>设置</span>
+                                    <span class="dash-pull-right ">
+                                            <i class="iconfont icon-right-arrow " style="font-size:12px; "></i>
                                         </span>
                                 </a>
-                                <ul class="treeview-menu" style="display: none;">
-                                    <li>
-                                        <a id="menu-tableList-item" href="#tableList">
-                                            <i class="iconfont icon-list"></i>查看餐桌信息</a>
-                                    </li>
-                                    <li class="li-not-allowed">
-                                        <a id="menu-updateTable-item" href="#updateTable">
-                                            <i class="iconfont icon-update-round"></i>更新餐桌信息<i class="iconfont icon-not-allowed"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a id="menu-addTable-item" href="#addTable">
-                                            <i class="iconfont icon-update"></i>增加餐桌</a>
-                                    </li>
-                                </ul>
+                                <ul class="treeview-menu " style="display: none; "></ul>
                             </li>
                         </ul>
                     </section>
-                    <script src="../js/sidebar-menu.js"></script>
+                    <script src="../js/sidebar-menu.js "></script>
                     <script>
                         $.sidebarMenu($('.sidebar-menu'))
                     </script>
                 </aside>
-                <div class="mask"></div>
-                <div class="main-bar">
+                <div class="mask "></div>
+                <div class="main-bar ">
                     <a name="#"></a>
-                    <div id="employeeList-tab" class="box box-active">
-                        <div class="title col-xs-12">
-                            <h4 class="title-left">员工列表</h4>
-                        </div>
-                        <div class="inner-box">
-                            <table class="employeeListTable tablesorter result">
-                                <thead>
-                                    <tr>
-                                        <th>序号</th>
-                                        <th>姓名</th>
-                                        <th>性别</th>
-                                        <th>工龄（年）</th>
-                                        <th>年龄</th>
-                                        <th>工资</th>
-                                        <th>手机号</th>
-                                        <th>类别</th>
-                                        <th>聘用日期</th>
-                                        <th>操作</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="employeeListTableBody">
-                                </tbody>
-                            </table>
+                    <div id="overview-tab " class="box box-active row">
+
+                    </div>
+                    <a name="#"></a>
+                    <div id="userUpdate-tab " class="box ">
+                        <div class="title col-xs-12 ">
+                            <h4 class="title-left ">个人信息</h4>
                         </div>
                     </div>
                     <a name="#"></a>
-                    <div id="displayEmployee-tab" class="box col-xs-12">
-                        <div class="title col-xs-12">
-                            <h4 class="title-left">查看员工信息</h4>
-                        </div>
-                    </div>
-                    <a name="#"></a>
-                    <div id="updateEmployee-tab" class="box">
-                        <div class="title col-xs-12">
-                            <h4 class="title-left">更新员工信息</h4>
-                        </div>
-                    </div>
-                    <a name="#"></a>
-                    <div id="addEmployee-tab" class="box">
-                        <div class="title col-xs-12">
-                            <h4 class="title-left">增加员工</h4>
-                        </div>
-                    </div>
-                    <a name="#"></a>
-                    <div id="financeList-tab" class="box">
-                        <div class="title col-xs-12">
-                            <h4 class="title-left">查看财务信息</h4>
-                        </div>
-                    </div>
-                    <a name="#"></a>
-                    <div id="financeHistory-tab" class="box">
-                        <div class="title col-xs-12">
-                            <h4 class="title-left">查询历史财务</h4>
-                        </div>
-                    </div>
-                    <a name="#"></a>
-                    <div id="inventoryList-tab" class="box">
-                        <div class="title col-xs-12">
-                            <h4 class="title-left">查看仓库信息</h4>
-                        </div>
-                    </div>
-                    <a name="#"></a>
-                    <div id="purchaseList-tab" class="box">
-                        <div class="title col-xs-12">
-                            <h4 class="title-left">查看进货信息</h4>
-                        </div>
-                    </div>
-                    <a name="#"></a>
-                    <div id="lossList-tab" class="box">
-                        <div class="title col-xs-12">
-                            <h4 class="title-left">查看损耗信息</h4>
-                        </div>
-                    </div>
-                    <a name="#"></a>
-                    <div id="dishList-tab" class="box">
-                        <div class="title col-xs-12">
-                            <h4 class="title-left">查看菜单</h4>
-                        </div>
-                    </div>
-                    <a name="#"></a>
-                    <div id="updateDish-tab" class="box">
-                        <div class="title col-xs-12">
-                            <h4 class="title-left">更新菜品信息</h4>
-                        </div>
-                    </div>
-                    <!--  -->
-                    <a name="#"></a>
-                    <div id="addDisht-tab" class="box">
-                        <div class="title col-xs-12">
-                            <h4 class="title-left">增加菜品</h4>
-                        </div>
-                    </div>
-                    <a name="#"></a>
-                    <div id="tableList-tab" class="box">
-                        <div class="title col-xs-12">
-                            <h4 class="title-left">查看餐桌信息</h4>
-                        </div>
-                    </div>
-                    <a name="#"></a>
-                    <div id="updateTable-tab" class="box">
-                        <div class="title col-xs-12">
-                            <h4 class="title-left">更新餐桌信息</h4>
-                        </div>
-                    </div>
-                    <a name="#"></a>
-                    <div id="addTable-tab" class="box">
-                        <div class="title col-xs-12">
-                            <h4 class="title-left">增加餐桌</h4>
+                    <div id="settings-tab " class="box ">
+                        <div class="title col-xs-12 ">
+                            <h4 class="title-left ">设置</h4>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <footer class="foot-content">
-            <div class="copyright">
-                <h5 class="copyright-text">&copy;&nbsp;餐饮店管理系统&nbsp;&nbsp;2018</h5>
+        <footer class="foot-content ">
+            <div class="copyright ">
+                <h5 class="copyright-text ">&copy;&nbsp;餐饮店管理系统&nbsp;&nbsp;2018</h5>
             </div>
         </footer>
     </div>
