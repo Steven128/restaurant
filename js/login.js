@@ -21,6 +21,14 @@ function getReferer() {
     }
 }
 
+
+function GetRandomNum(Min, Max) {
+    var Range = Max - Min;
+    var Rand = Math.random();
+    return (Min + Math.round(Rand * Range));
+}
+var num = GetRandomNum(10000, 99999);
+
 var name = "";
 var name = "";
 var isManager = "";
@@ -36,14 +44,13 @@ $(document).ready(() => {
             console.log(e)
             if (e.message == "online") {
                 if (!getReferer()) {
-                    goTo('?x=3&r=' + Math.random());
+                    goTo('?x=3&r=' + num);
                 } else {
                     var pre = "localhost";
                     if (getReferer().indexOf(pre) < 0) {
                         window.location.href = getReferer();
                         window.event.returnValue = false;
                     } else {
-                        console.log(e.admin_type);
                         window.location.href = "../";
                         window.event.returnValue = false;
                     }
@@ -93,11 +100,7 @@ $(document).ready(() => {
             var name = $("#name").val();
             var password = $("#password").val();
             password = "restaurant" + name + password;
-            console.log(password);
             password = hex_md5(password);
-            console.log(name);
-
-            console.log(password);
             $.ajax({
                 type: "POST",
                 url: "../php/login.php",

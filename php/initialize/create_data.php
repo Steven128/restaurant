@@ -44,16 +44,14 @@ function createAdminData($conn)
         $admin_passwd = md5($admin_passwd);
         $admin_type = $admin_data[$i]['admin_type'];
         $create_time = $admin_data[$i]['create_time'];
-
         $sql_insert = "INSERT INTO admin" .
-            "(admin_id,admin_name,admin_passwd,admin_type,create_time)" .
+            "(admin_id,admin_name,admin_passwd,admin_type,create_time,admin_pic)" .
             "VALUES" .
-            "('$admin_id','$admin_name','$admin_passwd',$admin_type,'$create_time')";
+            "('$admin_id','$admin_name','$admin_passwd',$admin_type,'$create_time','../../src/user.png')";
         $statement = oci_parse($conn, $sql_insert);
-        if (!oci_execute($statement)) {
-            die($statement);
-        }
+        oci_execute($statement);
     }
+    oci_free_statement($statement);
 }
 
 function createEmployeeData($conn, $quantity)
@@ -71,7 +69,7 @@ function createEmployeeData($conn, $quantity)
         $gender = mt_rand(0, 1);
         $age = mt_rand(25, 55);
         $type_param = mt_rand(0, 99);
-        $employee_type = ($type_param < 30 ? 2 : $type_param < 50 ? 5 : $type_param < 65 ? 4 : $type_param < 75 ? 6 : $type_param < 80 ? 3 : $type_param < 85 ? 7 : $type_param < 90 ? 8 : 1);
+        $employee_type = ($type_param < 30 ? 2 : ($type_param < 50 ? 5 : ($type_param < 65 ? 4 : ($type_param < 75 ? 6 : ($type_param < 80 ? 3 : ($type_param < 85 ? 7 : ($type_param < 90 ? 8 : 1)))))));
         $salary = 3000 + $working_year * 100;
         $phone_num = $phone_obj->nextMobile();
         $name = $name_obj->getName(2);
@@ -88,13 +86,13 @@ function createEmployeeData($conn, $quantity)
                 $count++;
             }
         }
-        $param = $count < 10 ? "000$count" : $count < 100 ? "00$count" : "0$count";
+        $param = $count < 10 ? "000$count" : ($count < 100 ? "00$count" : "0$count");
         $employee_id = "$employee_id" . "$param";
 
         $sql_insert = "INSERT INTO employee" .
-            "(employee_id,name,gender,working_year,age,salary,phone_num,employee_type,employ_time)" .
+            "(employee_id,name,gender,working_year,age,salary,phone_num,employee_type,employ_time,employee_pic)" .
             "VALUES" .
-            "('$employee_id','$name',$gender,$working_year,$age,$salary,'$phone_num',$employee_type,'$employ_time')";
+            "('$employee_id','$name',$gender,$working_year,$age,$salary,'$phone_num',$employee_type,'$employ_time','../../src/user.png')";
         $statement = oci_parse($conn, $sql_insert);
         if (!oci_execute($statement)) {
             die($statement);
@@ -163,7 +161,7 @@ function createGoodsData($conn)
         while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) {
             $count++;
         }
-        $goods_id = $count < 10 ? "00000$count" : $count < 100 ? "0000$count" : $count < 1000 ? "000$count" : "00$count";
+        $goods_id = $count < 10 ? "00000$count" : ($count < 100 ? "0000$count" : ($count < 1000 ? "000$count" : "00$count"));
         $goods_id = "goo_$goods_type" . "_$goods_id";
         //写入
         $sql_insert = "INSERT INTO goods" .

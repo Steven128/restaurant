@@ -5,7 +5,7 @@ session_set_cookie_params($lifeTime);
 session_start();
 
 if (isset($_SESSION['admin_id'])) {
-    echo json_encode(array("message" => "already_login", "admin_id" => $_SESSION['admin_id'], "admin_name" => $_SESSION['admin_name'], "admin_type" => $_SESSION['admin_type']));
+    echo json_encode(array("message" => "already_login", "admin_id" => $_SESSION['admin_id'], "admin_name" => $_SESSION['admin_name'], "admin_type" => $_SESSION['admin_type'], "admin_pic" => $_SESSION['admin_pic']));
 } else {
     $name = $_POST['name'];
     $password = $_POST['password'];
@@ -21,7 +21,7 @@ if (isset($_SESSION['admin_id'])) {
         $admin_name = "";
         $admin_passwd = "";
         $admin_type = 0;
-        $sql_query = "SELECT admin_id,admin_name,admin_passwd,admin_type FROM admin WHERE adm_status>0";
+        $sql_query = "SELECT admin_id,admin_name,admin_passwd,admin_type,admin_pic FROM admin WHERE adm_status>0";
         $statement = oci_parse($conn, $sql_query);
         oci_execute($statement);
         while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) {
@@ -29,6 +29,7 @@ if (isset($_SESSION['admin_id'])) {
             $admin_name = $row[1];
             $admin_passwd = $row[2];
             $admin_type = $row[3];
+            $admin_pic = $row[4];
             if ($admin_name == $name) {
                 //找到用户
                 $exist = 1;
@@ -54,7 +55,8 @@ if (isset($_SESSION['admin_id'])) {
             $_SESSION['admin_id'] = $admin_id;
             $_SESSION['admin_name'] = $admin_name;
             $_SESSION['admin_type'] = $admin_type;
-            echo json_encode(array("message" => "success_login", "admin_id" => $_SESSION['admin_id'], "admin_name" => $_SESSION['admin_name'], "admin_type" => $_SESSION['admin_type']));
+            $_SESSION['admin_pic'] = $admin_pic;
+            echo json_encode(array("message" => "success_login", "admin_id" => $_SESSION['admin_id'], "admin_name" => $_SESSION['admin_name'], "admin_type" => $_SESSION['admin_type'], "admin_pic" => $_SESSION['admin_pic']));
         } else {
             //错误
             unset($_SESSION);

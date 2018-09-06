@@ -21,6 +21,13 @@ function getReferer() {
     }
 }
 
+function GetRandomNum(Min, Max) {
+    var Range = Max - Min;
+    var Rand = Math.random();
+    return (Min + Math.round(Rand * Range));
+}
+var num = GetRandomNum(10000, 99999);
+
 $(document).ready(() => {
     //首先检查有无权限（用户是否登录及是否有管理员权限）
     $.ajax({
@@ -28,10 +35,9 @@ $(document).ready(() => {
         url: "../php/check_login.php?request=check", //后端接口
         dataType: "JSON", //返回的数据类型
         success: function(e) { //请求成功，e为返回的数据
-            console.log(e)
             if (e.message == "online") {
                 if (!getReferer()) { //IE不能直接得到referer，需要单独判断
-                    goTo('?x=3&r=' + Math.random());
+                    goTo('?x=3&r=' + num + "/");
                 } else {
                     var pre = "localhost";
                     if (getReferer().indexOf(pre) < 0) { //页面来自非本站，送回原来的位置
@@ -39,19 +45,42 @@ $(document).ready(() => {
                         window.location.href = getReferer();
                         window.event.returnValue = false;
                     } else { //页面来自本站
-                        if (e.admin_type != 1) {
+                        if (e.admin_type > 2) {
                             //不是管理员
                             admin_id = "";
                             window.location.href = "../";
                             window.event.returnValue = false;
                         } else { //是管理员，下面加载各种数据
                             admin_id = e.admin_id;
+                            var userPic = e.admin_pic;
+                            var userName = e.admin_name;
+                            var userType = e.admin_type;
+                            if (userType == 1) {
+                                userType = "超级管理员";
+                            } else if (userType == 2) {
+                                userType = "管理员";
+                            } else if (userType == 3) {
+                                userType = "财务管理";
+                            } else if (userType == 4) {
+                                userType = "港库管理";
+                            }
+                            if (userPic.indexOf("src/") > -1) {
+                                $(".userPic").attr('src', userPic + "?" + num);
+                                $(".online-user").html(userName);
+                                $(".user-type").html(userType);
+                            }
+                            if (e.admin_type == 1) {
+                                //是超级管理员，加载修改管理员信息的功能
+                                addAdminMgment();
+                            }
                             getEmployeeList();
                         }
                     }
                 }
             } else if (e.message == "offline") {
-
+                admin_id = "";
+                window.location.href = "../";
+                window.event.returnValue = false;
             }
         },
         error: function(err) {
@@ -60,6 +89,13 @@ $(document).ready(() => {
     });
 });
 
+function addAdminMgment() {
+    var append_text = "<li class=\"treeview\"><a href=\"#\"><i class=\"iconfont icon-admin\"></i><span>管理员信息</span><span class=\"pull-right\"><i class=\"iconfont icon-down-arrow\" style=\"font-size:12px;\"></i></span></a><ul class=\"treeview-menu\" style=\"display: none;\"><li><a id=\"menu-adminList-item\" href=\"#adminList\"><i class=\"iconfont icon-list\"></i>管理员列表</a></li><li class=\"li-not-allowed\"><a id=\"menu-updateAdmin-item\" href=\"#updateAdmin\"><i class=\"iconfont icon-update-round\"></i>更新信息<i class=\"iconfont icon-not-allowed\"></i></a></li><li><a id=\"menu-addAdmin-item\" href=\"#addAdmin\"><i class=\"iconfont icon-add-paper\"></i>增加管理员</a></li></ul></li>";
+    $(".employee-treeview").after(append_text);
+    append_text = "<a name=\"#\"></a><div id=\"adminList-tab\" class=\"box\"><div class=\"title col-xs-12\"><h4 class=\"title-left\">查看管理员信息</h4></div></div><a name=\"#\"></a><div id=\"updateAdmin-tab\" class=\"box\"><div class=\"title col-xs-12\"><h4 class=\"title-left\">更新管理员信息</h4></div></div><a name=\"#\"></a><div id=\"addAdmin-tab\" class=\"box\"><div class=\"title col-xs-12\"><h4 class=\"title-left\">增加管理员</h4></div></div>"
+    $("#addEmployee-tab").after(append_text);
+}
+
 
 function getEmployeeList() { //获得员工列表
     $.ajax({
@@ -67,7 +103,6 @@ function getEmployeeList() { //获得员工列表
         url: "../php/admin.php?request=getEmployeeList&admin_id=" + admin_id,
         dataType: "JSON",
         success: (emp_data) => {
-            console.log(emp_data);
             var i = 0;
             var append_text = "";
             while (emp_data[i]) {
@@ -106,7 +141,7 @@ function getEmployeeList() { //获得员工列表
                     employee_type = "其他";
                 }
                 var employ_time = emp_data[i]['employ_time'];
-                append_text += "<tr><td>" + j + "</td><td><a href = \"javascript:void(0);\" onclick =\"display_employee('" + employee_id + "')\">" + name + "</a></td><td>" + gender + "</td><td>" + working_year + "</td><td>" + age + "</td><td>" + salary + "</td><td>" + phone_num + "</td><td>" + employee_type + "</td><td>" + employ_time + "</td><td><a class=\"update-employee\" href = \"javascript:void(0);\" onclick=\"update_employee('" + employee_id + "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>"
+                append_text += "<tr><td>" + j + "</td><td><a href = \"javascript:void(0);\" onclick =\"display_employee('" + employee_id + "')\">" + name + "</a></td><td>" + gender + "</td><td>" + working_year + "</td><td>" + age + "</td><td>" + salary + "</td><td>" + phone_num + "</td><td>" + employee_type + "</td><td>" + employ_time + "</td><td><a class=\"table-update-btn update-employee\" href = \"javascript:void(0);\" onclick=\"update_employee('" + employee_id + "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>"
 
 
 
@@ -116,6 +151,9 @@ function getEmployeeList() { //获得员工列表
             $(".employeeListTableBody").append(append_text);
             $(function() {
                 $(".employeeListTable").tablesorter();
+            });
+            $(function() {
+                $(".employeeListTable").filterTable();
             });
         }
     })

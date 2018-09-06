@@ -40,6 +40,7 @@ if (!$conn) {
         "admin_passwd VARCHAR(32) NOT NULL," .
         "admin_type NUMBER(1) NOT NULL," .
         "create_time VARCHAR(25) NOT NULL," .
+        "admin_pic VARCHAR(100) NOT NULL," .
         "adm_status NUMBER(1) DEFAULT 1 NOT NULL)";
     $statement = oci_parse($conn, $sql_create_tab);
     if (oci_execute($statement)) {
@@ -52,9 +53,11 @@ if (!$conn) {
         oci_execute($statement);
         $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_passwd IS '密码'");
         oci_execute($statement);
-        $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_type IS '管理员类型，1为超级管理员，2为财务管理员，3为仓库管理员'");
+        $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_type IS '管理员类型，1为超级管理员，2为普通管理员，3为财务管理员，4为仓库管理员'");
         oci_execute($statement);
         $statement = oci_parse($conn, "COMMENT ON COLUMN admin.create_time IS '账号创建时间'");
+        oci_execute($statement);
+        $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_pic IS '管理员头像'");
         oci_execute($statement);
         $statement = oci_parse($conn, "COMMENT ON COLUMN admin.adm_status IS '账号状态，1有效 0无效'");
         oci_execute($statement);
@@ -72,6 +75,7 @@ if (!$conn) {
         "phone_num VARCHAR(11)," .
         "employee_type NUMBER(1) NOT NULL," .
         "employ_time VARCHAR(10) NOT NULL," .
+        "employee_pic VARCHAR(100) NOT NULL," .
         "emp_status NUMBER(1) DEFAULT 1 NOT NULL)";
     $statement = oci_parse($conn, $sql_create_tab);
     if (oci_execute($statement)) {
@@ -95,6 +99,8 @@ if (!$conn) {
         $statement = oci_parse($conn, "COMMENT ON COLUMN employee.employee_type IS '员工类别，1为餐厅管理人员，2为服务员，3为前台人员，4为厨师，5为保洁人员，6为仓库管理员，7为会计，8为其他'");
         oci_execute($statement);
         $statement = oci_parse($conn, "COMMENT ON COLUMN employee.employ_time IS '聘用日期'");
+        oci_execute($statement);
+        $statement = oci_parse($conn, "COMMENT ON COLUMN employee.employee_pic IS '员工照片'");
         oci_execute($statement);
         $statement = oci_parse($conn, "COMMENT ON COLUMN employee.emp_status IS '员工类别，0为已离职，1为在职，2为其他'");
         oci_execute($statement);
@@ -237,7 +243,7 @@ if (!$conn) {
     $sql_create_tab = "CREATE TABLE dish(" .
         "dish_id VARCHAR(20) NOT NULL PRIMARY KEY," .
         "dish_name VARCHAR(20) NOT NULL," .
-        "dish_pic BLOB," .
+        "dish_pic VARCHAR(100) NOT NULL," .
         "dish_price FLOAT NOT NULL," .
         "dish_type NUMBER(1) NOT NULL," .
         "dis_status NUMBER(1) NOT NULL)";

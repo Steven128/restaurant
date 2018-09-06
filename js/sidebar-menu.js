@@ -34,7 +34,17 @@ $.sidebarMenu = function(menu) {
                     }
                 }
             });
+
         }
+
+        var $list = $(".sidebar-menu").children();
+        $list.each(function() {
+            $(this).find(".pull-right i").removeClass("icon-up-arrow").addClass("icon-down-arrow");
+        })
+        var $item = $(this).find(".pull-right i");
+        $item.addClass("icon-up-arrow");
+        $item.removeClass("icon-down-arrow");
+
         var checkElement = $this.next();
 
         if (checkElement.is(".treeview-menu") && checkElement.is(":visible")) {
@@ -42,6 +52,7 @@ $.sidebarMenu = function(menu) {
                 checkElement.removeClass("menu-open");
             });
             checkElement.parent("li").removeClass("active");
+
         } else if (checkElement.is(".treeview-menu") && !checkElement.is(":visible")) {
             //如果菜单是隐藏的，寻找父元素
             var parent = $this.parents("ul").first();
@@ -56,7 +67,7 @@ $.sidebarMenu = function(menu) {
                 //向父元素添加class active
                 checkElement.addClass("menu-open");
                 parent.find("li.active").removeClass("active");
-                parent_li.addClass("active");
+                parent_li.addClass("active")
 
             });
         }
@@ -64,5 +75,41 @@ $.sidebarMenu = function(menu) {
         if (checkElement.is(".treeview-menu")) {
             e.preventDefault();
         }
+
     });
 };
+
+
+
+$(document).ready(function() {
+    $(window).resize(function() {
+        var width = $(window).width();
+        if (width > 768) {
+            $(".left-bar").css("left", "0");
+            $(".mask").css("display", "none");
+        } else {
+            $(".left-bar").css("left", "-180px");
+            $(".mask").css("display", "none");
+        }
+    });
+
+    let $btn = $(".avatar-small"),
+        $mask = $(".mask"),
+        $nav = $(".left-bar");
+    $btn.click(function() {
+        console.log("click")
+        if ($(".left-bar").css("left") == "-180px") {
+            $mask.css("display", "block");
+            $nav.css("left", "0");
+        } else {
+            $mask.css("display", "none");
+            $nav.css("left", "-180px");
+        }
+    });
+
+    $mask.click(function() {
+        $mask.css("display", "none");
+        $nav.css("left", "-180px");
+    });
+
+})
