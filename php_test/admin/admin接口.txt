@@ -1,0 +1,95 @@
+login.php
+POST{name, password}
+return
+成功
+	["message", "admin_id", "admin_name", "admin_type"]
+失败
+	["message"]
+
+
+
+employee.php
+1.查询
+GET{admin_id, request = "getEmployee"}
+return
+二维数组 ["employee_id", "name", "gender", 
+	"working_year", "age", "salary", 
+	"phone_num", "employee_type", "employ_time"]
+
+2.添加
+GET{admin_id, request = "addEmployee"}
+POST{month, name, gender, working_year, age, salary, phone_num, employee_type, employee_time, employee_pic}
+echo "success" 或 "fail"
+
+3.删除
+GET{admin_id, request = "deleteEmployee"}
+POST{employee_id}
+echo "success" 或 "fail"
+
+
+
+inventory.php
+1.查询
+GET{admin_id, request = "getInventory"}
+return
+二维数组 ["inventory_id", "goods_id", "quantity", 
+	"goods_name", "goods_price", "goods_type"]
+
+2.进货
+GET{admin_id, request = "purchase"}
+echo "success" 或 "fail"
+
+
+
+dish.php
+1.查询
+GET{admin_id, request = "getDish"}
+return
+二维数组 ["dish_id", "dish_name", "dish_pic", 
+	"dish_price", "dish_type"]
+
+2.添加
+GET{admin_id, request = "addDish"}
+POST{month, dish_name, dish_pic, dish_price, dish_type}
+echo "success" 或 "fail"
+
+3.删除
+GET{admin_id, request = "deleteDish"}
+POST{dish_id}
+echo "success" 或 "fail"
+
+
+
+res_table.php
+1.查询
+GET{admin_id, request = "getTable"}
+return
+二维数组 ["table_id", "table_number", 
+	"default_number", "table_order_status"]
+
+2.添加
+GET{admin_id, request = "addTable"}
+POST{month, table_number, default_number}
+echo "success" 或 "fail"
+
+3.删除
+GET{admin_id, request = "deleteTable"}
+POST{table_id}
+echo "success" 或 "fail"
+
+
+
+getFinance.php
+GET{admin_id, request = "getFinance"}
+return
+二维数组 ["finance_id", "fin_date", "month", 
+	"turnover", "cost", "profit"]
+
+
+
+
+
+
+
+
+
