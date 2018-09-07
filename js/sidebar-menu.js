@@ -3,40 +3,6 @@ $.sidebarMenu = function(menu) {
 
     $(menu).on("click", "li a", function(e) {
         var $this = $(this);
-        var idAttr = $this.attr("id");
-        if (idAttr != undefined && !idAttr.match("update") && !idAttr.match("display")) {
-            idAttr = idAttr.match(/menu-(.*?)-item/)[1];
-            var $box = $(".main-bar").children();
-            $box.each(function() {
-                var $thisID = $(this).attr("id")
-                if ($thisID != undefined) {
-                    if ($(this).hasClass("box-active")) {
-                        $(this).removeClass("box-active");
-                    }
-                    if ($thisID.match(idAttr)) {
-                        $("li a").each(function() {
-                            $(this).removeClass("outerActive");
-                            $(this).removeClass("innerActive");
-                        });
-                        if ($this.attr("id") == "menu-employeeList-item") {
-                            $this.addClass("outerActive");
-                        } else {
-                            $this.addClass("innerActive");
-                        }
-                        $(this).addClass("box-active");
-                        if ($(window).width() < 768) {
-                            $(".left-bar").css("left", "-180px");
-                            $(".mask").css("display", "none");
-                        }
-
-
-
-                    }
-                }
-            });
-
-        }
-
         var $list = $(".sidebar-menu").children();
         $list.each(function() {
             $(this).find(".pull-right i").removeClass("icon-up-arrow").addClass("icon-down-arrow");
@@ -46,7 +12,6 @@ $.sidebarMenu = function(menu) {
         $item.removeClass("icon-down-arrow");
 
         var checkElement = $this.next();
-
         if (checkElement.is(".treeview-menu") && checkElement.is(":visible")) {
             checkElement.slideUp(animationSpeed, function() {
                 checkElement.removeClass("menu-open");
@@ -97,7 +62,6 @@ $(document).ready(function() {
         $mask = $(".mask"),
         $nav = $(".left-bar");
     $btn.click(function() {
-        console.log("click")
         if ($(".left-bar").css("left") == "-180px") {
             $mask.css("display", "block");
             $nav.css("left", "0");
@@ -113,3 +77,7 @@ $(document).ready(function() {
     });
 
 })
+
+function goBack() {
+    window.location.replace("../../dashboard");
+}

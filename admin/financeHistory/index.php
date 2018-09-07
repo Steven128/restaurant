@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,35 +8,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>管理员系统-餐饮店管理系统</title>
-    <link type="text/css" rel="stylesheet" href="../css/bootstrap.css" />
-    <link type="text/css" rel="stylesheet" href="../css/iconfont.css" />
-    <link type="text/css" rel="stylesheet" href="../css/page.css" />
-    <link type="text/css" rel="stylesheet" href="../css/admin.css" />
-    <link type="text/css" rel="stylesheet" href="../css/sidebar-menu.css" />
-    <link type="text/css" rel="stylesheet" href="../css/tablesorter.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/iconfont.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/page.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/admin.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/tablesorter.css" />
 
 
-    <script type="text/javascript" src="../js/jQuery/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../js/page.js"></script>
-    <script type="text/javascript" src="../js/sidebar-menu.js"></script>
-    <script type="text/javascript" src="../js/xcConfirm.js"></script>
-    <script type="text/javascript" src="../js/jquery.tablesorter.min.js"></script>
-    <script type="text/javascript" src="../js/jquery.filtertable.js"></script>
-    <script type="text/javascript" src="../js/jquery.pjax.js"></script>
+    <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/page.js"></script>
+    <script type="text/javascript" src="../../js/xcConfirm.js"></script>
+    <script type="text/javascript" src="../../js/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="../../js/jquery.filtertable.js"></script>
+    <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
+<?php
+if (!isset($_SESSION['admin_id'])) {
+    echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
+}
+else if($_SESSION['admin_type'] != 1 && $_SESSION['admin_type'] != 2) {
+    echo "<script>$(document).ready(() => {window.location.replace(\"../../dashboard\");});</script>";
+}
+?>
 </head>
 
 <body>
+<?php
+$conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
+?>
     <div class="container">
         <header class="head-content">
             <div class="site-branding">
                 <a href="javascript:void(0);" class="avatar-small">
                     <div class="menu-button">
-                        <img src="../src/icon/menu.png" width="25px" height="25px" />
+                        <img src="../../src/icon/menu.png" width="25px" height="25px" />
                     </div>
                 </a>
                 <div class="site-title">
-                    <a herf="../" rel="home">餐饮店管理系统</a>
+                    <a herf="../../dashboard" rel="home">餐饮店管理系统</a>
                     <h5>管理员系统</h5>
                 </div>
             </div>
@@ -42,15 +55,23 @@
             <div class="bar-box">
                 <aside class="left-bar">
                     <div class="admin-box">
-                        <img class="userPic" src="" />
-                        <h4 class="online-user"></h4>
-                        <i class="iconfont icon-certificated" style="color: #1afa29;"></i>
-                        <h5 class="user-type"></h5>
+                        <?php
+    $admin_type = $_SESSION['admin_type'];
+    if ($admin_type == 1) {
+        $admin_type = "超级管理员";
+    } else if ($admin_type == 2) {
+        $admin_type = "管理员";
+    } else if ($admin_type == 3) {
+        $admin_type = "财务管理";
+    } else if ($admin_type == 4) {
+        $admin_type = "港库管理";
+    }
+    echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "\" /><h4 class=\"online-user\">" . $_SESSION['admin_name'] . "</h4><i class=\"iconfont icon-certificated\" style=\"color: #1afa29;\"></i><h5 class=\"user-type\">" . $admin_type . "</h5>";
+?>
                     </div>
                     <section class="sidebar">
                         <ul class="sidebar-menu">
-                            <!-- <li class="header">导航</li> -->
-                            <li class="treeview active">
+                            <li class="treeview">
                                 <a href="javascript:void(0);">
                                     <i class="iconfont icon-employee"></i>
                                     <span>员工管理</span>
@@ -58,28 +79,18 @@
                                         <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu menu-open">
+                                <ul class="treeview-menu">
                                     <li>
-                                        <a id="menu-employeeList-item" href="javascript:void(0);" class="innerActive">
+                                        <a id="menu-employeeList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-list"></i>员工列表</a>
                                     </li>
-                                    <li class="li-not-allowed">
-                                        <a id="menu-displayEmployee-item" href="#displayEmployee">
-                                            <i class="iconfont icon-display"></i>查看员工信息<i class="iconfont icon-not-allowed"></i>
-                                        </a>
-                                    </li>
-                                    <li class="li-not-allowed">
-                                        <a id="menu-updateEmployee-item" href="#updateEmployee">
-                                            <i class="iconfont icon-update-round"></i>更新员工信息<i class="iconfont icon-not-allowed"></i>
-                                        </a>
-                                    </li>
                                     <li>
-                                        <a id="menu-addEmployee-item" href="#addEmployee">
+                                        <a id="menu-addEmployee-item" href="javascript:void(0);">
                                             <i class="iconfont icon-add-paper"></i>增加员工</a>
                                     </li>
                                 </ul>
                             </li>
-                            <li class="treeview">
+                            <li class="treeview active">
                                 <a href="javascript:void(0);">
                                     <i class="iconfont icon-finance"></i>
                                     <span>财务管理</span>
@@ -87,13 +98,13 @@
                                             <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu">
+                                <ul class="treeview-menu menu-open">
                                     <li>
-                                        <a id="menu-financeList-item" href="#financeList">
+                                        <a id="menu-financeList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-list"></i>查看财务信息</a>
                                     </li>
                                     <li>
-                                        <a id="menu-financeHistory-item" href="#financeHistory">
+                                        <a id="menu-financeHistory-item" href="javascript:void(0);" class="innerActive">
                                             <i class="iconfont icon-list-search"></i>查询历史财务</a>
                                     </li>
                                 </ul>
@@ -108,15 +119,15 @@
                                 </a>
                                 <ul class="treeview-menu">
                                     <li>
-                                        <a id="menu-inventoryList-item" href="#inventoryList">
+                                        <a id="menu-inventoryList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-list"></i>查看仓库信息</a>
                                     </li>
                                     <li>
-                                        <a id="menu-purchaseList-item" href="#purchaseList">
+                                        <a id="menu-purchaseList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-display"></i>查看进货信息</a>
                                     </li>
                                     <li>
-                                        <a id="menu-lossList-item" href="#lossList">
+                                        <a id="menu-lossList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-display"></i>查看损耗信息 </a>
                                     </li>
                                 </ul>
@@ -131,16 +142,11 @@
                                 </a>
                                 <ul class="treeview-menu">
                                     <li>
-                                        <a id="menu-dishList-item" href="#dishList">
+                                        <a id="menu-dishList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-list"></i>查看菜单</a>
                                     </li>
-                                    <li class="li-not-allowed">
-                                        <a id="menu-updateDish-item" href="#updateDish">
-                                            <i class="iconfont icon-update-round"></i>更新菜品信息<i class="iconfont icon-not-allowed"></i>
-                                        </a>
-                                    </li>
                                     <li>
-                                        <a id="menu-addDish-item" href="#addDish">
+                                        <a id="menu-addDish-item" href="javascript:void(0);">
                                             <i class="iconfont icon-add"></i>增加菜品</a>
                                     </li>
                                 </ul>
@@ -155,16 +161,11 @@
                                 </a>
                                 <ul class="treeview-menu">
                                     <li>
-                                        <a id="menu-tableList-item" href="#tableList">
+                                        <a id="menu-tableList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-list"></i>查看餐桌信息</a>
                                     </li>
-                                    <li class="li-not-allowed">
-                                        <a id="menu-updateTable-item" href="#updateTable">
-                                            <i class="iconfont icon-update-round"></i>更新餐桌信息<i class="iconfont icon-not-allowed"></i>
-                                        </a>
-                                    </li>
                                     <li>
-                                        <a id="menu-addTable-item" href="#addTable">
+                                        <a id="menu-addTable-item" href="javascript:void(0);">
                                             <i class="iconfont icon-update"></i>增加餐桌</a>
                                     </li>
                                 </ul>
@@ -177,16 +178,40 @@
                             </li>
                         </ul>
                     </section>
-                    <script src="../js/sidebar-menu.js"></script>
+                    <script src="../../js/sidebar-menu.js"></script>
                     <script>
                         $.sidebarMenu($('.sidebar-menu'))
                     </script>
                 </aside>
                 <div class="mask"></div>
                 <div class="main-bar">
+                    <div class="title">
+                        <h4 class="title-left">查询历史财务</h4>
+                    </div>
+                    <div class="inner-box">
+
+                    </div>
                     <script>
                         $(document).ready(() => {
-                            window.location.replace("employeeList");
+                            function changeMainBar(itemName) {
+                                $("#menu-" + itemName + "-item").click(() => {
+                                    $.pjax({
+                                        url: "../" + itemName,
+                                        container: 'html'
+                                    });
+                                });
+                            }
+                            //
+                            changeMainBar("employeeList");
+                            changeMainBar("addEmployee");
+                            changeMainBar("financeList");
+                            changeMainBar("inventoryList");
+                            changeMainBar("purchaseList");
+                            changeMainBar("lossList");
+                            changeMainBar("dishList");
+                            changeMainBar("addDish");
+                            changeMainBar("tableList");
+                            changeMainBar("addTable");
                         });
                     </script>
                 </div>

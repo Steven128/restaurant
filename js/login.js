@@ -1,39 +1,3 @@
-//login
-
-//获取referer，兼容IE
-function goTo(url) {
-    var ua = navigator.userAgent;
-    if (ua.indexOf('MSIE') >= 0) {
-        var rl = document.createElement('a');
-        rl.href = url;
-        document.body.appendChild(rl);
-        rl.click();
-    } else {
-        location.href = url;
-    }
-}
-
-function getReferer() {
-    if (document.referrer) {
-        return document.referrer;
-    } else {
-        return false;
-    }
-}
-
-
-function GetRandomNum(Min, Max) {
-    var Range = Max - Min;
-    var Rand = Math.random();
-    return (Min + Math.round(Rand * Range));
-}
-var num = GetRandomNum(10000, 99999);
-
-var name = "";
-var name = "";
-var isManager = "";
-
-
 $(document).ready(() => {
     //检查用户是否已经登录
     $.ajax({
@@ -44,36 +8,20 @@ $(document).ready(() => {
             console.log(e)
             if (e.message == "online") {
                 if (!getReferer()) {
-                    goTo('?x=3&r=' + num);
+                    goTo('?x=3&r=' + num + "/");
                 } else {
-                    var pre = "localhost";
-                    if (getReferer().indexOf(pre) < 0) {
-                        window.location.href = getReferer();
-                        window.event.returnValue = false;
+                    if (getReferer().indexOf("admin") > -1) {
+                        window.location.href = "../admin";
                     } else {
-                        window.location.href = "../";
-                        window.event.returnValue = false;
+                        window.location.href = "../dashboard";
                     }
                 }
-
             } else {
-
+                setUserInfo("", "");
             }
         },
-        error: (err) => {
-
-        }
+        error: (err) => {}
     });
-
-    var width = $(window).width();
-    var height = $(window).height();
-    var foot_height = $(".foot-content").height();
-    var picHeight = height - foot_height - 2.5;
-    $(".main-content").css("height", picHeight);
-
-
-
-
     //form validate
 
     $("#login").validate({
@@ -123,21 +71,14 @@ $(document).ready(() => {
                             }
                         });
                     } else if (e.message == "success_login") {
+                        setUserInfo(e.admin_id, e.admin_type);
                         if (!getReferer()) {
-                            goTo('?x=3&r=' + num);
+                            goTo('?x=3&r=' + num + "/");
                         } else {
-                            if (getReferer() == '') {
-                                location.href = '../';
+                            if (getReferer().indexOf("admin") > -1) {
+                                window.location.href = "../admin";
                             } else {
-                                if (getReferer().indexOf('localhost') == -1) { //来自其它站点  
-                                    location.href = '../';
-                                } else if (getReferer().indexOf('dashboard') != -1) { //来自用户页面  
-                                    location.href = '../dashboard/';
-                                } else if (getReferer().indexOf('admin') != -1) { //来自管理员页面  
-                                    location.href = '../admin/';
-                                } else {
-                                    location.href = getReferer();
-                                }
+                                window.location.href = "../dashboard";
                             }
                         }
                     }

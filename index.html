@@ -20,9 +20,9 @@
                 success: (e) => {
                     console.log(e)
                     if (e.message == "online") {
-                        window.location.href = "./dashboard/";
+                        window.location.replace("dashboard");
                     } else if (e.message == "offline") {
-                        window.location.href = "./login/";
+                        window.location.replace("login");
                     }
                 },
                 error: (err) => {}
