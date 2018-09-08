@@ -189,23 +189,26 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
                     <div class="title">
                         <h4 class="title-left">员工列表</h4>
                     </div>
-                    <div class="inner-box">
-                        <table class="employeeListTable tablesorter result">
-                            <thead>
-                                <tr>
-                                <th>序号</th>
-                                    <th>姓名</th>
-                                    <th>性别</th>
-                                    <th>工龄（年）</th>
-                                    <th>年龄</th>
-                                    <th>工资</th>
-                                    <th>手机号</th>
-                                    <th>类别</th>
-                                    <th>聘用日期</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody class="employeeListTableBody">
+                    <div class='box-wrap'>
+                        <div class="box">
+                            <div class="inner-top-wrap"></div>
+                            <div class="inner-box">
+                                <table class="employeeListTable tablesorter result">
+                                    <thead>
+                                        <tr>
+                                        <th>序号</th>
+                                            <th>姓名</th>
+                                            <th>性别</th>
+                                            <th>工龄（年）</th>
+                                            <th>年龄</th>
+                                            <th>工资</th>
+                                            <th>手机号</th>
+                                            <th>类别</th>
+                                            <th>聘用日期</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="employeeListTableBody">
 <?php
     $sql_query = "SELECT EMPLOYEE_ID,NAME,GENDER,WORKING_YEAR,AGE,SALARY,PHONE_NUM,EMPLOYEE_TYPE,EMPLOY_TIME FROM EMPLOYEE WHERE EMP_STATUS>0 ORDER BY EMPLOYEE_TYPE ASC,EMPLOY_TIME DESC,WORKING_YEAR DESC";
     $statement = oci_parse($conn, $sql_query);
@@ -254,16 +257,18 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
         echo "<tr><td>$count</td><td><a href = \"javascript:void(0);\" onclick =\"display_employee('" . $employee_id . "')\">$name</td><td>$gender</td><td>$working_year</td><td>$age</td><td>$salary</td><td>$phone_num</td><td>$employee_type</td><td>$employ_time</td><td><a class=\"table-update-btn update-employee\" href = \"javascript:void(0);\" onclick=\"update_employee('" . $employee_id . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
     }
 ?>
-                                <script>
-                                $(() => {
-                                    $(".employeeListTable").tablesorter();
-                                });
-                                $(() => {
-                                    $(".employeeListTable").filterTable();
-                                });
-                                </script>
-                            </tbody>
-                        </table>
+                                        <script>
+                                        $(() => {
+                                            $(".employeeListTable").tablesorter();
+                                        });
+                                        $(() => {
+                                            $(".employeeListTable").filterTable();
+                                        });
+                                        </script>
+                                    </tbody>
+                                </table>
+                            </div> 
+                        </div>
                     </div>
                     <script>
                         $(document).ready(() => {
@@ -286,7 +291,7 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
                             changeMainBar("addDish");
                             changeMainBar("tableList");
                             changeMainBar("addTable");
-                        });
+                        });        
                     </script>
                 </div>
             </div>

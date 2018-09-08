@@ -98,6 +98,7 @@ li {
     overflow-x: hidden;
     position: absolute;
     transition: left linear 0.1s;
+    background-color: #efefef;
 }
 
 .admin-box {
@@ -339,19 +340,31 @@ td.alt {
 
 /* main-bar > box */
 
-.box {
-    padding-top: 0;
+.box-wrap {
     overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    display: none;
     background-color: #f5f5f5;
     clear: both;
-    border-top: 1px solid #ccc;
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    top: 00px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    padding: 10px;
+}
+
+.box {
+    padding: 0;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    background-color: #fff;
+}
+
+.box-full {
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
 }
 
 .box-active {
@@ -366,6 +379,7 @@ td.alt {
     position: fixed;
     left: 0;
     right: 0;
+    z-index: 1;
     transition: left linear 0.1s;
 }
 
@@ -380,10 +394,14 @@ td.alt {
     right: 10px;
 }
 
+.inner-top-wrap {
+    height: 40px;
+    background-color: #f5f5f5;
+}
+
 .inner-box {
     overflow: auto;
-    padding: 50px 10px 10px 10px;
-    margin: 0;
+    background-color: #fff;
 }
 
 

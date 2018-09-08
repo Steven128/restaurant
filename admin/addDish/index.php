@@ -13,14 +13,12 @@ session_start(); //开启php_session
     <link type="text/css" rel="stylesheet" href="../../css/page.css" />
     <link type="text/css" rel="stylesheet" href="../../css/admin.css" />
     <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
-    <link type="text/css" rel="stylesheet" href="../../css/tablesorter.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/form.css" />
 
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
-    <script type="text/javascript" src="../../js/jquery.tablesorter.min.js"></script>
-    <script type="text/javascript" src="../../js/jquery.filtertable.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
 <?php
 if (!isset($_SESSION['admin_id'])) {
@@ -187,6 +185,7 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
                     <div class="title">
                         <h4 class="title-left">增加菜品</h4>
                     </div>
+                    <div class="inner-top-wrap"></div>
                     <div class="inner-box">
 
                     </div>

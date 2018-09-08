@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>管理员系统-餐饮店管理系统</title>
+    <link type="text/css" rel="stylesheet" href="../css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="../css/iconfont.css" />
+    <link type="text/css" rel="stylesheet" href="../css/page.css" />
+    <link type="text/css" rel="stylesheet" href="../css/admin.css" />
+    <link type="text/css" rel="stylesheet" href="../css/sidebar-menu.css" />
+    <link type="text/css" rel="stylesheet" href="../css/tablesorter.css" />
+    <link type="text/css" rel="stylesheet" href="../css/form.css" />
+
+
+    <script type="text/javascript" src="../js/jQuery/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/page.js"></script>
+    <script type="text/javascript" src="../js/sidebar-menu.js"></script>
+    <script type="text/javascript" src="../js/xcConfirm.js"></script>
+    <script type="text/javascript" src="../js/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.filtertable.js"></script>
+    <script type="text/javascript" src="../js/jquery.pjax.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <header class="head-content">
+            <div class="site-branding">
+                <a href="javascript:void(0);" class="avatar-small">
+                    <div class="menu-button">
+                        <img src="../src/icon/menu.png" width="25px" height="25px" />
+                    </div>
+                </a>
+                <div class="site-title">
+                    <a herf="../" rel="home">餐饮店管理系统</a>
+                    <h5>管理员系统</h5>
+                </div>
+            </div>
+        </header>
+        <div class="main-content">
+            <div class="bar-box">
+                <aside class="left-bar">
+                    <div class="admin-box">
+                        <img class="userPic" src="" />
+                        <h4 class="online-user"></h4>
+                        <i class="iconfont icon-certificated" style="color: #1afa29;"></i>
+                        <h5 class="user-type"></h5>
+                    </div>
+                    <section class="sidebar">
+                        <ul class="sidebar-menu">
+                            <!-- <li class="header">导航</li> -->
+                            <li class="treeview active">
+                                <a href="javascript:void(0);">
+                                    <i class="iconfont icon-employee"></i>
+                                    <span>员工管理</span>
+                                    <span class="pull-right">
+                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu menu-open">
+                                    <li>
+                                        <a id="menu-employeeList-item" href="javascript:void(0);" class="innerActive">
+                                            <i class="iconfont icon-list"></i>员工列表</a>
+                                    </li>
+                                    <li class="li-not-allowed">
+                                        <a id="menu-displayEmployee-item" href="#displayEmployee">
+                                            <i class="iconfont icon-display"></i>查看员工信息<i class="iconfont icon-not-allowed"></i>
+                                        </a>
+                                    </li>
+                                    <li class="li-not-allowed">
+                                        <a id="menu-updateEmployee-item" href="#updateEmployee">
+                                            <i class="iconfont icon-update-round"></i>更新员工信息<i class="iconfont icon-not-allowed"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a id="menu-addEmployee-item" href="#addEmployee">
+                                            <i class="iconfont icon-add-paper"></i>增加员工</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="javascript:void(0);">
+                                    <i class="iconfont icon-finance"></i>
+                                    <span>财务管理</span>
+                                    <span class="pull-right">
+                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a id="menu-financeList-item" href="#financeList">
+                                            <i class="iconfont icon-list"></i>查看财务信息</a>
+                                    </li>
+                                    <li>
+                                        <a id="menu-financeHistory-item" href="#financeHistory">
+                                            <i class="iconfont icon-list-search"></i>查询历史财务</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="javascript:void(0);">
+                                    <i class="iconfont icon-inventory"></i>
+                                    <span>仓库管理</span>
+                                    <span class="pull-right">
+                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a id="menu-inventoryList-item" href="#inventoryList">
+                                            <i class="iconfont icon-list"></i>查看仓库信息</a>
+                                    </li>
+                                    <li>
+                                        <a id="menu-purchaseList-item" href="#purchaseList">
+                                            <i class="iconfont icon-display"></i>查看进货信息</a>
+                                    </li>
+                                    <li>
+                                        <a id="menu-lossList-item" href="#lossList">
+                                            <i class="iconfont icon-display"></i>查看损耗信息 </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="javascript:void(0);">
+                                    <i class="iconfont icon-dish"></i>
+                                    <span>菜单管理</span>
+                                    <span class="pull-right">
+                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a id="menu-dishList-item" href="#dishList">
+                                            <i class="iconfont icon-list"></i>查看菜单</a>
+                                    </li>
+                                    <li class="li-not-allowed">
+                                        <a id="menu-updateDish-item" href="#updateDish">
+                                            <i class="iconfont icon-update-round"></i>更新菜品信息<i class="iconfont icon-not-allowed"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a id="menu-addDish-item" href="#addDish">
+                                            <i class="iconfont icon-add"></i>增加菜品</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="javascript:void(0);">
+                                    <i class="iconfont icon-table"></i>
+                                    <span>餐桌管理</span>
+                                    <span class="pull-right">
+                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                        </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a id="menu-tableList-item" href="#tableList">
+                                            <i class="iconfont icon-list"></i>查看餐桌信息</a>
+                                    </li>
+                                    <li class="li-not-allowed">
+                                        <a id="menu-updateTable-item" href="#updateTable">
+                                            <i class="iconfont icon-update-round"></i>更新餐桌信息<i class="iconfont icon-not-allowed"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a id="menu-addTable-item" href="#addTable">
+                                            <i class="iconfont icon-update"></i>增加餐桌</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="javascript:void(0);" onclick="goBack()">
+                                    <i class="iconfont icon-back"></i>
+                                    <span>返回主页</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </section>
+                    <script src="../js/sidebar-menu.js"></script>
+                    <script>
+                        $.sidebarMenu($('.sidebar-menu'))
+                    </script>
+                </aside>
+                <div class="mask"></div>
+                <div class="main-bar">
+                    <form id="joinus" class="form-horizontal" method="post" action="javascritp:void(0);">
+                        <div class="subform">
+                            <div class="form-group">
+                                <div class="section_title">姓名</div>
+                                <input id="name" type="text" class="input-text form-control" name="name" placeholder="请输入姓名" maxlength=15 />
+                            </div>
+                            <div class="form-group">
+                                <div class="section_title">性别</div>
+                                <label class="gender">
+                                    <input type="radio" id="male" class=".radio-inline" name="gender" value="1" checked="checked" />男 
+                                </label>
+                                <label class="gender">
+                                    <input type="radio" id="female" class=".radio-inline" name="gender" value="0" />女
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <div class="section_title">年龄</div>
+                                <input id="college" type="text" class="input-text form-control" name="college" placeholder="请输入年龄" maxlength=2 />
+                            </div>
+                            <div class="form-group">
+                                <div class="section_title">工资</div>
+                                <input id="salary" type="text" class="input-text form-control" name="salary" placeholder="请输入工资" maxlength=5 />
+                            </div>
+                            <div class="form-group">
+                                <div class="section_title">手机号码</div>
+                                <input id="phone_num" type="text" class="input-text form-control" name="phone_num" placeholder="请留下手机号码" />
+                            </div>
+                            <div class="form-group">
+                                <div class="section_title">员工类型</div>
+                                <select id="employee_type" class="select form-control" name="employee_type">
+                                    <option class="option" value="1">管理人员</option>
+                                    <option class="option" value="2">服务员</option>
+                                    <option class="option" value="3">前台</option>
+                                    <option class="option" value="4">厨师</option>
+                                    <option class="option" value="5">保洁</option>
+                                    <option class="option" value="6">仓库管理员</option>
+                                    <option class="option" value="7">会计</option>
+                                    <option class="option" value="8">其他</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="btn-area">
+                            <button id="submit" type="submit" class="submit">添加</button>
+                        </div>
+                    </form>
+                    <script>
+                    </script>
+                </div>
+            </div>
+        </div>
+        <footer class="foot-content">
+            <div class="copyright">
+                <h5 class="copyright-text">&copy;&nbsp;餐饮店管理系统&nbsp;&nbsp;2018</h5>
+            </div>
+        </footer>
+    </div>
+</body>
+
+
+</html>

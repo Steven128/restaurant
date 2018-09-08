@@ -1,6 +1,8 @@
-<?php
-session_start();
-?>
+<!-- <?php
+session_start(); //开启php_session
+if (!isset($_SESSION['admin_id']) || $_SESSION['admin_type'] != 1 && $_SESSION['admin_type'] != 2) {
+}
+?> -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,28 +15,20 @@ session_start();
     <link type="text/css" rel="stylesheet" href="../../css/page.css" />
     <link type="text/css" rel="stylesheet" href="../../css/admin.css" />
     <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
-    <link type="text/css" rel="stylesheet" href="../../css/form.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/tablesorter.css" />
+
 
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
+    <script type="text/javascript" src="../../js/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="../../js/jquery.filtertable.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
-<?php
-if (!isset($_SESSION['admin_id'])) {
-    echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
-}
-else if($_SESSION['admin_type'] != 1 && $_SESSION['admin_type'] != 2) {
-    echo "<script>$(document).ready(() => {window.location.replace(\"../../dashboard\");});</script>";
-}
-?>
 
 </head>
 
 <body>
-<?php
-$conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
-?>
     <div class="container">
         <header class="head-content">
             <div class="site-branding">
@@ -53,7 +47,7 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
             <div class="bar-box">
                 <aside class="left-bar">
                     <div class="admin-box">
-                        <?php
+                        <!-- <?php
     $admin_type = $_SESSION['admin_type'];
     if ($admin_type == 1) {
         $admin_type = "超级管理员";
@@ -65,11 +59,11 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
         $admin_type = "港库管理";
     }
     echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "\" /><h4 class=\"online-user\">" . $_SESSION['admin_name'] . "</h4><i class=\"iconfont icon-certificated\" style=\"color: #1afa29;\"></i><h5 class=\"user-type\">" . $admin_type . "</h5>";
-?>
+?> -->
                     </div>
                     <section class="sidebar">
                         <ul class="sidebar-menu">
-                            <li class="treeview">
+                            <li class="treeview active">
                                 <a href="javascript:void(0);">
                                     <i class="iconfont icon-employee"></i>
                                     <span>员工管理</span>
@@ -77,11 +71,21 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
                                         <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu">
+                                <ul class="treeview-menu menu-open">
                                     <li>
-                                        <a id="menu-employeeList-item" href="javascript:void(0);">
+                                        <a id="menu-employeeList-item" href="javascript:void(0);" class="innerActive">
                                             <i class="iconfont icon-list"></i>员工列表</a>
                                     </li>
+                                    <!-- <li class="li-not-allowed">
+                                        <a id="menu-displayEmployee-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-display"></i>查看员工信息<i class="iconfont icon-not-allowed"></i>
+                                        </a>
+                                    </li>
+                                    <li class="li-not-allowed">
+                                        <a id="menu-updateEmployee-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-update-round"></i>更新员工信息<i class="iconfont icon-not-allowed"></i>
+                                        </a>
+                                    </li> -->
                                     <li>
                                         <a id="menu-addEmployee-item" href="javascript:void(0);">
                                             <i class="iconfont icon-add-paper"></i>增加员工</a>
@@ -143,13 +147,18 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
                                         <a id="menu-dishList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-list"></i>查看菜单</a>
                                     </li>
+                                    <!-- <li class="li-not-allowed">
+                                        <a id="menu-updateDish-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-update-round"></i>更新菜品信息<i class="iconfont icon-not-allowed"></i>
+                                        </a>
+                                    </li> -->
                                     <li>
                                         <a id="menu-addDish-item" href="javascript:void(0);">
                                             <i class="iconfont icon-add"></i>增加菜品</a>
                                     </li>
                                 </ul>
                             </li>
-                            <li class="treeview active">
+                            <li class="treeview">
                                 <a href="javascript:void(0);">
                                     <i class="iconfont icon-table"></i>
                                     <span>餐桌管理</span>
@@ -157,13 +166,18 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
                                             <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                         </span>
                                 </a>
-                                <ul class="treeview-menu menu-open">
+                                <ul class="treeview-menu">
                                     <li>
                                         <a id="menu-tableList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-list"></i>查看餐桌信息</a>
                                     </li>
+                                    <!-- <li class="li-not-allowed">
+                                        <a id="menu-updateTable-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-update-round"></i>更新餐桌信息<i class="iconfont icon-not-allowed"></i>
+                                        </a>
+                                    </li> -->
                                     <li>
-                                        <a id="menu-addTable-item" href="javascript:void(0);" class="innerActive">
+                                        <a id="menu-addTable-item" href="javascript:void(0);">
                                             <i class="iconfont icon-update"></i>增加餐桌</a>
                                     </li>
                                 </ul>
@@ -184,12 +198,13 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
                 <div class="mask"></div>
                 <div class="main-bar">
                     <div class="title">
-                        <h4 class="title-left">增加餐桌</h4>
+                        <h4 class="title-left"></h4>
                     </div>
                     <div class="inner-top-wrap"></div>
                     <div class="inner-box">
 
                     </div>
+
                     <script>
                         $(document).ready(() => {
                             function changeMainBar(itemName) {
@@ -211,6 +226,7 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
                             changeMainBar("dishList");
                             changeMainBar("addDish");
                             changeMainBar("tableList");
+                            changeMainBar("addTable");
                         });
                     </script>
                 </div>

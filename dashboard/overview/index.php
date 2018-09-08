@@ -7,7 +7,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>管理员系统-餐饮店管理系统</title>
+    <title>主页-餐饮店管理系统</title>
     <link type="text/css" rel="stylesheet" href="../../css/bootstrap.css" />
     <link type="text/css" rel="stylesheet" href="../../css/iconfont.css" />
     <link type="text/css" rel="stylesheet" href="../../css/page.css" />
@@ -102,7 +102,8 @@ echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['a
                     </section>
                 </aside>
                 <div class="mask "></div>
-                <div class="main-bar ">
+                <div class="main-bar row">
+                    <div class="chart-single-box col-xs-12 col-sm-6 col-md-3"></div>
                     <script>
                         $(document).ready(() => {
                             function changeMainBar(itemName) {

@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,30 +10,17 @@ session_start();
     <link type="text/css" rel="stylesheet" href="../../css/page.css" />
     <link type="text/css" rel="stylesheet" href="../../css/admin.css" />
     <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
-    <link type="text/css" rel="stylesheet" href="../../css/tablesorter.css" />
-
+    <link type="text/css" rel="stylesheet" href="../../css/form.css" />
 
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
-    <script type="text/javascript" src="../../js/jquery.tablesorter.min.js"></script>
-    <script type="text/javascript" src="../../js/jquery.filtertable.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
-<?php
-if (!isset($_SESSION['admin_id'])) {
-    echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
-}
-else if($_SESSION['admin_type'] != 1 && $_SESSION['admin_type'] != 2) {
-    echo "<script>$(document).ready(() => {window.location.replace(\"../../dashboard\");});</script>";
-}
-?>
+    <script type="text/javascript" src="../../js/jquery.validate.min.js"></script>
 </head>
 
 <body>
-<?php
-$conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
-?>
     <div class="container">
         <header class="head-content">
             <div class="site-branding">
@@ -55,19 +39,10 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
             <div class="bar-box">
                 <aside class="left-bar">
                     <div class="admin-box">
-                        <?php
-    $admin_type = $_SESSION['admin_type'];
-    if ($admin_type == 1) {
-        $admin_type = "超级管理员";
-    } else if ($admin_type == 2) {
-        $admin_type = "管理员";
-    } else if ($admin_type == 3) {
-        $admin_type = "财务管理";
-    } else if ($admin_type == 4) {
-        $admin_type = "港库管理";
-    }
-    echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "\" /><h4 class=\"online-user\">" . $_SESSION['admin_name'] . "</h4><i class=\"iconfont icon-certificated\" style=\"color: #1afa29;\"></i><h5 class=\"user-type\">" . $admin_type . "</h5>";
-?>
+                        <img class="userPic" src="" />
+                        <h4 class="online-user"></h4>
+                        <i class="iconfont icon-certificated" style="color: #1afa29;"></i>
+                        <h5 class="user-type"></h5>
                     </div>
                     <section class="sidebar">
                         <ul class="sidebar-menu">
@@ -188,9 +163,84 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
                     <div class="title">
                         <h4 class="title-left">增加员工</h4>
                     </div>
-                    <div class="inner-box">
-
+                    <div class='box-wrap'>
+                        <div class="box box-full">
+                            <div class="inner-top-wrap"></div>
+                            <div class="inner-box row">
+                                <div class="col-xs-0 col-sm-1 col-md-2 col-lg-3"></div>
+                                <form id="addEmployee-form" class="form-horizontal col-xs-12 col-sm-10 col-md-8 col-lg-6" method="post" action="">
+                                    <div class="subform">
+                                        <div class="form-group">
+                                            <div class="section_title">姓名</div>
+                                            <input id="name" type="text" class="input-text form-control" name="name" placeholder="请输入姓名" maxlength=15 />
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="section_title">性别</div>
+                                            <label class="gender">
+                                                <input type="radio" id="male" class=".radio-inline" name="gender" value="1" checked="checked" />男 
+                                            </label>
+                                            <label class="gender">
+                                                <input type="radio" id="female" class=".radio-inline" name="gender" value="0" />女
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="section_title">年龄</div>
+                                            <input id="age" type="text" class="input-text form-control" name="age" placeholder="请输入年龄" maxlength=2 />
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="section_title">工资</div>
+                                            <input id="salary" type="text" class="input-text form-control" name="salary" placeholder="请输入工资" maxlength=5 />
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="section_title">手机号码</div>
+                                            <input id="phone_num" type="text" class="input-text form-control" name="phone_num" placeholder="请留下手机号码" />
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="section_title">员工类型</div>
+                                            <select id="employee_type" class="select form-control" name="employee_type">
+                                                <option class="option" value="1">管理人员</option>
+                                                <option class="option" value="2">服务员</option>
+                                                <option class="option" value="3">前台</option>
+                                                <option class="option" value="4">厨师</option>
+                                                <option class="option" value="5">保洁</option>
+                                                <option class="option" value="6">仓库管理员</option>
+                                                <option class="option" value="7">会计</option>
+                                                <option class="option" value="8">其他</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="section__title">上传头像</div>
+                                            <div class="picArea">
+                                                <button class="button">选择图片<input type="file" id="file" accept="image/*" /></button>
+                                                <div class="wrap">
+                                                    <img id="previewResult" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="btn-area">
+                                        <button id="submit" name="submit" type="submit" class="submit">添加</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
+                    <div class="app" id="uploadPage">
+                        <div class="bar"><a class="back pull-left" id="closeCrop">取消</a><a id="getFile" class="pull-right">使用</a></div>
+                        <div class="main">
+                            <canvas class="upload-mask"></canvas>
+                            <div class="preview-box">
+                                <img id="preview" />
+                            </div>
+                            <canvas class="photo-canvas"></canvas>
+                            <a id="rotateBtn">
+                                <div>旋转照片</div>
+                            </a>
+                        </div>
+                    </div>
+                    <script type="text/javascript" src="js/require.js"></script>
+                    <script type="text/javascript" src="js/main.js"></script>
+                    <script type="text/javascript" src="../../js/admin.form.validate.js"></script>
                     <script>
                         $(document).ready(() => {
                             function changeMainBar(itemName) {
