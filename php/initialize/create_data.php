@@ -178,11 +178,32 @@ function createGoodsData($conn)
 
 function createInventoryData($conn)
 {
+    $query="SELECT * FROM GOODS";
+    $statement1=oci_parse($conn,$query);
+    oci_execute($statement1);
+    $count=1;
+    while($row=oci_fetch_array($statement1,OCI_RETURN_NULL)){
+        $count++;
+        $goods_id = $row[0];
+        $_inventory_id=$count < 10 ? "00000$count" : ($count < 100 ? "0000$count" : ($count < 1000 ? "000$count" : "00$count"));
+        $inventory_id="inv_$_inventory_id";
+        $quantity=mt_rand(50,200);
+        //写入库存信息
+        $sql_insert="INSERT INto inventory".
+            "(inventory_id,goods_id,quantity)".
+            "VALUES".
+            "('$inventory_id','$goods_id',$quantity)";
+        $statement2=oci_parse($conn,$sql_insert);
+        oci_execute($statement2);
+    }
+    oci_free_statement($statement1);
+    oci_free_statement($statement2);
 
 }
 
 function createPurchaseData($conn)
 {
+    $query="SELECT * FROM GOODS";
 
 }
 
