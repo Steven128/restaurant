@@ -188,9 +188,13 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
                     <div class="title">
                         <h4 class="title-left">查看餐桌信息</h4>
                     </div>
-                    <div class="inner-top-wrap"></div>
-                    <div class="inner-box">
+                    <div class='box-wrap'>
+                        <div class="box">
+                            <div class="inner-top-wrap"></div>
+                            <div class="inner-box">
 
+                            </div>
+                        </div>
                     </div>
                     <script>
                         $(document).ready(() => {
