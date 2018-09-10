@@ -22,7 +22,7 @@
     function getDish($conn)
     {
         $dish_data_array = array();//存放库存信息列表
-        $sql_query = "SELECT DISH_ID,DISH_NAME,DISH_PIC,DISH_PRICE,DISH_TYPE FROM DISH WHERE INV_STATUS>0 ORDER BY DISH_TYPE,DISH_NAME DESC;
+        $sql_query = "SELECT DISH_ID,DISH_NAME,DISH_PIC,DISH_PRICE,DISH_TYPE FROM DISH WHERE INV_STATUS>0 ORDER BY DISH_TYPE,DISH_NAME DESC";
         $statement = oci_parse($conn, $sql_query);
         oci_execute($statement);
         while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) {//查询结果集
@@ -44,7 +44,7 @@
         $sum = oci_execute($statement);
         $str = strval($sum);
         $DISH_ID = $_POST['month'];
-        for($i = 6 - strlen($str); i>0; i--){
+        for($i = 6 - strlen($str); $i>0; $i--){
             $DISH_ID += "0";
         }
         $DISH_ID += $str;
