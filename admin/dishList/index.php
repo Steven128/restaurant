@@ -42,7 +42,7 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
             <div class="site-branding">
                 <a href="javascript:void(0);" class="avatar-small">
                     <div class="menu-button">
-                        <img src="../../src/icon/menu.png" width="25px" height="25px" />
+                    <i class="iconfont icon-menu"></i>
                     </div>
                 </a>
                 <div class="site-title">

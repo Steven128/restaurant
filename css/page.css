@@ -44,7 +44,14 @@ header {
 .menu-button {
     display: block;
     float: left;
-    margin-right: 10px;
+    margin: 0 10px 0 3px;
+}
+
+.menu-button .iconfont {
+    font-size: 21px;
+    color: #fff;
+    position: relative;
+    top: -2px;
 }
 
 ul,

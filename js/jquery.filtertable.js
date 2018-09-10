@@ -394,7 +394,7 @@
 
                 // add the filter field and quick list container to just before the table if it was created by the plugin
                 if (created_filter) {
-                    t.parent().parent().find(".title").append(container);
+                    t.parent().parent().parent().parent().find(".title").append(container);
                 }
             }
         }); // return this.each
