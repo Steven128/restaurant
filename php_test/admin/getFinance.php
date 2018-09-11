@@ -20,7 +20,7 @@ if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如�
 function getFinance($conn)
 {
     $fin_data_array = array();//存放库存信息列表
-    $sql_query = "SELECT FINANCE_ID,FIN_DATE,MONTH,TURNOVER,COST,PROFIT FROM FINANCE WHERE INV_STATUS>0 ORDER BY FIN_DATE,MONTH DESC;
+    $sql_query = "SELECT FINANCE_ID,FIN_DATE,MONTH,TURNOVER,COST,PROFIT FROM FINANCE WHERE INV_STATUS>0 ORDER BY FIN_DATE,MONTH DESC";
     $statement = oci_parse($conn, $sql_query);
     oci_execute($statement);
     while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) {//查询结果集
@@ -34,5 +34,5 @@ function getFinance($conn)
         $data_single = array("finance_id" => $finance_id, "fin_date" => $fin_date, "month" => $month, "turnover" => $turnover, "cost" => $cost, "profit" => $profit);
         array_push($fin_data_array, $data_single);//将单个员工信息的数组添加到$emp_data_array中
     }
-    return json_encode($fin_data_array);//将数组进行json序列化后返回
+    echo json_encode($fin_data_array);//将数组进行json序列化后返回
 }
