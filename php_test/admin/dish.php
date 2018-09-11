@@ -35,7 +35,7 @@
             $data_single = array("dish_id" => $dish_id, "dish_name" => $dish_name, "dish_pic" => $dish_pic, "dish_price" => $dish_price, "dish_type" => $dish_type);
             array_push($dish_data_array, $data_single);//将单个员工信息的数组添加到$emp_data_array中
         }
-        return json_encode($dish_data_array);//将数组进行json序列化后返回
+        echo json_encode($dish_data_array);//将数组进行json序列化后返回
     }
     function addDish($conn)
     {
@@ -49,24 +49,22 @@
         }
         $DISH_ID += $str;
         
-        $sql_query = "INSERT INTO DISH (DISH_ID, DISH_NAME, DISH_PIC, DISH_PRICE, DISH_TYPE, DIS_STATUS) VALUES ('"$DISH_ID"', '$_POST['dish_name']', '$_POST['dish_pic']', $_POST['dish_price'], $_POST['dish_type'], 1)";
+        $sql_query = "INSERT INTO DISH (DISH_ID, DISH_NAME, DISH_PIC, DISH_PRICE, DISH_TYPE, DIS_STATUS) VALUES ('$DISH_ID', '".$_POST['dish_name']."', '".$_POST['dish_pic']."', ".$_POST['dish_price'].", ".$_POST['dish_type'].", 1)";
         
         $statement = oci_parse($conn, $sql_query);
-        $bool = oci_execute($statement);
-        if($bool)
-            return json_encode("bool" => "true");
+        if(oci_execute($statement))
+            echo json_encode(array("message" => "false"));
         else
-            return json_encode("bool" => "false");
+            echo json_encode(array("message" => "false"));
         
     }
     function deleteDish($conn)
     {
-        $sql_query = "UPDATE DISH SET DIS_STATUS = 0 WHERE DISH_ID = '"$_POST['dish_id']"'";
+        $sql_query = "UPDATE DISH SET DIS_STATUS = 0 WHERE DISH_ID = '".$_POST['dish_id']."'";
         $statement = oci_parse($conn, $sql_query);
-        $bool = oci_execute($statement);
-        if($bool)
-            return json_encode("bool" => "true");
+        if(oci_execute($statement))
+            echo json_encode(array("message" => "false"));
         else
-            return json_encode("bool" => "false");
+            echo json_encode(array("message" => "false"));
         
     }
