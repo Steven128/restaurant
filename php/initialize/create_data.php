@@ -8,7 +8,7 @@ if (!$conn) {
 } else {
     echo "连接oracle成功！";
 
-    createAdminData($conn);
+/*     createAdminData($conn);
     echo "<br>写入管理员表数据成功";
 
     createEmployeeData($conn, 20);
@@ -24,7 +24,14 @@ if (!$conn) {
     echo "<br>写入餐桌表数据成功";
 
     createFinanceData($conn, 100);
-    echo "<br>写入财务表数据成功";
+    echo "<br>写入财务表数据成功"; */
+
+    createPurchaseData($conn);
+    echo "<br>写入进货表数据成功";
+
+    createInventoryData($conn);
+    echo "<br>写入库存表数据成功";
+
     oci_close($conn);
 
 }
@@ -80,7 +87,7 @@ function createEmployeeData($conn, $quantity)
         $query = "SELECT * from employee where employ_time='$employ_time'";
         $statement = oci_parse($conn, $query);
         oci_execute($statement);
-        $count = 1;
+        $count = 0;
         while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) {
             if ($row[0] != null) {
                 $count++;
@@ -108,7 +115,6 @@ function createPresenceData($conn)
     $query = "SELECT * from employee";
     $statement1 = oci_parse($conn, $query);
     oci_execute($statement1);
-    $count = 1;
     while ($row = oci_fetch_array($statement1, OCI_RETURN_NULLS)) {
         $employee_id = $row[0];
         $employ_time = $row[8];
@@ -157,7 +163,7 @@ function createGoodsData($conn)
         $query = "SELECT * FROM goods WHERE goods_type='$goods_type'";
         $statement = oci_parse($conn, $query);
         oci_execute($statement);
-        $count = 1;
+        $count = 0;
         while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) {
             $count++;
         }
@@ -181,7 +187,7 @@ function createInventoryData($conn)
     $query="SELECT * FROM GOODS";
     $statement1=oci_parse($conn,$query);
     oci_execute($statement1);
-    $count=1;
+    $count=0;
     while($row=oci_fetch_array($statement1,OCI_RETURN_NULL)){
         $count++;
         $goods_id = $row[0];
@@ -201,20 +207,34 @@ function createInventoryData($conn)
 
 }
 
-function createPurchaseData($conn)//未完成
+function createPurchaseData($conn)//id根据进货单创建时间,31种,进货单号由发票号码12+8组成
 {
-    $query="SELECT * FROM GOODS";
-    $statement=oci_parse($conn,$query);
-    oci_execute($statement);
-    $count=1;
-    while($row=oci_fetch_array($statement,OCI_RETURN_NULL)){
-        $count++;
-        $goods_id = $row[0];
-
-        $quantity=mt_rand(50,200);
-
-
+    $begin_time=strtotime("2010-01-01 07:00:00");
+    $end_time=strtotime("$date 20:00:00");
+    $sql1="SELECT goods_id FROM goods";
+    $statement=oci_parse($conn,$sql1);
+    $res=oci_execute($statement);
+    $goods_array=array();
+    while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) {
+        $goods_array[]=$row[0];
     }
+    for($i=0;$i<500;$i++){
+        $rand=mt_rand($begin_time,$end_time);
+        $pur_id=date("ymd_his",strtotime($rand));
+        $_date=date("ymd",strototime($pur_id));
+        $pur_id="pur_$pur_id";
+        $rand1=mt_rand(10000000000000000000,300000000000000000000);
+        $rand2=mt_rand(0,30);
+        $rand3=mt_rand(30,100);
+        $goods_id=$goods_array[$rand2];
+        $sql_insert="INSERT INTO purchase".
+            "(purchase_id,purchase_number,goods_id,purchase_quantity,purchase_date".
+            "VALUES".
+            "('$pur_id','$rand1','$goods_id',$rand3,'$_date')";
+        $statement1=oci_parse($conn,$sql_insert);
+    }
+    oci_free_statement($statement);
+    oci_free_statement($statement1);
 }
 
 function createLossData($conn)
