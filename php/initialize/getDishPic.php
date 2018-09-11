@@ -31,20 +31,18 @@ $rs = mb_convert_encoding($rs, 'utf-8', 'GBK,UTF-8,ASCII');
 // var_dump($rs);
 preg_match_all("/\"http:\/\/cache.5ikfc.com\/imgs\/kfc\/menu\/(.*?)\" alt=\"(.*?)\"/", $rs, $matches);
 $dish = array();
-var_dump($matches[0][0]);
 foreach ($matches[0] as $value) {
-    // echo "$value<br>";
     preg_match("/\"http:\/\/cache.5ikfc.com\/imgs\/kfc\/menu\/(.*?)\"/", $value, $picurl);
     preg_match("/alt=\"(.*?)\"/", $value, $picname);
     $picurl = str_replace("\"", "", $picurl[0]);
-    $picname = str_replace("alt=\"KFC菜单图片:", "", $picname[0]);
-    $picname = str_replace("\"", "", $picname);
-    $savename = mt_rand(10000, 99999) . mt_rand(10000, 99999) . ".jpg";
-    $dl = getImage($picurl, 'dish_pic/', $savename);
-    if ($dl['error'] == 0) {
-        $savename = "../../src/dish_pic/" . $savename;
-        $dish_single = array("dish_pic" => $savename, "dish_name" => $picname);
-        array_push($dish, $dish_single);
+    $picname = str_replace("alt=\"KFC菜单图片:","",$picname[0]);
+    $picname = str_replace("\"","",$picname);
+    $savename = mt_rand(10000,99999).mt_rand(10000,99999).".jpg";
+    $dl = getImage($picurl,'dish_pic/',$savename);
+    if($dl['error'] == 0) {
+        $savename = "../../src/dish_pic/".$savename;
+        $dish_single = array("dish_pic"=> $savename,"dish_name"=>$picname,"dish_type"=>2,"dish_price"=>"");
+        array_push($dish,$dish_single);
     }
 }
 $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);

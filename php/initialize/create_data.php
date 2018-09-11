@@ -187,7 +187,7 @@ function createInventoryData($conn)
         $goods_id = $row[0];
         $_inventory_id=$count < 10 ? "00000$count" : ($count < 100 ? "0000$count" : ($count < 1000 ? "000$count" : "00$count"));
         $inventory_id="inv_$_inventory_id";
-        $quantity=mt_rand(50,200);
+        $quantity=mt_rand(50,500);
         //写入库存信息
         $sql_insert="INSERT INto inventory".
             "(inventory_id,goods_id,quantity)".
@@ -201,10 +201,20 @@ function createInventoryData($conn)
 
 }
 
-function createPurchaseData($conn)
+function createPurchaseData($conn)//未完成
 {
     $query="SELECT * FROM GOODS";
+    $statement=oci_parse($conn,$query);
+    oci_execute($statement);
+    $count=1;
+    while($row=oci_fetch_array($statement,OCI_RETURN_NULL)){
+        $count++;
+        $goods_id = $row[0];
 
+        $quantity=mt_rand(50,200);
+
+
+    }
 }
 
 function createLossData($conn)
@@ -253,7 +263,7 @@ function createTableData($conn, $quantity)
     oci_free_statement($statement);
 }
 
-function createOrderData($conn)
+function createOrderData($conn)//订单编号用Ord_餐桌_下单时间
 {
 
 }
