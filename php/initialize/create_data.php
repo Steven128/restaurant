@@ -11,26 +11,26 @@ if (!$conn) {
     createAdminData($conn);
     echo "<br>写入管理员表数据成功";
 
-    // createEmployeeData($conn, 20);
-    // echo "<br>写入员工表数据成功";
+    createEmployeeData($conn, 20);
+    echo "<br>写入员工表数据成功";
 
-    // createPresenceData($conn);
-    // echo "<br>写入出勤表数据成功";
+    createPresenceData($conn);
+    echo "<br>写入出勤表数据成功";
 
-    // createGoodsData($conn);
-    // echo "<br>写入原料表数据成功";
+    createGoodsData($conn);
+    echo "<br>写入原料表数据成功";
 
-    // createTableData($conn, 20);
-    // echo "<br>写入餐桌表数据成功";
+    createTableData($conn, 20);
+    echo "<br>写入餐桌表数据成功";
 
-    // createFinanceData($conn, 100);
-    // echo "<br>写入财务表数据成功";
+    createFinanceData($conn, 100);
+    echo "<br>写入财务表数据成功";
 
-    // createPurchaseData($conn);
-    // echo "<br>写入进货表数据成功";
+    createPurchaseData($conn);
+    echo "<br>写入进货表数据成功";
 
-    // createInventoryData($conn);
-    // echo "<br>写入库存表数据成功"; 
+    createInventoryData($conn);
+    echo "<br>写入库存表数据成功"; 
 
     oci_close($conn);
 

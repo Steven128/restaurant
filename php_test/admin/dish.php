@@ -31,11 +31,12 @@ function getDish($conn)
         $dish_pic = $row[2];
         $dish_price = $row[3];
         $dish_type = $row[4];
+        echo "<ul><li>$row[0]</li><li>$row[1]</li><li>$row[2]</li><li>$row[3]</li><li>$row[4]</li></ul>";
         //使用一个数组放入一个员工的信息
-        $data_single = array("dish_id" => $dish_id, "dish_name" => $dish_name, "dish_pic" => $dish_pic, "dish_price" => $dish_price, "dish_type" => $dish_type);
-        array_push($dish_data_array, $data_single); //将单个员工信息的数组添加到$emp_data_array中
+        //$data_single = array("dish_id" => $dish_id, "dish_name" => $dish_name, "dish_pic" => $dish_pic, "dish_price" => $dish_price, "dish_type" => $dish_type);
+        //array_push($dish_data_array, $data_single); //将单个员工信息的数组添加到$emp_data_array中
     }
-    echo json_encode($dish_data_array); //将数组进行json序列化后返回
+    //echo json_encode($dish_data_array); //将数组进行json序列化后返回
 }
 function addDish($conn)
 {

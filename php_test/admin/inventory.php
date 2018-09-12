@@ -26,19 +26,21 @@ function getInventory($conn)
     $statement = oci_parse($conn, $sql_query);
     oci_execute($statement);
     while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-        $sql_query = "SELECT GOODS_NAME, GOODS_PRICE, GOODS_TYPE FROM GOODS WHERE GOO_STATUS>0 AND GOODS_ID = $row[1]";
-        $statement2 = oci_parse($conn, $sql_query);
-        oci_execute($statement2);
-        $row2 = oci_fetch_array($statement2, OCI_RETURN_NULLS);
-        $inventory_id = $row[0];
-        $goods_id = $row[1];
-        $quantity = $row[2];
-        $goods_name = $row2[1];
-        $goods_price = $row2[2];
-        $goods_type = $row2[3];
-        //使用一个数组放入一个员工的信息
-        $data_single = array("inventory_id" => $inventory_id, "goods_id" => $goods_id, "quantity" => $quantity, "goods_name" => $goods_name, "goods_price" => $goods_price, "goods_type" => $goods_type);
-        array_push($inv_data_array, $data_single); //将单个员工信息的数组添加到$emp_data_array中
+        // $sql_query = "SELECT GOODS_NAME, GOODS_PRICE, GOODS_TYPE FROM GOODS WHERE GOO_STATUS>0 AND GOODS_ID = $row[1]";
+        // $statement2 = oci_parse($conn, $sql_query);
+        // oci_execute($statement2);
+        // $row2 = oci_fetch_array($statement2, OCI_RETURN_NULLS);
+        // $inventory_id = $row[0];
+        // $goods_id = $row[1];
+        // $quantity = $row[2];
+        // $goods_name = $row2[1];
+        // $goods_price = $row2[2];
+        // $goods_type = $row2[3];
+        // //使用一个数组放入一个员工的信息
+        // $data_single = array("inventory_id" => $inventory_id, "goods_id" => $goods_id, "quantity" => $quantity, "goods_name" => $goods_name, "goods_price" => $goods_price, "goods_type" => $goods_type);
+        // array_push($inv_data_array, $data_single); //将单个员工信息的数组添加到$emp_data_array中
+        echo "<ul><li>$row[0]</li><li>$row[1]</li><li>$row[2]</li><li>$row2[1]</li><li>$row2[2]</li><li>$row2[3]</li></ul>";
+
     }
     echo json_encode($inv_data_array); //将数组进行json序列化后返回
 }
