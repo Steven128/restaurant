@@ -51,10 +51,10 @@ $(document).ready(function() {
         var width = $(window).width();
         if (width > 768) {
             $(".left-bar").css("left", "0");
-            $(".mask").css("display", "none");
+            $(".mask").hide();
         } else {
             $(".left-bar").css("left", "-180px");
-            $(".mask").css("display", "none");
+            $(".mask").hide();
         }
     });
 
@@ -63,16 +63,16 @@ $(document).ready(function() {
         $nav = $(".left-bar");
     $btn.click(function() {
         if ($(".left-bar").css("left") == "-180px") {
-            $mask.css("display", "block");
+            $mask.show();
             $nav.css("left", "0");
         } else {
-            $mask.css("display", "none");
+            $mask.hide();
             $nav.css("left", "-180px");
         }
     });
 
     $mask.click(function() {
-        $mask.css("display", "none");
+        $mask.hide();
         $nav.css("left", "-180px");
     });
 

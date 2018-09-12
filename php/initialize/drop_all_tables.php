@@ -5,7 +5,7 @@ if (!$conn) {
     print htmlentities($e['message']);
     exit;
 } else {
-    echo "连接oracle成功！";
+    // echo "连接oracle成功！";
     // $sql_create_tab = "DROP TABLE finance";
     // $statement = oci_parse($conn, $sql_create_tab);
     // if (oci_execute($statement)) {
@@ -14,13 +14,13 @@ if (!$conn) {
     //     echo $statement;
     // }
 
-    // $sql_create_tab = "DROP TABLE admin";
-    // $statement = oci_parse($conn, $sql_create_tab);
-    // if (oci_execute($statement)) {
-    //     echo "<br>删除管理员表成功！";
-    // } else {
-    //     echo $statement;
-    // }
+    $sql_create_tab = "DROP TABLE admin";
+    $statement = oci_parse($conn, $sql_create_tab);
+    if (oci_execute($statement)) {
+        echo "<br>删除管理员表成功！";
+    } else {
+        echo $statement;
+    }
     // $sql_create_tab = "DROP TABLE presence";
     // $statement = oci_parse($conn, $sql_create_tab);
     // if (oci_execute($statement)) {
@@ -52,13 +52,13 @@ if (!$conn) {
     //     echo $statement;
     // }
 
-    $sql_create_tab = "DROP TABLE purchase";
-    $statement = oci_parse($conn, $sql_create_tab);
-    if (oci_execute($statement)) {
-        echo "<br>删除进货表成功！";
-    } else {
-        echo $statement;
-    }
+    // $sql_create_tab = "DROP TABLE purchase";
+    // $statement = oci_parse($conn, $sql_create_tab);
+    // if (oci_execute($statement)) {
+    //     echo "<br>删除进货表成功！";
+    // } else {
+    //     echo $statement;
+    // }
 
     // $sql_create_tab = "DROP TABLE goods";
     // $statement = oci_parse($conn, $sql_create_tab);

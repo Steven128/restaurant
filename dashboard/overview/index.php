@@ -41,7 +41,7 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
                 </div>
             </div>
             <a class="user-box" href="javascript:void(0);" onclick="showInfoBox()">
-<?php echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "\" /></div><div class=\"user-name\">" . $_SESSION['admin_name'] . "</div>"; ?>
+<?php echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /></div><div class=\"user-name\">" . $_SESSION['admin_name'] . "</div>"; ?>
             </a>
             <div class="info-box">
                 <div class="info-box-block">
@@ -57,7 +57,7 @@ if ($admin_type == 1) {
 } else if ($admin_type == 4) {
     $admin_type = "港库管理";
 }
-echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "\" /></div><div class=\"user-info-wrap\"><div class=\"user-name\">" . $_SESSION['admin_name'] . "</div><div class=\"user-type\">" . $admin_type . "</div></div>";
+echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /></div><div class=\"user-info-wrap\"><div class=\"user-name\">" . $_SESSION['admin_name'] . "</div><div class=\"user-type\">" . $admin_type . "</div></div>";
 ?>
                     <div class="logout-wrap">
                         <a class="logout" href="../../php/check_login.php?request=logout"><i class="iconfont icon-logout"></i>退出登录</a>
@@ -103,7 +103,148 @@ echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['a
                 </aside>
                 <div class="mask "></div>
                 <div class="main-bar row">
-                    <div class="chart-single-box col-xs-12 col-sm-6 col-md-3"></div>
+                    <div class="chart-box col-xs-12 col-md-6 col-lg-4">
+                        <div class="chart-box-inner">
+                            <h4 class="chart-title">员工性别</h4>
+                            <hr>
+                            <canvas id="genderChart"></canvas>
+                            <script>
+                                var ctx = document.getElementById("genderChart");
+                                var myChart = new Chart(ctx, {
+                                    type: 'pie',
+                                    data: {
+<?php
+$sql_query = "SELECT * FROM EMPLOYEE WHERE EMP_STATUS>0 AND gender=1";
+$statement = oci_parse($conn, $sql_query);
+oci_execute($statement);
+$male = 0;
+while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+    $male++;
+}
+
+$sql_query = "SELECT * FROM EMPLOYEE WHERE EMP_STATUS>0 AND gender=0";
+$statement = oci_parse($conn, $sql_query);
+oci_execute($statement);
+$female = 0;
+while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+    $female++;
+}
+
+$sql_query = "SELECT * FROM EMPLOYEE WHERE EMP_STATUS>0 AND gender>1";
+$statement = oci_parse($conn, $sql_query);
+oci_execute($statement);
+$other = 0;
+while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+    $other++;
+}
+echo "labels: [\"男\",\"女\",\"其他\"],datasets: [{label: '性别',data:[$male,$female,$other"
+?>
+                                        ],
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(255, 206, 86, 0.2)',
+                                        ],
+                                        borderColor: [
+                                            'rgba(255,99,132,1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(255, 206, 86, 1)',
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {}
+                            });
+                            </script>
+                        </div>
+                    </div>
+                    <div class="chart-box col-xs-12 col-md-6 col-lg-4">
+                    <div class="chart-box-inner">
+                            <h4 class="chart-title">员工年龄</h4>
+                            <hr>
+                            <canvas id="ageChart"></canvas>
+                            <script>
+                                var ctx = document.getElementById("ageChart");
+                                var myChart = new Chart(ctx, {
+                                    type: 'bar',
+                                    data: {
+<?php
+$sql_query = "SELECT * FROM EMPLOYEE WHERE EMP_STATUS>0 AND age>=20 AND age<30";
+$statement = oci_parse($conn, $sql_query);
+oci_execute($statement);
+$age_below_30 = 0;
+while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+    $age_below_30++;
+}
+
+$sql_query = "SELECT * FROM EMPLOYEE WHERE EMP_STATUS>0 AND age>=30 AND age<40";
+$statement = oci_parse($conn, $sql_query);
+oci_execute($statement);
+$age_below_40 = 0;
+while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+    $age_below_40++;
+}
+
+$sql_query = "SELECT * FROM EMPLOYEE WHERE EMP_STATUS>0 AND age>=40 AND age<50";
+$statement = oci_parse($conn, $sql_query);
+oci_execute($statement);
+$age_below_50 = 0;
+while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+    $age_below_50++;
+}
+
+$sql_query = "SELECT * FROM EMPLOYEE WHERE EMP_STATUS>0 AND age<20 OR age>=50";
+$statement = oci_parse($conn, $sql_query);
+oci_execute($statement);
+$age_other = 0;
+while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+    $age_other++;
+}
+echo "labels: [\"20~30\",\"30~40\",\"40~50\",\"其他\"],datasets: [{label: '年龄',data:[$age_below_30,$age_below_40,$age_below_50,$age_other"
+?>
+                                        ],
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(255, 159, 64, 0.2)',
+                                            'rgba(255, 206, 86, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(255,99,132,1)',
+                                            'rgba(255, 159, 64, 1)',
+                                            'rgba(255, 206, 86, 1)',
+                                            'rgb(54, 162, 235)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        xAxes: [{
+                                            gridLines: {
+                                                offsetGridLines: true
+                                            }
+                                        }],
+                                        yAxes:[{
+                                            ticks:{
+                                                beginAtZero:true
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+                            </script>
+                        </div>
+                    </div>
+                    <div class="chart-box col-xs-12 col-md-6 col-lg-4">
+
+                    </div>
+                    <div class="chart-box col-xs-12 col-md-6 col-lg-4">
+
+                    </div>
+                    <div class="chart-box col-xs-12 col-md-6 col-lg-4">
+
+                    </div>
                     <script>
                         $(document).ready(() => {
                             function changeMainBar(itemName) {

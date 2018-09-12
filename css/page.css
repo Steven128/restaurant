@@ -361,13 +361,13 @@ td.alt {
 
 .box {
     padding: 0;
-    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     background-color: #fff;
 }
 
 .box-full {
     position: absolute;
+    overflow-x: hidden;
     top: 10px;
     bottom: 10px;
     left: 10px;
@@ -458,6 +458,23 @@ th:last-child {
 .table-update-btn i {
     font-size: 24px;
     color: #1296db;
+}
+
+
+/* validate */
+
+input.error {
+    border: 1px solid red;
+}
+
+label.error {
+    text-align: right;
+    color: #f03333;
+    font-weight: 100px;
+}
+
+.checked {
+    border: 1px solid green;
 }
 
 @media (min-width: 768px) {

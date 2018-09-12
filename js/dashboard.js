@@ -12,13 +12,13 @@ $(document).ready(() => {
 })
 
 function showInfoBox() {
-    $(".info-box").css("display", "block");
-    $(".shelter").css("display", "block");
+    $(".info-box").show();
+    $(".shelter").show();
 }
 
 function hideShelter() {
-    $(".info-box").css("display", "none");
-    $(".shelter").css("display", "none");
+    $(".info-box").hide();
+    $(".shelter").hide();
 }
 
 function addRootMgment() {

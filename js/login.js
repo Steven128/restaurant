@@ -5,15 +5,14 @@ $(document).ready(() => {
         url: "../php/check_login.php?request=check",
         dataType: "JSON",
         success: (e) => {
-            console.log(e)
             if (e.message == "online") {
                 if (!getReferer()) {
                     goTo('?x=3&r=' + num + "/");
                 } else {
                     if (getReferer().indexOf("admin") > -1) {
-                        window.location.href = "../admin";
+                        window.location.replace("../admin");
                     } else {
-                        window.location.href = "../dashboard";
+                        window.location.replace("../dashboard");
                     }
                 }
             } else {
@@ -58,7 +57,6 @@ $(document).ready(() => {
                     "password": password,
                 },
                 success: function(e) {
-                    console.log(e);
                     if (e.message == "wrong_password") {
                         window.wxc.xcConfirm("密码输入错误！", window.wxc.xcConfirm.typeEnum.error);
                     } else if (e.message == "admin_not_found") {
@@ -76,16 +74,15 @@ $(document).ready(() => {
                             goTo('?x=3&r=' + num + "/");
                         } else {
                             if (getReferer().indexOf("admin") > -1) {
-                                window.location.href = "../admin";
+                                window.location.replace("../admin");
                             } else {
-                                window.location.href = "../dashboard";
+                                window.location.replace("../dashboard");
                             }
                         }
                     }
                 },
                 error: function(err) {
                     window.wxc.xcConfirm("出错了，稍后再试吧！", window.wxc.xcConfirm.typeEnum.error);
-                    console.log(err);
                 }
             });
         },

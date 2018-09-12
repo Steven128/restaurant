@@ -1,11 +1,10 @@
 [
-    { "admin_id": "adm_def_180905_01", "admin_name": "邱昊然", "admin_passwd": "123456", "admin_type": 1, "create_time": "2018-09-05 10:00:00" },
-    { "admin_id": "adm_def_180905_02", "admin_name": "吴垒", "admin_passwd": "123456", "admin_type": 1, "create_time": "2018-09-05 10:00:00" },
-    { "admin_id": "adm_def_180905_03", "admin_name": "高宏鹏", "admin_passwd": "123456", "admin_type": 1, "create_time": "2018-09-05 10:00:00" },
-    { "admin_id": "adm_def_180905_04", "admin_name": "李贺", "admin_passwd": "123456", "admin_type": 1, "create_time": "2018-09-05 10:00:00" },
-    { "admin_id": "adm_roo_180905_01", "admin_name": "def_root", "admin_passwd": "123456", "admin_type": 1, "create_time": "2018-09-05 10:00:00" },
-    { "admin_id": "adm_com_180905_01", "admin_name": "def_common", "admin_passwd": "123456", "admin_type": 2, "create_time": "2018-09-05 10:00:00" },
-    { "admin_id": "adm_fin_180905_01", "admin_name": "def_finance", "admin_passwd": "123456", "admin_type": 3, "create_time": "2018-09-05 10:00:00" },
-    { "admin_id": "adm_inv_180905_01", "admin_name": "def_inventory", "admin_passwd": "123456", "admin_type": 4, "create_time": "2018-09-05 10:00:00" }
-
+    { "admin_id": "adm_def_180905_01", "admin_name": "邱昊然", "admin_passwd": "123456", "admin_type": 1, "create_time": "2018-09-05 10:00:00", "admin_pic": "../../src/admin_pic/adm_def_180905_01.png" },
+    { "admin_id": "adm_def_180905_02", "admin_name": "吴垒", "admin_passwd": "123456", "admin_type": 1, "create_time": "2018-09-05 10:00:00", "admin_pic": "../../src/admin_pic/adm_def_180905_02.png" },
+    { "admin_id": "adm_def_180905_03", "admin_name": "高宏鹏", "admin_passwd": "123456", "admin_type": 1, "create_time": "2018-09-05 10:00:00", "admin_pic": "../../src/admin_pic/adm_def_180905_03.png" },
+    { "admin_id": "adm_def_180905_04", "admin_name": "李贺", "admin_passwd": "123456", "admin_type": 1, "create_time": "2018-09-05 10:00:00", "admin_pic": "../../src/admin_pic/adm_def_180905_04.png" },
+    { "admin_id": "adm_roo_180905_01", "admin_name": "def_root", "admin_passwd": "123456", "admin_type": 1, "create_time": "2018-09-05 10:00:00", "admin_pic": "../../src/admin_pic/adm_roo_180905_01.png" },
+    { "admin_id": "adm_com_180905_01", "admin_name": "def_common", "admin_passwd": "123456", "admin_type": 2, "create_time": "2018-09-05 10:00:00", "admin_pic": "../../src/admin_pic/adm_com_180905_01.png" },
+    { "admin_id": "adm_fin_180905_01", "admin_name": "def_finance", "admin_passwd": "123456", "admin_type": 3, "create_time": "2018-09-05 10:00:00", "admin_pic": "../../src/admin_pic/adm_fin_180905_01.png" },
+    { "admin_id": "adm_inv_180905_01", "admin_name": "def_inventory", "admin_passwd": "123456", "admin_type": 4, "create_time": "2018-09-05 10:00:00", "admin_pic": "../../src/admin_pic/adm_inv_180905_01.png" }
 ]

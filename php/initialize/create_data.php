@@ -8,8 +8,8 @@ if (!$conn) {
 } else {
     echo "连接oracle成功！";
 
-    // createAdminData($conn);
-    // echo "<br>写入管理员表数据成功";
+    createAdminData($conn);
+    echo "<br>写入管理员表数据成功";
 
     // createEmployeeData($conn, 20);
     // echo "<br>写入员工表数据成功";
@@ -51,10 +51,11 @@ function createAdminData($conn)
         $admin_passwd = md5($admin_passwd);
         $admin_type = $admin_data[$i]['admin_type'];
         $create_time = $admin_data[$i]['create_time'];
+        $admin_pic = $admin_data[$i]['admin_pic'];
         $sql_insert = "INSERT INTO admin" .
             "(admin_id,admin_name,admin_passwd,admin_type,create_time,admin_pic)" .
             "VALUES" .
-            "('$admin_id','$admin_name','$admin_passwd',$admin_type,'$create_time','../../src/user.png')";
+            "('$admin_id','$admin_name','$admin_passwd',$admin_type,'$create_time','$admin_pic')";
         $statement = oci_parse($conn, $sql_insert);
         oci_execute($statement);
     }

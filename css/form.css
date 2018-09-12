@@ -69,7 +69,7 @@
     margin-top: 20px;
     border: 1px solid#ccc;
     border-radius: 3px;
-    height: 300px;
+    height: 250px;
 }
 
 .wrap {
@@ -84,7 +84,7 @@
     background: #fff;
     max-width: 200px;
     border: 0.5px solid black;
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
 .preview-box {

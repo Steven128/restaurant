@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>登录-餐饮店管理系统</title>
     <link type="text/css" rel="stylesheet" href="../css/bootstrap.css" />
+    <link id="page-css" type="text/css" rel="stylesheet" href="../css/page.css" />
     <link id="page-css" type="text/css" rel="stylesheet" href="../css/login.css" />
+    <link type="text/css" rel="stylesheet" href="../css/iconfont.css" />
 
     <script type="text/javascript" src="../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../js/page.js"></script>
@@ -41,17 +43,15 @@
                             </div>
                             <div class="clear"></div>
                         </div>
-                        <div id="online-box" class="section">
-                            <!-- <label>
-                                <input type="checkbox " name="keep-online " value="1 " />&nbsp;7天内免登陆
-                            </label> -->
-                        </div>
-
-
                         <div class="btn-area">
                             <button id="submit" type="submit" class="submit">登录</button>
-                            <div class="joinus-text">忘记密码？<a href="../">点我找回</a></div>
+                            <div class="forget-passwd">忘记密码？<a class="get-passwd-link" href="javascript:void(0);" onclick="forgetPasswd()">点我找回</a></div>
                             <div class="wrap-bar" style="clear: both;"></div>
+                            <script>
+                                function forgetPasswd() {
+                                    window.location.href = "reset_password.html";
+                                }
+                            </script>
                         </div>
                     </div>
 
@@ -65,7 +65,6 @@
         </div>
     </div>
     <script type="text/javascript " src="../js/jquery.validate.min.js "></script>
-
 </body>
 
 </html>

@@ -1,3 +1,29 @@
+.main-bar {
+    left: 50px;
+}
+
+.row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.chart-box,
+.box {
+    position: relative;
+    overflow: auto;
+    background-color: #efefef;
+    padding: 15px;
+    padding-bottom: 0;
+}
+
+.chart-box-inner,
+.box-inner {
+    background-color: #fff;
+    padding: 20px;
+    overflow: auto;
+    min-width: 300px;
+}
+
 .user-box:link {
     position: absolute;
     top: 0;
@@ -107,6 +133,9 @@
 }
 
 @media (min-width: 768px) {
+    .main-bar {
+        left: 180px;
+    }
     .info-box {
         right: 40px;
     }
@@ -123,3 +152,5 @@
         right: 52px;
     }
 }
+
+@media(min-width: 1200px) {}

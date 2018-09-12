@@ -22,3 +22,21 @@ if ($request == "logout") {
         echo json_encode(array("message" => "success logout"));
     }
 }
+if ($request == "getUserInfo") {
+    $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8");
+    $target_id = $_GET['admin_id'];
+    $sql_query = "SELECT admin_id,admin_name,admin_type,admin_pic,create_time FROM admin WHERE adm_status>0";
+        $statement = oci_parse($conn, $sql_query);
+        oci_execute($statement);
+        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) {
+            $admin_id = $row[0];
+            $admin_name = $row[1];
+            $admin_type = $row[2];
+            $admin_pic = $row[3];
+            $create_time = $row[4];
+            if ($admin_id == $target_id) {
+                echo json_encode(array("message" => "success", "admin_id" => $admin_id, "admin_name" => $admin_name, "admin_type" => $admin_type, "admin_pic" => $admin_pic,"create_time"=>$create_time));
+                break;
+            }
+        }
+}

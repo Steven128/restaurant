@@ -1,3 +1,6 @@
+<!-- <?php
+session_start();
+?> -->
 <!DOCTYPE html>
 <html>
 
@@ -9,49 +12,55 @@
     <link type="text/css" rel="stylesheet" href="../../css/iconfont.css" />
     <link type="text/css" rel="stylesheet" href="../../css/page.css" />
     <link type="text/css" rel="stylesheet" href="../../css/dashboard.css" />
-    <link type="text/css" rel="stylesheet" href="../../css/resposive-sidebar.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/responsive-sidebar.css" />
 
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
+    <script type="text/javascript" src="../../js/dashboard.js"></script>
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../js/Chart.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
-
+    <!-- <?php
+if (!isset($_SESSION['admin_id'])) {
+    echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
+}
+?> -->
 </head>
 
 <body>
+    <!-- <?php
+$conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
+?> -->
     <div class="container">
         <header class="head-content">
             <div class="site-branding">
-                <a href="javascript:void(0);" class="avatar-small">
-                    <div class="menu-button">
-                        <i class="iconfont icon-menu"></i>
-                    </div>
-                </a>
                 <div class="site-title">
                     <a herf="../../" rel="home">餐饮店管理系统</a>
                     <h5>主页</h5>
                 </div>
             </div>
             <a class="user-box" href="javascript:void(0);" onclick="showInfoBox()">
-                <div class="user-pic-wrap">
-                    <img class="userPic" src="" />
-                </div>
-                <div class="user-name"></div>
+<!-- <?php echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /></div><div class=\"user-name\">" . $_SESSION['admin_name'] . "</div>"; ?> -->
             </a>
             <div class="info-box">
                 <div class="info-box-block">
                     <div class="info-box-arrow"></div>
-                    <div class="user-pic-wrap">
-                        <img class="userPic" src="" />
-                    </div>
-                    <div class="user-info-wrap">
-                        <div class="user-name"></div>
-                        <div class="user-type"></div>
-                    </div>
+                    <!-- <?php
+$admin_type = $_SESSION['admin_type'];
+if ($admin_type == 1) {
+    $admin_type = "超级管理员";
+} else if ($admin_type == 2) {
+    $admin_type = "管理员";
+} else if ($admin_type == 3) {
+    $admin_type = "财务管理";
+} else if ($admin_type == 4) {
+    $admin_type = "港库管理";
+}
+echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /></div><div class=\"user-info-wrap\"><div class=\"user-name\">" . $_SESSION['admin_name'] . "</div><div class=\"user-type\">" . $admin_type . "</div></div>";
+?> -->
                     <div class="logout-wrap">
-                        <a class="logout" href="javascript:void(0);" onclick="logout()"><i class="iconfont icon-logout"></i>退出登录</a>
+                        <a class="logout" href="../../php/check_login.php?request=logout"><i class="iconfont icon-logout"></i>退出登录</a>
                     </div>
                 </div>
             </div>
@@ -70,7 +79,6 @@
                                         <i class="iconfont icon-right-arrow " style="font-size:12px; "></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu menu-open " style="display: none; "></ul>
                             </li>
                             <li class="treeview">
                                 <a id="menu-userUpdate-item" href="javascript:void(0);">
@@ -80,7 +88,6 @@
                                             <i class="iconfont icon-right-arrow " style="font-size:12px; "></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu" style="display: none; "></ul>
                             </li>
                             <li class="treeview ">
                                 <a id="menu-settings-item" href="javascript:void(0);">
@@ -90,13 +97,83 @@
                                             <i class="iconfont icon-right-arrow " style="font-size:12px; "></i>
                                         </span>
                                 </a>
-                                <ul class="treeview-menu" style="display: none; "></ul>
                             </li>
                         </ul>
                     </section>
                 </aside>
                 <div class="mask "></div>
-                <div class="main-bar ">
+                <div class="main-bar row">
+                    <div class="chart-single-box col-xs-12 col-sm-6 col-lg-4">
+                        <canvas id="genderChart"></canvas>
+                        <script>
+                            // var ctx = document.getElementById("genderChart");
+                            // var myChart = new Chart(ctx, {
+                            //     type: 'pie',
+                            //     data: {
+                            // // <?php
+                            // $sql_query = "SELECT * FROM EMPLOYEE WHERE EMP_STATUS>0 AND gender=1";
+                            // $statement = oci_parse($conn, $sql_query);
+                            // oci_execute($statement);
+                            // $male = 0;
+                            // while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+                            //     $male++;
+                            // }
+
+                            // $sql_query = "SELECT * FROM EMPLOYEE WHERE EMP_STATUS>0 AND gender=0";
+                            // $statement = oci_parse($conn, $sql_query);
+                            // oci_execute($statement);
+                            // $female = 0;
+                            // while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+                            //     $female++;
+                            // }
+
+                            // $sql_query = "SELECT * FROM EMPLOYEE WHERE EMP_STATUS>0 AND gender>1";
+                            // $statement = oci_parse($conn, $sql_query);
+                            // oci_execute($statement);
+                            // $other = 0;
+                            // while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+                            //     $other++;
+                            // }
+                            // echo "labels: [\"男\",\"女\",\"其他\"],datasets: [{label: '性别',data:[$male,$female,$other"
+                            // ?>
+                            //     ],
+                            //         backgroundColor: [
+                            //             'rgba(255, 99, 132, 0.2)',
+                            //             'rgba(54, 162, 235, 0.2)',
+                            //             'rgba(255, 206, 86, 0.2)',
+                            //         ],
+                            //         borderColor: [
+                            //             'rgba(255,99,132,1)',
+                            //             'rgba(54, 162, 235, 1)',
+                            //             'rgba(255, 206, 86, 1)',
+                            //         ],
+                            //         borderWidth: 1
+                            //     }]
+                            // },
+                            // options: {
+                            //     scales: {
+                            //         yAxes: [{
+                            //             ticks: {
+                            //                 beginAtZero:true
+                            //             }
+                            //         }]
+                            //     }
+                            // }
+                            // });
+                        </script>
+                    </div>
+                    <div class="chart-single-box col-xs-12 col-sm-6 col-lg-4">
+
+                    </div>
+                    <div class="chart-single-box col-xs-12 col-sm-6 col-lg-4">
+
+                    </div>
+                    <div class="chart-single-box col-xs-12 col-sm-6 col-lg-4">
+
+                    </div>
+                    <div class="chart-single-box col-xs-12 col-sm-6 col-lg-4">
+
+                    </div>
                     <script>
                         $(document).ready(() => {
                             function changeMainBar(itemName) {
