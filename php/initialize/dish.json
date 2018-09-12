@@ -1,6 +1,6 @@
 [
-    { "dish_name": "罐焖牛肉", "dish_price": 56, "dish_type": 1 },
-    { "dish_name": "红鱼籽", "dish_price": 30, "dish_type": 1 },
+    { "dish_name": "超级塔可双人餐", "dish_price": 64.50, "dish_type": 1 },
+    { "dish_name": "超级塔可单人餐", "dish_price": 37.00, "dish_type": 1 },
     { "dish_name": "红菜汤", "dish_price": 28, "dish_type": 1 },
     { "dish_name": "金枪鱼沙拉", "dish_price": 28, "dish_type": 1 },
     { "dish_name": "基辅鸡卷", "dish_price": 48, "dish_type": 1 },

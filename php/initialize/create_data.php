@@ -8,29 +8,29 @@ if (!$conn) {
 } else {
     echo "连接oracle成功！";
 
-/*     createAdminData($conn);
-    echo "<br>写入管理员表数据成功";
+    // createAdminData($conn);
+    // echo "<br>写入管理员表数据成功";
 
-    createEmployeeData($conn, 20);
-    echo "<br>写入员工表数据成功";
+    // createEmployeeData($conn, 20);
+    // echo "<br>写入员工表数据成功";
 
-    createPresenceData($conn);
-    echo "<br>写入出勤表数据成功";
+    // createPresenceData($conn);
+    // echo "<br>写入出勤表数据成功";
 
-    createGoodsData($conn);
-    echo "<br>写入原料表数据成功";
+    // createGoodsData($conn);
+    // echo "<br>写入原料表数据成功";
 
-    createTableData($conn, 20);
-    echo "<br>写入餐桌表数据成功";
+    // createTableData($conn, 20);
+    // echo "<br>写入餐桌表数据成功";
 
-    createFinanceData($conn, 100);
-    echo "<br>写入财务表数据成功"; */
+    // createFinanceData($conn, 100);
+    // echo "<br>写入财务表数据成功";
 
-    createPurchaseData($conn);
-    echo "<br>写入进货表数据成功";
+    // createPurchaseData($conn);
+    // echo "<br>写入进货表数据成功";
 
-    createInventoryData($conn);
-    echo "<br>写入库存表数据成功";
+    // createInventoryData($conn);
+    // echo "<br>写入库存表数据成功"; 
 
     oci_close($conn);
 
@@ -188,18 +188,19 @@ function createInventoryData($conn)
     $statement1=oci_parse($conn,$query);
     oci_execute($statement1);
     $count=0;
-    while($row=oci_fetch_array($statement1,OCI_RETURN_NULL)){
+    while($row=oci_fetch_array($statement1,OCI_RETURN_NULLS)){
         $count++;
         $goods_id = $row[0];
         $_inventory_id=$count < 10 ? "00000$count" : ($count < 100 ? "0000$count" : ($count < 1000 ? "000$count" : "00$count"));
         $inventory_id="inv_$_inventory_id";
-        $quantity=mt_rand(50,500);
+        $quantity=mt_rand(50,300);
         //写入库存信息
         $sql_insert="INSERT INto inventory".
             "(inventory_id,goods_id,quantity)".
             "VALUES".
             "('$inventory_id','$goods_id',$quantity)";
         $statement2=oci_parse($conn,$sql_insert);
+        // echo "$inventory_id   $goods_id    $quantity<br>";
         oci_execute($statement2);
     }
     oci_free_statement($statement1);
@@ -209,6 +210,7 @@ function createInventoryData($conn)
 
 function createPurchaseData($conn)//id根据进货单创建时间,31种,进货单号由发票号码12+8组成
 {
+    $date=date("Y-m-d",time());
     $begin_time=strtotime("2010-01-01 07:00:00");
     $end_time=strtotime("$date 20:00:00");
     $sql1="SELECT goods_id FROM goods";
@@ -220,18 +222,20 @@ function createPurchaseData($conn)//id根据进货单创建时间,31种,进货�
     }
     for($i=0;$i<500;$i++){
         $rand=mt_rand($begin_time,$end_time);
-        $pur_id=date("ymd_his",strtotime($rand));
-        $_date=date("ymd",strototime($pur_id));
+        $pur_id=date("Ymd_His",$rand);
+        $_date=substr($pur_id,0,8);
         $pur_id="pur_$pur_id";
-        $rand1=mt_rand(10000000000000000000,300000000000000000000);
+        $rand1=strval(mt_rand(10000,30000)).strval(mt_rand(10000,99999)).strval(mt_rand(10000,99999)).strval(mt_rand(10000,99999));
         $rand2=mt_rand(0,30);
         $rand3=mt_rand(30,100);
         $goods_id=$goods_array[$rand2];
         $sql_insert="INSERT INTO purchase".
-            "(purchase_id,purchase_number,goods_id,purchase_quantity,purchase_date".
+            "(purchase_id,purchase_number,goods_id,purchase_quantity,purchase_date)".
             "VALUES".
             "('$pur_id','$rand1','$goods_id',$rand3,'$_date')";
         $statement1=oci_parse($conn,$sql_insert);
+        // echo "$pur_id   $_date   $rand1<br>";
+        oci_execute($statement1);
     }
     oci_free_statement($statement);
     oci_free_statement($statement1);
@@ -239,6 +243,7 @@ function createPurchaseData($conn)//id根据进货单创建时间,31种,进货�
 
 function createLossData($conn)
 {
+    
 
 }
 
