@@ -406,12 +406,12 @@
                                 options.outputSize = (0, _extend2.default)({}, defaultOptions.outputSize);
                             }
 
-                            if (options.outputType === 'jpg') {
-                                options.outputType = 'image/jpeg';
-                            } else {
-                                // 如果不是 jpg，则全部按 png 来对待
-                                options.outputType = 'image/png';
-                            }
+                            // if (options.outputType === 'jpg') {
+                            //     options.outputType = 'image/jpeg';
+                            // } else {
+                            // 如果不是 jpg，则全部按 png 来对待
+                            options.outputType = 'image/png';
+                            // }
 
                             // 变量初始化
                             if ((0, _isArray2.default)(options.adaptive)) {

@@ -115,7 +115,6 @@ $(document).ready(() => {
 
     $("#uploadpic").click(() => {
         var userPicData = picData;
-        console.log(userPicData)
         if (userPicData.indexOf("data:") > -1) {
             $.ajax({
                 type: "POST",
@@ -127,7 +126,6 @@ $(document).ready(() => {
                     "PicData": userPicData
                 },
                 success: (e) => {
-                    console.log(e)
                     if (e.message == "success") {
                         window.wxc.xcConfirm("修改成功！", window.wxc.xcConfirm.typeEnum.success, {
                             onOk: function() {
@@ -139,9 +137,7 @@ $(document).ready(() => {
                         });
                     }
                 },
-                error: (err) => {
-                    console.log(err.responseText)
-                }
+                error: (err) => {}
             })
         }
     })

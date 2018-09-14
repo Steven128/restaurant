@@ -17,7 +17,6 @@ if ($request == "upload_admin_pic") {
             mkdir($new_file, 0700);
         }
         $new_file = $new_file . $admin_id . ".{$type}";
-
         if (file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64_image_content)))) {
             echo json_encode(array("message" => "success"));
         }
