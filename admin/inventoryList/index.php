@@ -199,7 +199,6 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                             <th>数量</th>
                                             <th>价格</th>
                                             <th>类型</th>
-                                            <th>操作</th>
                                         </tr>
                                     </thead>
                                     <tbody class="inventoryListTableBody">
@@ -231,7 +230,7 @@ while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
     } else if ($row2[2] == 3) {
         $row2[2] = "生鲜";
     }
-    echo "<tr><td>$count</td><td>$row2[0]</td><td>$row[2]</td><td>$row2[1]</td><td>$row2[2]</td><td><a class=\"table-update-btn update-inventory\" href = \"javascript:void(0);\" onclick=\"update_inventory('" . $row[0] . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
+    echo "<tr><td>$count</td><td>$row2[0]</td><td>$row[2]</td><td>$row2[1]</td><td>$row2[2]</td></tr>";
 }
 ?>
                                         <script>

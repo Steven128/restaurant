@@ -1,0 +1,60 @@
+.box {
+    margin-bottom: 15px;
+}
+
+.employee-info-box {
+    padding: 10px 30px;
+}
+
+.employee-info-box .employee-pic-wrap {
+    width: 104px;
+    height: 104px;
+    border: 1px solid #888;
+    display: inline-block
+}
+
+.employee-info-box .employeePic {
+    width: 100px;
+    height: 100px;
+}
+
+.employee-info-box .employee-info-wrap {
+    display: inline-block;
+    position: relative;
+    top: -30px;
+    left: 20px;
+}
+
+.employee-info-box .employee-name {
+    font-size: 24px;
+    font-weight: 500;
+    display: block;
+    position: static;
+}
+
+.employee-info-box .employee-type {
+    padding: 0 10px;
+}
+
+.box-title {
+    position: static;
+    border-bottom: 1px solid #efefef;
+    padding: 15px;
+    padding-left: 20px;
+}
+
+.box-arrow:link {
+    position: relative;
+    float: right;
+    top: -35px;
+    color: #000;
+    text-decoration: none;
+}
+
+.pic-outer-wrap {
+    max-width: 500px;
+}
+
+.btn-area {
+    padding-top: 30px;
+}

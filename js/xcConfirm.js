@@ -1,15 +1,3 @@
-/*
- * 使用说明:
- * window.wxc.Pop(popHtml, [type], [options])
- * popHtml:html字符串
- * type:window.wxc.xcConfirm.typeEnum集合中的元素
- * options:扩展对象
- * 用法:
- * 1. window.wxc.xcConfirm("我是弹窗<span>lalala</span>");
- * 2. window.wxc.xcConfirm("成功","success");
- * 3. window.wxc.xcConfirm("请输入","input",{onOk:function(){}})
- * 4. window.wxc.xcConfirm("自定义",{title:"自定义"})
- */
 (function($) {
     window.wxc = window.wxc || {};
     window.wxc.xcConfirm = function(popHtml, type, options) {

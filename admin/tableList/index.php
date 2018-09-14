@@ -198,7 +198,8 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                             <th>餐桌自定义编号</th>
                                             <th>规定人数</th>
                                             <th>餐桌状态</th>
-                                            <th>操作</th>
+                                            <th>修改</th>
+                                            <th>删除</th>
                                         </tr>
                                     </thead>
                                     <tbody class="tableListTableBody">
@@ -224,7 +225,7 @@ while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
         $row[3] = "有人";
     }
     $row[0]=substr($row[0],9,12);
-    echo "<tr><td>$row[0]</td><td>$row[1]</td><td>$row[2]</td><td>$row[3]</td><td><a class=\"table-update-btn update-table\" href = \"javascript:void(0);\" onclick=\"update_table('" . $row[0] . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
+    echo "<tr><td>$row[0]</td><td>$row[1]</td><td>$row[2]</td><td>$row[3]</td><td><a class=\"table-update-btn update-table\" href = \"javascript:void(0);\" onclick=\"update_table('" . $row[0] . "')\"><i class=\"iconfont icon-update\"></i></a></td><td><a class=\"table-delete-btn delete-table\" href = \"javascript:void(0);\" onclick=\"delete_table('" . $row[0] . "')\"><i class=\"iconfont icon-delete\"></i></a></td></tr>";
 }
 
 ?>
