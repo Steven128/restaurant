@@ -22,6 +22,7 @@ header {
     height: 52px;
     background-color: #303a4d;
     color: #fff;
+    z-index: 10;
 }
 
 .site-branding {
@@ -155,6 +156,7 @@ footer {
     left: 0;
     right: 0;
     background-color: #303a4d;
+    z-index: 10;
 }
 
 .copyright {

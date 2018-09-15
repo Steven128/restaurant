@@ -17,7 +17,6 @@ if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //å¦‚æ
     }
 }
 
-
 function addDish($conn)
 {
     $sql_query = "SELECT COUNT(DISH_ID) FROM DISH";

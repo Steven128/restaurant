@@ -32,8 +32,8 @@ if (!$conn) {
     createInventoryData($conn);
     echo "<br>写入库存表数据成功"; 
 
-    // createLossData($conn);
-    // echo"<br>写入损失表数据成功";
+    createLossData($conn);
+    echo"<br>写入损失表数据成功";
 
     createDishData($conn);
     echo"<br>写入菜品表数据成功";

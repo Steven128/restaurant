@@ -73,35 +73,35 @@ echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['a
                         <ul class="sidebar-menu">
                             <li class="treeview overview-treeview active">
                                 <a id="menu-overview-item" href="javascript:void(0);">
-                                    <i class="iconfont icon-overview "></i>
+                                    <i class="iconfont icon-overview"></i>
                                     <span>总览</span>
-                                    <span class="dash-pull-right ">
-                                        <i class="iconfont icon-right-arrow " style="font-size:12px; "></i>
+                                    <span class="dash-pull-right">
+                                        <i class="iconfont icon-right-arrow " style="font-size:12px;"></i>
                                     </span>
                                 </a>
                             </li>
                             <li class="treeview">
                                 <a id="menu-userUpdate-item" href="javascript:void(0);">
-                                    <i class="iconfont icon-user "></i>
+                                    <i class="iconfont icon-user"></i>
                                     <span>个人信息</span>
-                                    <span class="dash-pull-right ">
-                                            <i class="iconfont icon-right-arrow " style="font-size:12px; "></i>
+                                    <span class="dash-pull-right">
+                                            <i class="iconfont icon-right-arrow " style="font-size:12px;"></i>
                                     </span>
                                 </a>
                             </li>
-                            <li class="treeview ">
+                            <li class="treeview">
                                 <a id="menu-settings-item" href="javascript:void(0);">
-                                    <i class="iconfont icon-settings "></i>
+                                    <i class="iconfont icon-settings"></i>
                                     <span>设置</span>
-                                    <span class="dash-pull-right ">
-                                            <i class="iconfont icon-right-arrow " style="font-size:12px; "></i>
+                                    <span class="dash-pull-right">
+                                            <i class="iconfont icon-right-arrow " style="font-size:12px;"></i>
                                         </span>
                                 </a>
                             </li>
                         </ul>
                     </section>
                 </aside>
-                <div class="mask "></div>
+                <div class="mask"></div>
                 <div class="main-bar row">
                     <div class="chart-box col-xs-12 col-md-6 col-lg-4">
                         <div class="chart-box-inner">
@@ -268,9 +268,9 @@ echo "labels: [\"20~30\",\"30~40\",\"40~50\",\"其他\"],datasets: [{label: '年
                 </div>
             </div>
         </div>
-        <footer class="foot-content ">
-            <div class="copyright ">
-                <h5 class="copyright-text ">&copy;&nbsp;餐饮店管理系统&nbsp;&nbsp;2018</h5>
+        <footer class="foot-content">
+            <div class="copyright">
+                <h5 class="copyright-text">&copy;&nbsp;餐饮店管理系统&nbsp;&nbsp;2018</h5>
             </div>
         </footer>
     </div>
