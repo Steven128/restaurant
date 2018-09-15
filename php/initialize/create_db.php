@@ -34,36 +34,36 @@ if (!$conn) {
         echo $statement;
     }
 
-    // $sql_create_tab = "CREATE TABLE admin(" .
-    //     "admin_id VARCHAR(20) NOT NULL PRIMARY KEY," .
-    //     "admin_name VARCHAR(20) NOT NULL," .
-    //     "admin_passwd VARCHAR(32) NOT NULL," .
-    //     "admin_type NUMBER(1) NOT NULL," .
-    //     "create_time VARCHAR(25) NOT NULL," .
-    //     "admin_pic VARCHAR(100) NOT NULL," .
-    //     "adm_status NUMBER(1) DEFAULT 1 NOT NULL)";
-    // $statement = oci_parse($conn, $sql_create_tab);
-    // if (oci_execute($statement)) {
-    //     echo "<br>创建管理员表成功！";
-    //     $statement = oci_parse($conn, "COMMENT ON TABLE admin IS '管理员表'");
-    //     oci_execute($statement);
-    //     $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_id IS '管理员ID'");
-    //     oci_execute($statement);
-    //     $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_name IS '姓名'");
-    //     oci_execute($statement);
-    //     $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_passwd IS '密码'");
-    //     oci_execute($statement);
-    //     $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_type IS '管理员类型，1为超级管理员，2为普通管理员，3为财务管理员，4为仓库管理员'");
-    //     oci_execute($statement);
-    //     $statement = oci_parse($conn, "COMMENT ON COLUMN admin.create_time IS '账号创建时间'");
-    //     oci_execute($statement);
-    //     $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_pic IS '管理员头像'");
-    //     oci_execute($statement);
-    //     $statement = oci_parse($conn, "COMMENT ON COLUMN admin.adm_status IS '账号状态，1有效 0无效'");
-    //     oci_execute($statement);
-    // } else {
-    //     echo $statement;
-    // }
+    $sql_create_tab = "CREATE TABLE admin(" .
+        "admin_id VARCHAR(20) NOT NULL PRIMARY KEY," .
+        "admin_name VARCHAR(20) NOT NULL," .
+        "admin_passwd VARCHAR(32) NOT NULL," .
+        "admin_type NUMBER(1) NOT NULL," .
+        "create_time VARCHAR(25) NOT NULL," .
+        "admin_pic VARCHAR(100) NOT NULL," .
+        "adm_status NUMBER(1) DEFAULT 1 NOT NULL)";
+    $statement = oci_parse($conn, $sql_create_tab);
+    if (oci_execute($statement)) {
+        echo "<br>创建管理员表成功！";
+        $statement = oci_parse($conn, "COMMENT ON TABLE admin IS '管理员表'");
+        oci_execute($statement);
+        $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_id IS '管理员ID'");
+        oci_execute($statement);
+        $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_name IS '姓名'");
+        oci_execute($statement);
+        $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_passwd IS '密码'");
+        oci_execute($statement);
+        $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_type IS '管理员类型，1为超级管理员，2为普通管理员，3为财务管理员，4为仓库管理员'");
+        oci_execute($statement);
+        $statement = oci_parse($conn, "COMMENT ON COLUMN admin.create_time IS '账号创建时间'");
+        oci_execute($statement);
+        $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_pic IS '管理员头像'");
+        oci_execute($statement);
+        $statement = oci_parse($conn, "COMMENT ON COLUMN admin.adm_status IS '账号状态，1有效 0无效'");
+        oci_execute($statement);
+    } else {
+        echo $statement;
+    }
 
     $sql_create_tab = "CREATE TABLE employee(" .
         "employee_id VARCHAR(20) NOT NULL PRIMARY KEY," .

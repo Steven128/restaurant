@@ -11,13 +11,13 @@ session_start(); //开启php_session
     <link type="text/css" rel="stylesheet" href="../../css/bootstrap.css" />
     <link type="text/css" rel="stylesheet" href="../../css/iconfont.css" />
     <link type="text/css" rel="stylesheet" href="../../css/page.css" />
-    <link type="text/css" rel="stylesheet" href="../../css/admin.css" />
     <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
     <link type="text/css" rel="stylesheet" href="../../css/form.css" />
 
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
+    
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
 <?php

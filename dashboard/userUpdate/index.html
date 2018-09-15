@@ -16,6 +16,7 @@
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
+
     <script type="text/javascript" src="../../js/dashboard.js"></script>
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../js/Chart.js"></script>
@@ -120,35 +121,35 @@
                         <ul class="sidebar-menu">
                             <li class="treeview overview-treeview">
                                 <a id="menu-overview-item" href="javascript:void(0);">
-                                    <i class="iconfont icon-overview "></i>
+                                    <i class="iconfont icon-overview"></i>
                                     <span>总览</span>
-                                    <span class="dash-pull-right ">
-                                        <i class="iconfont icon-right-arrow " style="font-size:12px; "></i>
+                                    <span class="dash-pull-right">
+                                        <i class="iconfont icon-right-arrow " style="font-size:12px;"></i>
                                     </span>
                                 </a>
                             </li>
                             <li class="treeview active">
                                 <a id="menu-userUpdate-item" href="javascript:void(0);">
-                                    <i class="iconfont icon-user "></i>
+                                    <i class="iconfont icon-user"></i>
                                     <span>个人信息</span>
-                                    <span class="dash-pull-right ">
-                                            <i class="iconfont icon-right-arrow " style="font-size:12px; "></i>
+                                    <span class="dash-pull-right">
+                                            <i class="iconfont icon-right-arrow " style="font-size:12px;"></i>
                                     </span>
                                 </a>
                             </li>
-                            <li class="treeview ">
+                            <li class="treeview">
                                 <a id="menu-settings-item" href="javascript:void(0);">
-                                    <i class="iconfont icon-settings "></i>
+                                    <i class="iconfont icon-settings"></i>
                                     <span>设置</span>
-                                    <span class="dash-pull-right ">
-                                            <i class="iconfont icon-right-arrow " style="font-size:12px; "></i>
+                                    <span class="dash-pull-right">
+                                            <i class="iconfont icon-right-arrow " style="font-size:12px;"></i>
                                         </span>
                                 </a>
                             </li>
                         </ul>
                     </section>
                 </aside>
-                <div class="mask "></div>
+                <div class="mask"></div>
                 <div class="main-bar row">
                     <div class="box col-xs-12">
                         <div class="box-inner">
@@ -240,9 +241,11 @@
             ok: '#clipBtn',
             done: function(dataURL) {
                 picData = dataURL;
+            },
+            fail: function(err) {
+                window.wxc.xcConfirm(err, window.wxc.xcConfirm.typeEnum.error);
             }
         });
-        pc.load('img/mm.jpg');
 
         function start() {
             $(".clip-wrapper").fadeIn();
@@ -256,7 +259,7 @@
             $(".clip-wrapper").fadeOut();
         }
     </script>
-    <script type="text/javascript" src="../../js/user.add.validate.js"></script>
+    <script type="text/javascript" src="../../js/user.update.validate.js"></script>
 </body>
 
 

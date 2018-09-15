@@ -11,7 +11,6 @@ session_start();
     <link type="text/css" rel="stylesheet" href="../../css/bootstrap.css" />
     <link type="text/css" rel="stylesheet" href="../../css/iconfont.css" />
     <link type="text/css" rel="stylesheet" href="../../css/page.css" />
-    <link type="text/css" rel="stylesheet" href="../../css/admin.css" />
     <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
     <link type="text/css" rel="stylesheet" href="../../css/tablesorter.css" />
 
@@ -19,6 +18,7 @@ session_start();
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
+    
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../js/jquery.tablesorter.min.js"></script>
     <script type="text/javascript" src="../../js/jquery.filtertable.js"></script>

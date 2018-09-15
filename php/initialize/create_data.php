@@ -8,8 +8,8 @@ if (!$conn) {
 } else {
     echo "连接oracle成功！";
 
-    // createAdminData($conn);
-    // echo "<br>写入管理员表数据成功";
+    createAdminData($conn);
+    echo "<br>写入管理员表数据成功";
 
     createEmployeeData($conn, 20);
     echo "<br>写入员工表数据成功";
@@ -32,8 +32,8 @@ if (!$conn) {
     createInventoryData($conn);
     echo "<br>写入库存表数据成功"; 
 
-    // createLossData($conn);
-    // echo"<br>写入损失表数据成功";
+    createLossData($conn);
+    echo"<br>写入损失表数据成功";
 
     createDishData($conn);
     echo"<br>写入菜品表数据成功";
@@ -106,7 +106,7 @@ function createEmployeeData($conn, $quantity)
         $sql_insert = "INSERT INTO employee" .
             "(employee_id,name,gender,working_year,age,salary,phone_num,employee_type,employ_time,employee_pic)" .
             "VALUES" .
-            "('$employee_id','$name',$gender,$working_year,$age,$salary,'$phone_num',$employee_type,'$employ_time','../../src/user.png')";
+            "('$employee_id','$name',$gender,$working_year,$age,$salary,'$phone_num',$employee_type,'$employ_time','../../src/employee_pic/default.png')";
         $statement = oci_parse($conn, $sql_insert);
         if (!oci_execute($statement)) {
             die($statement);
