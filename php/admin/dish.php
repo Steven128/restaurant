@@ -33,6 +33,7 @@ if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //å¦‚æ
         }
     }
 }
+<<<<<<< HEAD:php/admin/dish.php
 function islegalid($str)
 {
     if (preg_match('/^[_0-9a-z]{5,17}$/i', $str)) {
@@ -41,6 +42,8 @@ function islegalid($str)
         return false;
     }
 }
+=======
+>>>>>>> 0eb805dd8a2c85c4e1465ba7d415cbedc2b32787:php_test/admin/dish.php
 
 function addDish($conn)
 {

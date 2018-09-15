@@ -19,6 +19,7 @@ session_start();
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
+
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../js/jquery.tablesorter.min.js"></script>
     <script type="text/javascript" src="../../js/jquery.filtertable.js"></script>
@@ -221,15 +222,16 @@ while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
     } else if ($row[4] == 2) {
         $row[4] = "热菜";
     } else if ($row[4] == 3) {
-        $ro2[4] = "河海湖鲜";
+        $row[4] = "河海湖鲜";
     } else if ($row[4] == 4) {
-        $ro2[4] = "色拉";
+        $row[4] = "色拉";
     } else if ($row[4] == 5) {
-        $ro2[4] = "酒水饮料";
+        $row[4] = "酒水饮料";
     } else if ($row[4] == 6) {
-        $ro2[4] = "其他";
+        $row[4] = "其他";
     }
-    echo "<tr><td>$count</td><td>$row[4]</td><td>$row[2]</td><td>$row[1]</td><td>$row[3]</td><td><a class=\"table-update-btn update-dish\" href = \"javascript:void(0);\" onclick=\"update_dish('" . $row[0] . "')\"><i class=\"iconfont icon-update\"></i></a></td><td><a class=\"table-delete-btn delete-dish\" href = \"javascript:void(0);\" onclick=\"delete_dish('" . $row[0] . "')\"><i class=\"iconfont icon-delete\"></i></a></td></tr>";
+    $row[3] = $row[3] . ".00";
+    echo "<tr><td>$count</td><td>$row[4]</td><td><img src=\"$row[2]\" /></td><td>$row[1]</td><td>$row[3]</td><td><a class=\"table-update-btn update-dish\" href = \"javascript:void(0);\" onclick=\"update_dish('" . $row[0] . "')\"><i class=\"iconfont icon-update\"></i></a></td><td><a class=\"table-delete-btn delete-dish\" href = \"javascript:void(0);\" onclick=\"delete_dish('" . $row[0] . "')\"><i class=\"iconfont icon-delete\"></i></a></td></tr>";
 }
 ?>
                                         <script>
