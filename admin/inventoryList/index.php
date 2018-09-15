@@ -191,7 +191,58 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-
+                            <table class="inventoryListTable tablesorter result">
+                                    <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>原料</th>
+                                            <th>数量</th>
+                                            <th>价格</th>
+                                            <th>类型</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="inventoryListTableBody">
+<?php
+$sql_query = "SELECT INVENTORY_ID,GOODS_ID,QUANTITY FROM INVENTORY WHERE INV_STATUS>0";
+$statement = oci_parse($conn, $sql_query);
+oci_execute($statement);
+$count = 0;
+while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+    $count++;
+    $sql_query2 = "SELECT GOODS_NAME, GOODS_PRICE, GOODS_TYPE FROM GOODS WHERE GOO_STATUS>0 AND GOODS_ID = '$row[1]'";
+    $statement2 = oci_parse($conn, $sql_query2);
+    oci_execute($statement2);
+    $row2 = oci_fetch_array($statement2, OCI_RETURN_NULLS);
+    // $inventory_id = $row[0];
+    // $goods_id = $row[1];
+    // $quantity = $row[2];
+    // $goods_name = $row2[1];
+    // $goods_price = $row2[2];
+    // $goods_type = $row2[3];
+    // //使用一个数组放入一个员工的信息
+    // $data_single = array("inventory_id" => $inventory_id, "goods_id" => $goods_id, "quantity" => $quantity, "goods_name" => $goods_name, "goods_price" => $goods_price, "goods_type" => $goods_type);
+    // array_push($inv_data_array, $data_single); //将单个员工信息的数组添加到$emp_data_array中
+    //echo "<tr><td>$row[1]</td></td>";
+    if ($row2[2] == 1) {
+        $row2[2] = "粮食";
+    } else if ($row2[2] == 2) {
+        $row2[2] = "调料";
+    } else if ($row2[2] == 3) {
+        $row2[2] = "生鲜";
+    }
+    echo "<tr><td>$count</td><td>$row2[0]</td><td>$row[2]</td><td>$row2[1]</td><td>$row2[2]</td></tr>";
+}
+?>
+                                        <script>
+                                        $(() => {
+                                            $(".inventoryListTable").tablesorter();
+                                        });
+                                        $(() => {
+                                            $(".inventoryListTable").filterTable();
+                                        });
+                                        </script>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

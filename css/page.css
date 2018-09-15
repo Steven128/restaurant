@@ -10,6 +10,14 @@ body,
     overflow: hidden;
 }
 
+#back_to_top {
+    position: fixed;
+    bottom: 60px;
+    right: 20px;
+    display: none;
+    cursor: pointer;
+}
+
 header {
     height: 52px;
     background-color: #303a4d;
@@ -203,7 +211,7 @@ footer {
     width: 100%;
     height: 100%;
     background-color: #303a4d;
-    opacity: 0.85;
+    opacity: 0.5;
     z-index: 2147000000;
 }
 
@@ -211,14 +219,14 @@ footer {
     position: fixed;
     left: 50%;
     top: 50%;
-    background-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.95);
     z-index: 2147000001;
     width: 300px;
     height: 200px;
     margin-left: -150px;
     margin-top: -120px;
-    border-radius: 5px;
-    font-weight: bold;
+    border-radius: 2px;
+    font-weight: 500;
     color: #535e66;
 }
 
@@ -226,14 +234,14 @@ footer {
     height: 50px;
     line-height: 30px;
     padding: 14px 30px;
-    border-bottom: solid 1px #eef0f1;
+    border-bottom: solid 1px #ffffff;
 }
 
 .xcConfirm .popBox .ttBox .tt {
     font-size: 18px;
     display: block;
     float: left;
-    height: 30px;
+    height: 20px;
     position: relative;
 }
 
@@ -243,13 +251,13 @@ footer {
     width: 12px;
     height: 12px;
     position: absolute;
-    top: 22px;
-    right: 30px;
+    top: 20px;
+    right: 28px;
     background: url(../src/alert/icons.png) -48px -96px no-repeat;
 }
 
 .xcConfirm .popBox .txtBox {
-    margin: 20px 30px;
+    margin: 20px 35px;
     height: 70px;
     overflow: hidden;
 }
@@ -266,7 +274,7 @@ footer {
 
 .xcConfirm .popBox .txtBox p {
     height: 84px;
-    margin-top: 16px;
+    margin-top: 10px;
     line-height: 26px;
     overflow-x: hidden;
     overflow-y: auto;
@@ -289,8 +297,8 @@ footer {
 }
 
 .xcConfirm .popBox .btnGroup .sgBtn {
-    margin-top: 5px;
-    margin-right: 10px;
+    margin-top: 2px;
+    margin-right: 8px;
 }
 
 .xcConfirm .popBox .sgBtn {
@@ -299,10 +307,10 @@ footer {
     float: left;
     width: 95px;
     height: 30px;
-    line-height: 35px;
+    line-height: 30px;
     text-align: center;
     color: #FFFFFF;
-    border-radius: 5px;
+    border-radius: 1px;
 }
 
 .xcConfirm .popBox .sgBtn.ok {
@@ -449,7 +457,8 @@ th:last-child {
     border-right: 0;
 }
 
-.table-update-btn:link {
+.table-update-btn:link,
+.table-delete-btn:link {
     background-color: transparent;
     border: 0;
     text-decoration: none;
@@ -458,6 +467,11 @@ th:last-child {
 .table-update-btn i {
     font-size: 24px;
     color: #1296db;
+}
+
+.table-delete-btn i {
+    font-size: 24px;
+    color: #9c0c0c;
 }
 
 

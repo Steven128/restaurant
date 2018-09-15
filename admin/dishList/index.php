@@ -191,7 +191,57 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-
+                            <table class="dishListTable tablesorter result">
+                                    <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>类型</th>
+                                            <th>图片</th>
+                                            <th>名称</th>
+                                            <th>价格</th>
+                                            <th>修改</th>
+                                            <th>删除</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="dishListTableBody">
+<?php
+$sql_query = "SELECT DISH_ID,DISH_NAME,DISH_PIC,DISH_PRICE,DISH_TYPE FROM DISH WHERE DIS_STATUS>0 ORDER BY DISH_TYPE,DISH_NAME DESC";
+$statement = oci_parse($conn, $sql_query);
+oci_execute($statement);
+$count = 0;
+while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+    $count++;
+    // $dish_id = $row[0];
+    // $dish_name = $row[1];
+    // $dish_pic = $row[2];
+    // $dish_price = $row[3];
+    // $dish_type = $row[4];
+    if ($row[4] == 1) {
+        $row[4] = "特色菜";
+    } else if ($row[4] == 2) {
+        $row[4] = "热菜";
+    } else if ($row[4] == 3) {
+        $ro2[4] = "河海湖鲜";
+    } else if ($row[4] == 4) {
+        $ro2[4] = "色拉";
+    } else if ($row[4] == 5) {
+        $ro2[4] = "酒水饮料";
+    } else if ($row[4] == 6) {
+        $ro2[4] = "其他";
+    }
+    echo "<tr><td>$count</td><td>$row[4]</td><td>$row[2]</td><td>$row[1]</td><td>$row[3]</td><td><a class=\"table-update-btn update-dish\" href = \"javascript:void(0);\" onclick=\"update_dish('" . $row[0] . "')\"><i class=\"iconfont icon-update\"></i></a></td><td><a class=\"table-delete-btn delete-dish\" href = \"javascript:void(0);\" onclick=\"delete_dish('" . $row[0] . "')\"><i class=\"iconfont icon-delete\"></i></a></td></tr>";
+}
+?>
+                                        <script>
+                                        $(() => {
+                                            $(".dishListTable").tablesorter();
+                                        });
+                                        $(() => {
+                                            $(".dishListTable").filterTable();
+                                        });
+                                        </script>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
