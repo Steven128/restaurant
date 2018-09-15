@@ -191,7 +191,47 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-
+                                <table class="financeListTable tablesorter result">
+                                    <thead>
+                                        <tr>
+                                        <th>序号</th>
+                                            <th>日期</th>
+                                            <th>营业额</th>
+                                            <th>花销</th>
+                                            <th>盈利</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="financeListTableBody">
+<?php
+$sql_query = "SELECT FINANCE_ID,FIN_DATE,MONTH,TURNOVER,COST,PROFIT FROM FINANCE ORDER BY FIN_DATE,MONTH DESC";
+$statement = oci_parse($conn, $sql_query);
+oci_execute($statement);
+$count = 0;
+while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+    $count++;
+    // $finance_id = $row[0];
+    // $fin_date = $row[1];
+    // $month = $row[2];
+    // $turnover = $row[3];
+    // $cost = $row[4];
+    // $profit = $row[5];
+    // //使用一个数组放入一个员工的信息
+    // $data_single = array("finance_id" => $finance_id, "fin_date" => $fin_date, "month" => $month, "turnover" => $turnover, "cost" => $cost, "profit" => $profit);
+    // array_push($fin_data_array, $data_single);//将单个员工信息的数组添加到$emp_data_array中
+    echo "<tr><td>$count</td><td>$row[1]</td><td>$row[3]</td><td>$row[4]</td><td>$row[5]</td><td><a class=\"table-update-btn update-finance\" href = \"javascript:void(0);\" onclick=\"update_finance('" . $row[0] . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
+}
+?>
+                                        <script>
+                                        $(() => {
+                                            $(".financeListTable").tablesorter();
+                                        });
+                                        $(() => {
+                                            $(".financeListTable").filterTable();
+                                        });
+                                        </script>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

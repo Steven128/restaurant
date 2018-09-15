@@ -23,6 +23,71 @@ session_start();
     <script type="text/javascript" src="../../js/jquery.tablesorter.min.js"></script>
     <script type="text/javascript" src="../../js/jquery.filtertable.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <style>
+        .display-box-hide,.display-box {
+                width: 0px;
+                height: 0px;
+                position: absolute;
+                left: 50px !important;
+                top: 0px;
+                border: 0px solid #666;
+                border-radius: 5px;
+                background-color: rgba(255,255,255,0.85);
+                z-index: 10;
+            }
+
+            .display-box:before {
+                position: absolute;
+                content: "";
+                width: 0;
+                height: 0;
+                left: 30px;
+                top: -29px;
+                border-bottom: 30px solid #666;
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+            }
+
+            .display-box:after {
+                position: absolute;
+                content: "";
+                width: 0;
+                height: 0;
+                left: 30px;
+                top: -26px;
+                border-bottom: 30px solid #fff;
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+            }
+
+            .display-box-hide:before {
+                display: "none";
+                content: "";
+            }
+            
+            .display-box-hide:after {
+                display: "none";
+                content: "";
+            }
+        @media(min-width:768px) {
+            .display-box:before {
+                left: -30px;
+                top: 23px;
+                border-right: 30px solid #666;
+                border-top: 10px solid transparent;
+                border-bottom: 10px solid transparent;
+            }
+
+            .display-box:after {
+                left: -27px;
+                top: 23px;
+                border-right: 30px solid #fff;
+                border-top: 10px solid transparent;
+                border-bottom: 10px solid transparent;
+            }
+        }
+    </style>
 <?php
 if (!isset($_SESSION['admin_id'])) {
     echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
@@ -204,7 +269,8 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                             <th>手机号</th>
                                             <th>类别</th>
                                             <th>聘用日期</th>
-                                            <th>操作</th>
+                                            <th>修改</th>
+                                            <th>删除</th>
                                         </tr>
                                     </thead>
                                     <tbody class="employeeListTableBody">
@@ -253,7 +319,7 @@ while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
         $employee_type = "其他";
     }
     //
-    echo "<tr><td>$count</td><td><a href = \"javascript:void(0);\" onclick =\"display_employee('" . $employee_id . "')\">$name</td><td>$gender</td><td>$working_year</td><td>$age</td><td>$salary</td><td>$phone_num</td><td>$employee_type</td><td>$employ_time</td><td><a class=\"table-update-btn update-employee\" href = \"javascript:void(0);\" onclick=\"update_employee('" . $employee_id . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
+    echo "<tr><td>$count</td><td><a href = \"javascript:void(0);\" onclick =\"display_employee(this,'" . $employee_id . "')\">$name</td><td>$gender</td><td>$working_year</td><td>$age</td><td>$salary</td><td>$phone_num</td><td>$employee_type</td><td>$employ_time</td><td><a class=\"table-update-btn update-employee\" href = \"javascript:void(0);\" onclick=\"update_employee('" . $employee_id . "')\"><i class=\"iconfont icon-update\"></i></a></td><td><a class=\"table-delete-btn delete-employee\" href = \"javascript:void(0);\" onclick=\"delete_employee('" . $employee_id . "')\"><i class=\"iconfont icon-delete\"></i></a></td></tr>";
 }
 ?>
                                         <script>
@@ -265,7 +331,11 @@ while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
                                         });
                                         </script>
                                     </tbody>
+                                    <!-- <div class="display-box-hide"></div> -->
                                 </table>
+                                <div id="back_to_top">
+                                    <i class="iconfont icon-up-arrow"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -292,6 +362,7 @@ while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
                             changeMainBar("addTable");
                         });
                     </script>
+                    <div class="shelter" onclick="hideBox()"></div>
                 </div>
             </div>
         </div>

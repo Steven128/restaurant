@@ -1,0 +1,95 @@
+.clip-wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: none;
+    z-index: 11;
+    text-align: center;
+}
+
+.clipArea-head {
+    background-color: #303a4d;
+    padding: 10px;
+    height: 45px;
+}
+
+#clipArea {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 45px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+}
+
+#cancelBtn,
+#clipBtn {
+    background-color: transparent;
+    border: 0;
+    font-size: 16px;
+    width: 50px;
+    padding: 5px;
+    outline: none;
+}
+
+#cancelBtn {
+    float: left;
+    color: #eeeeee;
+}
+
+#clipBtn {
+    float: right;
+    color: #1296db;
+}
+
+.a-upload {
+    padding: 4px 10px;
+    line-height: 20px;
+    position: relative;
+    cursor: pointer;
+    color: #303a4d;
+    background: #fafafa;
+    border: 1px solid #72819c;
+    border-radius: 2px;
+    overflow: hidden;
+    display: inline-block;
+    bottom: -6px;
+    width: 200px;
+}
+
+.a-upload input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    cursor: pointer
+}
+
+.a-upload:link {
+    text-decoration: none
+}
+
+.a-upload:hover {
+    color: #444;
+    background: #eee;
+    border-color: #ccc;
+}
+
+#view {
+    margin: 0 auto;
+    width: 200px;
+    height: 200px;
+    border: 1px solid #888;
+    background-color: #f5f5f5;
+}
+
+.clip-tip {
+    color: #fff;
+    position: relative;
+    z-index: 12;
+}

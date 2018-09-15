@@ -114,7 +114,7 @@ $(document).ready(() => {
     //     }, "");
 
     $("#uploadpic").click(() => {
-        var userPicData = $("#previewResult")[0].src;
+        var userPicData = picData;
         if (userPicData.indexOf("data:") > -1) {
             $.ajax({
                 type: "POST",
@@ -126,7 +126,6 @@ $(document).ready(() => {
                     "PicData": userPicData
                 },
                 success: (e) => {
-                    console.log(e)
                     if (e.message == "success") {
                         window.wxc.xcConfirm("修改成功！", window.wxc.xcConfirm.typeEnum.success, {
                             onOk: function() {
@@ -138,22 +137,15 @@ $(document).ready(() => {
                         });
                     }
                 },
-                error: (err) => {
-                    console.log(err.responseText)
-                }
+                error: (err) => {}
             })
         }
     })
 });
 
 function showBox(obj) {
-    $(obj).parents(".box").find(".box-inner-hide").slideDown(200);
-    $(obj).hide();
-    $(obj).siblings(".box-up-arrow").show();
-}
-
-function hideBox(obj) {
-    $(obj).parents(".box").find(".box-inner-hide").slideUp(200);
-    $(obj).hide();
-    $(obj).siblings(".box-down-arrow").show();
+    var $box = $(obj).siblings(".box-inner-hide");
+    $box.slideToggle(200);
+    $(obj).find(".box-down-arrow").fadeToggle(100);
+    $(obj).find(".box-up-arrow").fadeToggle(100);
 }
