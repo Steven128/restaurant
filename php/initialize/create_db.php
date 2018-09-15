@@ -34,36 +34,36 @@ if (!$conn) {
     //     echo $statement;
     // }
 
-    $sql_create_tab = "CREATE TABLE admin(" .
-        "admin_id VARCHAR(20) NOT NULL PRIMARY KEY," .
-        "admin_name VARCHAR(20) NOT NULL," .
-        "admin_passwd VARCHAR(32) NOT NULL," .
-        "admin_type NUMBER(1) NOT NULL," .
-        "create_time VARCHAR(25) NOT NULL," .
-        "admin_pic VARCHAR(100) NOT NULL," .
-        "adm_status NUMBER(1) DEFAULT 1 NOT NULL)";
-    $statement = oci_parse($conn, $sql_create_tab);
-    if (oci_execute($statement)) {
-        echo "<br>创建管理员表成功！";
-        $statement = oci_parse($conn, "COMMENT ON TABLE admin IS '管理员表'");
-        oci_execute($statement);
-        $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_id IS '管理员ID'");
-        oci_execute($statement);
-        $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_name IS '姓名'");
-        oci_execute($statement);
-        $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_passwd IS '密码'");
-        oci_execute($statement);
-        $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_type IS '管理员类型，1为超级管理员，2为普通管理员，3为财务管理员，4为仓库管理员'");
-        oci_execute($statement);
-        $statement = oci_parse($conn, "COMMENT ON COLUMN admin.create_time IS '账号创建时间'");
-        oci_execute($statement);
-        $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_pic IS '管理员头像'");
-        oci_execute($statement);
-        $statement = oci_parse($conn, "COMMENT ON COLUMN admin.adm_status IS '账号状态，1有效 0无效'");
-        oci_execute($statement);
-    } else {
-        echo $statement;
-    }
+    // $sql_create_tab = "CREATE TABLE admin(" .
+    //     "admin_id VARCHAR(20) NOT NULL PRIMARY KEY," .
+    //     "admin_name VARCHAR(20) NOT NULL," .
+    //     "admin_passwd VARCHAR(32) NOT NULL," .
+    //     "admin_type NUMBER(1) NOT NULL," .
+    //     "create_time VARCHAR(25) NOT NULL," .
+    //     "admin_pic VARCHAR(100) NOT NULL," .
+    //     "adm_status NUMBER(1) DEFAULT 1 NOT NULL)";
+    // $statement = oci_parse($conn, $sql_create_tab);
+    // if (oci_execute($statement)) {
+    //     echo "<br>创建管理员表成功！";
+    //     $statement = oci_parse($conn, "COMMENT ON TABLE admin IS '管理员表'");
+    //     oci_execute($statement);
+    //     $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_id IS '管理员ID'");
+    //     oci_execute($statement);
+    //     $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_name IS '姓名'");
+    //     oci_execute($statement);
+    //     $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_passwd IS '密码'");
+    //     oci_execute($statement);
+    //     $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_type IS '管理员类型，1为超级管理员，2为普通管理员，3为财务管理员，4为仓库管理员'");
+    //     oci_execute($statement);
+    //     $statement = oci_parse($conn, "COMMENT ON COLUMN admin.create_time IS '账号创建时间'");
+    //     oci_execute($statement);
+    //     $statement = oci_parse($conn, "COMMENT ON COLUMN admin.admin_pic IS '管理员头像'");
+    //     oci_execute($statement);
+    //     $statement = oci_parse($conn, "COMMENT ON COLUMN admin.adm_status IS '账号状态，1有效 0无效'");
+    //     oci_execute($statement);
+    // } else {
+    //     echo $statement;
+    // }
 
     // $sql_create_tab = "CREATE TABLE employee(" .
     //     "employee_id VARCHAR(20) NOT NULL PRIMARY KEY," .
@@ -240,34 +240,34 @@ if (!$conn) {
     //     echo $statement;
     // }
 
-    // $sql_create_tab = "CREATE TABLE dish(" .
-    //     "dish_id VARCHAR(20) NOT NULL PRIMARY KEY," .
-    //     "dish_name VARCHAR(20) NOT NULL," .
-    //     "dish_pic VARCHAR(100) NOT NULL," .
-    //     "dish_price FLOAT NOT NULL," .
-    //     "dish_type NUMBER(1) NOT NULL," .
-    //     "dis_status NUMBER(1) NOT NULL)";
-    // $statement = oci_parse($conn, $sql_create_tab);
-    // if (oci_execute($statement)) {
-    //     echo "<br>创建菜品表成功！";
-    //     $statement = oci_parse($conn, "COMMENT ON TABLE dish IS '菜品表'");
-    //     oci_execute($statement);
-    //     $statement = oci_parse($conn, "COMMENT ON COLUMN dish.dish_id IS '菜品ID'");
-    //     oci_execute($statement);
-    //     $statement = oci_parse($conn, "COMMENT ON COLUMN dish.dish_name IS '菜名'");
-    //     oci_execute($statement);
-    //     $statement = oci_parse($conn, "COMMENT ON COLUMN dish.dish_pic IS '图片'");
-    //     oci_execute($statement);
-    //     $statement = oci_parse($conn, "COMMENT ON COLUMN dish.dish_price IS '售价'");
-    //     oci_execute($statement);
-    //     $statement = oci_parse($conn, "COMMENT ON COLUMN dish.dish_type IS '菜品类别，1为特色菜，2为热菜，3为河海湖鲜，4为色拉，5为酒水饮料，6为其他'");
-    //     oci_execute($statement);
-    //     $statement = oci_parse($conn, "COMMENT ON COLUMN dish.dis_status IS '状态，0无效 1有效'");
-    //     oci_execute($statement);
+    $sql_create_tab = "CREATE TABLE dish(" .
+        "dish_id VARCHAR(20) NOT NULL PRIMARY KEY," .
+        "dish_name VARCHAR(100) NOT NULL," .
+        "dish_pic VARCHAR(100) NOT NULL," .
+        "dish_price FLOAT NOT NULL," .
+        "dish_type NUMBER(1) NOT NULL," .
+        "dis_status NUMBER(1) DEFAULT 1 NOT NULL)";
+    $statement = oci_parse($conn, $sql_create_tab);
+    if (oci_execute($statement)) {
+        echo "<br>创建菜品表成功！";
+        $statement = oci_parse($conn, "COMMENT ON TABLE dish IS '菜品表'");
+        oci_execute($statement);
+        $statement = oci_parse($conn, "COMMENT ON COLUMN dish.dish_id IS '菜品ID'");
+        oci_execute($statement);
+        $statement = oci_parse($conn, "COMMENT ON COLUMN dish.dish_name IS '菜名'");
+        oci_execute($statement);
+        $statement = oci_parse($conn, "COMMENT ON COLUMN dish.dish_pic IS '图片'");
+        oci_execute($statement);
+        $statement = oci_parse($conn, "COMMENT ON COLUMN dish.dish_price IS '售价'");
+        oci_execute($statement);
+        $statement = oci_parse($conn, "COMMENT ON COLUMN dish.dish_type IS '菜品类别，1为早餐，2为主食，3为甜品和饮料，4为小食'");
+        oci_execute($statement);
+        $statement = oci_parse($conn, "COMMENT ON COLUMN dish.dis_status IS '状态，0无效 1有效'");
+        oci_execute($statement);
 
-    // } else {
-    //     echo $statement;
-    // }
+    } else {
+        echo $statement;
+    }
 
     // $sql_create_tab = "CREATE TABLE res_table(" .
     //     "table_id VARCHAR(20) NOT NULL PRIMARY KEY," .

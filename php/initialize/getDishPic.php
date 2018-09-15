@@ -1,5 +1,5 @@
 <?php
-$url = "http://www.5ikfc.com/kfc/menu/Meal";
+$url = "http://m.5ikfc.com/menu/kfc/snack/";
 
 $HTTP_REQUEST_HEADER = array(
     "Host: www.5ikfc.com",
@@ -41,7 +41,7 @@ foreach ($matches[0] as $value) {
     $dl = getImage($picurl,'dish_pic/',$savename);
     if($dl['error'] == 0) {
         $savename = "../../src/dish_pic/".$savename;
-        $dish_single = array("dish_pic"=> $savename,"dish_name"=>$picname,"dish_type"=>2,"dish_price"=>"");
+        $dish_single = array("dish_pic"=> $savename,"dish_name"=>$picname,"dish_type"=>4,"dish_price"=>"");
         array_push($dish,$dish_single);
     }
 }

@@ -8,8 +8,8 @@ if (!$conn) {
 } else {
     echo "连接oracle成功！";
 
-    createAdminData($conn);
-    echo "<br>写入管理员表数据成功";
+    // createAdminData($conn);
+    // echo "<br>写入管理员表数据成功";
 
     // createEmployeeData($conn, 20);
     // echo "<br>写入员工表数据成功";
@@ -31,6 +31,12 @@ if (!$conn) {
 
     // createInventoryData($conn);
     // echo "<br>写入库存表数据成功"; 
+
+    // createLossData($conn);
+    // echo"<br>写入损失表数据成功";
+
+    createDishData($conn);
+    echo"<br>写入菜品表数据成功";
 
     oci_close($conn);
 
@@ -242,15 +248,58 @@ function createPurchaseData($conn)//id根据进货单创建时间,31种,进货�
     oci_free_statement($statement1);
 }
 
-function createLossData($conn)
+function createLossData($conn)//id根据los_日期
 {
-    
-
+    $date=date("Y-m-d",time());
+    $sql1="SELECT goods_id FROM goods";
+    $statement=oci_parse($conn,$sql1);
+    $res=oci_execute($statement);
+    $goods_array=array();
+    while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) {
+        $goods_array[]=$row[0];
+    }
+    $begin_time=strtotime("2010-01-10 07:00:00");
+    $end_time=strtotime("$date 20:00:00");
+    for($i=0;$i<80;$i++){
+        $rand=mt_rand($begin_time,$end_time);
+        $rand_time=date("Y-m-d H:i:s",$rand);
+        $id_time=date("Ymd",$rand);
+        $rand2=mt_rand(0,30);
+        $loss_id="los_$id_time";
+        $loss_quantity=rand(5,30);
+        $goods_id=$goods_array[$rand2];
+        $sql_insert="INSERT INTO loss".
+            "(loss_id,goods_id,quantity,loss_time)".
+            "VALUES".
+            "('$loss_id','$goods_id',$loss_quantity,'$rand_time')";
+        // echo "$goods_id    $rand_time    $loss_id<br>";
+        $statement2=oci_parse($conn,$sql_insert);
+        oci_execute($statement2);
+    }
+    oci_free_statement($statement);
+    oci_free_statement($statement2);
 }
 
-function createDishData($conn)
+function createDishData($conn)//type=2为主食，type=1为早餐，type=3为甜品和饮料，type=4为小食
 {
-
+    $dish_list=file_get_contents("dish.json");
+    $dish_data=json_decode($dish_list,true);
+    for($i=0;$i<sizeof($dish_data,0);$i++){
+        $dish_pic=$dish_data[$i]['dish_pic'];
+        $dish_name=$dish_data[$i]['dish_name'];
+        $dish_type=$dish_data[$i]['dish_type'];
+        $dish_price=$dish_data[$i]['dish_price'];
+        $param = $i < 10 ? "000$i" : ($i < 100 ? "00$i" : "0$i");
+        $dish_id="dis_$dish_type"."_$param";
+        $sql_insert = "INSERT INTO dish" .
+            "(dish_id,dish_name,dish_pic,dish_price,dish_type)" .
+            "VALUES" .
+            "('$dish_id','$dish_name','$dish_pic',$dish_price,$dish_type)";
+        // echo "$dish_id   $dish_name   $dish_pic   $dish_price   $dish_type <br>";
+        $statement=oci_parse($conn,$sql_insert);
+        oci_execute($statement);
+    }
+    oci_free_statement($statement);
 }
 
 function createTableData($conn, $quantity)
@@ -291,7 +340,7 @@ function createTableData($conn, $quantity)
 
 function createOrderData($conn)//订单编号用Ord_餐桌_下单时间
 {
-
+    
 }
 
 function createPreOrderData($conn)
