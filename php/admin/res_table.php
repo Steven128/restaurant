@@ -20,7 +20,7 @@ if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如�
         $e = oci_error();
         die(json_encode($e));
     } else { //连接成功
-        // $sql_query = "SELECT ADMIN_TYPE FROM EMPLOYEE WHERE ADMIN_ID = '$admin_id'";
+        // $sql_query = "SELECT ADMIN_TYPE FROM SCOTT.EMPLOYEE WHERE ADMIN_ID = '$admin_id'";
         // $statement = oci_parse($conn, $sql_query);
         // $admin_type = oci_execute($statement);
         // if ($admin_type != 1 and $admin_type != 2) {
@@ -44,7 +44,7 @@ function islegalid($str)
 }
 function addTable($conn)
 {
-    $sql_query = "SELECT COUNT(TABLE_ID) FROM RES_TABLE";
+    $sql_query = "SELECT COUNT(TABLE_ID) FROM SCOTT.RES_TABLE";
     $statement = oci_parse($conn, $sql_query);
     $sum = oci_execute($statement);
     $str = strval($sum);

@@ -20,7 +20,7 @@ if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如�
         $e = oci_error();
         die(json_encode($e));
     } else { //连接成功
-        // $sql_query = "SELECT ADMIN_TYPE FROM EMPLOYEE WHERE ADMIN_ID = '$admin_id'";
+        // $sql_query = "SELECT ADMIN_TYPE FROM SCOTT.EMPLOYEE WHERE ADMIN_ID = '$admin_id'";
         // $statement = oci_parse($conn, $sql_query);
         // $admin_type = oci_execute($statement);
         // if ($admin_type != 1 and $admin_type != 4) {
@@ -51,7 +51,7 @@ function islegalnum($str)
 function purchase($conn)
 {
     if (islegalid($_POST['goods_id']) and islegalnum($_POST['purchase_quantity'])) {
-        $sql_query = "SELECT COUNT(PURCHASE_ID) FROM PURCHASE";
+        $sql_query = "SELECT COUNT(PURCHASE_ID) FROM SCOTT.PURCHASE";
         $statement = oci_parse($conn, $sql_query);
         $sum = oci_execute($statement);
         $str = strval($sum);

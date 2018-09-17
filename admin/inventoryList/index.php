@@ -203,13 +203,13 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                     </thead>
                                     <tbody class="inventoryListTableBody">
 <?php
-$sql_query = "SELECT INVENTORY_ID,GOODS_ID,QUANTITY FROM INVENTORY WHERE INV_STATUS>0";
+$sql_query = "SELECT INVENTORY_ID,GOODS_ID,QUANTITY FROM SCOTT.INVENTORY WHERE INV_STATUS>0";
 $statement = oci_parse($conn, $sql_query);
 oci_execute($statement);
 $count = 0;
 while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
     $count++;
-    $sql_query2 = "SELECT GOODS_NAME, GOODS_PRICE, GOODS_TYPE FROM GOODS WHERE GOO_STATUS>0 AND GOODS_ID = '$row[1]'";
+    $sql_query2 = "SELECT GOODS_NAME, GOODS_PRICE, GOODS_TYPE FROM SCOTT.GOODS WHERE GOO_STATUS>0 AND GOODS_ID = '$row[1]'";
     $statement2 = oci_parse($conn, $sql_query2);
     oci_execute($statement2);
     $row2 = oci_fetch_array($statement2, OCI_RETURN_NULLS);

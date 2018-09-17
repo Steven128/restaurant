@@ -3,6 +3,7 @@
         var $this = $(this);
         var inputArr = $this.find("input:text");
         var data = [];
+        var data_onChange = [{ "employee_id": "employee_id" }];
         for (var i = 0; i < inputArr.length; i++) {
             var itemName = $(inputArr[i]).attr('name');
             var itemId = $(inputArr[i]).attr('id');
@@ -27,10 +28,14 @@
                 $item.change(() => {
                     var newVal = $("#" + item.id).val();
                     if (newVal != item.value) {
-                        if ($item.siblings(".update-form-changed").length == 0)
+                        if ($item.siblings(".update-form-changed").length == 0) {
                             $item.after("<i class=\"iconfont icon-checked update-form-changed\"></i>");
+                            $item.siblings(".update-form-changed").fadeIn(1000);
+                        }
                     } else
-                        $item.siblings(".update-form-changed").remove();
+                        $item.siblings(".update-form-changed").fadeOut(1000, () => {
+                            $item.siblings(".update-form-changed").remove();
+                        });
                 })
             } else if (item.type == "radio") {
                 var $item = $("input:radio[name=" + item.name + "]");
@@ -40,21 +45,27 @@
                     if (newVal != item.value) {
                         if ($radioItem.parents(".form-group").find(".update-form-changed").length == 0) {
                             $radioItem.parents(".form-group").append("<i class=\"iconfont icon-checked update-form-changed\"></i>");
+                            $radioItem.parent().siblings(".update-form-changed").fadeIn(1000);
                         }
                     } else
-                        $radioItem.parents(".form-group").find(".update-form-changed").remove();
+                        $radioItem.parents(".form-group").find(".update-form-changed").fadeOut(1000, () => {
+                            $radioItem.parents(".form-group").find(".update-form-changed").remove();
+                        });
                 })
             } else if (item.type == "select") {
                 var $item = $("select[name=" + item.name + "]");
                 $item.change(() => {
-                    var $selectItem = $("select[name=" + item.name + "] option:selected")
+                    var $selectItem = $("select[name=" + item.name + "] option:selected");
                     var newVal = $selectItem.val();
                     if (newVal != item.value) {
                         if ($selectItem.parents(".form-group").find(".update-form-changed").length == 0) {
                             $selectItem.parents(".form-group").append("<i class=\"iconfont icon-checked update-form-changed\"></i>");
+                            $selectItem.parents(".form-group").find(".update-form-changed").fadeIn(1000);
                         }
                     } else
-                        $selectItem.parents(".form-group").find(".update-form-changed").remove();
+                        $selectItem.parents(".form-group").find(".update-form-changed").fadeOut(1000, () => {
+                            $selectItem.parents(".form-group").find(".update-form-changed").remove();
+                        })
                 })
             }
         })

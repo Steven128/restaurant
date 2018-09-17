@@ -69,9 +69,9 @@ $(document).ready(() => {
                     $(".employee-type").html(data.employee_type);
                     $(".emp-gender").html("性别：" + data.gender);
                     $(".emp-age").html("年龄：" + data.age);
-                    $(".emp-working-year").html("工龄：" + data.working_year);
-                    $(".emp-salary").html("工资：" + data.salary);
-                    $(".emp-time").html("聘用日期：" + data.employ_time);
+                    $(".emp-working-year").html("工龄：" + data.working_year + " 年");
+                    $(".emp-salary").html("工资：" + data.salary + " 元");
+                    $(".emp-time").html("聘用日期：" + data.employ_time.substring(0, 4) + " 年 " + data.employ_time.substring(5, 7) + " 月 " + data.employ_time.substring(8, 10) + " 日 ");
                     $(".emp-phone").html("手机号：" + data.phone_num);
                     var html = "<div class=\"subform\"><div class=\"form-group\"><div class=\"section_title\">姓名</div><input id=\"name\" type=\"text\" class=\"input-text form-control\" name=\"name\" placeholder=\"请输入姓名\" value=\"" + data.name + "\" maxlength=15 /></div><div class=\"form-group\"><div class=\"section_title\">性别</div>";
                     if (data.gender == "男") {
@@ -152,6 +152,7 @@ $(document).ready(() => {
             }
         },
         submitHandler: function(form) { //通过之后回调
+            var employee_id = data.employee_id;
             var name = $("#name").val();
             var gender = $("input[name='gender']:checked").val();
             var age = $("#age").val();
@@ -164,17 +165,30 @@ $(document).ready(() => {
                 url: "../../../php/admin/admin.update.php",
                 dataType: "JSON",
                 data: {
-                    "request": "update_employee",
+                    "request": "updateEmployee",
                     "admin_id": admin_id,
+                    "employee_id": employee_id,
                     "name": name,
                     "gender": gender,
                     "age": age,
                     "salary": salary,
                     "phone_num": phone_num,
-                    "employee_type": employee_type,
+                    "employee_type": employee_type
                 },
                 success: (e) => {
                     console.log(e)
+                    if (e.message == "success") {
+                        window.wxc.xcConfirm("修改成功！", window.wxc.xcConfirm.typeEnum.success, {
+                            onOk: function() {
+                                window.location.reload();
+                            },
+                            onClose: function() {
+                                window.location.reload();
+                            }
+                        });
+                    } else {
+                        window.wxc.xcConfirm("网络开小差啦~", window.wxc.xcConfirm.typeEnum.error);
+                    }
                 },
                 error: (err) => {
                     console.log(err)
