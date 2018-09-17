@@ -338,9 +338,17 @@ function createTableData($conn, $quantity)
     oci_free_statement($statement);
 }
 
-function createOrderData($conn)//订单编号用Ord_餐桌_下单时间
+function createOrderData($conn,$quantity)//订单编号用Ord_餐桌_下单时间
 {
-    
+    $data=data("Y-m-d",time());
+    $sql_select="select COUNT(table_id) from res_table";
+    $statement1=oci_parse($conn,$sql_select);
+    $count=oci_execute($statement1);
+    $begin_time=strtotime("2010-01-01 07:00:00");
+    $end_time=strtotime("$data 23:59:59");
+    for($i;$i<$quantity;$i++){
+        
+    }
 }
 
 function createPreOrderData($conn)
