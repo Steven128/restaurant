@@ -31,7 +31,7 @@ $(document).ready(() => {
     function getEmployeeInfo(employee_id) {
         $.ajax({
             type: "GET",
-            url: "../../../php/admin/admin.update.php?request=getEmployeeInfo&employee_id=" + employee_id + "&admin_id=" + getUserInfo().admin_id,
+            url: "../../../php/admin/employee.php?request=getEmployeeInfo&employee_id=" + employee_id + "&admin_id=" + getUserInfo().admin_id,
             dataType: "JSON",
             success: (e) => {
                 console.log(e);
@@ -64,7 +64,9 @@ $(document).ready(() => {
                     } else if (data.employee_type == 8) {
                         data.employee_type = "其他";
                     }
+
                     $(".employeePic").attr("src", "../" + data.employee_pic);
+                    //$(".employeePic").attr("src", "../../../src/employee_pic/default.png");
                     $(".employee-name").html(data.name);
                     $(".employee-type").html(data.employee_type);
                     $(".emp-gender").html("性别：" + data.gender);
@@ -151,7 +153,7 @@ $(document).ready(() => {
                 phone: "请输入正确的手机号码"
             }
         },
-        submitHandler: function(form) { //通过之后回调
+        submitHandler: function (form) { //通过之后回调
             var employee_id = data.employee_id;
             var name = $("#name").val();
             var gender = $("input[name='gender']:checked").val();
@@ -162,7 +164,7 @@ $(document).ready(() => {
             var admin_id = getUserInfo().admin_id;
             $.ajax({
                 type: "POST",
-                url: "../../../php/admin/admin.update.php",
+                url: "../../../php/admin/employee.php",
                 dataType: "JSON",
                 data: {
                     "request": "updateEmployee",
@@ -179,10 +181,10 @@ $(document).ready(() => {
                     console.log(e)
                     if (e.message == "success") {
                         window.wxc.xcConfirm("修改成功！", window.wxc.xcConfirm.typeEnum.success, {
-                            onOk: function() {
+                            onOk: function () {
                                 window.location.reload();
                             },
-                            onClose: function() {
+                            onClose: function () {
                                 window.location.reload();
                             }
                         });
@@ -196,12 +198,12 @@ $(document).ready(() => {
             })
         }
     });
-    $.validator.addMethod("chinese", function(value, element) {
+    $.validator.addMethod("chinese", function (value, element) {
         var chinese = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
         return this.optional(element) || (chinese.test(value));
     }, "");
 
-    $.validator.addMethod("phone", function(value, element) {
+    $.validator.addMethod("phone", function (value, element) {
         var phone = /^1[34578]\d{9}$/;
         return this.optional(element) || (phone.test(value));
     }, "");

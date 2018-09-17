@@ -82,7 +82,7 @@ $(document).ready(() => {
             var admin_id = getUserInfo().admin_id;
             $.ajax({
                 type: "POST",
-                url: "../../php/admin/admin.add.php",
+                url: "../../php/admin/employee.php",
                 dataType: "JSON",
                 data: {
                     "request": "add_employee",
