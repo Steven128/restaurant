@@ -42,7 +42,7 @@ $(document).ready(() => {
                 digits: true,
                 rangelength: [3, 5]
             },
-            phone: {
+            phone_num: {
                 required: true,
                 phone: true
             }
@@ -63,7 +63,7 @@ $(document).ready(() => {
                 digits: "请输入正确的工资",
                 rangelength: "请输入正确的工资",
             },
-            phone: {
+            phone_num: {
                 required: "请输入手机号码",
                 phone: "请输入正确的手机号码"
             }

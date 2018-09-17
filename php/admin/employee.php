@@ -1,4 +1,15 @@
 <?php
+$ref = $_SERVER['REFERER'];
+if ($ref == "") {
+    echo "不允许从地址栏访问";
+    exit();
+} else {
+    $url = parse_url($ref);
+    if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost") {
+        echo "no";
+        exit();
+    }
+}
 session_start(); //开启php_session
 $admin_id = $_GET['admin_id']; //获取admin_id
 if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如果已设置session且session对应用户为当前访问用户
@@ -9,6 +20,13 @@ if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如�
         $e = oci_error();
         die(json_encode($e));
     } else { //连接成功
+        // $sql_query = "SELECT ADMIN_TYPE FROM ADMIN WHERE ADMIN_ID = '$admin_id'";
+        // $statement = oci_parse($conn, $sql_query);
+        // $admin_type = oci_execute($statement);
+        // if ($admin_type != 1) {
+        //     exit();
+        // }
+
         if ($request == "addEmployee") {
             echo addEmployee($conn);
         } else if ($request == "deleteEmployee") {
@@ -17,7 +35,14 @@ if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如�
 
     }
 }
-
+function islegalid($str)
+{
+    if (preg_match('/^[_0-9a-z]{5,17}$/i', $str)) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 function addEmployee($conn)
 {
@@ -35,7 +60,7 @@ function addEmployee($conn)
 
     $statement = oci_parse($conn, $sql_query);
     if (oci_execute($statement)) {
-        echo json_encode(array("message" => "false"));
+        echo json_encode(array("message" => "true"));
     } else {
         echo json_encode(array("message" => "false"));
     }
@@ -43,10 +68,14 @@ function addEmployee($conn)
 }
 function deleteEmployee($conn)
 {
-    $sql_query = "UPDATE EMPLOYEE SET EMP_STATUS = 0 WHERE EMPLOYEE_ID = '" . $_POST['employee_id'] . "'";
-    $statement = oci_parse($conn, $sql_query);
-    if (oci_execute($statement)) {
-        echo json_encode(array("message" => "false"));
+    if (islegalid($_POST['employee_id'])) {
+        $sql_query = "UPDATE EMPLOYEE SET EMP_STATUS = 0 WHERE EMPLOYEE_ID = '" . $_POST['employee_id'] . "'";
+        $statement = oci_parse($conn, $sql_query);
+        if (oci_execute($statement)) {
+            echo json_encode(array("message" => "true"));
+        } else {
+            echo json_encode(array("message" => "false"));
+        }
     } else {
         echo json_encode(array("message" => "false"));
     }

@@ -18,13 +18,14 @@
     <script type="text/javascript" src="../../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../js/page.js"></script>
+
+    <script type="text/javascript" src="../../../js/encrypt.js"></script>
     <script type="text/javascript" src="../../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../../js/jquery.tablesorter.min.js"></script>
     <script type="text/javascript" src="../../../js/jquery.filtertable.js"></script>
     <script type="text/javascript" src="../../../js/jquery.pjax.js"></script>
     <script type="text/javascript" src="../../../js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="../../../js/admin.update.validate.js"></script>
-    <script type="text/javascript" src="../../../js/pic-wrapper.js"></script>
     <style>
 
     </style>
@@ -199,7 +200,7 @@
                                 </div>
                                 <div class="inner-item box-inner-hide" style="display: none;">
                                     <div class="col-xs-0 col-sm-1 col-md-2 col-lg-3"></div>
-                                    <form id="addEmployee-form" class="form-horizontal col-xs-12 col-sm-10 col-md-8 col-lg-6" method="post" action="">
+                                    <form id="updateEmployee-form" class="form-horizontal col-xs-12 col-sm-10 col-md-8 col-lg-6" method="post" action="">
                                         <div class="subform">
                                             <div class="form-group">
                                                 <div class="section_title">姓名</div>
@@ -328,9 +329,11 @@
             ok: '#clipBtn',
             done: function(dataURL) {
                 picData = dataURL;
+            },
+            fail: function(err) {
+                window.wxc.xcConfirm(err, window.wxc.xcConfirm.typeEnum.error);
             }
         });
-        pc.load('img/mm.jpg');
 
         function start() {
             $(".clip-wrapper").fadeIn();

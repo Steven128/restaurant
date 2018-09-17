@@ -18,6 +18,7 @@ session_start(); //开启php_session
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
+    
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
 <?php

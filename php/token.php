@@ -1,5 +1,18 @@
 <?php
+$ref = $_SERVER['REFERER'];
+if ($ref = '') {
+    echo '对不起，不允许从地址栏访问';
+    exit();
+} else {
+    $url = parse_url($ref);
+    echo $url['host'];
+    if ($url['host'] != '127.0.0.1' && $url['host'] != 'localhost') {
+        echo 'no';
+        exit();
+    }
+}
 var_dump($_SERVER);
+
 class Jwt
 {
 

@@ -115,7 +115,9 @@ $(document).ready(() => {
 
     $("#uploadpic").click(() => {
         var userPicData = picData;
-        if (userPicData.indexOf("data:") > -1) {
+        if (userPicData.indexOf("data:") < 0) {
+            window.wxc.xcConfirm("请先选择图片哟~", window.wxc.xcConfirm.typeEnum.error);
+        } else {
             $.ajax({
                 type: "POST",
                 url: "../../php/uploadPic.php",

@@ -1,4 +1,6 @@
 $(document).ready(() => {
+    var href = decodeURIComponent(window.location.search);
+    var employee_id = Decrypt(href.match(/\?employee_id=(.*?)$/)[1], "employee_id");
     $.ajax({
         type: "GET",
         url: "../../../php/check_login.php?request=check",
@@ -17,15 +19,30 @@ $(document).ready(() => {
                 $admin_type = "港库管理";
             }
             $(".user-type").html($admin_type);
+            getEmployeeInfo(employee_id);
         },
         error: (err) => {
             console.log(err)
         }
     })
 
+    var employee_info = {};
+
+    function getEmployeeInfo(employee_id) {
+        $.ajax({
+            type: "GET",
+            url: "../../php/admin.update.php?request=getEmployeeInfo&employee_id=" + employee_id + "&admin_id=" + getUserInfo().admin_id,
+            dataType: "JSON",
+            success: (e) => {
+                console.log(e);
+                employee_info = e.data;
+            },
+            error: (err) => { console.log(err) }
+        })
+    }
 
 
-    $("#addEmployee-form").validate({
+    $("#updateEmployee-form").validate({
         onsubmit: true, // 是否在提交是验证
         rules: { //规则
             name: {
@@ -42,7 +59,7 @@ $(document).ready(() => {
                 digits: true,
                 rangelength: [3, 5]
             },
-            phone: {
+            phone_num: {
                 required: true,
                 phone: true
             }
@@ -63,16 +80,12 @@ $(document).ready(() => {
                 digits: "请输入正确的工资",
                 rangelength: "请输入正确的工资",
             },
-            phone: {
+            phone_num: {
                 required: "请输入手机号码",
                 phone: "请输入正确的手机号码"
             }
         },
         submitHandler: function(form) { //通过之后回调
-            var userPicData = $("#previewResult")[0].src;
-            if (userPicData.indexOf("data:") < 0) {
-                userPicData = '';
-            }
             var name = $("#name").val();
             var gender = $("input[name='gender']:checked").val();
             var age = $("#age").val();
@@ -82,10 +95,10 @@ $(document).ready(() => {
             var admin_id = getUserInfo().admin_id;
             $.ajax({
                 type: "POST",
-                url: "../../../php/admin.add.php",
+                url: "../../../php/admin.update.php",
                 dataType: "JSON",
                 data: {
-                    "request": "add_employee",
+                    "request": "update_employee",
                     "admin_id": admin_id,
                     "name": name,
                     "gender": gender,
@@ -93,7 +106,6 @@ $(document).ready(() => {
                     "salary": salary,
                     "phone_num": phone_num,
                     "employee_type": employee_type,
-                    "userPicData": userPicData
                 },
                 success: (e) => {
                     console.log(e)
@@ -121,3 +133,8 @@ function showBox(obj) {
     $(obj).find(".box-down-arrow").fadeToggle(100);
     $(obj).find(".box-up-arrow").fadeToggle(100);
 }
+
+
+$(document).ready(() => {
+
+})
