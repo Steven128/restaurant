@@ -38,6 +38,9 @@ if (!$conn) {
     createDishData($conn);
     echo"<br>写入菜品表数据成功";
 
+    createOrderData($conn,1000);
+    echo"<br>写入订单表数据成功";
+
     oci_close($conn);
 
 }
@@ -58,7 +61,7 @@ function createAdminData($conn)
         $admin_type = $admin_data[$i]['admin_type'];
         $create_time = $admin_data[$i]['create_time'];
         $admin_pic = $admin_data[$i]['admin_pic'];
-        $sql_insert = "INSERT INTO admin" .
+        $sql_insert = "INSERT INTO SCOTT.admin" .
             "(admin_id,admin_name,admin_passwd,admin_type,create_time,admin_pic)" .
             "VALUES" .
             "('$admin_id','$admin_name','$admin_passwd',$admin_type,'$create_time','$admin_pic')";
@@ -103,7 +106,7 @@ function createEmployeeData($conn, $quantity)
         $param = $count < 10 ? "000$count" : ($count < 100 ? "00$count" : "0$count");
         $employee_id = "$employee_id" . "$param";
 
-        $sql_insert = "INSERT INTO employee" .
+        $sql_insert = "INSERT INTO SCOTT.employee" .
             "(employee_id,name,gender,working_year,age,salary,phone_num,employee_type,employ_time,employee_pic)" .
             "VALUES" .
             "('$employee_id','$name',$gender,$working_year,$age,$salary,'$phone_num',$employee_type,'$employ_time','../../src/employee_pic/default.png')";
@@ -143,7 +146,7 @@ function createPresenceData($conn)
             $presence_id = "pre_$_time" . "_$presence_id";
             $p_month = date("m", strtotime($sign_time));
             //写入签到信息
-            $sql_insert = "INSERT INTO presence" .
+            $sql_insert = "INSERT INTO SCOTT.presence" .
                 "(presence_id,sign_time,p_month,employee_id,hasPresented)" .
                 "VALUES" .
                 "('$presence_id','$sign_time','$p_month','$employee_id',$hasPresented)";
@@ -177,7 +180,7 @@ function createGoodsData($conn)
         $goods_id = $count < 10 ? "00000$count" : ($count < 100 ? "0000$count" : ($count < 1000 ? "000$count" : "00$count"));
         $goods_id = "goo_$goods_type" . "_$goods_id";
         //写入
-        $sql_insert = "INSERT INTO goods" .
+        $sql_insert = "INSERT INTO SCOTT.goods" .
             "(goods_id,goods_name,goods_price,goods_type)" .
             "VALUES" .
             "('$goods_id','$goods_name',$goods_price,$goods_type)";
@@ -202,7 +205,7 @@ function createInventoryData($conn)
         $inventory_id="inv_$_inventory_id";
         $quantity=mt_rand(50,300);
         //写入库存信息
-        $sql_insert="INSERT INto inventory".
+        $sql_insert="INSERT INto SCOTT.inventory".
             "(inventory_id,goods_id,quantity)".
             "VALUES".
             "('$inventory_id','$goods_id',$quantity)";
@@ -236,7 +239,7 @@ function createPurchaseData($conn)//id根据进货单创建时间,31种,进货�
         $rand2=mt_rand(0,30);
         $rand3=mt_rand(30,100);
         $goods_id=$goods_array[$rand2];
-        $sql_insert="INSERT INTO purchase".
+        $sql_insert="INSERT INTO SCOTT.purchase".
             "(purchase_id,purchase_number,goods_id,purchase_quantity,purchase_date)".
             "VALUES".
             "('$pur_id','$rand1','$goods_id',$rand3,'$_date')";
@@ -268,7 +271,7 @@ function createLossData($conn)//id根据los_日期
         $loss_id="los_$id_time";
         $loss_quantity=rand(5,30);
         $goods_id=$goods_array[$rand2];
-        $sql_insert="INSERT INTO loss".
+        $sql_insert="INSERT INTO SCOTT.loss".
             "(loss_id,goods_id,quantity,loss_time)".
             "VALUES".
             "('$loss_id','$goods_id',$loss_quantity,'$rand_time')";
@@ -291,7 +294,7 @@ function createDishData($conn)//type=2为主食，type=1为早餐，type=3为甜
         $dish_price=$dish_data[$i]['dish_price'];
         $param = $i < 10 ? "000$i" : ($i < 100 ? "00$i" : "0$i");
         $dish_id="dis_$dish_type"."_$param";
-        $sql_insert = "INSERT INTO dish" .
+        $sql_insert = "INSERT INTO SCOTT.dish" .
             "(dish_id,dish_name,dish_pic,dish_price,dish_type)" .
             "VALUES" .
             "('$dish_id','$dish_name','$dish_pic',$dish_price,$dish_type)";
@@ -326,7 +329,7 @@ function createTableData($conn, $quantity)
                 $default_number = 15;
             }
         }
-        $sql_insert = "INSERT INTO res_table" .
+        $sql_insert = "INSERT INTO SCOTT.res_table" .
             "(table_id,table_number,default_number)" .
             "VALUES" .
             "('$table_id','$table_number',$default_number)";
@@ -338,17 +341,57 @@ function createTableData($conn, $quantity)
     oci_free_statement($statement);
 }
 
-function createOrderData($conn,$quantity)//订单编号用Ord_餐桌_下单时间
+function createOrderData($conn,$quantity)//订单编号用ord_餐桌号_下单时间
 {
-    $data=data("Y-m-d",time());
-    $sql_select="select COUNT(table_id) from res_table";
+    $date=date("Y-m-d",time());
+    $dish_list=file_get_contents("dish.json");
+    $dish_data=json_decode($dish_list,true);
+    $dish_count=sizeof($dish_data,0);
+    $sql_select="SELECT table_id FROM SCOTT.res_table";
     $statement1=oci_parse($conn,$sql_select);
-    $count=oci_execute($statement1);
-    $begin_time=strtotime("2010-01-01 07:00:00");
-    $end_time=strtotime("$data 23:59:59");
-    for($i;$i<$quantity;$i++){
-        
+    oci_execute($statement1);
+    $tables_array=array();
+    $count=-1;
+    while ($row = oci_fetch_array($statement1, OCI_RETURN_NULLS)) {
+        $tables_array[]=$row[0];
+        $count++;
     }
+    $begin_time=strtotime("2010-01-01 07:00:00");
+    $end_time=strtotime("$date 23:59:59");
+    for($x=0;$x<$quantity;$x++){
+        $dish_list=null;//点菜列表
+        $sum_price=0;//总价
+        $rand1=mt_rand(0,$count);
+        $table_id=$tables_array[$rand1];//餐桌id
+        $table_number=substr($table_id,-3);//餐桌号
+        $rand2=mt_rand($begin_time,$end_time);//随机下单时间
+        $order_time=date("YmdHis",$rand2);//下单时间
+        $pay_time=date("Y-m-d H:i:s",strtotime('+1 hour',$rand2));//结账时间
+        $order_id="ord_"."$table_number"."_$order_time";//订单id
+        $rand3=mt_rand(3,10);//随机每单点菜数
+        for($i=0;$i<$rand3;$i++){//随机生成点菜单
+            $rand4=mt_rand(0,$dish_count-1);
+            $dish_type=$dish_data[$rand4]['dish_type'];
+            $param = $rand4 < 10 ? "000$rand4" : ($rand4 < 100 ? "00$rand4" : "0$rand4");
+            $dish_id="dis_$dish_type"."_$param";
+            $dish_list="$dish_list"."$dish_id";
+            $sum_price+=(float)$dish_data[$rand4]['dish_price'];
+            if($i<$rand3-1){
+                $dish_list.=",";
+            }
+        } 
+        $rand5=mt_rand(1,3);//付款方式
+        $order_note="多放香菜";
+        //echo" $order_id   $dish_list   $sum_price   $rand5  $table_id   $pay_time  $order_note <br>";
+        $sql_insert="INSERT INTO SCOTT.order_list".
+            "(order_id,dish_list,total_price,pay_method,pay_status,table_id,pay_time,order_note)".
+            "VALUES".
+            "('$order_id','$dish_list',$sum_price,$rand5,1,'$table_id','$pay_time','$order_note')";
+        $statement2=oci_parse($conn,$sql_insert);
+        oci_execute($statement2);
+    }
+    oci_free_statement($statement1);
+    oci_free_statement($statement2);
 }
 
 function createPreOrderData($conn)
@@ -378,7 +421,7 @@ function createFinanceData($conn, $quantity)
         $cost = mt_rand(4000, 6000);
         $profit = $turnover - $cost;
 
-        $sql_insert = "INSERT INTO finance" .
+        $sql_insert = "INSERT INTO SCOTT.finance" .
             "(finance_id,fin_date,month,turnover,cost,profit)" .
             "VALUES" .
             "('$finance_id','$fin_date',$month,$turnover,$cost,$profit)";
