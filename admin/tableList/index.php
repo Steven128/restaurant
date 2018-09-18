@@ -11,7 +11,6 @@ session_start();
     <link type="text/css" rel="stylesheet" href="../../css/bootstrap.css" />
     <link type="text/css" rel="stylesheet" href="../../css/iconfont.css" />
     <link type="text/css" rel="stylesheet" href="../../css/page.css" />
-    <link type="text/css" rel="stylesheet" href="../../css/admin.css" />
     <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
     <link type="text/css" rel="stylesheet" href="../../css/tablesorter.css" />
 
@@ -205,7 +204,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                     </thead>
                                     <tbody class="tableListTableBody">
 <?php
-$sql_query = "SELECT TABLE_ID,TABLE_NUMBER,DEFAULT_NUMBER,TABLE_ORDER_STATUS FROM RES_TABLE WHERE TAB_STATUS=0 ORDER BY TABLE_ID DESC";
+$sql_query = "SELECT TABLE_ID,TABLE_NUMBER,DEFAULT_NUMBER,TABLE_ORDER_STATUS FROM SCOTT.RES_TABLE WHERE TAB_STATUS=0 ORDER BY TABLE_ID DESC";
 $statement = oci_parse($conn, $sql_query);
 oci_execute($statement);
 //$count = 0;

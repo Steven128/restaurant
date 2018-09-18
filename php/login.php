@@ -21,7 +21,7 @@ if (isset($_SESSION['admin_id'])) {
         $admin_name = "";
         $admin_passwd = "";
         $admin_type = 0;
-        $sql_query = "SELECT admin_id,admin_name,admin_passwd,admin_type,admin_pic FROM admin WHERE adm_status>0";
+        $sql_query = "SELECT admin_id,admin_name,admin_passwd,admin_type,admin_pic FROM SCOTT.admin WHERE adm_status>0";
         $statement = oci_parse($conn, $sql_query);
         oci_execute($statement);
         while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) {

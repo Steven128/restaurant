@@ -33,3 +33,12 @@
     border-top: 1px solid #b2b2b2;
     background-color: #0067b8;
 }
+
+.update-form-changed {
+    color: #1afa29;
+    float: right;
+    position: relative;
+    top: -28px;
+    right: 5px;
+    display: none;
+}

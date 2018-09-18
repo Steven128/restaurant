@@ -114,7 +114,7 @@ echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['a
                                     type: 'pie',
                                     data: {
 <?php
-$sql_query = "SELECT * FROM EMPLOYEE WHERE EMP_STATUS>0 AND gender=1";
+$sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND gender=1";
 $statement = oci_parse($conn, $sql_query);
 oci_execute($statement);
 $male = 0;
@@ -122,7 +122,7 @@ while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
     $male++;
 }
 
-$sql_query = "SELECT * FROM EMPLOYEE WHERE EMP_STATUS>0 AND gender=0";
+$sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND gender=0";
 $statement = oci_parse($conn, $sql_query);
 oci_execute($statement);
 $female = 0;
@@ -130,7 +130,7 @@ while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
     $female++;
 }
 
-$sql_query = "SELECT * FROM EMPLOYEE WHERE EMP_STATUS>0 AND gender>1";
+$sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND gender>1";
 $statement = oci_parse($conn, $sql_query);
 oci_execute($statement);
 $other = 0;
@@ -169,7 +169,7 @@ echo "labels: [\"男\",\"女\",\"其他\"],datasets: [{label: '性别',data:[$ma
                                     type: 'bar',
                                     data: {
 <?php
-$sql_query = "SELECT * FROM EMPLOYEE WHERE EMP_STATUS>0 AND age>=20 AND age<30";
+$sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND age>=20 AND age<30";
 $statement = oci_parse($conn, $sql_query);
 oci_execute($statement);
 $age_below_30 = 0;
@@ -177,7 +177,7 @@ while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
     $age_below_30++;
 }
 
-$sql_query = "SELECT * FROM EMPLOYEE WHERE EMP_STATUS>0 AND age>=30 AND age<40";
+$sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND age>=30 AND age<40";
 $statement = oci_parse($conn, $sql_query);
 oci_execute($statement);
 $age_below_40 = 0;
@@ -185,7 +185,7 @@ while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
     $age_below_40++;
 }
 
-$sql_query = "SELECT * FROM EMPLOYEE WHERE EMP_STATUS>0 AND age>=40 AND age<50";
+$sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND age>=40 AND age<50";
 $statement = oci_parse($conn, $sql_query);
 oci_execute($statement);
 $age_below_50 = 0;
@@ -193,7 +193,7 @@ while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
     $age_below_50++;
 }
 
-$sql_query = "SELECT * FROM EMPLOYEE WHERE EMP_STATUS>0 AND age<20 OR age>=50";
+$sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND age<20 OR age>=50";
 $statement = oci_parse($conn, $sql_query);
 oci_execute($statement);
 $age_other = 0;

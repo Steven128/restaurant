@@ -11,7 +11,6 @@ session_start();
     <link type="text/css" rel="stylesheet" href="../../css/bootstrap.css" />
     <link type="text/css" rel="stylesheet" href="../../css/iconfont.css" />
     <link type="text/css" rel="stylesheet" href="../../css/page.css" />
-    <link type="text/css" rel="stylesheet" href="../../css/admin.css" />
     <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
     <link type="text/css" rel="stylesheet" href="../../css/tablesorter.css" />
 
@@ -206,7 +205,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                     </thead>
                                     <tbody class="dishListTableBody">
 <?php
-$sql_query = "SELECT DISH_ID,DISH_NAME,DISH_PIC,DISH_PRICE,DISH_TYPE FROM DISH WHERE DIS_STATUS>0 ORDER BY DISH_TYPE,DISH_NAME DESC";
+$sql_query = "SELECT DISH_ID,DISH_NAME,DISH_PIC,DISH_PRICE,DISH_TYPE FROM SCOTT.DISH WHERE DIS_STATUS>0 ORDER BY DISH_TYPE,DISH_NAME DESC";
 $statement = oci_parse($conn, $sql_query);
 oci_execute($statement);
 $count = 0;

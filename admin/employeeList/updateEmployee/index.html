@@ -18,13 +18,12 @@
     <script type="text/javascript" src="../../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../js/page.js"></script>
-
-    <script type="text/javascript" src="../../../js/encrypt.js"></script>
     <script type="text/javascript" src="../../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../../js/jquery.tablesorter.min.js"></script>
     <script type="text/javascript" src="../../../js/jquery.filtertable.js"></script>
     <script type="text/javascript" src="../../../js/jquery.pjax.js"></script>
     <script type="text/javascript" src="../../../js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="../../../js/form.onChange.js"></script>
     <script type="text/javascript" src="../../../js/admin.update.validate.js"></script>
     <style>
 
@@ -179,11 +178,26 @@
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-                                <div class="employee-info-box">
+                                <div class="employee-info-box col-xs-12 col-md-4">
                                     <div class="employee-pic-wrap"><img class="employeePic" src="" /></div>
                                     <div class="employee-info-wrap">
                                         <div class="employee-name"></div>
                                         <div class="employee-type"></div>
+                                    </div>
+                                </div>
+                                <div class="employee-info-box col-xs-12 col-md-8">
+                                    <div class="col-xs-0 col-md-12" style="padding: 5px;"></div>
+                                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+                                        <h5 class="emp-gender"></h5>
+                                        <h5 class="emp-age"></h5>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+                                        <h5 class="emp-working-year"></h5>
+                                        <h5 class="emp-salary"></h5>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+                                        <h5 class="emp-time"></h5>
+                                        <h5 class="emp-phone"></h5>
                                     </div>
                                 </div>
                             </div>
@@ -201,46 +215,7 @@
                                 <div class="inner-item box-inner-hide" style="display: none;">
                                     <div class="col-xs-0 col-sm-1 col-md-2 col-lg-3"></div>
                                     <form id="updateEmployee-form" class="form-horizontal col-xs-12 col-sm-10 col-md-8 col-lg-6" method="post" action="">
-                                        <div class="subform">
-                                            <div class="form-group">
-                                                <div class="section_title">姓名</div>
-                                                <input id="name" type="text" class="input-text form-control" name="name" placeholder="请输入姓名" maxlength=15 />
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="section_title">性别</div>
-                                                <label class="gender">
-                                                        <input type="radio" id="male" class=".radio-inline" name="gender" value="1" checked="checked" />男 
-                                                    </label>
-                                                <label class="gender">
-                                                        <input type="radio" id="female" class=".radio-inline" name="gender" value="0" />女
-                                                    </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="section_title">年龄</div>
-                                                <input id="age" type="text" class="input-text form-control" name="age" placeholder="请输入年龄" maxlength=2 />
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="section_title">工资</div>
-                                                <input id="salary" type="text" class="input-text form-control" name="salary" placeholder="请输入工资" maxlength=5 />
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="section_title">手机号码</div>
-                                                <input id="phone_num" type="text" class="input-text form-control" name="phone_num" placeholder="请留下手机号码" />
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="section_title">员工类型</div>
-                                                <select id="employee_type" class="select form-control" name="employee_type">
-                                                        <option class="option" value="1">管理人员</option>
-                                                        <option class="option" value="2">服务员</option>
-                                                        <option class="option" value="3">前台</option>
-                                                        <option class="option" value="4">厨师</option>
-                                                        <option class="option" value="5">保洁</option>
-                                                        <option class="option" value="6">仓库管理员</option>
-                                                        <option class="option" value="7">会计</option>
-                                                        <option class="option" value="8">其他</option>
-                                                    </select>
-                                            </div>
-                                        </div>
+
                                         <div class="btn-area">
                                             <button id="submit" name="submit" type="submit" class="submit">添加</button>
                                         </div>
@@ -284,6 +259,7 @@
                                 });
                             }
                             //
+                            changeMainBar("employeeList");
                             changeMainBar("addEmployee");
                             changeMainBar("financeList");
                             changeMainBar("financeHistory");

@@ -8,8 +8,8 @@ if (!$conn) {
 } else {
     echo "连接oracle成功！";
 
-    // createAdminData($conn);
-    // echo "<br>写入管理员表数据成功";
+    createAdminData($conn);
+    echo "<br>写入管理员表数据成功";
 
     createEmployeeData($conn, 20);
     echo "<br>写入员工表数据成功";
@@ -91,7 +91,7 @@ function createEmployeeData($conn, $quantity)
         $employee_id = "emp_" . $employee_id . "_$gender" . "_";
 
         //
-        $query = "SELECT * from employee where employ_time='$employ_time'";
+        $query = "SELECT * FROM SCOTT.employee where employ_time='$employ_time'";
         $statement = oci_parse($conn, $query);
         oci_execute($statement);
         $count = 0;
@@ -106,7 +106,7 @@ function createEmployeeData($conn, $quantity)
         $sql_insert = "INSERT INTO employee" .
             "(employee_id,name,gender,working_year,age,salary,phone_num,employee_type,employ_time,employee_pic)" .
             "VALUES" .
-            "('$employee_id','$name',$gender,$working_year,$age,$salary,'$phone_num',$employee_type,'$employ_time','../../src/user.png')";
+            "('$employee_id','$name',$gender,$working_year,$age,$salary,'$phone_num',$employee_type,'$employ_time','../../src/employee_pic/default.png')";
         $statement = oci_parse($conn, $sql_insert);
         if (!oci_execute($statement)) {
             die($statement);
@@ -119,7 +119,7 @@ function createPresenceData($conn)
 {
     $_date = date("Y-m-d", time());
     //查询employee表
-    $query = "SELECT * from employee";
+    $query = "SELECT * FROM SCOTT.employee";
     $statement1 = oci_parse($conn, $query);
     oci_execute($statement1);
     while ($row = oci_fetch_array($statement1, OCI_RETURN_NULLS)) {
@@ -167,7 +167,7 @@ function createGoodsData($conn)
         $goods_price = $goods_data[$i]['goods_price'];
         $goods_type = $goods_data[$i]['goods_type'];
         //
-        $query = "SELECT * FROM goods WHERE goods_type='$goods_type'";
+        $query = "SELECT * FROM SCOTT.goods WHERE goods_type='$goods_type'";
         $statement = oci_parse($conn, $query);
         oci_execute($statement);
         $count = 0;
@@ -191,7 +191,7 @@ function createGoodsData($conn)
 
 function createInventoryData($conn)
 {
-    $query="SELECT * FROM GOODS";
+    $query="SELECT * FROM SCOTT.GOODS";
     $statement1=oci_parse($conn,$query);
     oci_execute($statement1);
     $count=0;
@@ -220,7 +220,7 @@ function createPurchaseData($conn)//id根据进货单创建时间,31种,进货�
     $date=date("Y-m-d",time());
     $begin_time=strtotime("2010-01-01 07:00:00");
     $end_time=strtotime("$date 20:00:00");
-    $sql1="SELECT goods_id FROM goods";
+    $sql1="SELECT goods_id FROM SCOTT.goods";
     $statement=oci_parse($conn,$sql1);
     $res=oci_execute($statement);
     $goods_array=array();
@@ -251,7 +251,7 @@ function createPurchaseData($conn)//id根据进货单创建时间,31种,进货�
 function createLossData($conn)//id根据los_日期
 {
     $date=date("Y-m-d",time());
-    $sql1="SELECT goods_id FROM goods";
+    $sql1="SELECT goods_id FROM SCOTT.goods";
     $statement=oci_parse($conn,$sql1);
     $res=oci_execute($statement);
     $goods_array=array();
