@@ -269,8 +269,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                             <th>手机号</th>
                                             <th>类别</th>
                                             <th>聘用日期</th>
-                                            <th>修改</th>
-                                            <th>删除</th>
+                                            <th>操作</th>
                                         </tr>
                                     </thead>
                                     <tbody class="employeeListTableBody">
@@ -319,7 +318,7 @@ while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
         $employee_type = "其他";
     }
     //
-    echo "<tr><td>$count</td><td><a href = \"javascript:void(0);\" onclick =\"display_employee(this,'" . $employee_id . "')\">$name</td><td>$gender</td><td>$working_year</td><td>$age</td><td>$salary</td><td>$phone_num</td><td>$employee_type</td><td>$employ_time</td><td><a class=\"table-update-btn update-employee\" href = \"javascript:void(0);\" onclick=\"update_employee('" . $employee_id . "')\"><i class=\"iconfont icon-update\"></i></a></td><td><a class=\"table-delete-btn delete-employee\" href = \"javascript:void(0);\" onclick=\"delete_employee('" . $employee_id . "')\"><i class=\"iconfont icon-delete\"></i></a></td></tr>";
+    echo "<tr><td>$count</td><td>$name</td><td>$gender</td><td>$working_year</td><td>$age</td><td>$salary</td><td>$phone_num</td><td>$employee_type</td><td>$employ_time</td><td><a class=\"table-update-btn update-employee\" href = \"javascript:void(0);\" onclick=\"update_employee('" . $employee_id . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
 }
 ?>
                                         <script>

@@ -2,6 +2,10 @@
     left: 50px;
 }
 
+.title {
+    left: 50px;
+}
+
 .row {
     margin-right: 0;
     margin-left: 0;
@@ -134,6 +138,9 @@
 
 @media (min-width: 768px) {
     .main-bar {
+        left: 180px;
+    }
+    .title {
         left: 180px;
     }
     .info-box {

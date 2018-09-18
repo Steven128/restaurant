@@ -295,7 +295,7 @@ if (!$conn) {
     }
 
     $sql_create_tab = "CREATE TABLE order_list(" .
-        "order_id VARCHAR(20) NOT NULL PRIMARY KEY," .
+        "order_id VARCHAR(25) NOT NULL PRIMARY KEY," .
         "dish_list CLOB," .
         "total_price FLOAT," .
         "pay_method NUMBER(1)," .

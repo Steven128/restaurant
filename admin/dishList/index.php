@@ -199,8 +199,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                             <th>图片</th>
                                             <th>名称</th>
                                             <th>价格</th>
-                                            <th>修改</th>
-                                            <th>删除</th>
+                                            <th>操作</th>
                                         </tr>
                                     </thead>
                                     <tbody class="dishListTableBody">
@@ -230,7 +229,7 @@ while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
         $row[4] = "其他";
     }
     $row[3] = $row[3] . ".00";
-    echo "<tr><td>$count</td><td>$row[4]</td><td><img src=\"$row[2]\" /></td><td>$row[1]</td><td>$row[3]</td><td><a class=\"table-update-btn update-dish\" href = \"javascript:void(0);\" onclick=\"update_dish('" . $row[0] . "')\"><i class=\"iconfont icon-update\"></i></a></td><td><a class=\"table-delete-btn delete-dish\" href = \"javascript:void(0);\" onclick=\"delete_dish('" . $row[0] . "')\"><i class=\"iconfont icon-delete\"></i></a></td></tr>";
+    echo "<tr><td>$count</td><td>$row[4]</td><td><img src=\"$row[2]\" /></td><td>$row[1]</td><td>$row[3]</td><td><a class=\"table-update-btn update-dish\" href = \"javascript:void(0);\" onclick=\"update_dish('" . $row[0] . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
 }
 ?>
                                         <script>

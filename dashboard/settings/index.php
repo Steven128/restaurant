@@ -50,11 +50,11 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
 $admin_type = $_SESSION['admin_type'];
 if ($admin_type == 1) {
     $admin_type = "超级管理员";
-} else if ($admin_type == 2) {
+} elseif ($admin_type == 2) {
     $admin_type = "管理员";
-} else if ($admin_type == 3) {
+} elseif ($admin_type == 3) {
     $admin_type = "财务管理";
-} else if ($admin_type == 4) {
+} elseif ($admin_type == 4) {
     $admin_type = "港库管理";
 }
 echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "\" /></div><div class=\"user-info-wrap\"><div class=\"user-name\">" . $_SESSION['admin_name'] . "</div><div class=\"user-type\">" . $admin_type . "</div></div>";
@@ -103,6 +103,15 @@ echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['a
                 </aside>
                 <div class="mask"></div>
                 <div class="main-bar">
+                    <div class="title">
+                        <h4 class="title-left">设置</h4>
+                    </div>
+                    <div class="inner-top-wrap"></div>
+                    <div class="box col-xs-12">
+                        <div class="box-inner">
+                            <h5>目前还没有什么可以设置的(￣▽￣)~*</h5>
+                        </div>
+                    </div>
                     <script>
                         $(document).ready(() => {
                             function changeMainBar(itemName) {

@@ -34,7 +34,6 @@ $(document).ready(() => {
             url: "../../../php/admin/employee.php?request=getEmployeeInfo&employee_id=" + employee_id + "&admin_id=" + getUserInfo().admin_id,
             dataType: "JSON",
             success: (e) => {
-                console.log(e);
                 if (e.message = "success") {
                     data = e.data;
                     if (data.gender == 1) {
@@ -69,6 +68,7 @@ $(document).ready(() => {
                     //$(".employeePic").attr("src", "../../../src/employee_pic/default.png");
                     $(".employee-name").html(data.name);
                     $(".employee-type").html(data.employee_type);
+                    $(".btn-delete").val(data.employee_id);
                     $(".emp-gender").html("性别：" + data.gender);
                     $(".emp-age").html("年龄：" + data.age);
                     $(".emp-working-year").html("工龄：" + data.working_year + " 年");
@@ -108,7 +108,6 @@ $(document).ready(() => {
             error: (err) => { console.log(err) }
         })
     }
-
 
     $("#updateEmployee-form").validate({
         onsubmit: true, // 是否在提交是验证
@@ -153,7 +152,7 @@ $(document).ready(() => {
                 phone: "请输入正确的手机号码"
             }
         },
-        submitHandler: function (form) { //通过之后回调
+        submitHandler: function(form) { //通过之后回调
             var employee_id = data.employee_id;
             var name = $("#name").val();
             var gender = $("input[name='gender']:checked").val();
@@ -181,10 +180,10 @@ $(document).ready(() => {
                     console.log(e)
                     if (e.message == "success") {
                         window.wxc.xcConfirm("修改成功！", window.wxc.xcConfirm.typeEnum.success, {
-                            onOk: function () {
+                            onOk: function() {
                                 window.location.reload();
                             },
-                            onClose: function () {
+                            onClose: function() {
                                 window.location.reload();
                             }
                         });
@@ -198,12 +197,12 @@ $(document).ready(() => {
             })
         }
     });
-    $.validator.addMethod("chinese", function (value, element) {
+    $.validator.addMethod("chinese", function(value, element) {
         var chinese = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
         return this.optional(element) || (chinese.test(value));
     }, "");
 
-    $.validator.addMethod("phone", function (value, element) {
+    $.validator.addMethod("phone", function(value, element) {
         var phone = /^1[34578]\d{9}$/;
         return this.optional(element) || (phone.test(value));
     }, "");

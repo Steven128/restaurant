@@ -22,6 +22,7 @@
     display: inline-block;
     position: relative;
     left: 20px;
+    top: 30px;
 }
 
 .employee-info-box .employee-name {
@@ -29,10 +30,23 @@
     font-weight: 500;
     display: block;
     position: static;
+    padding: 0 10px;
 }
 
 .employee-info-box .employee-type {
-    padding: 0 10px;
+    padding: 0 20px;
+}
+
+.emp-btn-area {
+    padding-top: 10px;
+}
+
+.btn-delete {
+    background-color: rgb(199, 0, 0);
+    color: #fff;
+    padding: 5px 20px;
+    border: 1px solid #e73f3f;
+    border-radius: 3px;
 }
 
 .box-title {
@@ -56,4 +70,71 @@
 
 .btn-area {
     padding-top: 30px;
+}
+
+.emp-del-confirm {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -160px;
+    margin-top: -200px;
+    z-index: 100;
+    width: 320px;
+    padding: 20px;
+    padding-top: 30px;
+    border-radius: 1px;
+    color: #000;
+    background-color: #fff;
+}
+
+.emp-del-confirm .subform {
+    padding: 20px 10px;
+}
+
+.emp-del-confirm h5 {
+    padding: 0 10px;
+}
+
+.form-group input {
+    margin: auto;
+    border: 0;
+    border-bottom: 1px solid #4b9cfa;
+    width: 100%;
+    height: 30px;
+}
+
+input.error {
+    border-bottom: 1px solid red !important;
+}
+
+label.error {
+    width: 100%;
+}
+
+.btn-area {
+    text-align: right;
+    margin: 0;
+    padding: 15px 0 !important;
+}
+
+.cancel {
+    display: inline-block;
+    border-radius: 1px;
+    border: 0.5px solid #cccccc;
+    border-bottom: 0.5px solid #b2b2b2;
+    background-color: rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin-top: 10px;
+    height: 30px;
+    width: 100px;
+    color: #303a4d;
+}
+
+.submit {
+    display: inline-block;
+    width: 100px !important;
+}
+
+.submit_delete {
+    background-color: #bb3232 !important;
 }

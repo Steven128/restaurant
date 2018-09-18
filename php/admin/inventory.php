@@ -73,7 +73,7 @@ function purchase($conn)
         $sql_query = "UPDATE INVENTORY SET QUANTITY = " . $_POST['purchase_quantity'] . " WHERE GOODS_ID = '" . $_POST['goods_id'] . "'";
         $statement = oci_parse($conn, $sql_query);
         if (oci_execute($statement)) {
-            echo json_encode(array("message" => "true"));
+            echo json_encode(array("message" => "success"));
         } else {
             echo json_encode(array("message" => "false"));
         }

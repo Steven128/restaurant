@@ -64,7 +64,7 @@ function addDish($conn)
 
     $statement = oci_parse($conn, $sql_query);
     if (oci_execute($statement)) {
-        echo json_encode(array("message" => "true"));
+        echo json_encode(array("message" => "success"));
     } else {
         echo json_encode(array("message" => "false"));
     }
@@ -76,7 +76,7 @@ function deleteDish($conn)
         $sql_query = "UPDATE DISH SET DIS_STATUS = 0 WHERE DISH_ID = '" . $_POST['dish_id'] . "'";
         $statement = oci_parse($conn, $sql_query);
         if (oci_execute($statement)) {
-            echo json_encode(array("message" => "true"));
+            echo json_encode(array("message" => "success"));
         } else {
             echo json_encode(array("message" => "false"));
         }

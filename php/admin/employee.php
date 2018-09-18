@@ -1,15 +1,15 @@
 <?php
-$ref = $_SERVER['HTTP_REFERER'];
-if ($ref == "") {
-    echo "不允许从地址栏访问";
-    exit();
-} else {
-    $url = parse_url($ref);
-    if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost") {
-        echo "no";
-        exit();
-    }
-}
+//$ref = $_SERVER['HTTP_REFERER'];
+// if ($ref == "") {
+//     echo "不允许从地址栏访问";
+//     exit();
+// } else {
+//     $url = parse_url($ref);
+//     if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost") {
+//         echo "no";
+//         exit();
+//     }
+// }
 session_start(); //开启php_session
 if (isset($_GET['request'])) {
     $request = $_GET['request'];
@@ -70,7 +70,7 @@ function addEmployee($conn)
 
     $statement = oci_parse($conn, $sql_query);
     if (oci_execute($statement)) {
-        echo json_encode(array("message" => "true"));
+        echo json_encode(array("message" => "success"));
     } else {
         echo json_encode(array("message" => "error", "reason" => oci_error()));
     }
@@ -82,7 +82,7 @@ function deleteEmployee($conn)
         $sql_query = "UPDATE EMPLOYEE SET EMP_STATUS = 0 WHERE EMPLOYEE_ID = '" . $_POST['employee_id'] . "'";
         $statement = oci_parse($conn, $sql_query);
         if (oci_execute($statement)) {
-            echo json_encode(array("message" => "true"));
+            echo json_encode(array("message" => "success"));
         } else {
             echo json_encode(array("message" => "error", "reason" => oci_error()));
         }

@@ -25,6 +25,7 @@
     <script type="text/javascript" src="../../../js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="../../../js/form.onChange.js"></script>
     <script type="text/javascript" src="../../../js/admin.update.validate.js"></script>
+    <script type="text/javascript" src="../../../js/admin.delete.js"></script>
     <style>
 
     </style>
@@ -156,12 +157,6 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="treeview">
-                                <a href="javascript:void(0);" onclick="goBack()">
-                                    <i class="iconfont icon-back"></i>
-                                    <span>返回主页</span>
-                                </a>
-                            </li>
                         </ul>
                     </section>
                     <script src="../../../js/sidebar-menu.js"></script>
@@ -183,6 +178,9 @@
                                     <div class="employee-info-wrap">
                                         <div class="employee-name"></div>
                                         <div class="employee-type"></div>
+                                        <div class="emp-btn-area">
+                                            <button class="btn-delete" type="button" value="">删除员工</button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="employee-info-box col-xs-12 col-md-8">
@@ -272,7 +270,7 @@
                             changeMainBar("addTable");
                         });
                     </script>
-                    <div class="shelter" onclick="hideBox()"></div>
+                    <div class="shelter" onclick="hideBox()" style="background-color: rgba(0,0,0,0.5);z-index: 100;"></div>
                 </div>
             </div>
         </div>
@@ -323,6 +321,23 @@
             $(".clip-wrapper").fadeOut();
         }
     </script>
+    <div class="emp-del-confirm" style="display: none;">
+        <h3>确认删除此员工吗？</h3>
+        <hr>
+        <h5>请输入此员工的姓名</h5>
+        <div class="subform">
+            <div id="name-box" class="section">
+                <div class="form-group">
+                    <input id="delete_name" class="" type="text" name="name" placeholder="" maxlength="15" />
+                </div>
+                <div class="clear"></div>
+                <div class="btn-area">
+                    <button id="cancel" type="button" class="cancel" onclick="cancel()">取消</button>
+                    <button id="submit" type="button" class="submit submit_delete" onclick="nextStep()">确认删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 

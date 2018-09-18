@@ -204,7 +204,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                     </thead>
                                     <tbody class="financeListTableBody">
 <?php
-$sql_query = "SELECT FINANCE_ID,FIN_DATE,MONTH,TURNOVER,COST,PROFIT FROM SCOTT.FINANCE ORDER BY FIN_DATE,MONTH DESC";
+$sql_query = "SELECT FINANCE_ID,FIN_DATE,MONTH,TURNOVER,COST,PROFIT FROM SCOTT.FINANCE ORDER BY FIN_DATE DESC";
 $statement = oci_parse($conn, $sql_query);
 oci_execute($statement);
 $count = 0;

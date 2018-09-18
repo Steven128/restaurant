@@ -62,7 +62,7 @@ function addTable($conn)
     $sql_query = "INSERT INTO RES_TABLE (TABLE_ID, TABLE_NUMBER, DEFAULT_NUMBER, TABLE_ORDER_STATUS, TAB_STATUS) VALUES ('$TABLE_ID', '" . $_POST['table_number'] . "', " . $_POST['default_number'] . ", 0, 1)";
     $statement = oci_parse($conn, $sql_query);
     if (oci_execute($statement) == true) {
-        echo json_encode(array("message" => "true"));
+        echo json_encode(array("message" => "success"));
     } else {
         echo json_encode(array("message" => "false"));
     }
@@ -74,7 +74,7 @@ function deleteTable($conn)
         $sql_query = "UPDATE RES_TABLE SET TAB_STATUS = 0 WHERE TABLE_ID = '" . $_POST['table_id'] . "'";
         $statement = oci_parse($conn, $sql_query);
         if (oci_execute($statement) == true) {
-            echo json_encode(array("message" => "true"));
+            echo json_encode(array("message" => "success"));
         } else {
             echo json_encode(array("message" => "false"));
         }
