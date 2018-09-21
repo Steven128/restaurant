@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>管理员系统-餐饮店管理系统</title>
+    <link type="text/css" rel="stylesheet" href="../../css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/iconfont.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/page.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/form.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/cropper.css" />
+
+    <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/page.js"></script>
+
+    <script type="text/javascript" src="../../js/xcConfirm.js"></script>
+    <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
+    <script type="text/javascript" src="../../js/jquery.validate.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <header class="head-content">
+            <div class="site-branding">
+                <a href="javascript:void(0);" class="avatar-small">
+                    <div class="menu-button">
+                        <i class="iconfont icon-menu"></i>
+                    </div>
+                </a>
+                <div class="site-title">
+                    <a herf="../../dashboard" rel="home">餐饮店管理系统</a>
+                    <h5>管理员系统</h5>
+                </div>
+            </div>
+        </header>
+        <div class="main-content">
+            <div class="bar-box">
+                <aside class="left-bar">
+                    <div class="admin-box">
+                        <img class="userPic" src="" />
+                        <h4 class="online-user"></h4>
+                        <i class="iconfont icon-certificated" style="color: #1afa29;"></i>
+                        <h5 class="user-type"></h5>
+                    </div>
+                    <section class="sidebar">
+                        <ul class="sidebar-menu">
+                            <li class="treeview">
+                                <a href="javascript:void(0);">
+                                    <i class="iconfont icon-employee"></i>
+                                    <span>员工管理</span>
+                                    <span class="pull-right">
+                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a id="menu-employeeList-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-list"></i>员工列表</a>
+                                    </li>
+                                    <li>
+                                        <a id="menu-addEmployee-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-add-paper"></i>增加员工</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="javascript:void(0);">
+                                    <i class="iconfont icon-finance"></i>
+                                    <span>财务管理</span>
+                                    <span class="pull-right">
+                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a id="menu-financeList-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-list"></i>查看财务信息</a>
+                                    </li>
+                                    <li>
+                                        <a id="menu-financeHistory-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-list-search"></i>查询历史财务</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="javascript:void(0);">
+                                    <i class="iconfont icon-inventory"></i>
+                                    <span>仓库管理</span>
+                                    <span class="pull-right">
+                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a id="menu-inventoryList-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-list"></i>查看仓库信息</a>
+                                    </li>
+                                    <li>
+                                        <a id="menu-purchaseList-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-display"></i>查看进货信息</a>
+                                    </li>
+                                    <li>
+                                        <a id="menu-lossList-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-display"></i>查看损耗信息 </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="treeview active">
+                                <a href="javascript:void(0);">
+                                    <i class="iconfont icon-dish"></i>
+                                    <span>菜单管理</span>
+                                    <span class="pull-right">
+                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu menu-open">
+                                    <li>
+                                        <a id="menu-dishList-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-list"></i>查看菜单</a>
+                                    </li>
+                                    <li>
+                                        <a id="menu-addDish-item" href="javascript:void(0);" class="innerActive">
+                                            <i class="iconfont icon-add"></i>增加菜品</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="javascript:void(0);">
+                                    <i class="iconfont icon-table"></i>
+                                    <span>餐桌管理</span>
+                                    <span class="pull-right">
+                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                        </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a id="menu-tableList-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-list"></i>查看餐桌信息</a>
+                                    </li>
+                                    <li>
+                                        <a id="menu-addTable-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-update"></i>增加餐桌</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="javascript:void(0);" onclick="goBack()">
+                                    <i class="iconfont icon-back"></i>
+                                    <span>返回主页</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </section>
+                    <script src="../../js/sidebar-menu.js"></script>
+                    <script>
+                        $.sidebarMenu($('.sidebar-menu'))
+                    </script>
+                </aside>
+                <div class="mask"></div>
+                <div class="main-bar">
+                    <div class="title">
+                        <h4 class="title-left">增加菜品</h4>
+                    </div>
+                    <div class='box-wrap'>
+                        <div class="box box-full">
+                            <div class="inner-top-wrap"></div>
+                            <div class="inner-box row">
+                                <div class="col-xs-0 col-sm-1 col-md-2 col-lg-3"></div>
+                                <form id="addDish-form" class="form-horizontal col-xs-12 col-sm-10 col-md-8 col-lg-6" method="post" action="">
+                                    <div class="subform">
+                                        <div class="form-group">
+                                            <div class="section_title">名称</div>
+                                            <input id="dish_name" type="text" class="input-text form-control" name="dish_name" placeholder="请输入菜名" maxlength=15 />
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="section_title">售价</div>
+                                            <input id="dish_price" type="text" class="input-text form-control" name="dish_price" placeholder="请输入售价" maxlength=7 />
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="section_title">类别</div>
+                                            <select id="dish_type" class="select form-control" name="dish_type">
+                                                <option class="option" value="1">特色菜</option>
+                                                <option class="option" value="2">热菜</option>
+                                                <option class="option" value="3">河海湖鲜</option>
+                                                <option class="option" value="4">色拉</option>
+                                                <option class="option" value="5">酒水饮料</option>
+                                                <option class="option" value="6">其他</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="section_title">图片</div>
+                                            <div class="clip-box" style="text-align: center;padding: 20px 10px 0 10px;">
+                                                <a href="javascript:void(0);" class="a-upload">
+                                                    <input type="file" id="file" onclick="start()" /> 点击选择图片
+                                                </a>
+                                                <div id="view"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="btn-area">
+                                        <button id="submit" name="submit" type="submit" class="submit">添加</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        $(document).ready(() => {
+                            function changeMainBar(itemName) {
+                                $("#menu-" + itemName + "-item").click(() => {
+                                    $.pjax({
+                                        url: "../" + itemName,
+                                        container: 'html'
+                                    });
+                                });
+                            }
+                            //
+                            changeMainBar("employeeList");
+                            changeMainBar("addEmployee");
+                            changeMainBar("financeList");
+                            changeMainBar("financeHistory");
+                            changeMainBar("inventoryList");
+                            changeMainBar("purchaseList");
+                            changeMainBar("lossList");
+                            changeMainBar("dishList");
+                            changeMainBar("tableList");
+                            changeMainBar("addTable");
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <footer class="foot-content">
+            <div class="copyright">
+                <h5 class="copyright-text">&copy;&nbsp;餐饮店管理系统&nbsp;&nbsp;2018</h5>
+            </div>
+        </footer>
+    </div>
+    <div class="clip-wrapper">
+        <div class="clipArea-head">
+            <button id="cancelBtn" onclick="clipCancel()">取消</button>
+            <button id="clipBtn" onclick="clipFinish()">截取</button>
+        </div>
+        <div id="clipArea">
+            <p class="clip-tip">提示：触摸操作请用双指缩放或旋转；<br>&nbsp;&nbsp;鼠标操作请用滚轮缩放、双击旋转。</p>
+        </div>
+    </div>
+    <script src="../../js/cropper/hammer.min.js"></script>
+    <script src="../../js/cropper/iscroll-zoom-min.js"></script>
+    <script src="../../js/cropper/lrz.all.bundle.js"></script>
+    <script src="../../js/cropper/PhotoClip.js"></script>
+    <script>
+        var picData = "";
+        var pc = new PhotoClip('#clipArea', {
+            size: 260,
+            outputSize: 640,
+            file: '#file',
+            view: '#view',
+            ok: '#clipBtn',
+            done: function(dataURL) {
+                picData = dataURL;
+            },
+            fail: function(err) {
+                window.wxc.xcConfirm(err, window.wxc.xcConfirm.typeEnum.error);
+            }
+        });
+
+        function start() {
+            $(".clip-wrapper").fadeIn();
+        }
+
+        function clipCancel() {
+            $(".clip-wrapper").fadeOut();
+        }
+
+        function clipFinish() {
+            $(".clip-wrapper").fadeOut();
+        }
+    </script>
+    <script type="text/javascript" src="../../js/admin.add.validate.js"></script>
+</body>
+
+
+</html>
