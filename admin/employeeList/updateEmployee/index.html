@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8">
@@ -14,7 +14,6 @@
     <link type="text/css" rel="stylesheet" href="../../../css/form.css" />
     <link type="text/css" rel="stylesheet" href="../../../css/cropper.css" />
 
-
     <script type="text/javascript" src="../../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../js/page.js"></script>
@@ -26,9 +25,6 @@
     <script type="text/javascript" src="../../../js/form.onChange.js"></script>
     <script type="text/javascript" src="../../../js/admin.update.validate.js"></script>
     <script type="text/javascript" src="../../../js/admin.delete.js"></script>
-    <style>
-
-    </style>
 </head>
 
 <body>
@@ -57,7 +53,6 @@
                     </div>
                     <section class="sidebar">
                         <ul class="sidebar-menu">
-                            <!-- <li class="header">导航</li> -->
                             <li class="treeview active">
                                 <a href="javascript:void(0);">
                                     <i class="iconfont icon-employee"></i>
@@ -179,7 +174,7 @@
                                         <div class="employee-name"></div>
                                         <div class="employee-type"></div>
                                         <div class="emp-btn-area">
-                                            <button class="btn-delete" type="button" value="">删除员工</button>
+                                            <button class="btn-delete emp-btn-delete" type="button" value="">删除员工</button>
                                         </div>
                                     </div>
                                 </div>
@@ -215,7 +210,7 @@
                                     <form id="updateEmployee-form" class="form-horizontal col-xs-12 col-sm-10 col-md-8 col-lg-6" method="post" action="">
 
                                         <div class="btn-area">
-                                            <button id="submit" name="submit" type="submit" class="submit">添加</button>
+                                            <button id="submit" name="submit" type="submit" class="submit">修改</button>
                                         </div>
                                     </form>
                                 </div>
@@ -239,7 +234,7 @@
                                         </a>
                                         <div id="view"></div>
                                         <div class="btn-area">
-                                            <button id="uploadpic" type="button" class="submit">上传</button>
+                                            <button id="emp-uploadpic" type="button" class="submit">修改</button>
                                         </div>
                                     </div>
                                 </div>
@@ -321,7 +316,7 @@
             $(".clip-wrapper").fadeOut();
         }
     </script>
-    <div class="emp-del-confirm" style="display: none;">
+    <div class="del-confirm emp-del-confirm" style="display: none;">
         <h3>确认删除此员工吗？</h3>
         <hr>
         <h5>请输入此员工的姓名</h5>

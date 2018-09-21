@@ -37,7 +37,7 @@
     padding: 0 20px;
 }
 
-.emp-btn-area {
+.btn-area {
     padding-top: 10px;
 }
 
@@ -72,7 +72,7 @@
     padding-top: 30px;
 }
 
-.emp-del-confirm {
+.del-confirm {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -87,15 +87,15 @@
     background-color: #fff;
 }
 
-.emp-del-confirm .subform {
+.del-confirm .subform {
     padding: 20px 10px;
 }
 
-.emp-del-confirm h5 {
+.del-confirm h5 {
     padding: 0 10px;
 }
 
-.form-group input {
+.del-confirm .form-group input {
     margin: auto;
     border: 0;
     border-bottom: 1px solid #4b9cfa;
@@ -103,21 +103,21 @@
     height: 30px;
 }
 
-input.error {
+.del-confirm input.error {
     border-bottom: 1px solid red !important;
 }
 
-label.error {
+.del-confirm label.error {
     width: 100%;
 }
 
-.btn-area {
+.del-confirm .btn-area {
     text-align: right;
     margin: 0;
     padding: 15px 0 !important;
 }
 
-.cancel {
+.del-confirm .cancel {
     display: inline-block;
     border-radius: 1px;
     border: 0.5px solid #cccccc;
@@ -130,11 +130,11 @@ label.error {
     color: #303a4d;
 }
 
-.submit {
+.del-confirm .submit {
     display: inline-block;
     width: 100px !important;
 }
 
-.submit_delete {
+.del-confirm .submit_delete {
     background-color: #bb3232 !important;
 }

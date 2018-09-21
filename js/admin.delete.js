@@ -1,7 +1,32 @@
 var employee_name = "";
 var global_employee_id = "";
 $(document).ready(() => {
-    $(".btn-delete").click(() => {
+    $.ajax({
+        type: "GET",
+        url: "../../../php/check_login.php?request=check",
+        dataType: "JSON",
+        success: (e) => {
+            $(".userPic").attr('src', "../" + e.admin_pic + "?" + num);
+            $(".online-user").html(e.admin_name);
+            $admin_type = e.admin_type;
+            if ($admin_type == 1) {
+                $admin_type = "超级管理员";
+            } else if ($admin_type == 2) {
+                $admin_type = "管理员";
+            } else if ($admin_type == 3) {
+                $admin_type = "财务管理";
+            } else if ($admin_type == 4) {
+                $admin_type = "港库管理";
+            }
+            $(".user-type").html($admin_type);
+        },
+        error: (err) => {
+            console.log(err)
+        }
+    });
+
+
+    $(".emp-btn-delete").click(() => {
         let employee_id = $(".btn-delete").val();
         $.ajax({
             type: "GET",
@@ -16,9 +41,9 @@ $(document).ready(() => {
                 });
             },
             error: (err) => { console.log(err) }
-        })
-    })
-})
+        });
+    });
+});
 
 
 function cancel() {

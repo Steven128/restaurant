@@ -22,9 +22,22 @@ $(document).ready(() => {
             console.log(err)
         }
     })
+    addEmployeeValidate();
+    addDishValidate();
+    addTableValidate();
 
+    $.validator.addMethod("chinese", function(value, element) {
+        var chinese = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
+        return this.optional(element) || (chinese.test(value));
+    }, "");
 
+    $.validator.addMethod("phone", function(value, element) {
+        var phone = /^1[34578]\d{9}$/;
+        return this.optional(element) || (phone.test(value));
+    }, "");
+});
 
+function addEmployeeValidate() {
     $("#addEmployee-form").validate({
         onsubmit: true, // 是否在提交是验证
         rules: { //规则
@@ -93,7 +106,7 @@ $(document).ready(() => {
                     "salary": salary,
                     "phone_num": phone_num,
                     "employee_type": employee_type,
-                    "userPicData": userPicData
+                    "employeePicData": employeePicData
                 },
                 success: (e) => {
                     console.log(e)
@@ -104,13 +117,108 @@ $(document).ready(() => {
             })
         }
     });
-    $.validator.addMethod("chinese", function(value, element) {
-        var chinese = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
-        return this.optional(element) || (chinese.test(value));
-    }, "");
+}
 
-    $.validator.addMethod("phone", function(value, element) {
-        var phone = /^1[34578]\d{9}$/;
-        return this.optional(element) || (phone.test(value));
-    }, "");
-});
+function addDishValidate() {
+    $("#addDish-form").validate({
+        onsubmit: true, // 是否在提交是验证
+        rules: { //规则
+            dish_name: {
+                required: true
+            },
+            dish_price: {
+                required: true,
+                number: true
+            }
+        },
+        messages: { //验证错误信息
+
+            dish_name: {
+                required: "请输入菜名"
+            },
+            dish_price: {
+                required: "请输入价格",
+                number: "请输入正确的价格"
+            }
+        },
+        submitHandler: function(form) { //通过之后回调
+            var dishPicData = $("#previewResult")[0].src;
+            if (dishPicData.indexOf("data:") < 0) {
+                dishPicData = '';
+            }
+            var dish_name = $("#dish_name").val();
+            var dish_price = $("#dish_price").val();
+            var dish_type = $("#dish_type").val();
+            var admin_id = getUserInfo().admin_id;
+            $.ajax({
+                type: "POST",
+                url: "../../php/admin/dish.php",
+                dataType: "JSON",
+                data: {
+                    "request": "add_dish",
+                    "admin_id": admin_id,
+                    "dish_name": dish_name,
+                    "dish_price": dish_price,
+                    "dish_type": dish_type,
+                    "salary": salary,
+                    "dishPicData": dishPicData
+                },
+                success: (e) => {
+                    console.log(e)
+                },
+                error: (err) => {
+                    console.log(err)
+                }
+            })
+        }
+    });
+}
+
+function addTableValidate() {
+    $("#addTable-form").validate({
+        onsubmit: true, // 是否在提交是验证
+        rules: { //规则
+            table_number: {
+                required: true,
+                digits: true
+            },
+            default_number: {
+                required: true,
+                digits: true
+            }
+        },
+        messages: { //验证错误信息
+
+            table_number: {
+                required: "请输入编号",
+                digits: "请输入正确的编号"
+            },
+            default_number: {
+                required: "请输入人数",
+                digits: "请输入正确的人数"
+            }
+        },
+        submitHandler: function(form) { //通过之后回调
+            var table_number = $("#table_number").val();
+            var default_number = $("#default_number").val();
+            var admin_id = getUserInfo().admin_id;
+            $.ajax({
+                type: "POST",
+                url: "../../php/admin/res_table.php",
+                dataType: "JSON",
+                data: {
+                    "request": "add_table",
+                    "admin_id": admin_id,
+                    "table_number": table_number,
+                    "default_number": default_number,
+                },
+                success: (e) => {
+                    console.log(e)
+                },
+                error: (err) => {
+                    console.log(err)
+                }
+            })
+        }
+    });
+}

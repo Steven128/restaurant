@@ -17,16 +17,16 @@ session_start();
 
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
-    
+    <script type="text/javascript" src="../../js/admin.js"></script>
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../js/jquery.tablesorter.min.js"></script>
     <script type="text/javascript" src="../../js/jquery.filtertable.js"></script>
-    <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
 <?php
 if (!isset($_SESSION['admin_id'])) {
     echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
-} else if ($_SESSION['admin_type'] != 1 && $_SESSION['admin_type'] != 2) {
+} elseif ($_SESSION['admin_type'] != 1 && $_SESSION['admin_type'] != 2) {
     echo "<script>$(document).ready(() => {window.location.replace(\"../../dashboard\");});</script>";
 }
 ?>
@@ -58,11 +58,11 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
 $admin_type = $_SESSION['admin_type'];
 if ($admin_type == 1) {
     $admin_type = "超级管理员";
-} else if ($admin_type == 2) {
+} elseif ($admin_type == 2) {
     $admin_type = "管理员";
-} else if ($admin_type == 3) {
+} elseif ($admin_type == 3) {
     $admin_type = "财务管理";
-} else if ($admin_type == 4) {
+} elseif ($admin_type == 4) {
     $admin_type = "港库管理";
 }
 echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /><h4 class=\"online-user\">" . $_SESSION['admin_name'] . "</h4><i class=\"iconfont icon-certificated\" style=\"color: #1afa29;\"></i><h5 class=\"user-type\">" . $admin_type . "</h5>";
@@ -218,13 +218,12 @@ while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
     // array_push($table_data_array, $data_single); //将单个员工信息的数组添加到$emp_data_array中
     if ($row[3] == 0) {
         $row[3] = "无人";
-    } else if ($row[3] == 1) {
+    } elseif ($row[3] == 1) {
         $row[3] = "预定";
-    } else if ($row[3] == 2) {
+    } elseif ($row[3] == 2) {
         $row[3] = "有人";
     }
-    $row[0]=substr($row[0],9,12);
-    echo "<tr><td>$row[0]</td><td>$row[1]</td><td>$row[2]</td><td>$row[3]</td><td><a class=\"table-update-btn update-table\" href = \"javascript:void(0);\" onclick=\"update_table('" . $row[0] . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
+    echo "<tr><td>".substr($row[0], 9, 12)."</td><td>$row[1]</td><td>$row[2]</td><td>$row[3]</td><td><a class=\"table-update-btn update-table\" href = \"javascript:void(0);\" onclick=\"update_table('" . $row[0] . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
 }
 
 ?>

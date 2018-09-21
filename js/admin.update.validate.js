@@ -1,6 +1,6 @@
 $(document).ready(() => {
-    var href = decodeURIComponent(window.location.search);
-    var employee_id = Decrypt(href.match(/\?employee_id=(.*?)$/)[1], "employee_id");
+    var href = decodeURIComponent(window.location);
+    var reason = href.match(/\/update(.*?)\//)[1].toLowerCase();
     $.ajax({
         type: "GET",
         url: "../../../php/check_login.php?request=check",
@@ -19,7 +19,17 @@ $(document).ready(() => {
                 $admin_type = "港库管理";
             }
             $(".user-type").html($admin_type);
-            getEmployeeInfo(employee_id);
+            if (reason == "employee") {
+                var employee_id = Decrypt(href.match(/\?employee_id=(.*?)$/)[1], "employee_id");
+                getEmployeeInfo(employee_id);
+            } else if (reason == "dish") {
+                var dish_id = Decrypt(href.match(/\?dish_id=(.*?)$/)[1], "dish_id");
+                getDishInfo(dish_id);
+            } else if (reason == "table") {
+                var table_id = Decrypt(href.match(/\?table_id=(.*?)$/)[1], "table_id");
+                getTableInfo(table_id);
+            }
+
         },
         error: (err) => {
             console.log(err)
@@ -107,6 +117,14 @@ $(document).ready(() => {
             },
             error: (err) => { console.log(err) }
         })
+    }
+
+    function getDishInfo(dish_id) {
+
+    }
+
+    function getTableInfo(table_id) {
+
     }
 
     $("#updateEmployee-form").validate({
