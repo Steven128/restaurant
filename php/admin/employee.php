@@ -11,6 +11,7 @@
 //     }
 // }
 session_start(); //开启php_session
+include "../updatePic.php";
 if (isset($_GET['request'])) {
     $request = $_GET['request'];
     $admin_id = $_GET['admin_id'];
@@ -41,6 +42,8 @@ if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如�
             echo getEmployeeInfo($conn);
         } elseif ($request == "updateEmployee") {
             echo updateEmployee($conn);
+        } elseif ($request == "updateEmployeePic") {
+            echo updateEmployeePic($conn);
         }
 
     }
@@ -121,7 +124,13 @@ function updateEmployee($conn)
 {
     if (islegalid($_POST['employee_id'])) {
         $employee_id = $_POST['employee_id'];
-        $sql_insert = "UPDATE SCOTT.EMPLOYEE SET name='" . $_POST['name'] . "',gender='" . $_POST['gender'] . "',age='" . $_POST['age'] . "',salary='" . $_POST['salary'] . "',phone_num='" . $_POST['phone_num'] . "',employee_type='" . $_POST['employee_type'] . "' WHERE EMPLOYEE_ID='" . $_POST['employee_id'] . "'";
+        $name=$_POST['name'];
+        $gender=$_POST['gender'];
+        $age=$_POST['age'];
+        $salary=$_POST['salary'];
+        $phone_num=$_POST['phone_num'];
+        $employee_type=$_POST['employee_type'];
+        $sql_insert = "UPDATE SCOTT.EMPLOYEE SET name='$name',gender=$gender,age=$age,salary=$salary,phone_num='$phone_num',employee_type=$employee_type WHERE EMPLOYEE_ID='$employee_id'";
         $statement = oci_parse($conn, $sql_insert);
 
         if (oci_execute($statement)) {
@@ -132,4 +141,7 @@ function updateEmployee($conn)
     } else {
         echo json_encode(array("message" => "error", "reason" => oci_error()));
     }
+}
+function updateEmployeePic($conn){
+    new updatePic().upload("upload_employee_pic");
 }

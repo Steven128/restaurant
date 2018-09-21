@@ -189,7 +189,7 @@ if (!$conn) {
         "loss_id VARCHAR(20) NOT NULL PRIMARY KEY," .
         "goods_id VARCHAR(20) NOT NULL," .
         "quantity FLOAT NOT NULL," .
-        "loss_time VARCHAR(20) NOT NULL," .
+        "loss_date VARCHAR(10) NOT NULL," .
         "los_status NUMBER(1) DEFAULT 1 NOT NULL," .
         "FOREIGN KEY (goods_id) REFERENCES goods(goods_id) ON DELETE CASCADE)";
     $statement = oci_parse($conn, $sql_create_tab);
@@ -216,7 +216,7 @@ if (!$conn) {
         "purchase_number VARCHAR(20) NOT NULL," .
         "goods_id VARCHAR(20) NOT NULL," .
         "purchase_quantity FLOAT NOT NULL," .
-        "purchase_date VARCHAR(10) NOT NULL," .
+        "purchase_time VARCHAR(20) NOT NULL," .
         "pur_status NUMBER(1) DEFAULT 1 NOT NULL," .
         "FOREIGN KEY (goods_id) REFERENCES goods(goods_id) ON DELETE CASCADE)";
     $statement = oci_parse($conn, $sql_create_tab);
@@ -264,7 +264,6 @@ if (!$conn) {
         oci_execute($statement);
         $statement = oci_parse($conn, "COMMENT ON COLUMN dish.dis_status IS '状态，0无效 1有效'");
         oci_execute($statement);
-
     } else {
         echo $statement;
     }
@@ -300,7 +299,6 @@ if (!$conn) {
         "total_price FLOAT," .
         "pay_method NUMBER(1)," .
         "pay_status NUMBER(1) DEFAULT 0 NOT NULL," .
-        "table_id VARCHAR(20) NOT NULL," .
         "pay_time VARCHAR(20)," .
         "order_note VARCHAR(120)," .
         "ord_status NUMBER(1) DEFAULT 1 NOT NULL," .
@@ -320,8 +318,6 @@ if (!$conn) {
         oci_execute($statement);
         $statement = oci_parse($conn, "COMMENT ON COLUMN order_list.pay_status IS '付款状态，0为未付款，1为已付款'");
         oci_execute($statement);
-        $statement = oci_parse($conn, "COMMENT ON COLUMN order_list.table_id IS '餐桌ID（外键）'");
-        oci_execute($statement);
         $statement = oci_parse($conn, "COMMENT ON COLUMN order_list.pay_time IS '结账时间'");
         oci_execute($statement);
         $statement = oci_parse($conn, "COMMENT ON COLUMN order_list.order_note IS '备注'");
@@ -338,7 +334,9 @@ if (!$conn) {
         "arrive_time VARCHAR(20) NOT NULL," .
         "order_id VARCHAR(20) NOT NULL," .
         "dish_list CLOB," .
+        "table_id VARCHAR(20) NOT NULL," .
         "pre_status NUMBER(1) DEFAULT 1 NOT NULL," .
+        "FOREIGN KEY (table_id) REFERENCES res_table(table_id) ON DELETE CASCADE)" .
         "FOREIGN KEY (order_id) REFERENCES order_list(order_id) ON DELETE CASCADE)";
     $statement = oci_parse($conn, $sql_create_tab);
     if (oci_execute($statement)) {
@@ -354,6 +352,8 @@ if (!$conn) {
         $statement = oci_parse($conn, "COMMENT ON COLUMN pre_order.order_id IS '订单ID（外键）'");
         oci_execute($statement);
         $statement = oci_parse($conn, "COMMENT ON COLUMN pre_order.dish_list IS '点菜列表，dish_id用逗号分隔'");
+        oci_execute($statement);
+        $statement = oci_parse($conn, "COMMENT ON COLUMN order_list.table_id IS '餐桌ID（外键）'");
         oci_execute($statement);
         $statement = oci_parse($conn, "COMMENT ON COLUMN pre_order.pre_status IS '预订状态，0无效 1有效'");
         oci_execute($statement);
@@ -423,8 +423,8 @@ if (!$conn) {
     $statement = oci_parse($conn, $sql_create_tab);
     if (oci_execute($statement)) {
         echo "<br>创建更新管理表成功！";
-        $statement = oci_parse($conn, "COMMENT ON TABLE app_update IS '更新表'");oci_execute($statement);
-
+        $statement = oci_parse($conn, "COMMENT ON TABLE app_update IS '更新表'");
+        oci_execute($statement);
     } else {
         echo $statement;
     }
