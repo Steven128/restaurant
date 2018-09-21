@@ -1,4 +1,6 @@
 <?php
+
+session_start(); //开启php_session
 $ref = $_SERVER['REFERER'];
 if ($ref == "") {
     echo "不允许从地址栏访问";
@@ -10,7 +12,7 @@ if ($ref == "") {
         exit();
     }
 }
-session_start(); //开启php_session
+include "../updatePic.php";
 if (isset($_GET['request'])) {
     $request = $_GET['request'];
     $admin_id = $_GET['admin_id'];
@@ -40,6 +42,8 @@ if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如�
             echo getDishInfo($conn);
         } elseif($request== "updateDish"){
             echo updateDish($conn);
+        } elseif ($request == "updateDishPic") {
+            echo updateDishPic($conn);
         }
     }
 }
@@ -115,10 +119,9 @@ function updateDish($conn)
     if (islegalid($_POST['dish_id'])) {
         $dish_id = $_POST['dish_id'];
         $dish_name = $_POST["dish_name"];
-        $dish_pic = $_POST["dish_pic"];
         $dish_price = $_POST["dish_price"];
         $dish_type = $_POST["dish_type"];
-        $sql_insert = "UPDATE SCOTT.DISH SET dish_name='$dish_name',dish_pic='$dish_pic',dish_price=$dish_price,dish_type=$dish_type WHERE dish_id='$dish_id'";
+        $sql_insert = "UPDATE SCOTT.DISH SET dish_name='$dish_name',dish_price=$dish_price,dish_type=$dish_type WHERE dish_id='$dish_id'";
         $statement = oci_parse($conn, $sql_insert);
 
         if (oci_execute($statement)) {
@@ -129,4 +132,7 @@ function updateDish($conn)
     } else {
         echo json_encode(array("message" => "error", "reason" => oci_error()));
     }
+}
+function updateDishPic($conn){
+    new updatePic().upload("upload_dish_pic");
 }
