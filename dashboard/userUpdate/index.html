@@ -17,11 +17,11 @@
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
 
-    <script type="text/javascript" src="../../js/dashboard.js"></script>
+    <script type="text/javascript" src="../../js/das_mgment/dashboard.js"></script>
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../js/Chart.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
-    <script type="text/javascript" src="../../js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="../../js/plugins/jquery.validate.min.js"></script>
     <style>
         .box-inner {
             padding: 0 20px 0 20px;
@@ -119,7 +119,7 @@
                 <aside class="left-bar">
                     <section class="sidebar">
                         <ul class="sidebar-menu">
-                            <li class="treeview overview-treeview">
+                            <li class="treeview overview-tree">
                                 <a id="menu-overview-item" href="javascript:void(0);">
                                     <i class="iconfont icon-overview"></i>
                                     <span>总览</span>
@@ -151,7 +151,7 @@
                 </aside>
                 <div class="mask"></div>
                 <div class="main-bar row">
-                    <div class="box col-xs-12">
+                    <div class="user-update-box col-xs-12">
                         <div class="box-inner">
                             <div class="title">
                                 <h4>个人信息</h4>
@@ -167,7 +167,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="box col-xs-12" style="padding-bottom: 15px;">
+                    <div class="user-update-box col-xs-12" style="padding-bottom: 15px;">
                         <div class="box-inner" style="cursor: pointer;" onclick="showBox(this)">
                             <div class="title">
                                 <h4>修改信息</h4>
@@ -192,6 +192,8 @@
                     </div>
                     <script>
                         $(document).ready(() => {
+                            barAppend("userUpdate");
+
                             function changeMainBar(itemName) {
                                 $("#menu-" + itemName + "-item").click(() => {
                                     $.pjax({
@@ -227,10 +229,10 @@
             <p class="clip-tip">提示：触摸操作请用双指缩放或旋转；<br>&nbsp;&nbsp;鼠标操作请用滚轮缩放、双击旋转。</p>
         </div>
     </div>
-    <script src="../../js/cropper/hammer.min.js"></script>
-    <script src="../../js/cropper/iscroll-zoom-min.js"></script>
-    <script src="../../js/cropper/lrz.all.bundle.js"></script>
-    <script src="../../js/cropper/PhotoClip.js"></script>
+    <script src="../../js/plugins/cropper/hammer.min.js"></script>
+    <script src="../../js/plugins/cropper/iscroll-zoom-min.js"></script>
+    <script src="../../js/plugins/cropper/lrz.all.bundle.js"></script>
+    <script src="../../js/plugins/cropper/PhotoClip.js"></script>
     <script>
         var picData = "";
         var pc = new PhotoClip('#clipArea', {
@@ -259,7 +261,7 @@
             $(".clip-wrapper").fadeOut();
         }
     </script>
-    <script type="text/javascript" src="../../js/user.update.validate.js"></script>
+    <script type="text/javascript" src="../../js/das_mgment/user.update.validate.js"></script>
 </body>
 
 

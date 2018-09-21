@@ -12,7 +12,7 @@
 }
 
 .chart-box,
-.box {
+.user-update-box {
     position: relative;
     overflow: auto;
     background-color: #efefef;

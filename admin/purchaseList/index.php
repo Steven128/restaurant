@@ -20,8 +20,8 @@ session_start();
     <script type="text/javascript" src="../../js/page.js"></script>
     
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
-    <script type="text/javascript" src="../../js/jquery.tablesorter.min.js"></script>
-    <script type="text/javascript" src="../../js/jquery.filtertable.js"></script>
+    <script type="text/javascript" src="../../js/plugins/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="../../js/plugins/jquery.filtertable.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
 <?php
 if (!isset($_SESSION['admin_id'])) {

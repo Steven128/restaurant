@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html>
 
@@ -17,23 +14,13 @@ session_start();
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
-    <script type="text/javascript" src="../../js/dashboard.js"></script>
+    <script type="text/javascript" src="../../js/das_mgment/dashboard.js"></script>
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../js/Chart.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
-<?php
-if (!isset($_SESSION['admin_id'])) {
-    echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
-} else if ($_SESSION['admin_type'] != 1) {
-    echo "<script>$(document).ready(() => {window.location.replace(\"../overview\");});</script>";
-}
-?>
 </head>
 
 <body>
-<?php
-$conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
-?>
     <div class="container">
         <header class="head-content">
             <div class="site-branding">
@@ -43,24 +30,17 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
                 </div>
             </div>
             <a class="user-box" href="javascript:void(0);" onclick="showInfoBox()">
-<?php echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "\" /></div><div class=\"user-name\">" . $_SESSION['admin_name'] . "</div>"; ?>
+                <div class="user-pic-wrap"><img class="userPic" src="" /></div>
+                <div class="user-name"></div>
             </a>
             <div class="info-box">
                 <div class="info-box-block">
                     <div class="info-box-arrow"></div>
-<?php
-$admin_type = $_SESSION['admin_type'];
-if ($admin_type == 1) {
-    $admin_type = "超级管理员";
-} else if ($admin_type == 2) {
-    $admin_type = "管理员";
-} else if ($admin_type == 3) {
-    $admin_type = "财务管理";
-} else if ($admin_type == 4) {
-    $admin_type = "港库管理";
-}
-echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "\" /></div><div class=\"user-info-wrap\"><div class=\"user-name\">" . $_SESSION['admin_name'] . "</div><div class=\"user-type\">" . $admin_type . "</div></div>";
-?>
+                    <div class="user-pic-wrap"><img class="userPic" src="" /></div>
+                    <div class="user-info-wrap">
+                        <div class="user-name"></div>
+                        <div class="user-type"></div>
+                    </div>
                     <div class="logout-wrap">
                         <a class="logout" href="../../php/check_login.php?request=logout"><i class="iconfont icon-logout"></i>退出登录</a>
                     </div>
@@ -73,7 +53,7 @@ echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['a
                 <aside class="left-bar">
                     <section class="sidebar">
                         <ul class="sidebar-menu">
-                            <li class="treeview overview-treeview active">
+                            <li class="treeview overview-tree">
                                 <a id="menu-overview-item" href="javascript:void(0);">
                                     <i class="iconfont icon-overview"></i>
                                     <span>总览</span>
@@ -107,6 +87,8 @@ echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['a
                 <div class="main-bar">
                     <script>
                         $(document).ready(() => {
+                            barAppend("addAdmin");
+
                             function changeMainBar(itemName) {
                                 $("#menu-" + itemName + "-item").click(() => {
                                     $.pjax({

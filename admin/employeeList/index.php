@@ -19,10 +19,10 @@ session_start();
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
-    <script type="text/javascript" src="../../js/admin.js"></script>
+    <script type="text/javascript" src="../../js/adm_mgment/admin.js"></script>
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
-    <script type="text/javascript" src="../../js/jquery.tablesorter.min.js"></script>
-    <script type="text/javascript" src="../../js/jquery.filtertable.js"></script>
+    <script type="text/javascript" src="../../js/plugins/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="../../js/plugins/jquery.filtertable.js"></script>
     <style>
         .display-box-hide,.display-box {
                 width: 0px;

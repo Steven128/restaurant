@@ -17,10 +17,12 @@ session_start();
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
-    <script type="text/javascript" src="../../js/dashboard.js"></script>
+    <script type="text/javascript" src="../../js/das_mgment/dashboard.js"></script>
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../js/Chart.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
+    <script type="text/javascript" src="../../js/plugins/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="../../js/plugins/jquery.filtertable.js"></script>
 <?php
 if (!isset($_SESSION['admin_id'])) {
     echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
@@ -73,7 +75,7 @@ echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['a
                 <aside class="left-bar">
                     <section class="sidebar">
                         <ul class="sidebar-menu">
-                            <li class="treeview overview-treeview active">
+                            <li class="treeview overview-tree active">
                                 <a id="menu-overview-item" href="javascript:void(0);">
                                     <i class="iconfont icon-overview"></i>
                                     <span>总览</span>
@@ -105,8 +107,71 @@ echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['a
                 </aside>
                 <div class="mask"></div>
                 <div class="main-bar">
+                <div class="title">
+                        <h4 class="title-left">管理员列表</h4>
+                    </div>
+                    <div class='box-wrap'>
+                        <div class="box">
+                            <div class="inner-top-wrap"></div>
+                            <div class="inner-box">
+                                <table class="adminListTable tablesorter result">
+                                    <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>头像</th>
+                                            <th>姓名</th>
+                                            <th>类别</th>
+                                            <th>创建日期</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="employeeListTableBody">
+<?php
+$sql_query = "SELECT ADMIN_ID,ADMIN_NAME,ADMIN_TYPE,CREATE_TIME,ADMIN_PIC FROM SCOTT.ADMIN WHERE ADM_STATUS>0 ORDER BY ADMIN_TYPE ASC,ADMIN_NAME ASC";
+$statement = oci_parse($conn, $sql_query);
+oci_execute($statement);
+$count = 0;
+while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+    $count++;
+    $admin_id = $row[0];
+    $name = $row[1];
+    $admin_type = $row[2];
+    $create_time = $row[3];
+    $admin_pic = $row[4];
+    //
+    if ($admin_type == 1) {
+        $admin_type = "超级管理员";
+    } else if ($admin_type == 2) {
+        $admin_type = "管理员";
+    } else if ($admin_type == 3) {
+        $admin_type = "财务管理员";
+    } else if ($admin_type == 4) {
+        $admin_type = "仓库管理员";
+    }
+    //
+    echo "<tr><td>$count</td><td><img src=\"$admin_pic\" / width=\"50px\" height=\"50px\"></td><td>$name</td><td>$admin_type</td><td>$create_time</td><td><a class=\"table-update-btn update-admin\" href = \"javascript:void(0);\" onclick=\"update_admin('" . $admin_id . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
+}
+?>
+                                        <script>
+                                        $(() => {
+                                            $(".adminListTable").tablesorter();
+                                        });
+                                        $(() => {
+                                            $(".adminListTable").filterTable();
+                                        });
+                                        </script>
+                                    </tbody>
+                                    <!-- <div class="display-box-hide"></div> -->
+                                </table>
+                                <div id="back_to_top">
+                                    <i class="iconfont icon-up-arrow"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <script>
                         $(document).ready(() => {
+                            barAppend("adminList");
                             function changeMainBar(itemName) {
                                 $("#menu-" + itemName + "-item").click(() => {
                                     $.pjax({
@@ -120,7 +185,6 @@ echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['a
                             changeMainBar("userUpdate");
                             changeMainBar("settings");
                             if (getUserInfo().admin_type == 1) {
-                                changeMainBar("adminList");
                                 changeMainBar("addAdmin");
                             }
                         });

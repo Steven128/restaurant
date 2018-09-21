@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>主页-餐饮店管理系统</title>
+    <link type="text/css" rel="stylesheet" href="../../../css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="../../../css/iconfont.css" />
+    <link type="text/css" rel="stylesheet" href="../../../css/page.css" />
+    <link type="text/css" rel="stylesheet" href="../../../css/dashboard.css" />
+    <link type="text/css" rel="stylesheet" href="../../../css/responsive-sidebar.css" />
+    <link type="text/css" rel="stylesheet" href="../../../css/update.css" />
+    <link type="text/css" rel="stylesheet" href="../../../css/form.css" />
+    <link type="text/css" rel="stylesheet" href="../../../css/cropper.css" />
+
+    <script type="text/javascript" src="../../../js/jQuery/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../js/page.js"></script>
+    <script type="text/javascript" src="../../../js/xcConfirm.js"></script>
+    <script type="text/javascript" src="../../../js/Chart.js"></script>
+    <script type="text/javascript" src="../../../js/jquery.pjax.js"></script>
+    <script type="text/javascript" src="../../../js/das_mgment/dashboard.update.js"></script>
+    <script>
+        $(document).ready(() => {
+            var admin_type = getUserInfo().admin_type;
+            if (admin_type == 1) {
+                addRootMgment();
+            } else if (admin_type == 2) {
+                addAdminMgment();
+            } else if (admin_type == 3) {
+                addFinanceMgment();
+            } else if (admin_type == 4) {
+                addInventoryMgment();
+            }
+        })
+
+        function showInfoBox() {
+            $(".info-box").show();
+            $(".shelter").show();
+        }
+
+        function hideShelter() {
+            $(".info-box").hide();
+            $(".shelter").hide();
+        }
+
+        function addRootMgment() {
+            var append_text = "<li class=\"treeview\"><a href=\"../../../admin/\"><i class=\"iconfont icon-mgment\"></i><span>店面管理</span><span class=\"dash-pull-right\"><i class=\"iconfont icon-right-arrow\" style=\"font-size:12px;\"></i></span></a></li>";
+            append_text += "<li class=\"treeview\"><a id=\"menu-adminList-item\" href=\"javascript:void(0);\"><i class=\"iconfont icon-account\"></i><span>管理员信息</span><span class=\"dash-pull-right\"><i class=\"iconfont icon-right-arrow\" style=\"font-size:12px;\"></i></span></a></li>";
+            append_text += "<li class=\"treeview\"><a id=\"menu-addAdmin-item\" href=\"javascript:void(0);\"><i class=\"iconfont icon-account-plus\"></i><span>添加管理员</span><span class=\"dash-pull-right\"><i class=\"iconfont icon-right-arrow\" style=\"font-size:12px;\"></i></span></a></li>";
+            $(".overview-tree").after(append_text);
+        }
+
+        function addFinanceMgment() {
+            var append_text = "<li class=\"treeview\"><a href=\"../../../fin_mgment/\"><i class=\"iconfont icon-mgment\"></i><span>财务管理</span><span class=\"dash-pull-right\"><i class=\"iconfont icon-right-arrow\" style=\"font-size:12px;\"></i></span></a></li>";
+            $(".overview-tree").after(append_text);
+        }
+
+        function addInventoryMgment() {
+            var append_text = "<li class=\"treeview\"><a href=\"../../../inv_mgment/\"><i class=\"iconfont icon-mgment\"></i><span>库存管理</span><span class=\"dash-pull-right\"><i class=\"iconfont icon-right-arrow\" style=\"font-size:12px;\"></i></span></a></li>";
+            $(".overview-tree").after(append_text);
+        }
+
+        function addAdminMgment() {
+            var append_text = "<li class=\"treeview\"><a href=\"../../../admin/\"><i class=\"iconfont icon-mgment\"></i><span>店面管理</span><span class=\"dash-pull-right\"><i class=\"iconfont icon-right-arrow\" style=\"font-size:12px;\"></i></span></a></li>";
+            $(".overview-tree").after(append_text);
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <header class="head-content">
+            <div class="site-branding">
+                <div class="site-title">
+                    <a herf="../../" rel="home">餐饮店管理系统</a>
+                    <h5>主页</h5>
+                </div>
+            </div>
+            <a class="user-box" href="javascript:void(0);" onclick="showInfoBox()">
+                <div class="user-pic-wrap"><img class="userPic" src="" /></div>
+                <div class="user-name"></div>
+            </a>
+            <div class="info-box">
+                <div class="info-box-block">
+                    <div class="info-box-arrow"></div>
+                    <div class="user-pic-wrap"><img class="userPic" src="" /></div>
+                    <div class="user-info-wrap">
+                        <div class="user-name"></div>
+                        <div class="user-type"></div>
+                    </div>
+                    <div class="logout-wrap">
+                        <a class="logout" href="../../../php/check_login.php?request=logout"><i class="iconfont icon-logout"></i>退出登录</a>
+                    </div>
+                </div>
+            </div>
+            <a class="shelter" href="javascript:void(0);" onclick="hideShelter()"></a>
+        </header>
+        <div class="main-content">
+            <div class="bar-box">
+                <aside class="left-bar">
+                    <section class="sidebar">
+                        <ul class="sidebar-menu">
+                            <li class="treeview overview-tree active">
+                                <a id="menu-overview-item" href="javascript:void(0);">
+                                    <i class="iconfont icon-overview"></i>
+                                    <span>总览</span>
+                                    <span class="dash-pull-right">
+                                        <i class="iconfont icon-right-arrow " style="font-size:12px;"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="treeview">
+                                <a id="menu-userUpdate-item" href="javascript:void(0);">
+                                    <i class="iconfont icon-user"></i>
+                                    <span>个人信息</span>
+                                    <span class="dash-pull-right">
+                                            <i class="iconfont icon-right-arrow " style="font-size:12px;"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="treeview">
+                                <a id="menu-settings-item" href="javascript:void(0);">
+                                    <i class="iconfont icon-settings"></i>
+                                    <span>设置</span>
+                                    <span class="dash-pull-right">
+                                            <i class="iconfont icon-right-arrow " style="font-size:12px;"></i>
+                                        </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </section>
+                </aside>
+                <div class="mask"></div>
+                <div class="main-bar">
+                    <div class="title">
+                        <h4 class="title-left">更新管理员信息</h4>
+                    </div>
+                    <div class='box-wrap'>
+                        <div class="box">
+                            <div class="inner-top-wrap"></div>
+                            <div class="inner-box">
+                                <div class="admin-info-box col-xs-12 col-md-4">
+                                    <div class="admin-pic-wrap"><img class="adminPic" src="" /></div>
+                                    <div class="admin-info-wrap">
+                                        <div class="admin-name"></div>
+                                        <div class="admin-type"></div>
+                                        <div class="adm-btn-area">
+                                            <button class="btn-delete adm-btn-delete" type="button" value="">删除管理员</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="admin-info-box col-xs-12 col-md-8">
+                                    <div class="col-xs-0 col-md-12" style="padding: 5px;"></div>
+                                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+                                        <h5 class="adm-gender"></h5>
+                                        <h5 class="adm-age"></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box">
+                            <div class="inner-box">
+                                <div class="inner-item" style="cursor: pointer;" onclick="showBox(this)">
+                                    <div class="box-title">
+                                        <h4>修改信息</h4>
+                                        <a class="box-arrow box-down-arrow" href="javascript:void(0);"><i class="iconfont icon-down-arrow"></i></a>
+                                        <a class="box-arrow box-up-arrow" style="display: none;" href="javascript:void(0);"><i class="iconfont icon-up-arrow"></i></a>
+                                    </div>
+                                </div>
+                                <div class="inner-item box-inner-hide" style="display: none;">
+                                    <div class="col-xs-0 col-sm-1 col-md-2 col-lg-3"></div>
+                                    <form id="updateEmployee-form" class="form-horizontal col-xs-12 col-sm-10 col-md-8 col-lg-6" method="post" action="">
+
+                                        <div class="btn-area">
+                                            <button id="submit" name="submit" type="submit" class="submit">修改</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box">
+                            <div class="inner-box">
+                                <div class="inner-item" style="cursor: pointer;" onclick="showBox(this)">
+                                    <div class="box-title">
+                                        <h4>更换照片</h4>
+                                        <a class="box-arrow box-down-arrow" href="javascript:void(0);"><i class="iconfont icon-down-arrow"></i></a>
+                                        <a class="box-arrow box-up-arrow" style="display: none;" href="javascript:void(0);"><i class="iconfont icon-up-arrow"></i></a>
+                                    </div>
+                                </div>
+                                <div class="inner-item box-inner-hide" style="display: none;padding:5px 20px">
+                                    <h5>更换头像</h5>
+                                    <div class="col-xs-0 col-sm-1 col-md-2 col-lg-3"></div>
+                                    <div class="clip-box col-xs-12 col-sm-10 col-md-8 col-lg-6" style="text-align: center;padding: 20px 10px;">
+                                        <a href="javascript:void(0);" class="a-upload">
+                                            <input type="file" id="file" onclick="start()" /> 点击选择图片
+                                        </a>
+                                        <div id="view"></div>
+                                        <div class="btn-area">
+                                            <button id="emp-uploadpic" type="button" class="submit">修改</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        $(document).ready(() => {
+                            barAppend("adminList");
+
+                            function changeMainBar(itemName) {
+                                $("#menu-" + itemName + "-item").click(() => {
+                                    $.pjax({
+                                        url: "../../" + itemName,
+                                        container: 'html'
+                                    });
+                                });
+                            }
+                            //
+                            changeMainBar("overview");
+                            changeMainBar("userUpdate");
+                            changeMainBar("settings");
+                            if (getUserInfo().admin_type == 1) {
+                                changeMainBar("adminList");
+                                changeMainBar("addAdmin");
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <footer class="foot-content">
+            <div class="copyright">
+                <h5 class="copyright-text">&copy;&nbsp;餐饮店管理系统&nbsp;&nbsp;2018</h5>
+            </div>
+        </footer>
+    </div>
+</body>
+
+
+</html>

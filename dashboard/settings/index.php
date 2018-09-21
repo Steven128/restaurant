@@ -17,7 +17,7 @@ session_start();
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
-    <script type="text/javascript" src="../../js/dashboard.js"></script>
+    <script type="text/javascript" src="../../js/das_mgment/dashboard.js"></script>
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../js/Chart.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
@@ -71,7 +71,7 @@ echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['a
                 <aside class="left-bar">
                     <section class="sidebar">
                         <ul class="sidebar-menu">
-                            <li class="treeview overview-treeview active">
+                            <li class="treeview overview-tree active">
                                 <a id="menu-overview-item" href="javascript:void(0);">
                                     <i class="iconfont icon-overview"></i>
                                     <span>总览</span>
@@ -106,14 +106,17 @@ echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['a
                     <div class="title">
                         <h4 class="title-left">设置</h4>
                     </div>
-                    <div class="inner-top-wrap"></div>
-                    <div class="box col-xs-12">
-                        <div class="box-inner">
-                            <h5>目前还没有什么可以设置的(￣▽￣)~*</h5>
+                    <div class='box-wrap'>
+                        <div class="inner-top-wrap"></div>
+                        <div class="box col-xs-12">
+                            <div class="box-inner">
+                                <h5>目前还没有什么可以设置的(￣▽￣)~*</h5>
+                            </div>
                         </div>
                     </div>
                     <script>
                         $(document).ready(() => {
+                            barAppend("settings");
                             function changeMainBar(itemName) {
                                 $("#menu-" + itemName + "-item").click(() => {
                                     $.pjax({
