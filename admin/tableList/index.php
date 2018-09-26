@@ -24,18 +24,18 @@ session_start();
     <script type="text/javascript" src="../../js/plugins/jquery.tablesorter.min.js"></script>
     <script type="text/javascript" src="../../js/plugins/jquery.filtertable.js"></script>
     <?php
-if (!isset($_SESSION['admin_id'])) {
-    echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
-} elseif ($_SESSION['admin_type'] != 1 && $_SESSION['admin_type'] != 2) {
-    echo "<script>$(document).ready(() => {window.location.replace(\"../../dashboard\");});</script>";
-}
-?>
+    if (!isset($_SESSION['admin_id'])) {
+        echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
+    } elseif ($_SESSION['admin_type'] != 1 && $_SESSION['admin_type'] != 2) {
+        echo "<script>$(document).ready(() => {window.location.replace(\"../../dashboard\");});</script>";
+    }
+    ?>
 </head>
 
 <body>
     <?php
-$conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
-?>
+    $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
+    ?>
     <div class="container">
         <header class="head-content">
             <div class="site-branding">
@@ -55,18 +55,18 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
                 <aside class="left-bar">
                     <div class="admin-box">
                         <?php
-$admin_type = $_SESSION['admin_type'];
-if ($admin_type == 1) {
-    $admin_type = "超级管理员";
-} elseif ($admin_type == 2) {
-    $admin_type = "管理员";
-} elseif ($admin_type == 3) {
-    $admin_type = "财务管理";
-} elseif ($admin_type == 4) {
-    $admin_type = "库存管理";
-}
-echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /><h4 class=\"online-user\">" . $_SESSION['admin_name'] . "</h4><i class=\"iconfont icon-certificated\" style=\"color: #1afa29;\"></i><h5 class=\"user-type\">" . $admin_type . "</h5>";
-?>
+                        $admin_type = $_SESSION['admin_type'];
+                        if ($admin_type == 1) {
+                            $admin_type = "超级管理员";
+                        } elseif ($admin_type == 2) {
+                            $admin_type = "管理员";
+                        } elseif ($admin_type == 3) {
+                            $admin_type = "财务管理";
+                        } elseif ($admin_type == 4) {
+                            $admin_type = "库存管理";
+                        }
+                        echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /><h4 class=\"online-user\">" . $_SESSION['admin_name'] . "</h4><i class=\"iconfont icon-certificated\" style=\"color: #1afa29;\"></i><h5 class=\"user-type\">" . $admin_type . "</h5>";
+                        ?>
                     </div>
                     <section class="sidebar">
                         <ul class="sidebar-menu">
@@ -203,30 +203,30 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                     </thead>
                                     <tbody class="tableListTableBody">
                                         <?php
-$sql_query = "SELECT TABLE_ID,TABLE_NUMBER,DEFAULT_NUMBER,TABLE_ORDER_STATUS FROM SCOTT.RES_TABLE WHERE TAB_STATUS=0 ORDER BY TABLE_ID DESC";
-$statement = oci_parse($conn, $sql_query);
-oci_execute($statement);
-//$count = 0;
-while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-    //$count++;
-    // $table_id = $row[0];
-    // $table_number = $row[1];
-    // $default_number = $row[2];
-    // $table_order_status = $row[3];
-    // //使用一个数组放入一个员工的信息
-    // $data_single = array("table_id" => $table_id, "table_number" => $table_number, "default_number" => $default_number, "table_order_status" => $table_order_status);
-    // array_push($table_data_array, $data_single); //将单个员工信息的数组添加到$emp_data_array中
-    if ($row[3] == 0) {
-        $row[3] = "无人";
-    } elseif ($row[3] == 1) {
-        $row[3] = "预定";
-    } elseif ($row[3] == 2) {
-        $row[3] = "有人";
-    }
-    echo "<tr><td>".substr($row[0], 9, 12)."</td><td>$row[1]</td><td>$row[2]</td><td>$row[3]</td><td><a class=\"table-update-btn update-table\" href = \"javascript:void(0);\" onclick=\"update_table('" . $row[0] . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
-}
+                                        $sql_query = "SELECT TABLE_ID,TABLE_NUMBER,DEFAULT_NUMBER,TABLE_ORDER_STATUS FROM SCOTT.RES_TABLE WHERE TAB_STATUS=0 ORDER BY TABLE_ID DESC";
+                                        $statement = oci_parse($conn, $sql_query);
+                                        oci_execute($statement);
+                                        //$count = 0;
+                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+                                            //$count++;
+                                            // $table_id = $row[0];
+                                            // $table_number = $row[1];
+                                            // $default_number = $row[2];
+                                            // $table_order_status = $row[3];
+                                            // //使用一个数组放入一个员工的信息
+                                            // $data_single = array("table_id" => $table_id, "table_number" => $table_number, "default_number" => $default_number, "table_order_status" => $table_order_status);
+                                            // array_push($table_data_array, $data_single); //将单个员工信息的数组添加到$emp_data_array中
+                                            if ($row[3] == 0) {
+                                                $row[3] = "无人";
+                                            } elseif ($row[3] == 1) {
+                                                $row[3] = "预定";
+                                            } elseif ($row[3] == 2) {
+                                                $row[3] = "有人";
+                                            }
+                                            echo "<tr><td>".substr($row[0], 9, 12)."</td><td>$row[1]</td><td>$row[2]</td><td>$row[3]</td><td><a class=\"table-update-btn update-table\" href = \"javascript:void(0);\" onclick=\"update_table('" . $row[0] . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
+                                        }
 
-?>
+                                        ?>
                                         <script>
                                         $(() => {
                                             $(".tableListTable").tablesorter();

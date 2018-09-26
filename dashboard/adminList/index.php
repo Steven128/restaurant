@@ -24,18 +24,18 @@ session_start();
     <script type="text/javascript" src="../../js/plugins/jquery.tablesorter.min.js"></script>
     <script type="text/javascript" src="../../js/plugins/jquery.filtertable.js"></script>
     <?php
-if (!isset($_SESSION['admin_id'])) {
-    echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
-} elseif ($_SESSION['admin_type'] != 1) {
-    echo "<script>$(document).ready(() => {window.location.replace(\"../overview\");});</script>";
-}
-?>
+    if (!isset($_SESSION['admin_id'])) {
+        echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
+    } elseif ($_SESSION['admin_type'] != 1) {
+        echo "<script>$(document).ready(() => {window.location.replace(\"../overview\");});</script>";
+    }
+    ?>
 </head>
 
 <body>
     <?php
-$conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
-?>
+    $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
+    ?>
     <div class="container">
         <header class="head-content">
             <div class="site-branding">
@@ -51,18 +51,18 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
                 <div class="info-box-block">
                     <div class="info-box-arrow"></div>
                     <?php
-$admin_type = $_SESSION['admin_type'];
-if ($admin_type == 1) {
-    $admin_type = "超级管理员";
-} elseif ($admin_type == 2) {
-    $admin_type = "管理员";
-} elseif ($admin_type == 3) {
-    $admin_type = "财务管理";
-} elseif ($admin_type == 4) {
-    $admin_type = "库存管理";
-}
-echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "\" /></div><div class=\"user-info-wrap\"><div class=\"user-name\">" . $_SESSION['admin_name'] . "</div><div class=\"user-type\">" . $admin_type . "</div></div>";
-?>
+                    $admin_type = $_SESSION['admin_type'];
+                    if ($admin_type == 1) {
+                        $admin_type = "超级管理员";
+                    } elseif ($admin_type == 2) {
+                        $admin_type = "管理员";
+                    } elseif ($admin_type == 3) {
+                        $admin_type = "财务管理";
+                    } elseif ($admin_type == 4) {
+                        $admin_type = "库存管理";
+                    }
+                    echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "\" /></div><div class=\"user-info-wrap\"><div class=\"user-name\">" . $_SESSION['admin_name'] . "</div><div class=\"user-type\">" . $admin_type . "</div></div>";
+                    ?>
                     <div class="logout-wrap">
                         <a class="logout" href="../../php/check_login.php?request=logout"><i class="iconfont icon-logout"></i>退出登录</a>
                     </div>
@@ -127,31 +127,31 @@ echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['a
                                     </thead>
                                     <tbody class="employeeListTableBody">
                                         <?php
-$sql_query = "SELECT ADMIN_ID,ADMIN_NAME,ADMIN_TYPE,CREATE_TIME,ADMIN_PIC FROM SCOTT.ADMIN WHERE ADM_STATUS>0 ORDER BY ADMIN_TYPE ASC,ADMIN_NAME ASC";
-$statement = oci_parse($conn, $sql_query);
-oci_execute($statement);
-$count = 0;
-while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-    $count++;
-    $admin_id = $row[0];
-    $name = $row[1];
-    $admin_type = $row[2];
-    $create_time = $row[3];
-    $admin_pic = $row[4];
-    //
-    if ($admin_type == 1) {
-        $admin_type = "超级管理员";
-    } elseif ($admin_type == 2) {
-        $admin_type = "管理员";
-    } elseif ($admin_type == 3) {
-        $admin_type = "财务管理员";
-    } elseif ($admin_type == 4) {
-        $admin_type = "仓库管理员";
-    }
-    //
-    echo "<tr><td>$count</td><td><img src=\"$admin_pic\" / width=\"50px\" height=\"50px\"></td><td>$name</td><td>$admin_type</td><td>$create_time</td><td><a class=\"table-update-btn update-admin\" href = \"javascript:void(0);\" onclick=\"update_admin('" . $admin_id . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
-}
-?>
+                                        $sql_query = "SELECT ADMIN_ID,ADMIN_NAME,ADMIN_TYPE,CREATE_TIME,ADMIN_PIC FROM SCOTT.ADMIN WHERE ADM_STATUS>0 ORDER BY ADMIN_TYPE ASC,ADMIN_NAME ASC";
+                                        $statement = oci_parse($conn, $sql_query);
+                                        oci_execute($statement);
+                                        $count = 0;
+                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+                                            $count++;
+                                            $admin_id = $row[0];
+                                            $name = $row[1];
+                                            $admin_type = $row[2];
+                                            $create_time = $row[3];
+                                            $admin_pic = $row[4];
+                                            //
+                                            if ($admin_type == 1) {
+                                                $admin_type = "超级管理员";
+                                            } elseif ($admin_type == 2) {
+                                                $admin_type = "管理员";
+                                            } elseif ($admin_type == 3) {
+                                                $admin_type = "财务管理员";
+                                            } elseif ($admin_type == 4) {
+                                                $admin_type = "仓库管理员";
+                                            }
+                                            //
+                                            echo "<tr><td>$count</td><td><img src=\"$admin_pic\" / width=\"50px\" height=\"50px\"></td><td>$name</td><td>$admin_type</td><td>$create_time</td><td><a class=\"table-update-btn update-admin\" href = \"javascript:void(0);\" onclick=\"update_admin('" . $admin_id . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
+                                        }
+                                        ?>
                                         <script>
                                         $(() => {
                                             $(".adminListTable").tablesorter();

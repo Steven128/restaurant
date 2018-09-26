@@ -24,18 +24,18 @@ session_start();
     <script type="text/javascript" src="../../js/plugins/jquery.filtertable.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
     <?php
-if (!isset($_SESSION['admin_id'])) {
-    echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
-} elseif ($_SESSION['admin_type'] != 1 && $_SESSION['admin_type'] != 2) {
-    echo "<script>$(document).ready(() => {window.location.replace(\"../../dashboard\");});</script>";
-}
-?>
+    if (!isset($_SESSION['admin_id'])) {
+        echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
+    } elseif ($_SESSION['admin_type'] != 1 && $_SESSION['admin_type'] != 2) {
+        echo "<script>$(document).ready(() => {window.location.replace(\"../../dashboard\");});</script>";
+    }
+    ?>
 </head>
 
 <body>
     <?php
-$conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
-?>
+    $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
+    ?>
     <div class="container">
         <header class="head-content">
             <div class="site-branding">
@@ -55,18 +55,18 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
                 <aside class="left-bar">
                     <div class="admin-box">
                         <?php
-$admin_type = $_SESSION['admin_type'];
-if ($admin_type == 1) {
-    $admin_type = "超级管理员";
-} elseif ($admin_type == 2) {
-    $admin_type = "管理员";
-} elseif ($admin_type == 3) {
-    $admin_type = "财务管理";
-} elseif ($admin_type == 4) {
-    $admin_type = "库存管理";
-}
-echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /><h4 class=\"online-user\">" . $_SESSION['admin_name'] . "</h4><i class=\"iconfont icon-certificated\" style=\"color: #1afa29;\"></i><h5 class=\"user-type\">" . $admin_type . "</h5>";
-?>
+                        $admin_type = $_SESSION['admin_type'];
+                        if ($admin_type == 1) {
+                            $admin_type = "超级管理员";
+                        } elseif ($admin_type == 2) {
+                            $admin_type = "管理员";
+                        } elseif ($admin_type == 3) {
+                            $admin_type = "财务管理";
+                        } elseif ($admin_type == 4) {
+                            $admin_type = "库存管理";
+                        }
+                        echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /><h4 class=\"online-user\">" . $_SESSION['admin_name'] . "</h4><i class=\"iconfont icon-certificated\" style=\"color: #1afa29;\"></i><h5 class=\"user-type\">" . $admin_type . "</h5>";
+                        ?>
                     </div>
                     <section class="sidebar">
                         <ul class="sidebar-menu">
@@ -203,36 +203,36 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                     </thead>
                                     <tbody class="inventoryListTableBody">
                                         <?php
-$sql_query = "SELECT INVENTORY_ID,GOODS_ID,QUANTITY FROM SCOTT.INVENTORY WHERE INV_STATUS>0";
-$statement = oci_parse($conn, $sql_query);
-oci_execute($statement);
-$count = 0;
-while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-    $count++;
-    $sql_query2 = "SELECT GOODS_NAME, GOODS_PRICE, GOODS_TYPE FROM SCOTT.GOODS WHERE GOO_STATUS>0 AND GOODS_ID = '$row[1]'";
-    $statement2 = oci_parse($conn, $sql_query2);
-    oci_execute($statement2);
-    $row2 = oci_fetch_array($statement2, OCI_RETURN_NULLS);
-    // $inventory_id = $row[0];
-    // $goods_id = $row[1];
-    // $quantity = $row[2];
-    // $goods_name = $row2[1];
-    // $goods_price = $row2[2];
-    // $goods_type = $row2[3];
-    // //使用一个数组放入一个员工的信息
-    // $data_single = array("inventory_id" => $inventory_id, "goods_id" => $goods_id, "quantity" => $quantity, "goods_name" => $goods_name, "goods_price" => $goods_price, "goods_type" => $goods_type);
-    // array_push($inv_data_array, $data_single); //将单个员工信息的数组添加到$emp_data_array中
-    //echo "<tr><td>$row[1]</td></td>";
-    if ($row2[2] == 1) {
-        $row2[2] = "粮食";
-    } elseif ($row2[2] == 2) {
-        $row2[2] = "调料";
-    } elseif ($row2[2] == 3) {
-        $row2[2] = "生鲜";
-    }
-    echo "<tr><td>$count</td><td>$row2[0]</td><td>$row[2]</td><td>$row2[1]</td><td>$row2[2]</td></tr>";
-}
-?>
+                                        $sql_query = "SELECT INVENTORY_ID,GOODS_ID,QUANTITY FROM SCOTT.INVENTORY WHERE INV_STATUS>0";
+                                        $statement = oci_parse($conn, $sql_query);
+                                        oci_execute($statement);
+                                        $count = 0;
+                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+                                            $count++;
+                                            $sql_query2 = "SELECT GOODS_NAME, GOODS_PRICE, GOODS_TYPE FROM SCOTT.GOODS WHERE GOO_STATUS>0 AND GOODS_ID = '$row[1]'";
+                                            $statement2 = oci_parse($conn, $sql_query2);
+                                            oci_execute($statement2);
+                                            $row2 = oci_fetch_array($statement2, OCI_RETURN_NULLS);
+                                            // $inventory_id = $row[0];
+                                            // $goods_id = $row[1];
+                                            // $quantity = $row[2];
+                                            // $goods_name = $row2[1];
+                                            // $goods_price = $row2[2];
+                                            // $goods_type = $row2[3];
+                                            // //使用一个数组放入一个员工的信息
+                                            // $data_single = array("inventory_id" => $inventory_id, "goods_id" => $goods_id, "quantity" => $quantity, "goods_name" => $goods_name, "goods_price" => $goods_price, "goods_type" => $goods_type);
+                                            // array_push($inv_data_array, $data_single); //将单个员工信息的数组添加到$emp_data_array中
+                                            //echo "<tr><td>$row[1]</td></td>";
+                                            if ($row2[2] == 1) {
+                                                $row2[2] = "粮食";
+                                            } elseif ($row2[2] == 2) {
+                                                $row2[2] = "调料";
+                                            } elseif ($row2[2] == 3) {
+                                                $row2[2] = "生鲜";
+                                            }
+                                            echo "<tr><td>$count</td><td>$row2[0]</td><td>$row[2]</td><td>$row2[1]</td><td>$row2[2]</td></tr>";
+                                        }
+                                        ?>
                                         <script>
                                         $(() => {
                                             $(".inventoryListTable").tablesorter();

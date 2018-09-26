@@ -24,18 +24,18 @@ session_start();
     <script type="text/javascript" src="../../js/plugins/jquery.filtertable.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
     <?php
-if (!isset($_SESSION['admin_id'])) {
-    echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
-} elseif ($_SESSION['admin_type'] != 1 && $_SESSION['admin_type'] != 2) {
-    echo "<script>$(document).ready(() => {window.location.replace(\"../../dashboard\");});</script>";
-}
-?>
+    if (!isset($_SESSION['admin_id'])) {
+        echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
+    } elseif ($_SESSION['admin_type'] != 1 && $_SESSION['admin_type'] != 2) {
+        echo "<script>$(document).ready(() => {window.location.replace(\"../../dashboard\");});</script>";
+    }
+    ?>
 </head>
 
 <body>
     <?php
-$conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
-?>
+    $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
+    ?>
     <div class="container">
         <header class="head-content">
             <div class="site-branding">
@@ -55,18 +55,18 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
                 <aside class="left-bar">
                     <div class="admin-box">
                         <?php
-$admin_type = $_SESSION['admin_type'];
-if ($admin_type == 1) {
-    $admin_type = "超级管理员";
-} elseif ($admin_type == 2) {
-    $admin_type = "管理员";
-} elseif ($admin_type == 3) {
-    $admin_type = "财务管理";
-} elseif ($admin_type == 4) {
-    $admin_type = "库存管理";
-}
-echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /><h4 class=\"online-user\">" . $_SESSION['admin_name'] . "</h4><i class=\"iconfont icon-certificated\" style=\"color: #1afa29;\"></i><h5 class=\"user-type\">" . $admin_type . "</h5>";
-?>
+                        $admin_type = $_SESSION['admin_type'];
+                        if ($admin_type == 1) {
+                            $admin_type = "超级管理员";
+                        } elseif ($admin_type == 2) {
+                            $admin_type = "管理员";
+                        } elseif ($admin_type == 3) {
+                            $admin_type = "财务管理";
+                        } elseif ($admin_type == 4) {
+                            $admin_type = "库存管理";
+                        }
+                        echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /><h4 class=\"online-user\">" . $_SESSION['admin_name'] . "</h4><i class=\"iconfont icon-certificated\" style=\"color: #1afa29;\"></i><h5 class=\"user-type\">" . $admin_type . "</h5>";
+                        ?>
                     </div>
                     <section class="sidebar">
                         <ul class="sidebar-menu">

@@ -30,7 +30,7 @@ if (!$conn) {
     echo "<br>写入进货表数据成功";
 
     createInventoryData($conn);
-    echo "<br>写入库存表数据成功"; 
+    echo "<br>写入库存表数据成功";
 
     createLossData($conn);
     echo"<br>写入损失表数据成功";
@@ -38,11 +38,13 @@ if (!$conn) {
     createDishData($conn);
     echo"<br>写入菜品表数据成功";
 
-    createOrderData($conn,1000);
+    createOrderData($conn, 180000);
     echo"<br>写入订单表数据成功";
 
-    oci_close($conn);
+    createPreOrderData($conn, 50);
+    echo"<br>写入预定表数据成功";
 
+    oci_close($conn);
 }
 // echo date("y_m_d", time());
 // date("y_m_d", strtotime("-1 day"));
@@ -80,7 +82,6 @@ function createEmployeeData($conn, $quantity)
     $_date = date("Y-m-d", time());
 
     for ($i = 0; $i < $quantity; $i++) {
-
         $working_year = mt_rand(0, 50) / 10;
         $employ_time = date("Y-m-d", (strtotime($_date) - $working_year * 365 * 24 * 3600));
         $gender = mt_rand(0, 1);
@@ -195,55 +196,54 @@ function createGoodsData($conn)
 function createInventoryData($conn)
 {
     $query="SELECT * FROM SCOTT.GOODS";
-    $statement1=oci_parse($conn,$query);
+    $statement1=oci_parse($conn, $query);
     oci_execute($statement1);
     $count=0;
-    while($row=oci_fetch_array($statement1,OCI_RETURN_NULLS)){
+    while ($row=oci_fetch_array($statement1, OCI_RETURN_NULLS)) {
         $count++;
         $goods_id = $row[0];
         $_inventory_id=$count < 10 ? "00000$count" : ($count < 100 ? "0000$count" : ($count < 1000 ? "000$count" : "00$count"));
         $inventory_id="inv_$_inventory_id";
-        $quantity=mt_rand(50,300);
+        $quantity=mt_rand(50, 300);
         //写入库存信息
         $sql_insert="INSERT INto SCOTT.inventory".
             "(inventory_id,goods_id,quantity)".
             "VALUES".
             "('$inventory_id','$goods_id',$quantity)";
-        $statement2=oci_parse($conn,$sql_insert);
+        $statement2=oci_parse($conn, $sql_insert);
         // echo "$inventory_id   $goods_id    $quantity<br>";
         oci_execute($statement2);
     }
     oci_free_statement($statement1);
     oci_free_statement($statement2);
-
 }
 
 function createPurchaseData($conn)//id根据进货单创建时间,31种,进货单号由发票号码12+8组成
 {
-    $date=date("Y-m-d",time());
+    $date=date("Y-m-d", time());
     $begin_time=strtotime("2010-01-01 07:00:00");
     $end_time=strtotime("$date 20:00:00");
     $sql1="SELECT goods_id FROM SCOTT.goods";
-    $statement=oci_parse($conn,$sql1);
+    $statement=oci_parse($conn, $sql1);
     $res=oci_execute($statement);
     $goods_array=array();
     while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) {
         $goods_array[]=$row[0];
     }
-    for($i=0;$i<500;$i++){
-        $rand=mt_rand($begin_time,$end_time);
-        $pur_id=date("Ymd_His",$rand);
-        $_date=substr($pur_id,0,8);
+    for ($i=0;$i<500;$i++) {
+        $rand=mt_rand($begin_time, $end_time);
+        $pur_id=date("Ymd_His", $rand);
+        $pur_time=date("Y-m-d H:i:s", $rand);
         $pur_id="pur_$pur_id";
-        $rand1=strval(mt_rand(10000,30000)).strval(mt_rand(10000,99999)).strval(mt_rand(10000,99999)).strval(mt_rand(10000,99999));
-        $rand2=mt_rand(0,30);
-        $rand3=mt_rand(30,100);
+        $rand1=strval(mt_rand(10000, 30000)).strval(mt_rand(10000, 99999)).strval(mt_rand(10000, 99999)).strval(mt_rand(10000, 99999));
+        $rand2=mt_rand(0, 30);
+        $rand3=mt_rand(30, 100);
         $goods_id=$goods_array[$rand2];
         $sql_insert="INSERT INTO SCOTT.purchase".
-            "(purchase_id,purchase_number,goods_id,purchase_quantity,purchase_date)".
+            "(purchase_id,purchase_number,goods_id,purchase_quantity,purchase_time)".
             "VALUES".
-            "('$pur_id','$rand1','$goods_id',$rand3,'$_date')";
-        $statement1=oci_parse($conn,$sql_insert);
+            "('$pur_id','$rand1','$goods_id',$rand3,'$pur_time')";
+        $statement1=oci_parse($conn, $sql_insert);
         // echo "$pur_id   $_date   $rand1<br>";
         oci_execute($statement1);
     }
@@ -253,9 +253,9 @@ function createPurchaseData($conn)//id根据进货单创建时间,31种,进货�
 
 function createLossData($conn)//id根据los_日期
 {
-    $date=date("Y-m-d",time());
+    $date=date("Y-m-d", time());
     $sql1="SELECT goods_id FROM SCOTT.goods";
-    $statement=oci_parse($conn,$sql1);
+    $statement=oci_parse($conn, $sql1);
     $res=oci_execute($statement);
     $goods_array=array();
     while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) {
@@ -263,20 +263,20 @@ function createLossData($conn)//id根据los_日期
     }
     $begin_time=strtotime("2010-01-10 07:00:00");
     $end_time=strtotime("$date 20:00:00");
-    for($i=0;$i<80;$i++){
-        $rand=mt_rand($begin_time,$end_time);
-        $rand_time=date("Y-m-d H:i:s",$rand);
-        $id_time=date("Ymd",$rand);
-        $rand2=mt_rand(0,30);
+    for ($i=0;$i<80;$i++) {
+        $rand=mt_rand($begin_time, $end_time);
+        $rand_time=date("Y-m-d", $rand);
+        $id_time=date("Ymd", $rand);
+        $rand2=mt_rand(0, 30);
         $loss_id="los_$id_time";
-        $loss_quantity=rand(5,30);
+        $loss_quantity=rand(5, 30);
         $goods_id=$goods_array[$rand2];
         $sql_insert="INSERT INTO SCOTT.loss".
-            "(loss_id,goods_id,quantity,loss_time)".
+            "(loss_id,goods_id,quantity,loss_date)".
             "VALUES".
             "('$loss_id','$goods_id',$loss_quantity,'$rand_time')";
         // echo "$goods_id    $rand_time    $loss_id<br>";
-        $statement2=oci_parse($conn,$sql_insert);
+        $statement2=oci_parse($conn, $sql_insert);
         oci_execute($statement2);
     }
     oci_free_statement($statement);
@@ -286,8 +286,8 @@ function createLossData($conn)//id根据los_日期
 function createDishData($conn)//type=2为主食，type=1为早餐，type=3为甜品和饮料，type=4为小食
 {
     $dish_list=file_get_contents("dish.json");
-    $dish_data=json_decode($dish_list,true);
-    for($i=0;$i<sizeof($dish_data,0);$i++){
+    $dish_data=json_decode($dish_list, true);
+    for ($i=0;$i<sizeof($dish_data, 0);$i++) {
         $dish_pic=$dish_data[$i]['dish_pic'];
         $dish_name=$dish_data[$i]['dish_name'];
         $dish_type=$dish_data[$i]['dish_type'];
@@ -299,7 +299,7 @@ function createDishData($conn)//type=2为主食，type=1为早餐，type=3为甜
             "VALUES" .
             "('$dish_id','$dish_name','$dish_pic',$dish_price,$dish_type)";
         // echo "$dish_id   $dish_name   $dish_pic   $dish_price   $dish_type <br>";
-        $statement=oci_parse($conn,$sql_insert);
+        $statement=oci_parse($conn, $sql_insert);
         oci_execute($statement);
     }
     oci_free_statement($statement);
@@ -315,7 +315,7 @@ function createTableData($conn, $quantity)
             $table_id = "tab_comm_$table_number";
             if ($i < $quantity * 0.2) {
                 $default_number = 4;
-            } else if ($i < $quantity * 0.4) {
+            } elseif ($i < $quantity * 0.4) {
                 $default_number = 6;
             } else {
                 $default_number = 8;
@@ -341,14 +341,14 @@ function createTableData($conn, $quantity)
     oci_free_statement($statement);
 }
 
-function createOrderData($conn,$quantity)//订单编号用ord_餐桌号_下单时间
+function createOrderData($conn, $quantity)//订单编号用ord_餐桌号_下单时间
 {
-    $date=date("Y-m-d",time());
+    $date=date("Y-m-d", time());
     $dish_list=file_get_contents("dish.json");
-    $dish_data=json_decode($dish_list,true);
-    $dish_count=sizeof($dish_data,0);
+    $dish_data=json_decode($dish_list, true);
+    $dish_count=sizeof($dish_data, 0);
     $sql_select="SELECT table_id FROM SCOTT.res_table";
-    $statement1=oci_parse($conn,$sql_select);
+    $statement1=oci_parse($conn, $sql_select);
     oci_execute($statement1);
     $tables_array=array();
     $count=-1;
@@ -358,55 +358,78 @@ function createOrderData($conn,$quantity)//订单编号用ord_餐桌号_下单�
     }
     $begin_time=strtotime("2010-01-01 07:00:00");
     $end_time=strtotime("$date 23:59:59");
-    for($x=0;$x<$quantity;$x++){
+    for ($x=0;$x<$quantity;$x++) {
         $dish_list=null;//点菜列表
         $sum_price=0;//总价
-        $rand1=mt_rand(0,$count);
+        $rand1=mt_rand(0, $count);
         $table_id=$tables_array[$rand1];//餐桌id
-        $table_number=substr($table_id,-3);//餐桌号
-        $rand2=mt_rand($begin_time,$end_time);//随机下单时间
-        $order_time=date("YmdHis",$rand2);//下单时间
-        $pay_time=date("Y-m-d H:i:s",strtotime('+1 hour',$rand2));//结账时间
+        $table_number=substr($table_id, -3);//餐桌号
+        $rand2=mt_rand($begin_time, $end_time);//随机下单时间
+        $order_time=date("YmdHis", $rand2);//下单时间
+        $rand5=mt_rand(1, 3);//付款方式&用餐时间
+        $pay_time=date("Y-m-d H:i:s", strtotime('+'.$rand5.'hour', $rand2));//结账时间
         $order_id="ord_"."$table_number"."_$order_time";//订单id
-        $rand3=mt_rand(3,10);//随机每单点菜数
-        for($i=0;$i<$rand3;$i++){//随机生成点菜单
-            $rand4=mt_rand(0,$dish_count-1);
+        $rand3=mt_rand(3, 10);//随机每单点菜数
+        for ($i=0;$i<$rand3;$i++) {//随机生成点菜单
+            $rand4=mt_rand(0, $dish_count-1);
             $dish_type=$dish_data[$rand4]['dish_type'];
             $param = $rand4 < 10 ? "000$rand4" : ($rand4 < 100 ? "00$rand4" : "0$rand4");
             $dish_id="dis_$dish_type"."_$param";
             $dish_list="$dish_list"."$dish_id";
             $sum_price+=(float)$dish_data[$rand4]['dish_price'];
-            if($i<$rand3-1){
+            if ($i<$rand3-1) {
                 $dish_list.=",";
             }
-        } 
-        $rand5=mt_rand(1,3);//付款方式
+        }
         $order_note="多放香菜";
         //echo" $order_id   $dish_list   $sum_price   $rand5  $table_id   $pay_time  $order_note <br>";
         $sql_insert="INSERT INTO SCOTT.order_list".
             "(order_id,dish_list,total_price,pay_method,pay_status,table_id,pay_time,order_note)".
             "VALUES".
             "('$order_id','$dish_list',$sum_price,$rand5,1,'$table_id','$pay_time','$order_note')";
-        $statement2=oci_parse($conn,$sql_insert);
+        $statement2=oci_parse($conn, $sql_insert);
         oci_execute($statement2);
     }
     oci_free_statement($statement1);
     oci_free_statement($statement2);
 }
 
-function createPreOrderData($conn)
+function createPreOrderData($conn, $quantity)
 {
-
+    $sql_select="SELECT order_id,dish_list FROM SCOTT.order_list";
+    $statement1=oci_parse($conn, $sql_select);
+    oci_execute($statement1);
+    $order_id_array[]=array();
+    $dish_list_array[]=array();
+    while ($row=oci_fetch_array($statement1, OCI_RETURN_NULLS)) {
+        $order_id_array[]=$row[0];
+        $dish_list_array[]=$row[1];
+    }
+    for ($i=0;$i<$quantity;$i++) {
+        $rand1=mt_rand(0, 999);
+        $pre_order="pre_".substr($order_id_array[$rand1], -18);
+        $pre_dish=$dish_list_array[$rand1];
+        $order_time=substr($order_id_array[$rand1], -14);
+        $pre_order_time=date("Y-m-d H:i:s", strtotime($order_time));
+        $arrive_time=date("Y-m-d H:i:s", strtotime('+20 minute', strtotime($pre_order_time)));
+        $sql_insert="INSERT INTO SCOTT.pre_order".
+            "(preorder_id,preorder_time,arrive_time,order_id,dish_list)".
+            "VALUES".
+            "('$pre_order','$pre_order_time','$arrive_time','$pre_dish')";
+        //echo"  $pre_order   $pre_order_time  $arrive_time $pre_dish<br>";
+        $statement2=oci_parse($conn, $sql_insert);
+        oci_execute($statement2);
+    }
+    oci_free_statement($statement1);
+    oci_free_statement($statement2);
 }
 
 function createSalesData($conn)
 {
-
 }
 
 function createEvaluateData($conn)
 {
-
 }
 
 function createFinanceData($conn, $quantity)

@@ -203,7 +203,7 @@ if (!$conn) {
         oci_execute($statement);
         $statement = oci_parse($conn, "COMMENT ON COLUMN loss.quantity IS '损失数量'");
         oci_execute($statement);
-        $statement = oci_parse($conn, "COMMENT ON COLUMN loss.loss_time IS '损失时间'");
+        $statement = oci_parse($conn, "COMMENT ON COLUMN loss.loss_date IS '损失时间'");
         oci_execute($statement);
         $statement = oci_parse($conn, "COMMENT ON COLUMN loss.los_status IS '状态，0无效 1有效'");
         oci_execute($statement);
@@ -232,7 +232,7 @@ if (!$conn) {
         oci_execute($statement);
         $statement = oci_parse($conn, "COMMENT ON COLUMN purchase.purchase_quantity IS '数量'");
         oci_execute($statement);
-        $statement = oci_parse($conn, "COMMENT ON COLUMN purchase.purchase_date IS '进货日期'");
+        $statement = oci_parse($conn, "COMMENT ON COLUMN purchase.purchase_time IS '进货日期'");
         oci_execute($statement);
         $statement = oci_parse($conn, "COMMENT ON COLUMN purchase.pur_status IS '状态，0无效 1有效'");
         oci_execute($statement);
@@ -295,6 +295,7 @@ if (!$conn) {
 
     $sql_create_tab = "CREATE TABLE order_list(" .
         "order_id VARCHAR(25) NOT NULL PRIMARY KEY," .
+        "table_id VARCHAR(20) NOT NULL," .
         "dish_list CLOB," .
         "total_price FLOAT," .
         "pay_method NUMBER(1)," .
@@ -307,6 +308,8 @@ if (!$conn) {
     if (oci_execute($statement)) {
         echo "<br>创建订单表成功！";
         $statement = oci_parse($conn, "COMMENT ON TABLE order_list IS '订单表'");
+        oci_execute($statement);
+        $statement = oci_parse($conn, "COMMENT ON COLUMN order_list.table_id IS '餐桌ID（外键）'");
         oci_execute($statement);
         $statement = oci_parse($conn, "COMMENT ON COLUMN order_list.order_id IS '订单ID'");
         oci_execute($statement);
@@ -329,14 +332,14 @@ if (!$conn) {
     }
 
     $sql_create_tab = "CREATE TABLE pre_order(" .
-        "preorder_id VARCHAR(20) NOT NULL PRIMARY KEY," .
+        "preorder_id VARCHAR(25) NOT NULL PRIMARY KEY," .
         "preorder_time VARCHAR(20) NOT NULL," .
         "arrive_time VARCHAR(20) NOT NULL," .
         "order_id VARCHAR(20) NOT NULL," .
         "dish_list CLOB," .
         "table_id VARCHAR(20) NOT NULL," .
         "pre_status NUMBER(1) DEFAULT 1 NOT NULL," .
-        "FOREIGN KEY (table_id) REFERENCES res_table(table_id) ON DELETE CASCADE)" .
+        "FOREIGN KEY (table_id) REFERENCES res_table(table_id) ON DELETE CASCADE," .
         "FOREIGN KEY (order_id) REFERENCES order_list(order_id) ON DELETE CASCADE)";
     $statement = oci_parse($conn, $sql_create_tab);
     if (oci_execute($statement)) {
