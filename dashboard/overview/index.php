@@ -21,7 +21,7 @@ session_start();
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../js/Chart.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
-<?php
+    <?php
 if (!isset($_SESSION['admin_id'])) {
     echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
 }
@@ -29,7 +29,7 @@ if (!isset($_SESSION['admin_id'])) {
 </head>
 
 <body>
-<?php
+    <?php
 $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
 ?>
     <div class="container">
@@ -41,20 +41,20 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
                 </div>
             </div>
             <a class="user-box" href="javascript:void(0);" onclick="showInfoBox()">
-<?php echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /></div><div class=\"user-name\">" . $_SESSION['admin_name'] . "</div>"; ?>
+                <?php echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /></div><div class=\"user-name\">" . $_SESSION['admin_name'] . "</div>"; ?>
             </a>
             <div class="info-box">
                 <div class="info-box-block">
                     <div class="info-box-arrow"></div>
-<?php
+                    <?php
 $admin_type = $_SESSION['admin_type'];
 if ($admin_type == 1) {
     $admin_type = "超级管理员";
-} else if ($admin_type == 2) {
+} elseif ($admin_type == 2) {
     $admin_type = "管理员";
-} else if ($admin_type == 3) {
+} elseif ($admin_type == 3) {
     $admin_type = "财务管理";
-} else if ($admin_type == 4) {
+} elseif ($admin_type == 4) {
     $admin_type = "库存管理";
 }
 echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /></div><div class=\"user-info-wrap\"><div class=\"user-name\">" . $_SESSION['admin_name'] . "</div><div class=\"user-type\">" . $admin_type . "</div></div>";
@@ -85,7 +85,7 @@ echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['a
                                     <i class="iconfont icon-user"></i>
                                     <span>个人信息</span>
                                     <span class="dash-pull-right">
-                                            <i class="iconfont icon-right-arrow " style="font-size:12px;"></i>
+                                        <i class="iconfont icon-right-arrow " style="font-size:12px;"></i>
                                     </span>
                                 </a>
                             </li>
@@ -94,8 +94,8 @@ echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['a
                                     <i class="iconfont icon-settings"></i>
                                     <span>设置</span>
                                     <span class="dash-pull-right">
-                                            <i class="iconfont icon-right-arrow " style="font-size:12px;"></i>
-                                        </span>
+                                        <i class="iconfont icon-right-arrow " style="font-size:12px;"></i>
+                                    </span>
                                 </a>
                             </li>
                         </ul>
@@ -113,53 +113,53 @@ echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['a
                                 var myChart = new Chart(ctx, {
                                     type: 'pie',
                                     data: {
-<?php
-$sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND gender=1";
-$statement = oci_parse($conn, $sql_query);
-oci_execute($statement);
-$male = 0;
-while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-    $male++;
-}
+                                        <?php
+                                        $sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND gender=1";
+                                        $statement = oci_parse($conn, $sql_query);
+                                        oci_execute($statement);
+                                        $male = 0;
+                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+                                            $male++;
+                                        }
 
-$sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND gender=0";
-$statement = oci_parse($conn, $sql_query);
-oci_execute($statement);
-$female = 0;
-while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-    $female++;
-}
+                                        $sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND gender=0";
+                                        $statement = oci_parse($conn, $sql_query);
+                                        oci_execute($statement);
+                                        $female = 0;
+                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+                                            $female++;
+                                        }
 
-$sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND gender>1";
-$statement = oci_parse($conn, $sql_query);
-oci_execute($statement);
-$other = 0;
-while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-    $other++;
-}
-echo "labels: [\"男\",\"女\",\"其他\"],datasets: [{label: '性别',data:[$male,$female,$other"
-?>
-                                        ],
-                                        backgroundColor: [
-                                            'rgba(255, 99, 132, 0.2)',
-                                            'rgba(54, 162, 235, 0.2)',
-                                            'rgba(255, 206, 86, 0.2)',
-                                        ],
-                                        borderColor: [
-                                            'rgba(255,99,132,1)',
-                                            'rgba(54, 162, 235, 1)',
-                                            'rgba(255, 206, 86, 1)',
-                                        ],
-                                        borderWidth: 1
-                                    }]
+                                        $sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND gender>1";
+                                        $statement = oci_parse($conn, $sql_query);
+                                        oci_execute($statement);
+                                        $other = 0;
+                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+                                            $other++;
+                                        }
+                                        echo "labels: [\"男\",\"女\",\"其他\"],datasets: [{label: '性别',data:[$male,$female,$other"
+                                        ?>
+                                    ],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                    ],
+                                    borderColor: [
+                                        'rgba(255,99,132,1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                    ],
+                                    borderWidth: 1
+                                }]
                                 },
                                 options: {}
-                            });
+                                });
                             </script>
                         </div>
                     </div>
                     <div class="chart-box col-xs-12 col-md-6 col-lg-4">
-                    <div class="chart-box-inner">
+                        <div class="chart-box-inner">
                             <h4 class="chart-title">员工年龄</h4>
                             <hr>
                             <canvas id="ageChart"></canvas>
@@ -168,71 +168,71 @@ echo "labels: [\"男\",\"女\",\"其他\"],datasets: [{label: '性别',data:[$ma
                                 var myChart = new Chart(ctx, {
                                     type: 'bar',
                                     data: {
-<?php
-$sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND age>=20 AND age<30";
-$statement = oci_parse($conn, $sql_query);
-oci_execute($statement);
-$age_below_30 = 0;
-while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-    $age_below_30++;
-}
+                                        <?php
+                                        $sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND age>=20 AND age<30";
+                                        $statement = oci_parse($conn, $sql_query);
+                                        oci_execute($statement);
+                                        $age_below_30 = 0;
+                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+                                            $age_below_30++;
+                                        }
 
-$sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND age>=30 AND age<40";
-$statement = oci_parse($conn, $sql_query);
-oci_execute($statement);
-$age_below_40 = 0;
-while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-    $age_below_40++;
-}
+                                        $sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND age>=30 AND age<40";
+                                        $statement = oci_parse($conn, $sql_query);
+                                        oci_execute($statement);
+                                        $age_below_40 = 0;
+                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+                                            $age_below_40++;
+                                        }
 
-$sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND age>=40 AND age<50";
-$statement = oci_parse($conn, $sql_query);
-oci_execute($statement);
-$age_below_50 = 0;
-while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-    $age_below_50++;
-}
+                                        $sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND age>=40 AND age<50";
+                                        $statement = oci_parse($conn, $sql_query);
+                                        oci_execute($statement);
+                                        $age_below_50 = 0;
+                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+                                            $age_below_50++;
+                                        }
 
-$sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND age<20 OR age>=50";
-$statement = oci_parse($conn, $sql_query);
-oci_execute($statement);
-$age_other = 0;
-while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-    $age_other++;
-}
-echo "labels: [\"20~30\",\"30~40\",\"40~50\",\"其他\"],datasets: [{label: '年龄',data:[$age_below_30,$age_below_40,$age_below_50,$age_other"
-?>
-                                        ],
-                                        backgroundColor: [
-                                            'rgba(255, 99, 132, 0.2)',
-                                            'rgba(255, 159, 64, 0.2)',
-                                            'rgba(255, 206, 86, 0.2)',
-                                            'rgba(54, 162, 235, 0.2)'
-                                        ],
-                                        borderColor: [
-                                            'rgba(255,99,132,1)',
-                                            'rgba(255, 159, 64, 1)',
-                                            'rgba(255, 206, 86, 1)',
-                                            'rgb(54, 162, 235)'
-                                        ],
-                                        borderWidth: 1
-                                    }]
+                                        $sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND age<20 OR age>=50";
+                                        $statement = oci_parse($conn, $sql_query);
+                                        oci_execute($statement);
+                                        $age_other = 0;
+                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+                                            $age_other++;
+                                        }
+                                        echo "labels: [\"20~30\",\"30~40\",\"40~50\",\"其他\"],datasets: [{label: '年龄',data:[$age_below_30,$age_below_40,$age_below_50,$age_other"
+                                        ?>
+                                    ],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255,99,132,1)',
+                                        'rgba(255, 159, 64, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgb(54, 162, 235)'
+                                    ],
+                                    borderWidth: 1
+                                }]
                                 },
                                 options: {
-                                    scales: {
-                                        xAxes: [{
-                                            gridLines: {
-                                                offsetGridLines: true
-                                            }
-                                        }],
-                                        yAxes:[{
-                                            ticks:{
-                                                beginAtZero:true
-                                            }
-                                        }]
-                                    }
+                                scales: {
+                                    xAxes: [{
+                                        gridLines: {
+                                            offsetGridLines: true
+                                        }
+                                    }],
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
                                 }
-                            });
+                                }
+                                });
                             </script>
                         </div>
                     </div>
@@ -248,6 +248,7 @@ echo "labels: [\"20~30\",\"30~40\",\"40~50\",\"其他\"],datasets: [{label: '年
                     <script>
                         $(document).ready(() => {
                             barAppend("overview");
+
                             function changeMainBar(itemName) {
                                 $("#menu-" + itemName + "-item").click(() => {
                                     $.pjax({

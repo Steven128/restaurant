@@ -18,22 +18,22 @@ session_start();
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
-    
+
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../js/plugins/jquery.tablesorter.min.js"></script>
     <script type="text/javascript" src="../../js/plugins/jquery.filtertable.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
-<?php
+    <?php
 if (!isset($_SESSION['admin_id'])) {
     echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
-} else if ($_SESSION['admin_type'] != 1 && $_SESSION['admin_type'] != 2) {
+} elseif ($_SESSION['admin_type'] != 1 && $_SESSION['admin_type'] != 2) {
     echo "<script>$(document).ready(() => {window.location.replace(\"../../dashboard\");});</script>";
 }
 ?>
 </head>
 
 <body>
-<?php
+    <?php
 $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
 ?>
     <div class="container">
@@ -41,7 +41,7 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
             <div class="site-branding">
                 <a href="javascript:void(0);" class="avatar-small">
                     <div class="menu-button">
-                    <i class="iconfont icon-menu"></i>
+                        <i class="iconfont icon-menu"></i>
                     </div>
                 </a>
                 <div class="site-title">
@@ -58,11 +58,11 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
 $admin_type = $_SESSION['admin_type'];
 if ($admin_type == 1) {
     $admin_type = "超级管理员";
-} else if ($admin_type == 2) {
+} elseif ($admin_type == 2) {
     $admin_type = "管理员";
-} else if ($admin_type == 3) {
+} elseif ($admin_type == 3) {
     $admin_type = "财务管理";
-} else if ($admin_type == 4) {
+} elseif ($admin_type == 4) {
     $admin_type = "库存管理";
 }
 echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /><h4 class=\"online-user\">" . $_SESSION['admin_name'] . "</h4><i class=\"iconfont icon-certificated\" style=\"color: #1afa29;\"></i><h5 class=\"user-type\">" . $admin_type . "</h5>";
@@ -94,7 +94,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                     <i class="iconfont icon-finance"></i>
                                     <span>财务管理</span>
                                     <span class="pull-right">
-                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
@@ -113,7 +113,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                     <i class="iconfont icon-inventory"></i>
                                     <span>仓库管理</span>
                                     <span class="pull-right">
-                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
                                 <ul class="treeview-menu menu-open">
@@ -136,7 +136,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                     <i class="iconfont icon-dish"></i>
                                     <span>菜单管理</span>
                                     <span class="pull-right">
-                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
@@ -155,8 +155,8 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                     <i class="iconfont icon-table"></i>
                                     <span>餐桌管理</span>
                                     <span class="pull-right">
-                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
-                                        </span>
+                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                    </span>
                                 </a>
                                 <ul class="treeview-menu">
                                     <li>
@@ -191,7 +191,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-                            <table class="inventoryListTable tablesorter result">
+                                <table class="inventoryListTable tablesorter result">
                                     <thead>
                                         <tr>
                                             <th>序号</th>
@@ -202,7 +202,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                         </tr>
                                     </thead>
                                     <tbody class="inventoryListTableBody">
-<?php
+                                        <?php
 $sql_query = "SELECT INVENTORY_ID,GOODS_ID,QUANTITY FROM SCOTT.INVENTORY WHERE INV_STATUS>0";
 $statement = oci_parse($conn, $sql_query);
 oci_execute($statement);
@@ -225,9 +225,9 @@ while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
     //echo "<tr><td>$row[1]</td></td>";
     if ($row2[2] == 1) {
         $row2[2] = "粮食";
-    } else if ($row2[2] == 2) {
+    } elseif ($row2[2] == 2) {
         $row2[2] = "调料";
-    } else if ($row2[2] == 3) {
+    } elseif ($row2[2] == 3) {
         $row2[2] = "生鲜";
     }
     echo "<tr><td>$count</td><td>$row2[0]</td><td>$row[2]</td><td>$row2[1]</td><td>$row2[2]</td></tr>";

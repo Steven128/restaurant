@@ -23,7 +23,7 @@ session_start();
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../js/plugins/jquery.tablesorter.min.js"></script>
     <script type="text/javascript" src="../../js/plugins/jquery.filtertable.js"></script>
-<?php
+    <?php
 if (!isset($_SESSION['admin_id'])) {
     echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
 } elseif ($_SESSION['admin_type'] != 1 && $_SESSION['admin_type'] != 2) {
@@ -33,7 +33,7 @@ if (!isset($_SESSION['admin_id'])) {
 </head>
 
 <body>
-<?php
+    <?php
 $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
 ?>
     <div class="container">
@@ -41,7 +41,7 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
             <div class="site-branding">
                 <a href="javascript:void(0);" class="avatar-small">
                     <div class="menu-button">
-                    <i class="iconfont icon-menu"></i>
+                        <i class="iconfont icon-menu"></i>
                     </div>
                 </a>
                 <div class="site-title">
@@ -94,7 +94,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                     <i class="iconfont icon-finance"></i>
                                     <span>财务管理</span>
                                     <span class="pull-right">
-                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
@@ -113,7 +113,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                     <i class="iconfont icon-inventory"></i>
                                     <span>仓库管理</span>
                                     <span class="pull-right">
-                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
@@ -136,7 +136,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                     <i class="iconfont icon-dish"></i>
                                     <span>菜单管理</span>
                                     <span class="pull-right">
-                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
@@ -155,8 +155,8 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                     <i class="iconfont icon-table"></i>
                                     <span>餐桌管理</span>
                                     <span class="pull-right">
-                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
-                                        </span>
+                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                    </span>
                                 </a>
                                 <ul class="treeview-menu menu-open">
                                     <li>
@@ -191,7 +191,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-                            <table class="tableListTable tablesorter result">
+                                <table class="tableListTable tablesorter result">
                                     <thead>
                                         <tr>
                                             <th>餐桌序号</th>
@@ -202,7 +202,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                         </tr>
                                     </thead>
                                     <tbody class="tableListTableBody">
-<?php
+                                        <?php
 $sql_query = "SELECT TABLE_ID,TABLE_NUMBER,DEFAULT_NUMBER,TABLE_ORDER_STATUS FROM SCOTT.RES_TABLE WHERE TAB_STATUS=0 ORDER BY TABLE_ID DESC";
 $statement = oci_parse($conn, $sql_query);
 oci_execute($statement);

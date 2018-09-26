@@ -24,51 +24,53 @@ session_start();
     <script type="text/javascript" src="../../js/plugins/jquery.tablesorter.min.js"></script>
     <script type="text/javascript" src="../../js/plugins/jquery.filtertable.js"></script>
     <style>
-        .display-box-hide,.display-box {
-                width: 0px;
-                height: 0px;
-                position: absolute;
-                left: 50px !important;
-                top: 0px;
-                border: 0px solid #666;
-                border-radius: 5px;
-                background-color: rgba(255,255,255,0.85);
-                z-index: 10;
-            }
+        .display-box-hide,
+        .display-box {
+            width: 0px;
+            height: 0px;
+            position: absolute;
+            left: 50px !important;
+            top: 0px;
+            border: 0px solid #666;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.85);
+            z-index: 10;
+        }
 
-            .display-box:before {
-                position: absolute;
-                content: "";
-                width: 0;
-                height: 0;
-                left: 30px;
-                top: -29px;
-                border-bottom: 30px solid #666;
-                border-left: 10px solid transparent;
-                border-right: 10px solid transparent;
-            }
+        .display-box:before {
+            position: absolute;
+            content: "";
+            width: 0;
+            height: 0;
+            left: 30px;
+            top: -29px;
+            border-bottom: 30px solid #666;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+        }
 
-            .display-box:after {
-                position: absolute;
-                content: "";
-                width: 0;
-                height: 0;
-                left: 30px;
-                top: -26px;
-                border-bottom: 30px solid #fff;
-                border-left: 10px solid transparent;
-                border-right: 10px solid transparent;
-            }
+        .display-box:after {
+            position: absolute;
+            content: "";
+            width: 0;
+            height: 0;
+            left: 30px;
+            top: -26px;
+            border-bottom: 30px solid #fff;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+        }
 
-            .display-box-hide:before {
-                display: "none";
-                content: "";
-            }
-            
-            .display-box-hide:after {
-                display: "none";
-                content: "";
-            }
+        .display-box-hide:before {
+            display: "none";
+            content: "";
+        }
+
+        .display-box-hide:after {
+            display: "none";
+            content: "";
+        }
+
         @media(min-width:768px) {
             .display-box:before {
                 left: -30px;
@@ -87,17 +89,17 @@ session_start();
             }
         }
     </style>
-<?php
+    <?php
 if (!isset($_SESSION['admin_id'])) {
     echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
-} else if ($_SESSION['admin_type'] != 1 && $_SESSION['admin_type'] != 2) {
+} elseif ($_SESSION['admin_type'] != 1 && $_SESSION['admin_type'] != 2) {
     echo "<script>$(document).ready(() => {window.location.replace(\"../../dashboard\");});</script>";
 }
 ?>
 </head>
 
 <body>
-<?php
+    <?php
 $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
 ?>
     <div class="container">
@@ -105,7 +107,7 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
             <div class="site-branding">
                 <a href="javascript:void(0);" class="avatar-small">
                     <div class="menu-button">
-                    <i class="iconfont icon-menu"></i>
+                        <i class="iconfont icon-menu"></i>
                     </div>
                 </a>
                 <div class="site-title">
@@ -122,11 +124,11 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
 $admin_type = $_SESSION['admin_type'];
 if ($admin_type == 1) {
     $admin_type = "超级管理员";
-} else if ($admin_type == 2) {
+} elseif ($admin_type == 2) {
     $admin_type = "管理员";
-} else if ($admin_type == 3) {
+} elseif ($admin_type == 3) {
     $admin_type = "财务管理";
-} else if ($admin_type == 4) {
+} elseif ($admin_type == 4) {
     $admin_type = "库存管理";
 }
 echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /><h4 class=\"online-user\">" . $_SESSION['admin_name'] . "</h4><i class=\"iconfont icon-certificated\" style=\"color: #1afa29;\"></i><h5 class=\"user-type\">" . $admin_type . "</h5>";
@@ -159,7 +161,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                     <i class="iconfont icon-finance"></i>
                                     <span>财务管理</span>
                                     <span class="pull-right">
-                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
@@ -178,7 +180,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                     <i class="iconfont icon-inventory"></i>
                                     <span>仓库管理</span>
                                     <span class="pull-right">
-                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
@@ -201,7 +203,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                     <i class="iconfont icon-dish"></i>
                                     <span>菜单管理</span>
                                     <span class="pull-right">
-                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
@@ -220,8 +222,8 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                     <i class="iconfont icon-table"></i>
                                     <span>餐桌管理</span>
                                     <span class="pull-right">
-                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
-                                        </span>
+                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                    </span>
                                 </a>
                                 <ul class="treeview-menu">
                                     <li>
@@ -259,7 +261,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                 <table class="employeeListTable tablesorter result">
                                     <thead>
                                         <tr>
-                                        <th>序号</th>
+                                            <th>序号</th>
                                             <th>姓名</th>
                                             <th>性别</th>
                                             <th>工龄（年）</th>
@@ -272,7 +274,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                         </tr>
                                     </thead>
                                     <tbody class="employeeListTableBody">
-<?php
+                                        <?php
 $sql_query = "SELECT EMPLOYEE_ID,NAME,GENDER,WORKING_YEAR,AGE,SALARY,PHONE_NUM,EMPLOYEE_TYPE,EMPLOY_TIME FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 ORDER BY EMPLOYEE_TYPE ASC,EMPLOY_TIME DESC,WORKING_YEAR DESC";
 $statement = oci_parse($conn, $sql_query);
 oci_execute($statement);
@@ -291,7 +293,7 @@ while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
     //
     if ($gender == 1) {
         $gender = "男";
-    } else if ($gender == 0) {
+    } elseif ($gender == 0) {
         $gender = "女";
     }
     //
@@ -301,19 +303,19 @@ while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
     //
     if ($employee_type == 1) {
         $employee_type = "管理人员";
-    } else if ($employee_type == 2) {
+    } elseif ($employee_type == 2) {
         $employee_type = "服务员";
-    } else if ($employee_type == 3) {
+    } elseif ($employee_type == 3) {
         $employee_type = "前台";
-    } else if ($employee_type == 4) {
+    } elseif ($employee_type == 4) {
         $employee_type = "厨师";
-    } else if ($employee_type == 5) {
+    } elseif ($employee_type == 5) {
         $employee_type = "保洁";
-    } else if ($employee_type == 6) {
+    } elseif ($employee_type == 6) {
         $employee_type = "仓库管理员";
-    } else if ($employee_type == 7) {
+    } elseif ($employee_type == 7) {
         $employee_type = "会计";
-    } else if ($employee_type == 8) {
+    } elseif ($employee_type == 8) {
         $employee_type = "其他";
     }
     //

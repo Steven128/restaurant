@@ -21,7 +21,7 @@ session_start();
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../js/Chart.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
-<?php
+    <?php
 if (!isset($_SESSION['admin_id'])) {
     echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
 }
@@ -29,7 +29,7 @@ if (!isset($_SESSION['admin_id'])) {
 </head>
 
 <body>
-<?php
+    <?php
 $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
 ?>
     <div class="container">
@@ -41,12 +41,12 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
                 </div>
             </div>
             <a class="user-box" href="javascript:void(0);" onclick="showInfoBox()">
-<?php echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "\" /></div><div class=\"user-name\">" . $_SESSION['admin_name'] . "</div>"; ?>
+                <?php echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "\" /></div><div class=\"user-name\">" . $_SESSION['admin_name'] . "</div>"; ?>
             </a>
             <div class="info-box">
                 <div class="info-box-block">
                     <div class="info-box-arrow"></div>
-<?php
+                    <?php
 $admin_type = $_SESSION['admin_type'];
 if ($admin_type == 1) {
     $admin_type = "超级管理员";
@@ -85,7 +85,7 @@ echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['a
                                     <i class="iconfont icon-user"></i>
                                     <span>个人信息</span>
                                     <span class="dash-pull-right">
-                                            <i class="iconfont icon-right-arrow " style="font-size:12px;"></i>
+                                        <i class="iconfont icon-right-arrow " style="font-size:12px;"></i>
                                     </span>
                                 </a>
                             </li>
@@ -94,8 +94,8 @@ echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['a
                                     <i class="iconfont icon-settings"></i>
                                     <span>设置</span>
                                     <span class="dash-pull-right">
-                                            <i class="iconfont icon-right-arrow " style="font-size:12px;"></i>
-                                        </span>
+                                        <i class="iconfont icon-right-arrow " style="font-size:12px;"></i>
+                                    </span>
                                 </a>
                             </li>
                         </ul>
@@ -117,6 +117,7 @@ echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['a
                     <script>
                         $(document).ready(() => {
                             barAppend("settings");
+
                             function changeMainBar(itemName) {
                                 $("#menu-" + itemName + "-item").click(() => {
                                     $.pjax({
