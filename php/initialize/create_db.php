@@ -329,7 +329,7 @@ if (!$conn) {
     }
 
     $sql_create_tab = "CREATE TABLE pre_order(" .
-        "preorder_id VARCHAR(20) NOT NULL PRIMARY KEY," .
+        "preorder_id VARCHAR(25) NOT NULL PRIMARY KEY," .
         "preorder_time VARCHAR(20) NOT NULL," .
         "arrive_time VARCHAR(20) NOT NULL," .
         "order_id VARCHAR(20) NOT NULL," .

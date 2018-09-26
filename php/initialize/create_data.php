@@ -41,6 +41,9 @@ if (!$conn) {
     createOrderData($conn,1000);
     echo"<br>写入订单表数据成功";
 
+    createPreOrderData($conn,50);
+    echo"<br>写入预定表数据成功";
+
     oci_close($conn);
 
 }
@@ -366,7 +369,8 @@ function createOrderData($conn,$quantity)//订单编号用ord_餐桌号_下单�
         $table_number=substr($table_id,-3);//餐桌号
         $rand2=mt_rand($begin_time,$end_time);//随机下单时间
         $order_time=date("YmdHis",$rand2);//下单时间
-        $pay_time=date("Y-m-d H:i:s",strtotime('+1 hour',$rand2));//结账时间
+        $rand5=mt_rand(1,3);//付款方式&用餐时间
+        $pay_time=date("Y-m-d H:i:s",strtotime('+'.$rand5.'hour',$rand2));//结账时间
         $order_id="ord_"."$table_number"."_$order_time";//订单id
         $rand3=mt_rand(3,10);//随机每单点菜数
         for($i=0;$i<$rand3;$i++){//随机生成点菜单
@@ -380,7 +384,6 @@ function createOrderData($conn,$quantity)//订单编号用ord_餐桌号_下单�
                 $dish_list.=",";
             }
         } 
-        $rand5=mt_rand(1,3);//付款方式
         $order_note="多放香菜";
         //echo" $order_id   $dish_list   $sum_price   $rand5  $table_id   $pay_time  $order_note <br>";
         $sql_insert="INSERT INTO SCOTT.order_list".
@@ -394,9 +397,34 @@ function createOrderData($conn,$quantity)//订单编号用ord_餐桌号_下单�
     oci_free_statement($statement2);
 }
 
-function createPreOrderData($conn)
+function createPreOrderData($conn,$quantity)
 {
-
+    $sql_select="SELECT order_id,dish_list FROM SCOTT.order_list";
+    $statement1=oci_parse($conn,$sql_select);
+    oci_execute($statement1);
+    $order_id_array[]=array();
+    $dish_list_array[]=array();
+    while($row=oci_fetch_array($statement1,OCI_RETURN_NULLS)){
+        $order_id_array[]=$row[0];
+        $dish_list_array[]=$row[1];
+    }
+    for($i=0;$i<$quantity;$i++){
+        $rand1=mt_rand(0,999);
+        $pre_order="pre_".substr($order_id_array[$rand1],-18);
+        $pre_dish=$dish_list_array[$rand1];
+        $order_time=substr($order_id_array[$rand1],-14);
+        $pre_order_time=date("Y-m-d H:i:s",strtotime($order_time));
+        $arrive_time=date("Y-m-d H:i:s",strtotime('+20 minute',strtotime($pre_order_time)));
+        $sql_insert="INSERT INTO SCOTT.pre_order".
+            "(preorder_id,preorder_time,arrive_time,order_id,dish_list)".
+            "VALUES".
+            "('$pre_order','$pre_order_time','$arrive_time','$pre_dish')";
+        //echo"  $pre_order   $pre_order_time  $arrive_time $pre_dish<br>";
+        $statement2=oci_parse($conn,$sql_insert);
+         oci_execute($statement2);
+    }
+    oci_free_statement($statement1);
+    oci_free_statement($statement2);
 }
 
 function createSalesData($conn)
