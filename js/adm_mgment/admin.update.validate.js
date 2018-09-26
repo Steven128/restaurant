@@ -16,7 +16,7 @@ $(document).ready(() => {
             } else if ($admin_type == 3) {
                 $admin_type = "财务管理";
             } else if ($admin_type == 4) {
-                $admin_type = "港库管理";
+                $admin_type = "库存管理";
             }
             $(".user-type").html($admin_type);
             if (reason == "employee") {

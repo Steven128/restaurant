@@ -17,7 +17,7 @@ function barAppend(treeName) {
                 admin_type = "财务管理";
                 addFinanceMgment();
             } else if ($admin_type == 4) {
-                admin_type = "港库管理";
+                admin_type = "库存管理";
                 addInventoryMgment();
             }
             $(".user-type").html(admin_type);
