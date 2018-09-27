@@ -89,7 +89,7 @@ session_start();
                                     </li>
                                 </ul>
                             </li>
-                            <li class="treeview active">
+                            <li class="treeview">
                                 <a href="javascript:void(0);">
                                     <i class="iconfont icon-finance"></i>
                                     <span>财务管理</span>
@@ -97,13 +97,13 @@ session_start();
                                         <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu menu-open">
+                                <ul class="treeview-menu">
                                     <li>
                                         <a id="menu-financeList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-list"></i>查看财务信息</a>
                                     </li>
                                     <li>
-                                        <a id="menu-financeHistory-item" href="javascript:void(0);" class="innerActive">
+                                        <a id="menu-financeHistory-item" href="javascript:void(0);">
                                             <i class="iconfont icon-list-search"></i>查询历史财务</a>
                                     </li>
                                 </ul>
@@ -133,15 +133,39 @@ session_start();
                             </li>
                             <li class="treeview">
                                 <a href="javascript:void(0);">
-                                    <i class="iconfont icon-dish"></i>
-                                    <span>菜单管理</span>
+                                    <i class="iconfont icon-order"></i>
+                                    <span>订单管理</span>
                                     <span class="pull-right">
                                         <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
                                     <li>
-                                        <a id="menu-dishList-item" href="javascript:void(0);">
+                                        <a id="menu-preOrderList-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-pre-order"></i>预定信息</a>
+                                    </li>
+                                    <li>
+                                        <a id="menu-orderList-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-display"></i>查询订单
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a id="menu-orderHistory-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-history"></i>历史订单</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="treeview active">
+                                <a href="javascript:void(0);">
+                                    <i class="iconfont icon-dish"></i>
+                                    <span>菜单管理</span>
+                                    <span class="pull-right">
+                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu menu-open">
+                                    <li>
+                                        <a id="menu-dishList-item" href="javascript:void(0);" class="innerActive">
                                             <i class="iconfont icon-list"></i>查看菜单</a>
                                     </li>
                                     <li>
@@ -212,6 +236,9 @@ session_start();
                             changeMainBar("inventoryList");
                             changeMainBar("purchaseList");
                             changeMainBar("lossList");
+                            changeMainBar("preOrderList");
+                            changeMainBar("orderList");
+                            changeMainBar("orderHistory");
                             changeMainBar("dishList");
                             changeMainBar("addDish");
                             changeMainBar("tableList");

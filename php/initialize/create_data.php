@@ -44,6 +44,12 @@ if (!$conn) {
     createPreOrderData($conn, 50);
     echo"<br>写入预定表数据成功";
 
+    createSalesData($conn);
+    echo"<br>写入销售表数据成功";
+
+    createEvaluateData($conn);
+    echo"<br>写入评价表数据成功";
+
     oci_close($conn);
 }
 // echo date("y_m_d", time());
@@ -292,13 +298,14 @@ function createDishData($conn)//type=2为主食，type=1为早餐，type=3为甜
         $dish_name=$dish_data[$i]['dish_name'];
         $dish_type=$dish_data[$i]['dish_type'];
         $dish_price=$dish_data[$i]['dish_price'];
-        $param = $i < 10 ? "000$i" : ($i < 100 ? "00$i" : "0$i");
+        $x=$i+1;
+        $param = $x < 10 ? "000$x" : ($x < 100 ? "00$x" : "0$x");
         $dish_id="dis_$dish_type"."_$param";
         $sql_insert = "INSERT INTO SCOTT.dish" .
             "(dish_id,dish_name,dish_pic,dish_price,dish_type)" .
             "VALUES" .
             "('$dish_id','$dish_name','$dish_pic',$dish_price,$dish_type)";
-        // echo "$dish_id   $dish_name   $dish_pic   $dish_price   $dish_type <br>";
+        //echo "$dish_id   $dish_name   $dish_pic   $dish_price   $dish_type <br>";
         $statement=oci_parse($conn, $sql_insert);
         oci_execute($statement);
     }
@@ -424,12 +431,57 @@ function createPreOrderData($conn, $quantity)
     oci_free_statement($statement2);
 }
 
-function createSalesData($conn)
+function createSalesData($conn)//未测试
 {
+    $sql_select1="SELECT order_id,dish_list FROM SCOTT.order_List";
+    $statement1=oci_parse($conn,$sql_select1);
+    oci_execute($statement1);
+    while($row=oci_fetch_array($statement1,OCI_RETURN_NULLS)){
+        $arr=explode(",",$row[1]);
+        $count=0;
+        foreach($arr as $a){
+            //$a是菜品编号
+            $count++;
+            $order_id=$row[0];
+            $sql_select2="SELECT dish_price FROM SCOTT.dish WHERE dish_id=$a";
+            $statement2=oci_parse($conn,$sql_select2);
+            $dish_price=(float)oci_execute($statement2);
+            $count=$count<10 ? "00$count" : ($count<100 ? "0$count" : "$count");
+            $sales_id="sal_".substr($order_id,-18)."_"."$count";
+            $sql_insert="INSERT INTO SCOTT.sales".
+                "(sales_id,dish_id,dish_price,order_id,sal_status)".
+                "VALUE".
+                "('$sales_id','$a',$dish_price,'$order_id',3)";
+            $statement3=oci_parse($conn,$sql_insert);
+            oci_execute($statement3);
+            oci_free_statement($statement2);
+            oci_free_statement($statement3);
+        }
+    }
+    oci_free_statement($statement1);
 }
 
-function createEvaluateData($conn)
+function createEvaluateData($conn)//未测试
 {
+    $message=array("服务很好","食物很棒","价格实惠","还会再来");
+    $sql_select="SELECT order_id FROM SCOTT.order_list";
+    $statement1=oci_parse($conn,$sql_select);
+    oci_execute($statement1);
+    while($row=oci_fetch_array($statement1,OCI_RETURN_NULLS)){
+        $eva_id="eva_".substr($row[0],-18);
+        $order_id=$row[0];
+        $star=(float)mt_rand(3,5);
+        $rand1=mt_rand(0,3);
+        $note=$message[$rand1];
+        $sql_insert="INSERT INTO SCOTT.evaluate".
+            "(evaluate_id,order_id,rating,evaluate_note)".
+            "VALUE".
+            "'$eva_id','$order_id',$star,'$note'";
+        $statement2=oci_parse($conn,$sql_insert);
+        oci_execute($statement2);
+    }
+    oci_free_statement($statement1);
+    oci_free_statement($statement2);
 }
 
 function createFinanceData($conn, $quantity)

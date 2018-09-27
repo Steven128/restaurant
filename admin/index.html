@@ -10,6 +10,7 @@
     <link type="text/css" rel="stylesheet" href="../css/page.css" />
     <link type="text/css" rel="stylesheet" href="../css/sidebar-menu.css" />
     <link type="text/css" rel="stylesheet" href="../css/tablesorter.css" />
+    <link type="text/css" rel="stylesheet" href="../css/form.css" />
 
 
     <script type="text/javascript" src="../js/jQuery/jquery-1.11.3.min.js"></script>
@@ -20,6 +21,7 @@
     <script type="text/javascript" src="../js/plugins/jquery.tablesorter.min.js"></script>
     <script type="text/javascript" src="../js/plugins/jquery.filtertable.js"></script>
     <script type="text/javascript" src="../js/jquery.pjax.js"></script>
+
 </head>
 
 <body>
@@ -48,8 +50,7 @@
                     </div>
                     <section class="sidebar">
                         <ul class="sidebar-menu">
-                            <!-- <li class="header">导航</li> -->
-                            <li class="treeview active">
+                            <li class="treeview">
                                 <a href="javascript:void(0);">
                                     <i class="iconfont icon-employee"></i>
                                     <span>员工管理</span>
@@ -57,42 +58,32 @@
                                         <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu menu-open">
+                                <ul class="treeview-menu">
                                     <li>
-                                        <a id="menu-employeeList-item" href="javascript:void(0);" class="innerActive">
+                                        <a id="menu-employeeList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-list"></i>员工列表</a>
                                     </li>
-                                    <li class="li-not-allowed">
-                                        <a id="menu-displayEmployee-item" href="#displayEmployee">
-                                            <i class="iconfont icon-display"></i>查看员工信息<i class="iconfont icon-not-allowed"></i>
-                                        </a>
-                                    </li>
-                                    <li class="li-not-allowed">
-                                        <a id="menu-updateEmployee-item" href="#updateEmployee">
-                                            <i class="iconfont icon-update-round"></i>更新员工信息<i class="iconfont icon-not-allowed"></i>
-                                        </a>
-                                    </li>
                                     <li>
-                                        <a id="menu-addEmployee-item" href="#addEmployee">
+                                        <a id="menu-addEmployee-item" href="javascript:void(0);">
                                             <i class="iconfont icon-add-paper"></i>增加员工</a>
                                     </li>
                                 </ul>
                             </li>
-                            <li class="treeview">
+                            <li class="treeview active">
                                 <a href="javascript:void(0);">
                                     <i class="iconfont icon-finance"></i>
                                     <span>财务管理</span>
                                     <span class="pull-right">
-                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu">
+                                <ul class="treeview-menu menu-open">
                                     <li>
-                                        <a id="menu-financeList-item" href="#financeList">
+                                        <a id="menu-financeList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-list"></i>查看财务信息</a>
                                     </li>
                                     <li>
-                                        <a id="menu-financeHistory-item" href="#financeHistory">
+                                        <a id="menu-financeHistory-item" href="javascript:void(0);" class="innerActive">
                                             <i class="iconfont icon-list-search"></i>查询历史财务</a>
                                     </li>
                                 </ul>
@@ -102,21 +93,45 @@
                                     <i class="iconfont icon-inventory"></i>
                                     <span>仓库管理</span>
                                     <span class="pull-right">
-                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
                                     <li>
-                                        <a id="menu-inventoryList-item" href="#inventoryList">
+                                        <a id="menu-inventoryList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-list"></i>查看仓库信息</a>
                                     </li>
                                     <li>
-                                        <a id="menu-purchaseList-item" href="#purchaseList">
+                                        <a id="menu-purchaseList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-display"></i>查看进货信息</a>
                                     </li>
                                     <li>
-                                        <a id="menu-lossList-item" href="#lossList">
+                                        <a id="menu-lossList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-display"></i>查看损耗信息 </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="javascript:void(0);">
+                                    <i class="iconfont icon-order"></i>
+                                    <span>订单管理</span>
+                                    <span class="pull-right">
+                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a id="menu-preOrderList-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-pre-order"></i>预定信息</a>
+                                    </li>
+                                    <li>
+                                        <a id="menu-orderList-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-display"></i>查询订单
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a id="menu-orderHistory-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-history"></i>历史订单</a>
                                     </li>
                                 </ul>
                             </li>
@@ -125,21 +140,16 @@
                                     <i class="iconfont icon-dish"></i>
                                     <span>菜单管理</span>
                                     <span class="pull-right">
-                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
                                     <li>
-                                        <a id="menu-dishList-item" href="#dishList">
+                                        <a id="menu-dishList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-list"></i>查看菜单</a>
                                     </li>
-                                    <li class="li-not-allowed">
-                                        <a id="menu-updateDish-item" href="#updateDish">
-                                            <i class="iconfont icon-update-round"></i>更新菜品信息<i class="iconfont icon-not-allowed"></i>
-                                        </a>
-                                    </li>
                                     <li>
-                                        <a id="menu-addDish-item" href="#addDish">
+                                        <a id="menu-addDish-item" href="javascript:void(0);">
                                             <i class="iconfont icon-add"></i>增加菜品</a>
                                     </li>
                                 </ul>
@@ -149,21 +159,16 @@
                                     <i class="iconfont icon-table"></i>
                                     <span>餐桌管理</span>
                                     <span class="pull-right">
-                                            <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
-                                        </span>
+                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                    </span>
                                 </a>
                                 <ul class="treeview-menu">
                                     <li>
-                                        <a id="menu-tableList-item" href="#tableList">
+                                        <a id="menu-tableList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-list"></i>查看餐桌信息</a>
                                     </li>
-                                    <li class="li-not-allowed">
-                                        <a id="menu-updateTable-item" href="#updateTable">
-                                            <i class="iconfont icon-update-round"></i>更新餐桌信息<i class="iconfont icon-not-allowed"></i>
-                                        </a>
-                                    </li>
                                     <li>
-                                        <a id="menu-addTable-item" href="#addTable">
+                                        <a id="menu-addTable-item" href="javascript:void(0);">
                                             <i class="iconfont icon-update"></i>增加餐桌</a>
                                     </li>
                                 </ul>
@@ -185,8 +190,46 @@
                 <div class="main-bar">
                     <script>
                         $(document).ready(() => {
-                            window.location.replace("employeeList");
-                        });
+                            if (getUserInfo().admin_type == 1 || getUserInfo().admin_type == 2) {
+                                window.location.replace("employeeList");
+                            } else {
+                                window.wxc.xcConfirm("你没有权限", window.wxc.xcConfirm.typeEnum.error, {
+                                    onOk: function() {
+                                        window.location.replace("../dashboard");
+                                    },
+                                    onClose: function() {
+                                        window.location.replace("../dashboard");
+                                    }
+                                });
+                            }
+                            //
+                            function changeMainBar(itemName) {
+                                $("#menu-" + itemName + "-item").click(() => {
+                                    $.pjax({
+                                        url: "../" + itemName,
+                                        container: 'html'
+                                    });
+                                });
+                            }
+                            //
+                            changeMainBar("employeeList");
+                            changeMainBar("addEmployee");
+                            changeMainBar("financeList");
+                            changeMainBar("financeHistory");
+                            changeMainBar("inventoryList");
+                            changeMainBar("purchaseList");
+                            changeMainBar("lossList");
+                            changeMainBar("preOrderList");
+                            changeMainBar("orderList");
+                            changeMainBar("orderHistory");
+                            changeMainBar("preOrderList");
+                            changeMainBar("orderList");
+                            changeMainBar("orderHistory");
+                            changeMainBar("dishList");
+                            changeMainBar("addDish");
+                            changeMainBar("tableList");
+                            changeMainBar("addTable");
+                        })
                     </script>
                 </div>
             </div>

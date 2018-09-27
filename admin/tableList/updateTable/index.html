@@ -116,6 +116,30 @@
                             </li>
                             <li class="treeview">
                                 <a href="javascript:void(0);">
+                                    <i class="iconfont icon-order"></i>
+                                    <span>订单管理</span>
+                                    <span class="pull-right">
+                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a id="menu-preOrderList-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-pre-order"></i>预定信息</a>
+                                    </li>
+                                    <li>
+                                        <a id="menu-orderList-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-display"></i>查询订单
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a id="menu-orderHistory-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-history"></i>历史订单</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="javascript:void(0);">
                                     <i class="iconfont icon-dish"></i>
                                     <span>菜单管理</span>
                                     <span class="pull-right">
@@ -234,6 +258,9 @@
                             changeMainBar("inventoryList");
                             changeMainBar("purchaseList");
                             changeMainBar("lossList");
+                            changeMainBar("preOrderList");
+                            changeMainBar("orderList");
+                            changeMainBar("orderHistory");
                             changeMainBar("dishList");
                             changeMainBar("addDish");
                             changeMainBar("tableList");
