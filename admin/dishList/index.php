@@ -2,7 +2,7 @@
 session_start();
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -24,18 +24,18 @@ session_start();
     <script type="text/javascript" src="../../js/plugins/jquery.filtertable.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
     <?php
-    if (!isset($_SESSION['admin_id'])) {
-        echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
-    } elseif ($_SESSION['admin_type'] != 1 && $_SESSION['admin_type'] != 2) {
-        echo "<script>$(document).ready(() => {window.location.replace(\"../../dashboard\");});</script>";
-    }
-    ?>
+if (!isset($_SESSION['admin_id'])) {
+    echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
+} elseif ($_SESSION['admin_type'] != 1 && $_SESSION['admin_type'] != 2) {
+    echo "<script>$(document).ready(() => {window.location.replace(\"../../dashboard\");});</script>";
+}
+?>
 </head>
 
 <body>
     <?php
-    $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
-    ?>
+$conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
+?>
     <div class="container">
         <header class="head-content">
             <div class="site-branding">
@@ -55,18 +55,18 @@ session_start();
                 <aside class="left-bar">
                     <div class="admin-box">
                         <?php
-                        $admin_type = $_SESSION['admin_type'];
-                        if ($admin_type == 1) {
-                            $admin_type = "超级管理员";
-                        } elseif ($admin_type == 2) {
-                            $admin_type = "管理员";
-                        } elseif ($admin_type == 3) {
-                            $admin_type = "财务管理";
-                        } elseif ($admin_type == 4) {
-                            $admin_type = "库存管理";
-                        }
-                        echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /><h4 class=\"online-user\">" . $_SESSION['admin_name'] . "</h4><i class=\"iconfont icon-certificated\" style=\"color: #1afa29;\"></i><h5 class=\"user-type\">" . $admin_type . "</h5>";
-                        ?>
+$admin_type = $_SESSION['admin_type'];
+if ($admin_type == 1) {
+    $admin_type = "超级管理员";
+} elseif ($admin_type == 2) {
+    $admin_type = "管理员";
+} elseif ($admin_type == 3) {
+    $admin_type = "财务管理";
+} elseif ($admin_type == 4) {
+    $admin_type = "库存管理";
+}
+echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /><h4 class=\"online-user\">" . $_SESSION['admin_name'] . "</h4><i class=\"iconfont icon-certificated\" style=\"color: #1afa29;\"></i><h5 class=\"user-type\">" . $admin_type . "</h5>";
+?>
                     </div>
                     <section class="sidebar">
                         <ul class="sidebar-menu">
@@ -131,30 +131,6 @@ session_start();
                                     </li>
                                 </ul>
                             </li>
-                            <li class="treeview">
-                                <a href="javascript:void(0);">
-                                    <i class="iconfont icon-order"></i>
-                                    <span>订单管理</span>
-                                    <span class="pull-right">
-                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li>
-                                        <a id="menu-preOrderList-item" href="javascript:void(0);">
-                                            <i class="iconfont icon-pre-order"></i>预定信息</a>
-                                    </li>
-                                    <li>
-                                        <a id="menu-orderList-item" href="javascript:void(0);">
-                                            <i class="iconfont icon-display"></i>查询订单
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a id="menu-orderHistory-item" href="javascript:void(0);">
-                                            <i class="iconfont icon-history"></i>历史订单</a>
-                                    </li>
-                                </ul>
-                            </li>
                             <li class="treeview active">
                                 <a href="javascript:void(0);">
                                     <i class="iconfont icon-dish"></i>
@@ -163,7 +139,7 @@ session_start();
                                         <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu menu-open">
+                                <ul class="treeview-menuu menu-open">
                                     <li>
                                         <a id="menu-dishList-item" href="javascript:void(0);" class="innerActive">
                                             <i class="iconfont icon-list"></i>查看菜单</a>
@@ -209,13 +185,63 @@ session_start();
                 <div class="mask"></div>
                 <div class="main-bar">
                     <div class="title">
-                        <h4 class="title-left">查询历史财务</h4>
+                        <h4 class="title-left">查看菜单</h4>
                     </div>
                     <div class='box-wrap'>
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-
+<table class="dishListTable tablesorter result">
+                                    <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>类型</th>
+                                            <th>图片</th>
+                                            <th>名称</th>
+                                            <th>价格</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="dishListTableBody">
+                                        <?php
+                                        $sql_query = "SELECT DISH_ID,DISH_NAME,DISH_PIC,DISH_PRICE,DISH_TYPE FROM SCOTT.DISH WHERE DIS_STATUS>0 ORDER BY DISH_TYPE,DISH_NAME DESC";
+                                        $statement = oci_parse($conn, $sql_query);
+                                        oci_execute($statement);
+                                        $count = 0;
+                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+                                            $count++;
+                                            // $dish_id = $row[0];
+                                            // $dish_name = $row[1];
+                                            // $dish_pic = $row[2];
+                                            // $dish_price = $row[3];
+                                            // $dish_type = $row[4];
+                                            if ($row[4] == 1) {
+                                                $row[4] = "特色菜";
+                                            } elseif ($row[4] == 2) {
+                                                $row[4] = "热菜";
+                                            } elseif ($row[4] == 3) {
+                                                $row[4] = "河海湖鲜";
+                                            } elseif ($row[4] == 4) {
+                                                $row[4] = "色拉";
+                                            } elseif ($row[4] == 5) {
+                                                $row[4] = "酒水饮料";
+                                            } elseif ($row[4] == 6) {
+                                                $row[4] = "其他";
+                                            }
+                                            $row[3] = $row[3] . ".00";
+                                            echo "<tr><td>$count</td><td>$row[4]</td><td><img src=\"$row[2]\" /></td><td>$row[1]</td><td>$row[3]</td><td><a class=\"table-update-btn update-dish\" href = \"javascript:void(0);\" onclick=\"update_dish('" . $row[0] . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
+                                        }
+                                        ?>
+                                        <script>
+                                        $(() => {
+                                            $(".dishListTable").tablesorter();
+                                        });
+                                        $(() => {
+                                            $(".dishListTable").filterTable();
+                                        });
+                                        </script>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -233,13 +259,10 @@ session_start();
                             changeMainBar("employeeList");
                             changeMainBar("addEmployee");
                             changeMainBar("financeList");
+                            changeMainBar("financeHistory");
                             changeMainBar("inventoryList");
                             changeMainBar("purchaseList");
                             changeMainBar("lossList");
-                            changeMainBar("preOrderList");
-                            changeMainBar("orderList");
-                            changeMainBar("orderHistory");
-                            changeMainBar("dishList");
                             changeMainBar("addDish");
                             changeMainBar("tableList");
                             changeMainBar("addTable");
