@@ -365,7 +365,7 @@ if (!$conn) {
     }
 
     $sql_create_tab = "CREATE TABLE sales(" .
-        "sales_id VARCHAR(20) NOT NULL PRIMARY KEY," .
+        "sales_id VARCHAR(30) NOT NULL PRIMARY KEY," .
         "dish_id VARCHAR(20) NOT NULL," .
         "dish_price FLOAT NOT NULL," .
         "order_id VARCHAR(20) NOT NULL," .
