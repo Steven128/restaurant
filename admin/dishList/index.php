@@ -189,7 +189,11 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
+<<<<<<< HEAD
                                 <table class="dishListTable tablesorter result">
+=======
+<table class="dishListTable tablesorter result">
+>>>>>>> d34d8d51ebc55e75be64474c6973e6cb5a78ad38
                                     <thead>
                                         <tr>
                                             <th>序号</th>
