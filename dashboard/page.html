@@ -1,43 +1,29 @@
+<!-- <?php
+session_start();
+?> -->
 <!DOCTYPE html>
 <html>
 
 <head>
-<<<<<<< HEAD
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>仓库管理 - 餐饮店管理系统</title>
-=======
-    <meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge">
->>>>>>> d34d8d51ebc55e75be64474c6973e6cb5a78ad38
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <script src="main.js"></script> -->
-</head>
+    <title>主页-餐饮店管理系统</title>
+    <link type="text/css" rel="stylesheet" href="../../css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/iconfont.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/page.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/dashboard.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/responsive-sidebar.css" />
 
-<<<<<<< HEAD
-<body>
-
-</body>
-
-</html>nk type="text/css" rel="stylesheet" href="../../css/responsive-sidebar.css" />
-
-<script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../../js/page.js"></script>
-<script type="text/javascript" src="../../js/das_mgment/dashboard.js"></script>
-<script type="text/javascript" src="../../js/xcConfirm.js"></script>
-<script type="text/javascript" src="../../js/Chart.js"></script>
-<script type="text/javascript" src="../../js/jquery.pjax.js"></script>
-<!-- <?php
-=======
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
+
     <script type="text/javascript" src="../../js/das_mgment/dashboard.js"></script>
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../js/Chart.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
     <!-- <?php
->>>>>>> d34d8d51ebc55e75be64474c6973e6cb5a78ad38
 if (!isset($_SESSION['admin_id'])) {
     echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
 }
@@ -57,7 +43,7 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连
                 </div>
             </div>
             <a class="user-box" href="javascript:void(0);" onclick="showInfoBox()">
-<!-- <?php echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /></div><div class=\"user-name\">" . $_SESSION['admin_name'] . "</div>"; ?> -->
+                <!-- <?php echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /></div><div class=\"user-name\">" . $_SESSION['admin_name'] . "</div>"; ?> -->
             </a>
             <div class="info-box">
                 <div class="info-box-block">
@@ -101,7 +87,7 @@ echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['a
                                     <i class="iconfont icon-user"></i>
                                     <span>个人信息</span>
                                     <span class="dash-pull-right">
-                                            <i class="iconfont icon-right-arrow " style="font-size:12px;"></i>
+                                        <i class="iconfont icon-right-arrow " style="font-size:12px;"></i>
                                     </span>
                                 </a>
                             </li>
@@ -110,8 +96,8 @@ echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['a
                                     <i class="iconfont icon-settings"></i>
                                     <span>设置</span>
                                     <span class="dash-pull-right">
-                                            <i class="iconfont icon-right-arrow " style="font-size:12px;"></i>
-                                        </span>
+                                        <i class="iconfont icon-right-arrow " style="font-size:12px;"></i>
+                                    </span>
                                 </a>
                             </li>
                         </ul>

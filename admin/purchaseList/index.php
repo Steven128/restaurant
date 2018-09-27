@@ -6,11 +6,7 @@ session_start();
 
 <head>
     <meta charset="UTF-8">
-<<<<<<< HEAD
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-=======
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
->>>>>>> d34d8d51ebc55e75be64474c6973e6cb5a78ad38
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>管理员系统-餐饮店管理系统</title>
     <link type="text/css" rel="stylesheet" href="../../css/bootstrap.css" />
