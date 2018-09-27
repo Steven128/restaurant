@@ -210,7 +210,7 @@ session_start();
                     <div class="title">
                         <h4 class="title-left">查看进货信息</h4>
                     </div>
-                    <div class='box-wrap'>
+                    <div class="box-wrap">
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">

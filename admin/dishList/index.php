@@ -16,11 +16,12 @@ session_start();
 
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
+    <script type="text/javascript" src="../../js/adm_mgment/admin.js"></script>
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../js/plugins/jquery.tablesorter.min.js"></script>
     <script type="text/javascript" src="../../js/plugins/jquery.filtertable.js"></script>
-    <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
     <?php
 if (!isset($_SESSION['admin_id'])) {
     echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
@@ -137,7 +138,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                         <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menuu menu-open">
+                                <ul class="treeview-menu menu-open">
                                     <li>
                                         <a id="menu-dishList-item" href="javascript:void(0);" class="innerActive">
                                             <i class="iconfont icon-list"></i>查看菜单</a>
@@ -185,15 +186,11 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                     <div class="title">
                         <h4 class="title-left">查看菜单</h4>
                     </div>
-                    <div class='box-wrap'>
+                    <div class="box-wrap">
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-<<<<<<< HEAD
                                 <table class="dishListTable tablesorter result">
-=======
-<table class="dishListTable tablesorter result">
->>>>>>> d34d8d51ebc55e75be64474c6973e6cb5a78ad38
                                     <thead>
                                         <tr>
                                             <th>序号</th>
