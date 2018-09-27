@@ -1,3 +1,12 @@
+function changeMainBar(itemName) {
+    $("#menu-" + itemName + "-item").click(() => {
+        $.pjax({
+            url: "../" + itemName,
+            container: 'html'
+        });
+    });
+}
+
 function barAppend(treeName) {
     $.ajax({
         type: "GET",
@@ -31,13 +40,16 @@ function barAppend(treeName) {
 }
 
 function showInfoBox() {
-    $(".info-box").show();
-    $(".shelter").show();
+    $(".shelter").fadeIn(() => {
+        $(".info-box").slideDown(50);
+    });
 }
 
 function hideShelter() {
-    $(".info-box").hide();
-    $(".shelter").hide();
+    $(".info-box").slideUp(50, () => {
+        $(".shelter").fadeOut();
+    });
+
 }
 
 function addRootMgment() {
@@ -45,6 +57,8 @@ function addRootMgment() {
     append_text += "<li class=\"treeview adminList-tree\"><a id=\"menu-adminList-item\" href=\"javascript:void(0);\"><i class=\"iconfont icon-account\"></i><span>管理员信息</span><span class=\"dash-pull-right\"><i class=\"iconfont icon-right-arrow\" style=\"font-size:12px;\"></i></span></a></li>";
     append_text += "<li class=\"treeview addAdmin-tree\"><a id=\"menu-addAdmin-item\" href=\"javascript:void(0);\"><i class=\"iconfont icon-account-plus\"></i><span>添加管理员</span><span class=\"dash-pull-right\"><i class=\"iconfont icon-right-arrow\" style=\"font-size:12px;\"></i></span></a></li>";
     $(".overview-tree").after(append_text);
+    changeMainBar("adminList");
+    changeMainBar("addAdmin");
 }
 
 function addFinanceMgment() {
