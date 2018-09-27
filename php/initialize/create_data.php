@@ -38,10 +38,10 @@ if (!$conn) {
     createDishData($conn);
     echo"<br>写入菜品表数据成功";
 
-    createOrderData($conn, 180000);
+    createOrderData($conn, 1000);
     echo"<br>写入订单表数据成功";
 
-    createPreOrderData($conn, 50);
+    createPreOrderData($conn, 100);
     echo"<br>写入预定表数据成功";
 
     createSalesData($conn);
@@ -176,15 +176,8 @@ function createGoodsData($conn)
         $goods_name = $goods_data[$i]['goods_name'];
         $goods_price = $goods_data[$i]['goods_price'];
         $goods_type = $goods_data[$i]['goods_type'];
-        //
-        $query = "SELECT * FROM SCOTT.goods WHERE goods_type='$goods_type'";
-        $statement = oci_parse($conn, $query);
-        oci_execute($statement);
-        $count = 0;
-        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) {
-            $count++;
-        }
-        $goods_id = $count < 10 ? "00000$count" : ($count < 100 ? "0000$count" : ($count < 1000 ? "000$count" : "00$count"));
+        $count = $i+1;
+        $goods_id = $count < 10 ? "000$count" : ($count < 100 ? "00$count" : ($count < 1000 ? "0$count" : "$count"));
         $goods_id = "goo_$goods_type" . "_$goods_id";
         //写入
         $sql_insert = "INSERT INTO SCOTT.goods" .
@@ -192,9 +185,7 @@ function createGoodsData($conn)
             "VALUES" .
             "('$goods_id','$goods_name',$goods_price,$goods_type)";
         $statement = oci_parse($conn, $sql_insert);
-        if (!oci_execute($statement)) {
-            die($statement);
-        }
+        oci_execute($statement);
     }
     oci_free_statement($statement);
 }
