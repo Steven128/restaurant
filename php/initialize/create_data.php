@@ -394,27 +394,33 @@ function createOrderData($conn, $quantity)//订单编号用ord_餐桌号_下单�
 
 function createPreOrderData($conn, $quantity)
 {
-    $sql_select="SELECT order_id,dish_list FROM SCOTT.order_list";
+    $sql_select="SELECT order_id,dish_list,table_id FROM SCOTT.order_list";
     $statement1=oci_parse($conn, $sql_select);
     oci_execute($statement1);
     $order_id_array[]=array();
     $dish_list_array[]=array();
+    $table_id_array[]=array();
     while ($row=oci_fetch_array($statement1, OCI_RETURN_NULLS)) {
         $order_id_array[]=$row[0];
+        //echo "$row[0]";
         $dish_list_array[]=$row[1];
+        //echo "$row[1]";
+        $table_id_array[]=$row[2];
     }
     for ($i=0;$i<$quantity;$i++) {
         $rand1=mt_rand(0, 999);
+        $table_id=$table_id_array[$rand1];
         $pre_order="pre_".substr($order_id_array[$rand1], -18);
         $pre_dish=$dish_list_array[$rand1];
         $order_time=substr($order_id_array[$rand1], -14);
+        $orderid=$order_id_array[$rand1];
         $pre_order_time=date("Y-m-d H:i:s", strtotime($order_time));
         $arrive_time=date("Y-m-d H:i:s", strtotime('+20 minute', strtotime($pre_order_time)));
         $sql_insert="INSERT INTO SCOTT.pre_order".
-            "(preorder_id,preorder_time,arrive_time,order_id,dish_list)".
-            "VALUES".
-            "('$pre_order','$pre_order_time','$arrive_time','$pre_dish')";
-        //echo"  $pre_order   $pre_order_time  $arrive_time $pre_dish<br>";
+             "(preorder_id,preorder_time,arrive_time,order_id,dish_list,table_id)".
+             "VALUES".
+             "('$pre_order','$pre_order_time','$arrive_time','$orderid','$pre_dish','$table_id')";
+        //echo"  $pre_order   $pre_order_time  $arrive_time  $orderid  $pre_dish<br>";
         $statement2=oci_parse($conn, $sql_insert);
         oci_execute($statement2);
     }
@@ -430,18 +436,22 @@ function createSalesData($conn)//未测试
     while($row=oci_fetch_array($statement1,OCI_RETURN_NULLS)){
         $arr=explode(",",$row[1]);
         $count=0;
+        $order_id=$row[0];
         foreach($arr as $a){
             //$a是菜品编号
             $count++;
-            $order_id=$row[0];
-            $sql_select2="SELECT dish_price FROM SCOTT.dish WHERE dish_id=$a";
+            $sql_select2="SELECT dish_price FROM SCOTT.dish WHERE dish_id='$a'";
             $statement2=oci_parse($conn,$sql_select2);
-            $dish_price=(float)oci_execute($statement2);
+            oci_execute($statement2);
+            while($row=oci_fetch_array($statement2,OCI_RETURN_NULLS)){
+                $dish_price=$row[0];
+            }
+            //echo "a:$dish_price<br>";
             $count=$count<10 ? "00$count" : ($count<100 ? "0$count" : "$count");
             $sales_id="sal_".substr($order_id,-18)."_"."$count";
             $sql_insert="INSERT INTO SCOTT.sales".
                 "(sales_id,dish_id,dish_price,order_id,sal_status)".
-                "VALUE".
+                "VALUES".
                 "('$sales_id','$a',$dish_price,'$order_id',3)";
             $statement3=oci_parse($conn,$sql_insert);
             oci_execute($statement3);
@@ -461,13 +471,13 @@ function createEvaluateData($conn)//未测试
     while($row=oci_fetch_array($statement1,OCI_RETURN_NULLS)){
         $eva_id="eva_".substr($row[0],-18);
         $order_id=$row[0];
-        $star=(float)mt_rand(3,5);
+        $star=mt_rand(3,5);
         $rand1=mt_rand(0,3);
         $note=$message[$rand1];
         $sql_insert="INSERT INTO SCOTT.evaluate".
             "(evaluate_id,order_id,rating,evaluate_note)".
-            "VALUE".
-            "'$eva_id','$order_id',$star,'$note'";
+            "VALUES".
+            "('$eva_id','$order_id',$star,'$note')";
         $statement2=oci_parse($conn,$sql_insert);
         oci_execute($statement2);
     }

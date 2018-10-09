@@ -296,7 +296,7 @@ if (!$conn) {
     $sql_create_tab = "CREATE TABLE order_list(" .
         "order_id VARCHAR(25) NOT NULL PRIMARY KEY," .
         "table_id VARCHAR(20) NOT NULL," .
-        "dish_list CLOB," .
+        "dish_list VARCHAR(1000)," .
         "total_price FLOAT," .
         "pay_method NUMBER(1)," .
         "pay_status NUMBER(1) DEFAULT 0 NOT NULL," .
@@ -335,8 +335,8 @@ if (!$conn) {
         "preorder_id VARCHAR(25) NOT NULL PRIMARY KEY," .
         "preorder_time VARCHAR(20) NOT NULL," .
         "arrive_time VARCHAR(20) NOT NULL," .
-        "order_id VARCHAR(20) NOT NULL," .
-        "dish_list CLOB," .
+        "order_id VARCHAR(25) NOT NULL," .
+        "dish_list VARCHAR(1000)," .
         "table_id VARCHAR(20) NOT NULL," .
         "pre_status NUMBER(1) DEFAULT 1 NOT NULL," .
         "FOREIGN KEY (table_id) REFERENCES res_table(table_id) ON DELETE CASCADE," .
@@ -368,7 +368,7 @@ if (!$conn) {
         "sales_id VARCHAR(30) NOT NULL PRIMARY KEY," .
         "dish_id VARCHAR(20) NOT NULL," .
         "dish_price FLOAT NOT NULL," .
-        "order_id VARCHAR(20) NOT NULL," .
+        "order_id VARCHAR(25) NOT NULL," .
         "sal_status NUMBER(1) DEFAULT 1 NOT NULL," .
         "FOREIGN KEY (dish_id) REFERENCES dish(dish_id) ON DELETE CASCADE," .
         "FOREIGN KEY (order_id) REFERENCES order_list(order_id) ON DELETE CASCADE)";
@@ -392,8 +392,8 @@ if (!$conn) {
     }
 
     $sql_create_tab = "CREATE TABLE evaluate(" .
-        "evaluate_id VARCHAR(20) NOT NULL PRIMARY KEY," .
-        "order_id VARCHAR(20) NOT NULL," .
+        "evaluate_id VARCHAR(25) NOT NULL PRIMARY KEY," .
+        "order_id VARCHAR(25) NOT NULL," .
         "rating FLOAT DEFAULT 0.0 NOT NULL," .
         "evaluate_note VARCHAR(100)," .
         "eva_status NUMBER(1) DEFAULT 1 NOT NULL," .
