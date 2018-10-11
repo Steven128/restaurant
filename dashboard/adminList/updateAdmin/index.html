@@ -6,22 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>主页-餐饮店管理系统</title>
-    <link type="text/css" rel="stylesheet" href="../../css/bootstrap.css" />
-    <link type="text/css" rel="stylesheet" href="../../css/iconfont.css" />
-    <link type="text/css" rel="stylesheet" href="../../css/page.css" />
-    <link type="text/css" rel="stylesheet" href="../../css/dashboard.css" />
-    <link type="text/css" rel="stylesheet" href="../../css/responsive-sidebar.css" />
-    <link type="text/css" rel="stylesheet" href="../../css/form.css" />
-    <link type="text/css" rel="stylesheet" href="../../css/cropper.css" />
+    <link type="text/css" rel="stylesheet" href="../../../css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="../../../css/iconfont.css" />
+    <link type="text/css" rel="stylesheet" href="../../../css/page.css" />
+    <link type="text/css" rel="stylesheet" href="../../../css/dashboard.css" />
+    <link type="text/css" rel="stylesheet" href="../../../css/responsive-sidebar.css" />
+    <link type="text/css" rel="stylesheet" href="../../../css/form.css" />
+    <link type="text/css" rel="stylesheet" href="../../../css/cropper.css" />
 
-    <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../../js/page.js"></script>
-    <script type="text/javascript" src="../../js/das_mgment/dashboard.js"></script>
-    <script type="text/javascript" src="../../js/xcConfirm.js"></script>
-    <script type="text/javascript" src="../../js/Chart.js"></script>
-    <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
-    <script type="text/javascript" src="../../js/plugins/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="../../../js/jQuery/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../js/page.js"></script>
+    <script type="text/javascript" src="../../../js/das_mgment/dashboard.js"></script>
+    <script type="text/javascript" src="../../../js/xcConfirm.js"></script>
+    <script type="text/javascript" src="../../../js/Chart.js"></script>
+    <script type="text/javascript" src="../../../js/jquery.pjax.js"></script>
+    <script type="text/javascript" src="../../../js/plugins/jquery.validate.min.js"></script>
     <style>
         .box-inner {
             padding: 0 20px 0 20px;
@@ -91,7 +91,7 @@
         <header class="head-content">
             <div class="site-branding">
                 <div class="site-title">
-                    <a herf="../../" rel="home">餐饮店管理系统</a>
+                    <a herf="../../../" rel="home">餐饮店管理系统</a>
                     <h5>主页</h5>
                 </div>
             </div>
@@ -108,7 +108,7 @@
                         <div class="user-type"></div>
                     </div>
                     <div class="logout-wrap">
-                        <a class="logout" href="../../php/check_login.php?request=logout"><i class="iconfont icon-logout"></i>退出登录</a>
+                        <a class="logout" href="../../../php/check_login.php?request=logout"><i class="iconfont icon-logout"></i>退出登录</a>
                     </div>
                 </div>
             </div>
@@ -197,7 +197,7 @@
                             function changeMainBar(itemName) {
                                 $("#menu-" + itemName + "-item").click(() => {
                                     $.pjax({
-                                        url: "../" + itemName,
+                                        url: "../../" + itemName,
                                         container: 'html'
                                     });
                                 });
@@ -229,10 +229,10 @@
             <p class="clip-tip">提示：触摸操作请用双指缩放或旋转；<br>&nbsp;&nbsp;鼠标操作请用滚轮缩放、双击旋转。</p>
         </div>
     </div>
-    <script src="../../js/plugins/cropper/hammer.min.js"></script>
-    <script src="../../js/plugins/cropper/iscroll-zoom-min.js"></script>
-    <script src="../../js/plugins/cropper/lrz.all.bundle.js"></script>
-    <script src="../../js/plugins/cropper/PhotoClip.js"></script>
+    <script src="../../../js/plugins/cropper/hammer.min.js"></script>
+    <script src="../../../js/plugins/cropper/iscroll-zoom-min.js"></script>
+    <script src="../../../js/plugins/cropper/lrz.all.bundle.js"></script>
+    <script src="../../../js/plugins/cropper/PhotoClip.js"></script>
     <script>
         var picData = "";
         var pc = new PhotoClip('#clipArea', {
@@ -261,7 +261,7 @@
             $(".clip-wrapper").fadeOut();
         }
     </script>
-    <script type="text/javascript" src="../../js/das_mgment/user.update.validate.js"></script>
+    <script type="text/javascript" src="../../../js/das_mgment/user.update.validate.js"></script>
 </body>
 
 

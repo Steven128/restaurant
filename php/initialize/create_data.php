@@ -8,47 +8,47 @@ if (!$conn) {
 } else {
     echo "连接oracle成功！";
 
-    createAdminData($conn);
-    echo "<br>写入管理员表数据成功";
+    // createAdminData($conn);
+    // echo "<br>写入管理员表数据成功";
 
-    createEmployeeData($conn, 20);
-    echo "<br>写入员工表数据成功";
+    // createEmployeeData($conn, 20);
+    // echo "<br>写入员工表数据成功";
 
-    createPresenceData($conn);
-    echo "<br>写入出勤表数据成功";
+    // createPresenceData($conn);
+    // echo "<br>写入出勤表数据成功";
 
-    createGoodsData($conn);
-    echo "<br>写入原料表数据成功";
+    // createGoodsData($conn);
+    // echo "<br>写入原料表数据成功";
 
-    createTableData($conn, 20);
-    echo "<br>写入餐桌表数据成功";
+    // createTableData($conn, 20);
+    // echo "<br>写入餐桌表数据成功";
 
-    createFinanceData($conn, 100);
-    echo "<br>写入财务表数据成功";
+    // createFinanceData($conn, 100);
+    // echo "<br>写入财务表数据成功";
 
-    createPurchaseData($conn);
-    echo "<br>写入进货表数据成功";
+    createOverheadData($conn,500);
+    echo "<br>写入开销表数据成功";
 
-    createInventoryData($conn);
-    echo "<br>写入库存表数据成功";
+    // createInventoryData($conn);
+    // echo "<br>写入库存表数据成功";
 
-    createLossData($conn);
-    echo"<br>写入损失表数据成功";
+    // createLossData($conn);
+    // echo"<br>写入损失表数据成功";
 
-    createDishData($conn);
-    echo"<br>写入菜品表数据成功";
+    // createDishData($conn);
+    // echo"<br>写入菜品表数据成功";
 
-    createOrderData($conn, 1000);
-    echo"<br>写入订单表数据成功";
+    // createOrderData($conn, 1000);
+    // echo"<br>写入订单表数据成功";
 
-    createPreOrderData($conn, 100);
-    echo"<br>写入预定表数据成功";
+    // createPreOrderData($conn, 100);
+    // echo"<br>写入预定表数据成功";
 
-    createSalesData($conn);
-    echo"<br>写入销售表数据成功";
+    // createSalesData($conn);
+    // echo"<br>写入销售表数据成功";
 
-    createEvaluateData($conn);
-    echo"<br>写入评价表数据成功";
+    // createEvaluateData($conn);
+    // echo"<br>写入评价表数据成功";
 
     oci_close($conn);
 }
@@ -154,7 +154,7 @@ function createPresenceData($conn)
             $p_month = date("m", strtotime($sign_time));
             //写入签到信息
             $sql_insert = "INSERT INTO SCOTT.presence" .
-                "(presence_id,sign_time,p_month,employee_id,hasPresented)" .
+                "(presence_id,sign_time,pre_month,employee_id,hasPresented)" .
                 "VALUES" .
                 "('$presence_id','$sign_time','$p_month','$employee_id',$hasPresented)";
             $statement2 = oci_parse($conn, $sql_insert);
@@ -215,37 +215,28 @@ function createInventoryData($conn)
     oci_free_statement($statement2);
 }
 
-function createPurchaseData($conn)//id根据进货单创建时间,31种,进货单号由发票号码12+8组成
+function createOverheadData($conn, $quantity)//id根据进货单创建时间,31种,进货单号由发票号码12+8组成
 {
     $date=date("Y-m-d", time());
-    $begin_time=strtotime("2010-01-01 07:00:00");
+    $begin_time=strtotime(date("Y-m-d", time()-3*365*24*3600)." 07:00:00");
     $end_time=strtotime("$date 20:00:00");
-    $sql1="SELECT goods_id FROM SCOTT.goods";
-    $statement=oci_parse($conn, $sql1);
-    $res=oci_execute($statement);
-    $goods_array=array();
-    while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) {
-        $goods_array[]=$row[0];
-    }
-    for ($i=0;$i<500;$i++) {
+    for ($i=0;$i<$quantity;$i++) {
         $rand=mt_rand($begin_time, $end_time);
-        $pur_id=date("Ymd_His", $rand);
-        $pur_time=date("Y-m-d H:i:s", $rand);
-        $pur_id="pur_$pur_id";
-        $rand1=strval(mt_rand(10000, 30000)).strval(mt_rand(10000, 99999)).strval(mt_rand(10000, 99999)).strval(mt_rand(10000, 99999));
-        $rand2=mt_rand(0, 30);
-        $rand3=mt_rand(30, 100);
-        $goods_id=$goods_array[$rand2];
-        $sql_insert="INSERT INTO SCOTT.purchase".
-            "(purchase_id,purchase_number,goods_id,purchase_quantity,purchase_time)".
+        $ove_id=date("Ymd_His", $rand);
+        $ove_date=date("Y-m-d", $rand);
+        $ove_id="ove_$ove_id";
+        $price = mt_rand(5000,15000);
+        $ove_type = mt_rand(0,10);
+        $ove_type = $ove_type<6?1:($ove_type<8?2:($ove_type<9?3:4));
+        $sql_insert="INSERT INTO SCOTT.overhead".
+            "(overhead_id,overhead_type,overhead_price,overhead_date)".
             "VALUES".
-            "('$pur_id','$rand1','$goods_id',$rand3,'$pur_time')";
-        $statement1=oci_parse($conn, $sql_insert);
-        // echo "$pur_id   $_date   $rand1<br>";
-        oci_execute($statement1);
+            "('$ove_id','$ove_type','$price','$ove_date')";
+        $statement=oci_parse($conn, $sql_insert);
+        // echo "$sql_insert<br>";
+        oci_execute($statement);
     }
     oci_free_statement($statement);
-    oci_free_statement($statement1);
 }
 
 function createLossData($conn)//id根据los_日期
@@ -431,29 +422,29 @@ function createPreOrderData($conn, $quantity)
 function createSalesData($conn)//未测试
 {
     $sql_select1="SELECT order_id,dish_list FROM SCOTT.order_List";
-    $statement1=oci_parse($conn,$sql_select1);
+    $statement1=oci_parse($conn, $sql_select1);
     oci_execute($statement1);
-    while($row=oci_fetch_array($statement1,OCI_RETURN_NULLS)){
-        $arr=explode(",",$row[1]);
+    while ($row=oci_fetch_array($statement1, OCI_RETURN_NULLS)) {
+        $arr=explode(",", $row[1]);
         $count=0;
         $order_id=$row[0];
-        foreach($arr as $a){
+        foreach ($arr as $a) {
             //$a是菜品编号
             $count++;
             $sql_select2="SELECT dish_price FROM SCOTT.dish WHERE dish_id='$a'";
-            $statement2=oci_parse($conn,$sql_select2);
+            $statement2=oci_parse($conn, $sql_select2);
             oci_execute($statement2);
-            while($row=oci_fetch_array($statement2,OCI_RETURN_NULLS)){
+            while ($row=oci_fetch_array($statement2, OCI_RETURN_NULLS)) {
                 $dish_price=$row[0];
             }
             //echo "a:$dish_price<br>";
             $count=$count<10 ? "00$count" : ($count<100 ? "0$count" : "$count");
-            $sales_id="sal_".substr($order_id,-18)."_"."$count";
+            $sales_id="sal_".substr($order_id, -18)."_"."$count";
             $sql_insert="INSERT INTO SCOTT.sales".
                 "(sales_id,dish_id,dish_price,order_id,sal_status)".
                 "VALUES".
                 "('$sales_id','$a',$dish_price,'$order_id',3)";
-            $statement3=oci_parse($conn,$sql_insert);
+            $statement3=oci_parse($conn, $sql_insert);
             oci_execute($statement3);
             oci_free_statement($statement2);
             oci_free_statement($statement3);
@@ -466,19 +457,19 @@ function createEvaluateData($conn)//未测试
 {
     $message=array("服务很好","食物很棒","价格实惠","还会再来");
     $sql_select="SELECT order_id FROM SCOTT.order_list";
-    $statement1=oci_parse($conn,$sql_select);
+    $statement1=oci_parse($conn, $sql_select);
     oci_execute($statement1);
-    while($row=oci_fetch_array($statement1,OCI_RETURN_NULLS)){
-        $eva_id="eva_".substr($row[0],-18);
+    while ($row=oci_fetch_array($statement1, OCI_RETURN_NULLS)) {
+        $eva_id="eva_".substr($row[0], -18);
         $order_id=$row[0];
-        $star=mt_rand(3,5);
-        $rand1=mt_rand(0,3);
+        $star=mt_rand(3, 5);
+        $rand1=mt_rand(0, 3);
         $note=$message[$rand1];
         $sql_insert="INSERT INTO SCOTT.evaluate".
             "(evaluate_id,order_id,rating,evaluate_note)".
             "VALUES".
             "('$eva_id','$order_id',$star,'$note')";
-        $statement2=oci_parse($conn,$sql_insert);
+        $statement2=oci_parse($conn, $sql_insert);
         oci_execute($statement2);
     }
     oci_free_statement($statement1);
@@ -493,8 +484,8 @@ function createFinanceData($conn, $quantity)
         $finance_id = "fin_$date";
         $fin_date = date("Y-m-d", strtotime($_date));
         $month = date("m", strtotime($_date));
-        $turnover = mt_rand(6000, 10000);
-        $cost = mt_rand(4000, 6000);
+        $turnover = mt_rand(13000, 18000);
+        $cost = mt_rand(6000, 8000);
         $profit = $turnover - $cost;
 
         $sql_insert = "INSERT INTO SCOTT.finance" .

@@ -52,10 +52,10 @@ if (!$conn) {
         echo $statement;
     }
 
-    $sql_create_tab = "DROP TABLE purchase";
+    $sql_create_tab = "DROP TABLE overhead";
     $statement = oci_parse($conn, $sql_create_tab);
     if (oci_execute($statement)) {
-        echo "<br>删除进货表成功！";
+        echo "<br>删除开销表成功！";
     } else {
         echo $statement;
     }

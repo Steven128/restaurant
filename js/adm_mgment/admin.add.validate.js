@@ -1,4 +1,7 @@
 $(document).ready(() => {
+    /**
+     * 获取登录信息
+     */
     $.ajax({
         type: "GET",
         url: "../../php/check_login.php?request=check",
@@ -37,6 +40,10 @@ $(document).ready(() => {
     }, "");
 });
 
+/**
+ *添加员工
+ *
+ */
 function addEmployeeValidate() {
     $("#addEmployee-form").validate({
         onsubmit: true, // 是否在提交是验证
@@ -119,6 +126,10 @@ function addEmployeeValidate() {
     });
 }
 
+/**
+ *添加菜品
+ *
+ */
 function addDishValidate() {
     $("#addDish-form").validate({
         onsubmit: true, // 是否在提交是验证

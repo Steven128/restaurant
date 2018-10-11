@@ -104,10 +104,195 @@ session_start();
                 </aside>
                 <div class="mask"></div>
                 <div class="main-bar row">
+                    <div class="chart-box col-xs-12">
+                        <div class="chart-box-inner">
+                            <h4 class="chart-title">今天是
+                                <?php
+                                echo date("Y", time())."年".date("m", time())."月".date("d", time())."日";
+                                ?>
+                            </h4>
+                            <hr>
+                            <div class="col-xs-12 col-md-6" style="text-align: center;">
+                                <h4 class="chart-title">预定总数</h4>
+                                <h1 style="font-size: 48px; color: #1296db;">
+                                    <?php
+                                    $sql_query = "SELECT COUNT(*) FROM SCOTT.PRE_ORDER WHERE PRE_STATUS=1 AND SUBSTR(PREORDER_ID,9,8)='".date("Ymd", time()-24*3600)."'";
+                                    $statement = oci_parse($conn, $sql_query);
+                                    oci_execute($statement);
+                                    $row = oci_fetch_array($statement, OCI_RETURN_NULLS);
+                                    if ($row[0] == "") {
+                                        $row[0]=0;
+                                    }
+                                    echo $row[0];
+                                ?>
+                                </h1>
+                            </div>
+                            <div class="col-xs-12 col-md-6" style="text-align: center;">
+                                <h4 class="chart-title">今日订单总数</h4>
+                                <h1 style="font-size: 48px; color: #1296db;">
+                                    <?php
+                                    $sql_query = "SELECT COUNT(*) FROM SCOTT.ORDER_LIST WHERE ORD_STATUS=1 AND SUBSTR(ORDER_ID,9,8)='".date("Ymd", time()-2*24*3600)."'";
+                                    $statement = oci_parse($conn, $sql_query);
+                                    oci_execute($statement);
+                                    $row = oci_fetch_array($statement, OCI_RETURN_NULLS);
+                                    if ($row[0] == "") {
+                                        $row[0]=0;
+                                    }
+                                    echo $row[0];
+                                ?>
+                                </h1>
+                            </div>
+                            <hr>
+                            <canvas id="topChart"></canvas>
+                            <script>
+                                var ctx = document.getElementById("topChart");
+                                var myChart = new Chart(ctx, {
+                                    type: 'line',
+                                    data: {
+                                        <?php
+                                        function getFinData($conn, $param, $date)
+                                        {
+                                            $sql_query = "SELECT $param FROM SCOTT.FINANCE WHERE FIN_DATE='$date'";
+                                            $statement = oci_parse($conn, $sql_query);
+                                            oci_execute($statement);
+                                            $row = oci_fetch_array($statement, OCI_RETURN_NULLS);
+                                            if ($row[0] == "") {
+                                                $row[0]=0;
+                                            }
+                                            return $row[0];
+                                        }
+                                        ?>
+                                        labels: [
+                                            <?php
+                                            $time = time()-7*24*3600;
+                                            $echo_str = "";
+                                            for ($i=0;$i<7;$i++) {
+                                                $echo_str = $echo_str . "\"" . date("m.d", $time)."\",";
+                                                $time += 24*3600;
+                                            }
+                                            echo substr($echo_str, 0, strlen($echo_str)-1);
+                                            ?>
+                                        ],
+                                        datasets: [{
+                                            label: '营业额',
+                                            data: [
+                                                <?php
+                                                $time = time()-7*24*3600;
+                                                $echo_str = "";
+                                                for ($i=0;$i<7;$i++) {
+                                                    $echo_str = $echo_str . getFinData($conn, "TURNOVER", date("Y-m-d", $time)) . ",";
+                                                    $time += 24*3600;
+                                                }
+                                                echo substr($echo_str, 0, strlen($echo_str)-1);
+                                                ?>
+                                            ],
+                                            fill: false,
+                                            borderColor: ['rgba(255,99,132,1)']
+                                        }, {
+                                            label: '成本',
+                                            data: [
+                                                <?php
+                                                $time = time()-7*24*3600;
+                                                $echo_str = "";
+                                                for ($i=0;$i<7;$i++) {
+                                                    $echo_str = $echo_str . getFinData($conn, "COST", date("Y-m-d", $time)) . ",";
+                                                    $time += 24*3600;
+                                                }
+                                                echo substr($echo_str, 0, strlen($echo_str)-1);
+                                                ?>
+                                            ],
+                                            fill: false,
+                                            borderColor: ['rgba(255, 159, 64, 1)']
+                                        }, {
+                                            label: '利润',
+                                            data: [
+                                                <?php
+                                                $time = time()-7*24*3600;
+                                                $echo_str = "";
+                                                for ($i=0;$i<7;$i++) {
+                                                    $echo_str = $echo_str . getFinData($conn, "PROFIT", date("Y-m-d", $time)) . ",";
+                                                    $time += 24*3600;
+                                                }
+                                                echo substr($echo_str, 0, strlen($echo_str)-1);
+                                                ?>
+                                            ],
+                                            fill: false,
+                                            borderColor: ['rgb(54, 162, 235)']
+                                        }]
+                                    },
+                                    options: {}
+                                });
+                            </script>
+                        </div>
+                    </div>
                     <div class="chart-box col-xs-12 col-md-6 col-lg-4">
                         <div class="chart-box-inner">
-                            <h4 class="chart-title">员工性别</h4>
+                            <h4 class="chart-title">当前营业额</h4>
+                            <div style="font-size: 48px; color: #1296db;text-align: center;">
+                                <?php
+                                $sql_query = "SELECT SUM(DISH_PRICE) FROM SCOTT.SALES WHERE SAL_STATUS>=1 AND SUBSTR(ORDER_ID,9,8)='".date("Ymd", time()-2*24*3600)."'";
+                                $statement = oci_parse($conn, $sql_query);
+                                oci_execute($statement);
+                                $row = oci_fetch_array($statement, OCI_RETURN_NULLS);
+                                if ($row[0] == "") {
+                                    $row[0]=0;
+                                }
+                                echo $row[0];
+                                ?>
+                                <span style="font-size: 36px;">元</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-box col-xs-12 col-md-6 col-lg-4">
+                        <div class="chart-box-inner">
+                            <h4 class="chart-title">用户综合评价</h4>
+                            <div style="font-size: 48px; color: #1296db;text-align: center;">
+                                <?php
+                                $sql_query = "SELECT SUM(RATING)，COUNT(RATING) FROM SCOTT.EVALUATE WHERE EVA_STATUS=1 AND SUBSTR(ORDER_ID,9,8)='".date("Ymd", time()-2*24*3600)."'";
+                                $statement = oci_parse($conn, $sql_query);
+                                oci_execute($statement);
+                                $row = oci_fetch_array($statement, OCI_RETURN_NULLS);
+                                if ($row[1] == 0) {
+                                    $row[1]=1;
+                                }
+                                echo substr($row[0]/$row[1], 0, 3);
+                                ?>
+                                <span style="font-size: 36px;">星</span>
+                            </div>
                             <hr>
+                            <h4 class="chart-title">差评数</h4>
+                            <h1 style="font-size: 48px; color: #1296db;text-align: center;">
+                                <?php
+                                $sql_query = "SELECT COUNT(RATING) FROM SCOTT.EVALUATE WHERE EVA_STATUS=1 AND RATING<=2 AND SUBSTR(ORDER_ID,9,8)='".date("Ymd", time()-2*24*3600)."'";
+                                $statement = oci_parse($conn, $sql_query);
+                                oci_execute($statement);
+                                $row = oci_fetch_array($statement, OCI_RETURN_NULLS);
+                                echo $row[0];
+                                ?>
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="chart-box col-xs-12 col-md-6 col-lg-4">
+                        <div class="chart-box-inner">
+                            <h4 class="chart-title">出勤情况</h4>
+                            <div style="font-size: 36px; color: #1296db;text-align: center;">
+                                <?php
+                                    $sql_query = "SELECT COUNT(UNIQUE(PRESENCE.EMPLOYEE_ID)) FROM SCOTT.EMPLOYEE,SCOTT.PRESENCE WHERE SCOTT.EMPLOYEE.EMPLOYEE_ID=SCOTT.PRESENCE.EMPLOYEE_ID AND EMP_STATUS=1 AND PRE_STATUS=1 AND HASPRESENTED=1 AND SUBSTR(SIGN_TIME,0,10)='".date("Y-m-d", time()-24*3600)."'";
+                                    $statement = oci_parse($conn, $sql_query);
+                                    oci_execute($statement);
+                                    $row = oci_fetch_array($statement, OCI_RETURN_NULLS);
+                                    $haspresenced = "$row[0]";
+                                    $sql_query = "SELECT COUNT(*) FROM SCOTT.EMPLOYEE WHERE EMP_STATUS=1";
+                                    $statement = oci_parse($conn, $sql_query);
+                                    oci_execute($statement);
+                                    $row = oci_fetch_array($statement, OCI_RETURN_NULLS);
+                                    $quantity = "$row[0]";
+                                    echo "$haspresenced/$quantity";
+                                ?>
+                                <span style="font-size: 24px;">人</span>
+                            </div>
+                            <hr>
+                            <h4 class="chart-title">员工性别</h4>
                             <canvas id="genderChart"></canvas>
                             <script>
                                 var ctx = document.getElementById("genderChart");
@@ -115,54 +300,42 @@ session_start();
                                     type: 'pie',
                                     data: {
                                         <?php
-                                        $sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND gender=1";
-                                        $statement = oci_parse($conn, $sql_query);
-                                        oci_execute($statement);
-                                        $male = 0;
-                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-                                            $male++;
+                                        function getCount($conn, $table, $where)
+                                        {
+                                            $sql_query = "SELECT COUNT(*) FROM SCOTT.$table WHERE $where";
+                                            $statement = oci_parse($conn, $sql_query);
+                                            oci_execute($statement);
+                                            $row = oci_fetch_array($statement, OCI_RETURN_NULLS);
+                                            return $row[0];
                                         }
-
-                                        $sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND gender=0";
-                                        $statement = oci_parse($conn, $sql_query);
-                                        oci_execute($statement);
-                                        $female = 0;
-                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-                                            $female++;
-                                        }
-
-                                        $sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND gender>1";
-                                        $statement = oci_parse($conn, $sql_query);
-                                        oci_execute($statement);
-                                        $other = 0;
-                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-                                            $other++;
-                                        }
-                                        echo "labels: [\"男\",\"女\",\"其他\"],datasets: [{label: '性别',data:[$male,$female,$other"
+                                        $male = getCount($conn, "EMPLOYEE", "EMP_STATUS>0 AND gender=1");
+                                        $female = getCount($conn, "EMPLOYEE", "EMP_STATUS>0 AND gender=0");
+                                        // $other = getCount($conn, "EMPLOYEE", "EMP_STATUS>0 AND gender>1");
                                         ?>
-                                    ],
-                                    backgroundColor: [
-                                        'rgba(255, 99, 132, 0.2)',
-                                        'rgba(54, 162, 235, 0.2)',
-                                        'rgba(255, 206, 86, 0.2)',
-                                    ],
-                                    borderColor: [
-                                        'rgba(255,99,132,1)',
-                                        'rgba(54, 162, 235, 1)',
-                                        'rgba(255, 206, 86, 1)',
-                                    ],
-                                    borderWidth: 1
-                                }]
-                                },
-                                options: {}
+                                        labels: ["男", "女"],
+                                        datasets: [{
+                                            label: '性别',
+                                            data: [
+                                                <?php
+                                                echo "$male, $female";
+                                                ?>
+                                            ],
+                                            backgroundColor: [
+                                                'rgba(255, 99, 132, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)'
+                                            ],
+                                            borderColor: [
+                                                'rgba(255,99,132,1)',
+                                                'rgba(54, 162, 235, 1)'
+                                            ],
+                                            borderWidth: 1
+                                        }]
+                                    },
+                                    options: {}
                                 });
                             </script>
-                        </div>
-                    </div>
-                    <div class="chart-box col-xs-12 col-md-6 col-lg-4">
-                        <div class="chart-box-inner">
-                            <h4 class="chart-title">员工年龄</h4>
                             <hr>
+                            <h4 class="chart-title">员工年龄</h4>
                             <canvas id="ageChart"></canvas>
                             <script>
                                 var ctx = document.getElementById("ageChart");
@@ -170,37 +343,10 @@ session_start();
                                     type: 'bar',
                                     data: {
                                         <?php
-                                        $sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND age>=20 AND age<30";
-                                        $statement = oci_parse($conn, $sql_query);
-                                        oci_execute($statement);
-                                        $age_below_30 = 0;
-                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-                                            $age_below_30++;
-                                        }
-
-                                        $sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND age>=30 AND age<40";
-                                        $statement = oci_parse($conn, $sql_query);
-                                        oci_execute($statement);
-                                        $age_below_40 = 0;
-                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-                                            $age_below_40++;
-                                        }
-
-                                        $sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND age>=40 AND age<50";
-                                        $statement = oci_parse($conn, $sql_query);
-                                        oci_execute($statement);
-                                        $age_below_50 = 0;
-                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-                                            $age_below_50++;
-                                        }
-
-                                        $sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND age<20 OR age>=50";
-                                        $statement = oci_parse($conn, $sql_query);
-                                        oci_execute($statement);
-                                        $age_other = 0;
-                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-                                            $age_other++;
-                                        }
+                                        $age_below_30 = getCount($conn, "EMPLOYEE", "EMP_STATUS>0 AND age>=20 AND age<30");
+                                        $age_below_40 = getCount($conn, "EMPLOYEE", "EMP_STATUS>0 AND age>=30 AND age<40");
+                                        $age_below_50 = getCount($conn, "EMPLOYEE", "EMP_STATUS>0 AND age>=40 AND age<50");
+                                        $age_other = getCount($conn, "EMPLOYEE", "EMP_STATUS>0 AND age<20 OR age>=50");
                                         echo "labels: [\"20~30\",\"30~40\",\"40~50\",\"其他\"],datasets: [{label: '年龄',data:[$age_below_30,$age_below_40,$age_below_50,$age_other"
                                         ?>
                                     ],
@@ -238,13 +384,7 @@ session_start();
                         </div>
                     </div>
                     <div class="chart-box col-xs-12 col-md-6 col-lg-4">
-
-                    </div>
-                    <div class="chart-box col-xs-12 col-md-6 col-lg-4">
-
-                    </div>
-                    <div class="chart-box col-xs-12 col-md-6 col-lg-4">
-
+                        <div class="chart-box-inner"></div>
                     </div>
                     <script>
                         $(document).ready(() => {
