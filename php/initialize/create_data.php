@@ -431,29 +431,29 @@ function createPreOrderData($conn, $quantity)
 function createSalesData($conn)//未测试
 {
     $sql_select1="SELECT order_id,dish_list FROM SCOTT.order_List";
-    $statement1=oci_parse($conn,$sql_select1);
+    $statement1=oci_parse($conn, $sql_select1);
     oci_execute($statement1);
-    while($row=oci_fetch_array($statement1,OCI_RETURN_NULLS)){
-        $arr=explode(",",$row[1]);
+    while ($row=oci_fetch_array($statement1, OCI_RETURN_NULLS)) {
+        $arr=explode(",", $row[1]);
         $count=0;
         $order_id=$row[0];
-        foreach($arr as $a){
+        foreach ($arr as $a) {
             //$a是菜品编号
             $count++;
             $sql_select2="SELECT dish_price FROM SCOTT.dish WHERE dish_id='$a'";
-            $statement2=oci_parse($conn,$sql_select2);
+            $statement2=oci_parse($conn, $sql_select2);
             oci_execute($statement2);
-            while($row=oci_fetch_array($statement2,OCI_RETURN_NULLS)){
+            while ($row=oci_fetch_array($statement2, OCI_RETURN_NULLS)) {
                 $dish_price=$row[0];
             }
             //echo "a:$dish_price<br>";
             $count=$count<10 ? "00$count" : ($count<100 ? "0$count" : "$count");
-            $sales_id="sal_".substr($order_id,-18)."_"."$count";
+            $sales_id="sal_".substr($order_id, -18)."_"."$count";
             $sql_insert="INSERT INTO SCOTT.sales".
                 "(sales_id,dish_id,dish_price,order_id,sal_status)".
                 "VALUES".
                 "('$sales_id','$a',$dish_price,'$order_id',3)";
-            $statement3=oci_parse($conn,$sql_insert);
+            $statement3=oci_parse($conn, $sql_insert);
             oci_execute($statement3);
             oci_free_statement($statement2);
             oci_free_statement($statement3);
@@ -466,19 +466,19 @@ function createEvaluateData($conn)//未测试
 {
     $message=array("服务很好","食物很棒","价格实惠","还会再来");
     $sql_select="SELECT order_id FROM SCOTT.order_list";
-    $statement1=oci_parse($conn,$sql_select);
+    $statement1=oci_parse($conn, $sql_select);
     oci_execute($statement1);
-    while($row=oci_fetch_array($statement1,OCI_RETURN_NULLS)){
-        $eva_id="eva_".substr($row[0],-18);
+    while ($row=oci_fetch_array($statement1, OCI_RETURN_NULLS)) {
+        $eva_id="eva_".substr($row[0], -18);
         $order_id=$row[0];
-        $star=mt_rand(3,5);
-        $rand1=mt_rand(0,3);
+        $star=mt_rand(3, 5);
+        $rand1=mt_rand(0, 3);
         $note=$message[$rand1];
         $sql_insert="INSERT INTO SCOTT.evaluate".
             "(evaluate_id,order_id,rating,evaluate_note)".
             "VALUES".
             "('$eva_id','$order_id',$star,'$note')";
-        $statement2=oci_parse($conn,$sql_insert);
+        $statement2=oci_parse($conn, $sql_insert);
         oci_execute($statement2);
     }
     oci_free_statement($statement1);
@@ -493,8 +493,8 @@ function createFinanceData($conn, $quantity)
         $finance_id = "fin_$date";
         $fin_date = date("Y-m-d", strtotime($_date));
         $month = date("m", strtotime($_date));
-        $turnover = mt_rand(6000, 10000);
-        $cost = mt_rand(4000, 6000);
+        $turnover = mt_rand(13000, 18000);
+        $cost = mt_rand(6000, 8000);
         $profit = $turnover - $cost;
 
         $sql_insert = "INSERT INTO SCOTT.finance" .
