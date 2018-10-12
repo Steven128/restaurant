@@ -1,17 +1,17 @@
 <?php
-$ref = $_SERVER['REFERER'];
-if ($ref = '') {
-    echo '对不起，不允许从地址栏访问';
-    exit();
-} else {
-    $url = parse_url($ref);
-    echo $url['host'];
-    if ($url['host'] != '127.0.0.1' && $url['host'] != 'localhost') {
-        echo 'no';
-        exit();
-    }
-}
-var_dump($_SERVER);
+// $ref = $_SERVER['REFERER'];
+// if ($ref = '') {
+//     echo '对不起，不允许从地址栏访问';
+//     exit();
+// } else {
+//     $url = parse_url($ref);
+//     echo $url['host'];
+//     if ($url['host'] != '127.0.0.1' && $url['host'] != 'localhost') {
+//         echo 'no';
+//         exit();
+//     }
+// }
+// var_dump($_SERVER);
 
 class Jwt
 {
@@ -138,16 +138,15 @@ class Jwt
 
 
 
-$payload = array('iss' => 'xiaodingdang', 'iat' => time(), 'exp' => time() + 20, 'nbf' => time(), sub => $_POST['admin_id'], 'jti' => md5(uniqid('JWT') . time()));
+$payload = array('iss' => 'xiaodingdang', 'iat' => time(), 'exp' => time() + 20, 'nbf' => time(), 'jti' => md5(uniqid('JWT') . time()));
 
-$token = $_POST['token'];
+$token = $_SERVER['token'];
 if (isset($token)) {
     $getpayload = Jwt::verifyToken($token);
     if ($getpayload['sub'] == $payload['sub']) {
     } else {
         $token = Jwt::getToken($payload);
     }
-
 } else {
     $token = Jwt::getToken($payload);
 }

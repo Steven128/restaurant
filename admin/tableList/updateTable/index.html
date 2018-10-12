@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>管理员系统-餐饮店管理系统</title>
     <link type="text/css" rel="stylesheet" href="../../../css/bootstrap.css" />
@@ -46,7 +47,7 @@
             <div class="bar-box">
                 <aside class="left-bar">
                     <div class="admin-box">
-                        <img class="userPic" src="" />
+                        <img class="userPic" />
                         <h4 class="online-user"></h4>
                         <i class="iconfont icon-certificated" style="color: #1afa29;"></i>
                         <h5 class="user-type"></h5>
@@ -129,7 +130,7 @@
                                     </li>
                                     <li>
                                         <a id="menu-orderList-item" href="javascript:void(0);">
-                                            <i class="iconfont icon-display"></i>查询订单
+                                            <i class="iconfont icon-display"></i>今日订单
                                         </a>
                                     </li>
                                     <li>
@@ -188,16 +189,17 @@
                     <div class="title">
                         <h4 class="title-left">更新餐桌信息</h4>
                     </div>
-                    <div class='box-wrap'>
+                    <div class="box-wrap">
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-                                <div class="table-info-box col-xs-12 col-md-4">
-                                    <div class="table-info-wrap">
+                                <div class="employee-info-box col-xs-12 col-md-4">
+                                    <div class="employee-pic-wrap"><img class="employeePic" /></div>
+                                    <div class="employee-info-wrap">
                                         <div class="employee-name"></div>
                                         <div class="employee-type"></div>
                                         <div class="emp-btn-area">
-                                            <button class="btn-delete tab-btn-delete" type="button" value="">删除餐桌</button>
+                                            <button class="btn-delete emp-btn-delete" type="button" value="">删除餐桌</button>
                                         </div>
                                     </div>
                                 </div>
@@ -278,7 +280,48 @@
             </div>
         </footer>
     </div>
-    <div class="emp-del-confirm" style="display: none;">
+    <div class="clip-wrapper">
+        <div class="clipArea-head">
+            <button id="cancelBtn" onclick="clipCancel()">取消</button>
+            <button id="clipBtn" onclick="clipFinish()">截取</button>
+        </div>
+        <div id="clipArea">
+            <p class="clip-tip">提示：触摸操作请用双指缩放或旋转；<br>&nbsp;&nbsp;鼠标操作请用滚轮缩放、双击旋转。</p>
+        </div>
+    </div>
+    <script src="../../../js/plugins/cropper/hammer.min.js"></script>
+    <script src="../../../js/plugins/cropper/iscroll-zoom-min.js"></script>
+    <script src="../../../js/plugins/cropper/lrz.all.bundle.js"></script>
+    <script src="../../../js/plugins/cropper/PhotoClip.js"></script>
+    <script>
+        var picData = "";
+        var pc = new PhotoClip('#clipArea', {
+            size: 260,
+            outputSize: 640,
+            file: '#file',
+            view: '#view',
+            ok: '#clipBtn',
+            done: function(dataURL) {
+                picData = dataURL;
+            },
+            fail: function(err) {
+                window.wxc.xcConfirm(err, window.wxc.xcConfirm.typeEnum.error);
+            }
+        });
+
+        function start() {
+            $(".clip-wrapper").fadeIn();
+        }
+
+        function clipCancel() {
+            $(".clip-wrapper").fadeOut();
+        }
+
+        function clipFinish() {
+            $(".clip-wrapper").fadeOut();
+        }
+    </script>
+    <div class="del-confirm emp-del-confirm" style="display: none;">
         <h3>确认删除此员工吗？</h3>
         <hr>
         <h5>请输入此员工的姓名</h5>
@@ -290,7 +333,7 @@
                 <div class="clear"></div>
                 <div class="btn-area">
                     <button id="cancel" type="button" class="cancel" onclick="cancel()">取消</button>
-                    <button id="submit" type="button" class="submit submit_delete" onclick="nextStep()">确认删除</button>
+                    <button id="tab-btn-delete" type="button" class="submit submit_delete" onclick="nextStep()">确认删除</button>
                 </div>
             </div>
         </div>

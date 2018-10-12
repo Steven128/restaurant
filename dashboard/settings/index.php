@@ -100,6 +100,10 @@ session_start();
                             </li>
                         </ul>
                     </section>
+                    <script src="../../js/sidebar-menu.js"></script>
+                    <script>
+                        $.sidebarMenu($('.sidebar-menu'))
+                    </script>
                 </aside>
                 <div class="mask"></div>
                 <div class="main-bar row">

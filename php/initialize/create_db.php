@@ -220,7 +220,7 @@ if (!$conn) {
         "ove_status NUMERIC(1,0) DEFAULT 1 NOT NULL)";
     $statement = oci_parse($conn, $sql_create_tab);
     if (oci_execute($statement)) {
-        echo "<br>创建进货表成功！";
+        echo "<br>创建开销表成功！";
         $statement = oci_parse($conn, "COMMENT ON TABLE overhead IS '开销表'");
         oci_execute($statement);
         $statement = oci_parse($conn, "COMMENT ON COLUMN overhead.overhead_id IS '开销ID'");

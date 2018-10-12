@@ -19,13 +19,13 @@ function barAppend(treeName) {
             if (admin_type == 1) {
                 admin_type = "超级管理员";
                 addRootMgment();
-            } else if ($admin_type == 2) {
+            } else if (admin_type == 2) {
                 admin_type = "管理员";
                 addAdminMgment();
-            } else if ($admin_type == 3) {
+            } else if (admin_type == 3) {
                 admin_type = "财务管理";
                 addFinanceMgment();
-            } else if ($admin_type == 4) {
+            } else if (admin_type == 4) {
                 admin_type = "库存管理";
                 addInventoryMgment();
             }

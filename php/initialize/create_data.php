@@ -8,47 +8,47 @@ if (!$conn) {
 } else {
     echo "连接oracle成功！";
 
-    // createAdminData($conn);
-    // echo "<br>写入管理员表数据成功";
+    createAdminData($conn);
+    echo "<br>写入管理员表数据成功";
 
-    // createEmployeeData($conn, 20);
-    // echo "<br>写入员工表数据成功";
+    createEmployeeData($conn, 30);
+    echo "<br>写入员工表数据成功";
 
-    // createPresenceData($conn);
-    // echo "<br>写入出勤表数据成功";
+    createPresenceData($conn);
+    echo "<br>写入出勤表数据成功";
 
-    // createGoodsData($conn);
-    // echo "<br>写入原料表数据成功";
+    createGoodsData($conn);
+    echo "<br>写入原料表数据成功";
 
-    // createTableData($conn, 20);
-    // echo "<br>写入餐桌表数据成功";
+    createTableData($conn, 20);
+    echo "<br>写入餐桌表数据成功";
 
-    // createFinanceData($conn, 100);
-    // echo "<br>写入财务表数据成功";
+    createFinanceData($conn, 1095);
+    echo "<br>写入财务表数据成功";
 
-    createOverheadData($conn,500);
+    createOverheadData($conn,3585);
     echo "<br>写入开销表数据成功";
 
-    // createInventoryData($conn);
-    // echo "<br>写入库存表数据成功";
+    createInventoryData($conn);
+    echo "<br>写入库存表数据成功";
 
-    // createLossData($conn);
-    // echo"<br>写入损失表数据成功";
+    createLossData($conn);
+    echo"<br>写入损失表数据成功";
 
-    // createDishData($conn);
-    // echo"<br>写入菜品表数据成功";
+    createDishData($conn);
+    echo"<br>写入菜品表数据成功";
 
-    // createOrderData($conn, 1000);
-    // echo"<br>写入订单表数据成功";
+    createOrderData($conn, 1000);
+    echo"<br>写入订单表数据成功";
 
-    // createPreOrderData($conn, 100);
-    // echo"<br>写入预定表数据成功";
+    createPreOrderData($conn, 500);
+    echo"<br>写入预定表数据成功";
 
-    // createSalesData($conn);
-    // echo"<br>写入销售表数据成功";
+    createSalesData($conn);
+    echo"<br>写入销售表数据成功";
 
-    // createEvaluateData($conn);
-    // echo"<br>写入评价表数据成功";
+    createEvaluateData($conn);
+    echo"<br>写入评价表数据成功";
 
     oci_close($conn);
 }
