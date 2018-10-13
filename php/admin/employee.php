@@ -65,10 +65,8 @@ function addEmployee($conn)
     $str = strval($sum);
     
     $gender=$_POST['gender'];
-    if($gender=="男")
-        $gender=1;
-    else
-        $gender=0;
+    if($gender!=1&&$gender!=0)
+        return;
     $employee_id = date("ymd", strtotime($employ_time));
     $employee_id = "emp_" . $employee_id . "_$gender" . "_";
 
@@ -133,10 +131,8 @@ function updateEmployee($conn)
         $employee_id = $_POST['employee_id'];
         $name=$_POST['name'];
         $gender=$_POST['gender'];
-        if($gender=="男")
-            $gender=1;
-        else
-            $gender=0;
+        if($gender!=1&&$gender!=0)
+            return;
         $age=$_POST['age'];
         $salary=$_POST['salary'];
         $phone_num=$_POST['phone_num'];
