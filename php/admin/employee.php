@@ -63,13 +63,16 @@ function addEmployee($conn)
     $statement = oci_parse($conn, $sql_query);
     $sum = oci_execute($statement);
     $str = strval($sum);
-    $EMPLOYEE_ID = date('m');
-    for ($i = 4 - strlen($str); $i > 0; $i--) {
-        $EMPLOYEE_ID += "0";
-    }
-    $EMPLOYEE_ID += $str;
+    
+    $gender=$_POST['gender'];
+    if($gender=="男")
+        $gender=1;
+    else
+        $gender=0;
+    $employee_id = date("ymd", strtotime($employ_time));
+    $employee_id = "emp_" . $employee_id . "_$gender" . "_";
 
-    $sql_query = "INSERT INTO EMPLOYEE (EMPLOYEE_ID, NAME, GENDER,  WORKING_YEAR, AGE, SALARY, PHONE_NUM, EMPLOYEE_TYPE, EMPLOY_TIME, EMPLOYEE_PIC, EMP_STATUS) VALUES ('$EMPLOYEE_ID', '" . $_POST['name'] . "', " . $_POST['gender'] . ", " . $_POST['working_year'] . ", " . $_POST['age'] . ", " . $_POST['salary'] . ", '" . $_POST['phone_num'] . "', " . $_POST['employee_type'] . ", '" . $_POST['employee_time'] . "', '" . $_POST['employee_pic'] . "', 1)";
+    $sql_query = "INSERT INTO EMPLOYEE (EMPLOYEE_ID, NAME, GENDER,  WORKING_YEAR, AGE, SALARY, PHONE_NUM, EMPLOYEE_TYPE, EMPLOY_TIME, EMPLOYEE_PIC, EMP_STATUS) VALUES ('$EMPLOYEE_ID', '" . $_POST['name'] . "', $gender, " . $_POST['working_year'] . ", " . $_POST['age'] . ", " . $_POST['salary'] . ", '" . $_POST['phone_num'] . "', " . $_POST['employee_type'] . ", '" . $_POST['employee_time'] . "', '" . $_POST['employee_pic'] . "', 1)";
 
     $statement = oci_parse($conn, $sql_query);
     if (oci_execute($statement)) {
@@ -106,6 +109,10 @@ function getEmployeeInfo($conn)
             $employee_id = $row[0];
             $name = $row[1];
             $gender = $row[2];
+            if($gender==1)
+                $gender="男";
+            else
+                $gender="女";
             $working_year = $row[3];
             $age = $row[4];
             $salary = $row[5];
@@ -126,6 +133,10 @@ function updateEmployee($conn)
         $employee_id = $_POST['employee_id'];
         $name=$_POST['name'];
         $gender=$_POST['gender'];
+        if($gender=="男")
+            $gender=1;
+        else
+            $gender=0;
         $age=$_POST['age'];
         $salary=$_POST['salary'];
         $phone_num=$_POST['phone_num'];
