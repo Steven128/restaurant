@@ -6,16 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>财务管理-餐饮店管理系统</title>
-    <link type="text/css" rel="stylesheet" href="../css/bootstrap.css" />
-    <link type="text/css" rel="stylesheet" href="../css/iconfont.css" />
-    <link type="text/css" rel="stylesheet" href="../css/page.css" />
-    <link type="text/css" rel="stylesheet" href="../css/sidebar-menu.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/iconfont.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/page.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/tablesorter.css" />
 
-    <script type="text/javascript" src="../js/jQuery/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../js/page.js"></script>
-    <script type="text/javascript" src="../js/xcConfirm.js"></script>
-    <script type="text/javascript" src="../js/jquery.pjax.js"></script>
+    <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/page.js"></script>
+    <script type="text/javascript" src="../../js/xcConfirm.js"></script>
+    <script type="text/javascript" src="../../js/plugins/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="../../js/plugins/jquery.filtertable.js"></script>
+    <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
 </head>
 
 <body>
@@ -28,7 +31,7 @@
                     </div>
                 </a>
                 <div class="site-title">
-                    <a herf="../dashboard" rel="home">餐饮店管理系统</a>
+                    <a herf="../../dashboard" rel="home">餐饮店管理系统</a>
                     <h5>财务管理系统</h5>
                 </div>
             </div>
@@ -44,7 +47,7 @@
                     </div>
                     <section class="sidebar">
                         <ul class="sidebar-menu">
-                            <li class="treeview active">
+                            <li class="treeview">
                                 <a href="javascript:void(0);">
                                     <i class="iconfont icon-overview"></i>
                                     <span>总览</span>
@@ -52,14 +55,14 @@
                                         <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu menu-open">
+                                <ul class="treeview-menu">
                                     <li>
-                                        <a id="menu-finOverview-item" href="javascript:void(0);" class="innerActive">
+                                        <a id="menu-finOverview-item" href="javascript:void(0);">
                                             <i class="iconfont icon-list"></i>财务总览</a>
                                     </li>
                                 </ul>
                             </li>
-                            <li class="treeview">
+                            <li class="treeview active">
                                 <a href="javascript:void(0);">
                                     <i class="iconfont icon-finance"></i>
                                     <span>开销管理</span>
@@ -67,7 +70,7 @@
                                         <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu">
+                                <ul class="treeview-menu menu-open">
                                     <li>
                                         <a id="menu-overheadList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-overhead-list"></i>今日开销</a>
@@ -77,7 +80,7 @@
                                             <i class="iconfont icon-list-search"></i>历史查询</a>
                                     </li>
                                     <li>
-                                        <a id="menu-addOverhead-item" href="javascript:void(0);">
+                                        <a id="menu-addOverhead-item" href="javascript:void(0);" class="innerActive">
                                             <i class="iconfont icon-overhead-add"></i>增加开销</a>
                                     </li>
                                 </ul>
@@ -118,7 +121,7 @@
                             </li>
                         </ul>
                     </section>
-                    <script src="../js/sidebar-menu.js"></script>
+                    <script src="../../js/sidebar-menu.js"></script>
                     <script>
                         $.sidebarMenu($('.sidebar-menu'))
                     </script>
@@ -126,19 +129,22 @@
                 <div class="mask"></div>
                 <div class="main-bar">
                     <div class="title">
-                        <h4 class="title-left">更新员工信息</h4>
+                        <h4 class="title-left">增加开销信息</h4>
                     </div>
                     <div class="box-wrap">
+                        <div class="box">
+                            <div class="inner-top-wrap"></div>
+                            <div class="inner-box">
 
+                            </div>
+                        </div>
                     </div>
                     <script>
                         $(document).ready(() => {
-                            window.location.replace("finOverview");
-
                             function changeMainBar(itemName) {
                                 $("#menu-" + itemName + "-item").click(() => {
                                     $.pjax({
-                                        url: "" + itemName,
+                                        url: "../" + itemName,
                                         container: 'html'
                                     });
                                 });
@@ -147,13 +153,11 @@
                             changeMainBar("finOverview");
                             changeMainBar("overheadList");
                             changeMainBar("overheadHistory");
-                            changeMainBar("addOverhead");
                             changeMainBar("orderList");
                             changeMainBar("orderHistory");
                             changeMainBar("salaryList");
                         });
                     </script>
-                    <div class="shelter" onclick="hideBox()" style="background-color: rgba(0,0,0,0.5);z-index: 100;"></div>
                 </div>
             </div>
         </div>
@@ -164,6 +168,6 @@
         </footer>
     </div>
 </body>
-
+<script type="text/javascript" src="../../js/fin_mgment/fin.add.validate.js"></script>
 
 </html>
