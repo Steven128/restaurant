@@ -32,7 +32,7 @@ if (!$conn) {
     createInventoryData($conn);
     echo "<br>写入库存表数据成功";
 
-    createLossData($conn);
+    createLossData($conn,80);
     echo"<br>写入损失表数据成功";
 
     createDishData($conn);
@@ -41,10 +41,10 @@ if (!$conn) {
     createOrderData($conn, 1000);
     echo"<br>写入订单表数据成功";
 
-    createPreOrderData($conn, 500);
+    createPreOrderData($conn, 50);
     echo"<br>写入预定表数据成功";
 
-    createSalesData($conn);
+    createSalesData($conn);   //有问题
     echo"<br>写入销售表数据成功";
 
     createEvaluateData($conn);
@@ -239,7 +239,7 @@ function createOverheadData($conn, $quantity)//id根据进货单创建时间,31�
     oci_free_statement($statement);
 }
 
-function createLossData($conn)//id根据los_日期
+function createLossData($conn,$quantity)//id根据los_日期
 {
     $date=date("Y-m-d", time());
     $sql1="SELECT goods_id FROM SCOTT.goods";
@@ -251,7 +251,7 @@ function createLossData($conn)//id根据los_日期
     }
     $begin_time=strtotime("2010-01-10 07:00:00");
     $end_time=strtotime("$date 20:00:00");
-    for ($i=0;$i<80;$i++) {
+    for ($i=0;$i<$quantity;$i++) {
         $rand=mt_rand($begin_time, $end_time);
         $rand_time=date("Y-m-d", $rand);
         $id_time=date("Ymd", $rand);
@@ -419,7 +419,7 @@ function createPreOrderData($conn, $quantity)
     oci_free_statement($statement2);
 }
 
-function createSalesData($conn)//未测试
+function createSalesData($conn)
 {
     $sql_select1="SELECT order_id,dish_list FROM SCOTT.order_List";
     $statement1=oci_parse($conn, $sql_select1);
@@ -444,6 +444,7 @@ function createSalesData($conn)//未测试
                 "(sales_id,dish_id,dish_price,order_id,sal_status)".
                 "VALUES".
                 "('$sales_id','$a',$dish_price,'$order_id',3)";
+            //echo "$sales_id   $a  $dish_price  $order_id <br>";
             $statement3=oci_parse($conn, $sql_insert);
             oci_execute($statement3);
             oci_free_statement($statement2);
@@ -453,7 +454,7 @@ function createSalesData($conn)//未测试
     oci_free_statement($statement1);
 }
 
-function createEvaluateData($conn)//未测试
+function createEvaluateData($conn)
 {
     $message=array("服务很好","食物很棒","价格实惠","还会再来");
     $sql_select="SELECT order_id FROM SCOTT.order_list";

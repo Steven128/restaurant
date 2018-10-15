@@ -122,6 +122,14 @@ if (!$conn) {
         echo $statement;
     }
 
+    // $sql_create_tab = "DROP TABLE purchase";
+    // $statement = oci_parse($conn, $sql_create_tab);
+    // if (oci_execute($statement)) {
+    //     echo "<br>删除进货表成功！";
+    // } else {
+    //     echo $statement;
+    // }
+
     oci_free_statement($statement);
     oci_close($conn);
 }
