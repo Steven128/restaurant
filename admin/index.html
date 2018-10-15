@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- /admin/ -->
 <html>
 
 <head>
@@ -6,26 +7,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>管理员系统-餐饮店管理系统</title>
-    <link type="text/css" rel="stylesheet" href="../../../css/bootstrap.css" />
-    <link type="text/css" rel="stylesheet" href="../../../css/iconfont.css" />
-    <link type="text/css" rel="stylesheet" href="../../../css/page.css" />
-    <link type="text/css" rel="stylesheet" href="../../../css/update.css" />
-    <link type="text/css" rel="stylesheet" href="../../../css/sidebar-menu.css" />
-    <link type="text/css" rel="stylesheet" href="../../../css/tablesorter.css" />
-    <link type="text/css" rel="stylesheet" href="../../../css/form.css" />
-    <link type="text/css" rel="stylesheet" href="../../../css/cropper.css" />
+    <link type="text/css" rel="stylesheet" href="../css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="../css/iconfont.css" />
+    <link type="text/css" rel="stylesheet" href="../css/page.css" />
+    <link type="text/css" rel="stylesheet" href="../css/sidebar-menu.css" />
+    <link type="text/css" rel="stylesheet" href="../css/tablesorter.css" />
+    <link type="text/css" rel="stylesheet" href="../css/form.css" />
 
-    <script type="text/javascript" src="../../../js/jQuery/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="../../../js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../../../js/page.js"></script>
-    <script type="text/javascript" src="../../../js/xcConfirm.js"></script>
-    <script type="text/javascript" src="../../../js/plugins/jquery.tablesorter.min.js"></script>
-    <script type="text/javascript" src="../../../js/plugins/jquery.filtertable.js"></script>
-    <script type="text/javascript" src="../../../js/jquery.pjax.js"></script>
-    <script type="text/javascript" src="../../../js/plugins/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="../../../js/form.onChange.js"></script>
-    <script type="text/javascript" src="../../../js/adm_mgment/admin.update.validate.js"></script>
-    <script type="text/javascript" src="../../../js/adm_mgment/admin.delete.js"></script>
+    <script type="text/javascript" src="../js/jQuery/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/page.js"></script>
+    <script type="text/javascript" src="../js/sidebar-menu.js"></script>
+    <script type="text/javascript" src="../js/xcConfirm.js"></script>
+    <script type="text/javascript" src="../js/plugins/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="../js/plugins/jquery.filtertable.js"></script>
+    <script type="text/javascript" src="../js/jquery.pjax.js"></script>
+
 </head>
 
 <body>
@@ -38,7 +35,7 @@
                     </div>
                 </a>
                 <div class="site-title">
-                    <a herf="../../../dashboard" rel="home">餐饮店管理系统</a>
+                    <a herf="../" rel="home">餐饮店管理系统</a>
                     <h5>管理员系统</h5>
                 </div>
             </div>
@@ -54,7 +51,7 @@
                     </div>
                     <section class="sidebar">
                         <ul class="sidebar-menu">
-                            <li class="treeview active">
+                            <li class="treeview">
                                 <a href="javascript:void(0);">
                                     <i class="iconfont icon-employee"></i>
                                     <span>员工管理</span>
@@ -62,9 +59,9 @@
                                         <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu menu-open">
+                                <ul class="treeview-menu">
                                     <li>
-                                        <a id="menu-employeeList-item" href="javascript:void(0);" class="innerActive">
+                                        <a id="menu-employeeList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-list"></i>员工列表</a>
                                     </li>
                                     <li>
@@ -177,9 +174,15 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li class="treeview">
+                                <a href="javascript:void(0);" onclick="goBack()">
+                                    <i class="iconfont icon-back"></i>
+                                    <span>返回主页</span>
+                                </a>
+                            </li>
                         </ul>
                     </section>
-                    <script src="../../../js/sidebar-menu.js"></script>
+                    <script src="../js/sidebar-menu.js"></script>
                     <script>
                         $.sidebarMenu($('.sidebar-menu'))
                     </script>
@@ -188,10 +191,47 @@
                 <div class="main-bar">
                     <script>
                         $(document).ready(() => {
-                            window.location.replace("employeeList");
-                        });
+                            if (getUserInfo().admin_type == 1 || getUserInfo().admin_type == 2) {
+                                window.location.replace("employeeList");
+                            } else {
+                                window.wxc.xcConfirm("你没有权限", window.wxc.xcConfirm.typeEnum.error, {
+                                    onOk: function() {
+                                        window.location.replace("../dashboard");
+                                    },
+                                    onClose: function() {
+                                        window.location.replace("../dashboard");
+                                    }
+                                });
+                            }
+                            //
+                            function changeMainBar(itemName) {
+                                $("#menu-" + itemName + "-item").click(() => {
+                                    $.pjax({
+                                        url: "../" + itemName,
+                                        container: 'html'
+                                    });
+                                });
+                            }
+                            //
+                            changeMainBar("employeeList");
+                            changeMainBar("addEmployee");
+                            changeMainBar("financeList");
+                            changeMainBar("financeHistory");
+                            changeMainBar("inventoryList");
+                            changeMainBar("purchaseList");
+                            changeMainBar("lossList");
+                            changeMainBar("preOrderList");
+                            changeMainBar("orderList");
+                            changeMainBar("orderHistory");
+                            changeMainBar("preOrderList");
+                            changeMainBar("orderList");
+                            changeMainBar("orderHistory");
+                            changeMainBar("dishList");
+                            changeMainBar("addDish");
+                            changeMainBar("tableList");
+                            changeMainBar("addTable");
+                        })
                     </script>
-                    <div class="shelter" onclick="hideBox()" style="background-color: rgba(0,0,0,0.5);z-index: 100;"></div>
                 </div>
             </div>
         </div>
