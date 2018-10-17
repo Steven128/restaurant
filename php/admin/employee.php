@@ -1,4 +1,7 @@
 <?php
+
+require '../updatePic.php';
+session_start(); //开启php_session
 //$ref = $_SERVER['HTTP_REFERER'];
 // if ($ref == "") {
 //     echo "不允许从地址栏访问";
@@ -10,8 +13,7 @@
 //         exit();
 //     }
 // }
-session_start(); //开启php_session
-include "../updatePic.php";
+
 if (isset($_GET['request'])) {
     $request = $_GET['request'];
     $admin_id = $_GET['admin_id'];
@@ -34,16 +36,16 @@ if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如�
         //     exit();
         // }
 
-        if ($request == "addEmployee") {
-            echo addEmployee($conn);
+        if ($request == "add_employee") {
+            addEmployee($conn);
         } else if ($request == "deleteEmployee") {
-            echo deleteEmployee($conn);
+            deleteEmployee($conn);
         } elseif ($request == "getEmployeeInfo") {
-            echo getEmployeeInfo($conn);
+            getEmployeeInfo($conn);
         } elseif ($request == "updateEmployee") {
-            echo updateEmployee($conn);
+            updateEmployee($conn);
         } elseif ($request == "updateEmployeePic") {
-            echo updateEmployeePic($conn);
+            updateEmployeePic($conn,"sd");
         }
 
     }
@@ -59,26 +61,35 @@ function islegalid($str)
 
 function addEmployee($conn)
 {
+    // $sql_query = "INSERT INTO EMPLOYEE (EMPLOYEE_ID, NAME, GENDER,  WORKING_YEAR, AGE, SALARY, PHONE_NUM, EMPLOYEE_TYPE, EMPLOY_TIME, EMPLOYEE_PIC, EMP_STATUS) VALUES ('asd', 'hou', 1, 2,33, 555, '13212312312', 2, '1998-11-11', 'asd', 1)";
+    // $statement = oci_parse($conn, $sql_query);
+    // oci_execute($statement);
+
+
     $sql_query = "SELECT COUNT(EMPLOYEE_ID) FROM SCOTT.EMPLOYEE";
     $statement = oci_parse($conn, $sql_query);
-    $sum = oci_execute($statement);
-    $str = strval($sum);
-    
+    oci_execute($statement);
+    $row = oci_fetch_array($statement, OCI_RETURN_NULLS);
+    $count = $row[0];
     $gender=$_POST['gender'];
+    
     if($gender!=1&&$gender!=0)
         return;
+    $employ_time = date("Y-m-d");
     $employee_id = date("ymd", strtotime($employ_time));
     $employee_id = "emp_" . $employee_id . "_$gender" . "_";
-
-    $sql_query = "INSERT INTO EMPLOYEE (EMPLOYEE_ID, NAME, GENDER,  WORKING_YEAR, AGE, SALARY, PHONE_NUM, EMPLOYEE_TYPE, EMPLOY_TIME, EMPLOYEE_PIC, EMP_STATUS) VALUES ('$EMPLOYEE_ID', '" . $_POST['name'] . "', $gender, " . $_POST['working_year'] . ", " . $_POST['age'] . ", " . $_POST['salary'] . ", '" . $_POST['phone_num'] . "', " . $_POST['employee_type'] . ", '" . $_POST['employee_time'] . "', '" . $_POST['employee_pic'] . "', 1)";
+    $param = $count < 10 ? "000$count" : ($count < 100 ? "00$count" : "0$count");
+    $employee_id = "$employee_id" . "$param";
+    
+    $sql_query = "INSERT INTO EMPLOYEE (EMPLOYEE_ID, NAME, GENDER,  WORKING_YEAR, AGE, SALARY, PHONE_NUM, EMPLOYEE_TYPE, EMPLOY_TIME, EMPLOYEE_PIC, EMP_STATUS) VALUES ('$employee_id', '" . $_POST['name'] . "', $gender, 0, " . $_POST['age'] . ", " . $_POST['salary'] . ", '" . $_POST['phone_num'] . "', " . $_POST['employee_type'] . ", '" . $employ_time . "', 'd', 1)";
 
     $statement = oci_parse($conn, $sql_query);
     if (oci_execute($statement)) {
-        echo json_encode(array("message" => "success"));
+        updateEmployeePic($conn,$employee_id);
     } else {
         echo json_encode(array("message" => "error", "reason" => oci_error()));
     }
-
+    //if(isset($_POST['employeePicData']))
 }
 function deleteEmployee($conn)
 {
@@ -149,6 +160,10 @@ function updateEmployee($conn)
         echo json_encode(array("message" => "error", "reason" => oci_error()));
     }
 }
-function updateEmployeePic($conn){
-    new updatePic().upload("upload_employee_pic");
+function updateEmployeePic($conn,$upid){
+    $sd=new uploadPic();
+    $sd->upload("upload_employee_pic",$upid);
+    
 }
+
+

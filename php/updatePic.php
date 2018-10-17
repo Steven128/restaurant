@@ -11,11 +11,11 @@ class uploadPic
      * @param $src 源图
      * @param float $percent  压缩比例
      */
-    public function __construct($src, $percent = 1)
-    {
-        $this->src = $src;
-        $this->percent = $percent;
-    }
+    // public function __construct($src, $percent = 1)
+    // {
+    //     $this->src = $src;
+    //     $this->percent = $percent;
+    // }
     /** 高清压缩图片
      * @param string $saveName  提供图片名（可不带扩展名，用源图扩展名）用于保存。或不提供文件名直接显示
      */
@@ -104,11 +104,11 @@ class uploadPic
     /**
      * 销毁图片
      */
-    public function __destruct()
-    {
-        imagedestroy($this->image);
-    }
-    public function upload($request)
+    // public function __destruct()
+    // {
+    //     imagedestroy($this->image);
+    // }
+    public function upload($request,$upid)
     {
         if ($request == "upload_admin_pic") {
             $table="admin";
@@ -123,14 +123,20 @@ class uploadPic
                     mkdir($new_file, 0700);
                 }
                 $new_file = $new_file . $admin_id . ".{$type}";
-                if (file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64_image_content)))) {
-                    echo json_encode(array("message" => "success"));
+                if (!file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64_image_content)))) {
+                    echo json_encode(array("message" => "error"));
                 }
             }
         } else if ($request == "upload_employee_pic") {
             $table="employee";
             $base64_image_content = $_POST['employeePicData'];
-            $employee_id = $_POST['employee_id'];
+            if(isset($_POST['employee_id'])){
+
+                $employee_id = $_POST['employee_id'];
+            }
+            else{
+                $employee_id = $upid;
+            }
             $id=$employee_id;
             //匹配出图片的格式
             if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64_image_content, $result)) {
@@ -141,9 +147,8 @@ class uploadPic
                     mkdir($new_file, 0700);
                 }
                 $new_file = $new_file . $employee_id . ".{$type}";
-
-                if (file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64_image_content)))) {
-                    echo json_encode(array("message" => "success"));
+                if (!file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64_image_content)))) {
+                    echo json_encode(array("message" => "error"));
                 }
             }
         } else if ($request == "upload_dish_pic") {
@@ -166,12 +171,13 @@ class uploadPic
                 }
             }
         }
-        $percent = 1; #原图压缩，不缩放，但体积大大降低
-        $image = (new imgcompress($new_file, $percent))->compressImg($new_file);
+        $this->percent = 1; #原图压缩，不缩放，但体积大大降低
+        $this->src=$new_file;
+        //$image = $this->compressImg($new_file);
         $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8");
-        $sql_insert = "UPDATE SCOTT.$table SET $table"."_pic='$new_file' WHERE $table"."_id='$i'";
+        $sql_insert = "UPDATE SCOTT.$table SET $table"."_pic='$new_file' WHERE $table"."_id='$id'";
         $statement = oci_parse($conn, $sql_insert);
-
+        oci_execute($statement);
         if (oci_execute($statement)) {
             echo json_encode(array("message" => "success"));
         } else {
