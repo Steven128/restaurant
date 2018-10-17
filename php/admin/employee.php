@@ -85,11 +85,14 @@ function addEmployee($conn)
 
     $statement = oci_parse($conn, $sql_query);
     if (oci_execute($statement)) {
-        updateEmployeePic($conn,$employee_id);
+        if(isset($_POST['employeePicData']))
+            updateEmployeePic($conn,$employee_id);
+        else
+            echo json_encode(array("message" => "success"));
     } else {
         echo json_encode(array("message" => "error", "reason" => oci_error()));
     }
-    //if(isset($_POST['employeePicData']))
+    //
 }
 function deleteEmployee($conn)
 {
