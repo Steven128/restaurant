@@ -89,10 +89,6 @@ function addEmployeeValidate() {
             }
         },
         submitHandler: function(form) { //通过之后回调
-            var userPicData = $("#previewResult")[0].src;
-            if (userPicData.indexOf("data:") < 0) {
-                userPicData = '';
-            }
             var name = $("#name").val();
             var gender = $("input[name='gender']:checked").val();
             var age = $("#age").val();
@@ -113,7 +109,7 @@ function addEmployeeValidate() {
                     "salary": salary,
                     "phone_num": phone_num,
                     "employee_type": employee_type,
-                    "employeePicData": employeePicData
+                    "employeePicData": picData
                 },
                 success: (e) => {
                     console.log(e)

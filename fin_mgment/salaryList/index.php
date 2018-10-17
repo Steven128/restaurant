@@ -143,6 +143,12 @@ session_start();
                                     </li>
                                 </ul>
                             </li>
+                            <li class="treeview">
+                                <a href="javascript:void(0);" onclick="goBack()">
+                                    <i class="iconfont icon-back"></i>
+                                    <span>返回主页</span>
+                                </a>
+                            </li>
                         </ul>
                     </section>
                     <script src="../../js/sidebar-menu.js"></script>
