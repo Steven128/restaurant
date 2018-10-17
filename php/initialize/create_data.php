@@ -399,7 +399,7 @@ function createPreOrderData($conn, $quantity)
         $table_id_array[]=$row[2];
     }
     for ($i=0;$i<$quantity;$i++) {
-        $rand1=mt_rand(0, 999);
+        $rand1=mt_rand(0, $quantity-1);
         $table_id=$table_id_array[$rand1];
         $pre_order="pre_".substr($order_id_array[$rand1], -18);
         $pre_dish=$dish_list_array[$rand1];

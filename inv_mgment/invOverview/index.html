@@ -6,16 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>仓库管理-餐饮店管理系统</title>
-    <link type="text/css" rel="stylesheet" href="../css/bootstrap.css" />
-    <link type="text/css" rel="stylesheet" href="../css/iconfont.css" />
-    <link type="text/css" rel="stylesheet" href="../css/page.css" />
-    <link type="text/css" rel="stylesheet" href="../css/sidebar-menu.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/iconfont.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/page.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
 
-    <script type="text/javascript" src="../js/jQuery/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../js/page.js"></script>
-    <script type="text/javascript" src="../js/xcConfirm.js"></script>
-    <script type="text/javascript" src="../js/jquery.pjax.js"></script>
+    <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/page.js"></script>
+    <script type="text/javascript" src="../../js/xcConfirm.js"></script>
+    <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
 </head>
 
 <body>
@@ -28,7 +28,7 @@
                     </div>
                 </a>
                 <div class="site-title">
-                    <a herf="../dashboard" rel="home">餐饮店管理系统</a>
+                    <a herf="../../dashboard" rel="home">餐饮店管理系统</a>
                     <h5>仓库管理系统</h5>
                 </div>
             </div>
@@ -105,7 +105,7 @@
                             </li>
                         </ul>
                     </section>
-                    <script src="../js/sidebar-menu.js"></script>
+                    <script src="../../js/sidebar-menu.js"></script>
                     <script>
                         $.sidebarMenu($('.sidebar-menu'))
                     </script>
@@ -114,18 +114,16 @@
                 <div class="main-bar">
                     <script>
                         $(document).ready(() => {
-                            window.location.replace("invOverview");
 
                             function changeMainBar(itemName) {
                                 $("#menu-" + itemName + "-item").click(() => {
                                     $.pjax({
-                                        url: "" + itemName,
+                                        url: "../" + itemName,
                                         container: 'html'
                                     });
                                 });
                             }
                             //
-                            changeMainBar("invOverview");
                             changeMainBar("inventoryList");
                             changeMainBar("inventoryWarring");
                             changeMainBar("addPurchase");
