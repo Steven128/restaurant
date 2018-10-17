@@ -18,7 +18,7 @@ $(document).ready(() => {
             } else if (admin_type == 4) {
                 admin_type = "库存管理";
             }
-            $(".user-type").html($admin_type);
+            $(".user-type").html(admin_type);
             if (reason == "employee") {
                 var employee_id = Decrypt(href.match(/\?employee_id=(.*?)$/)[1], "employee_id");
                 getEmployeeInfo(employee_id);
