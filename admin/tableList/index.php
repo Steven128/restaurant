@@ -227,7 +227,7 @@ session_start();
                                     </thead>
                                     <tbody class="tableListTableBody">
                                         <?php
-                                        $sql_query = "SELECT TABLE_ID,TABLE_NUMBER,DEFAULT_NUMBER,TABLE_ORDER_STATUS FROM SCOTT.RES_TABLE WHERE TAB_STATUS=0 ORDER BY TABLE_ID DESC";
+                                        $sql_query = "SELECT TABLE_ID,TABLE_NUMBER,DEFAULT_NUMBER,TABLE_ORDER_STATUS FROM SCOTT.RES_TABLE WHERE TAB_STATUS>0 ORDER BY TABLE_ID ASC";
                                         $statement = oci_parse($conn, $sql_query);
                                         oci_execute($statement);
                                         //$count = 0;

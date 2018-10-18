@@ -1,17 +1,17 @@
 <?php
 
 session_start(); //开启php_session
-$ref = $_SERVER['REFERER'];
-if ($ref == "") {
-    echo "不允许从地址栏访问";
-    exit();
-} else {
-    $url = parse_url($ref);
-    if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost") {
-        echo "no";
-        exit();
-    }
-}
+// $ref = $_SERVER['REFERER'];
+// if ($ref == "") {
+//     echo "不允许从地址栏访问";
+//     exit();
+// } else {
+//     $url = parse_url($ref);
+//     if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost") {
+//         echo "no";
+//         exit();
+//     }
+// }
 include "../updatePic.php";
 if (isset($_GET['request'])) {
     $request = $_GET['request'];

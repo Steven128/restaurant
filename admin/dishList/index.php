@@ -215,17 +215,13 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                             // $dish_price = $row[3];
                                             // $dish_type = $row[4];
                                             if ($row[4] == 1) {
-                                                $row[4] = "特色菜";
+                                                $row[4] = "早餐";
                                             } elseif ($row[4] == 2) {
-                                                $row[4] = "热菜";
+                                                $row[4] = "主食";
                                             } elseif ($row[4] == 3) {
-                                                $row[4] = "河海湖鲜";
+                                                $row[4] = "甜品/饮料";
                                             } elseif ($row[4] == 4) {
-                                                $row[4] = "色拉";
-                                            } elseif ($row[4] == 5) {
-                                                $row[4] = "酒水饮料";
-                                            } elseif ($row[4] == 6) {
-                                                $row[4] = "其他";
+                                                $row[4] = "小食";
                                             }
                                             $row[3] = $row[3] . ".00";
                                             echo "<tr><td>$count</td><td>$row[4]</td><td><img src=\"$row[2]\" /></td><td>$row[1]</td><td>$row[3]</td><td><a class=\"table-update-btn update-dish\" href = \"javascript:void(0);\" onclick=\"update_dish('" . $row[0] . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";

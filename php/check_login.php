@@ -13,6 +13,7 @@ if ($request == "logout") {
     unset($_SESSION);
     session_destroy();
     if (strpos($referer, "dashboard") > -1) {
+        echo "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />";
         echo "正在注销，请稍后...";
         echo "<script type=\"text/javascript\" src=\"../js/jQuery/jquery-1.11.3.min.js\"></script>";
         echo "<script type=\"text/javascript\" src=\"../js/page.js\"></script>";

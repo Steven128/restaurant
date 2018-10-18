@@ -193,34 +193,18 @@
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-                                <div class="employee-info-box col-xs-12 col-md-4">
-                                    <div class="employee-pic-wrap"><img class="employeePic" /></div>
-                                    <div class="employee-info-wrap">
-                                        <div class="employee-name"></div>
-                                        <div class="employee-type"></div>
-                                        <div class="emp-btn-area">
-                                            <button class="btn-delete emp-btn-delete" type="button" value="">删除餐桌</button>
+                                <div class="table-info-box col-xs-12 col-md-4">
+                                    <div class="table-info-wrap" style="display: block;position: static;">
+                                        <div class="table-number"></div>
+                                        <div class="table-defNum"></div>
+                                        <div class="table-ordSta"></div>
+                                        <div class="tab-btn-area">
+                                            <button class="btn-delete tab-btn-delete" type="button" value="">删除餐桌</button>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="employee-info-box col-xs-12 col-md-8">
-                                    <div class="col-xs-0 col-md-12" style="padding: 5px;"></div>
-                                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                                        <h5 class="emp-gender"></h5>
-                                        <h5 class="emp-age"></h5>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                                        <h5 class="emp-working-year"></h5>
-                                        <h5 class="emp-salary"></h5>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                                        <h5 class="emp-time"></h5>
-                                        <h5 class="emp-phone"></h5>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                         <div class="box">
                             <div class="inner-box">
                                 <div class="inner-item" style="cursor: pointer;" onclick="showBox(this)">
@@ -233,7 +217,7 @@
                                 </div>
                                 <div class="inner-item box-inner-hide" style="display: none;">
                                     <div class="col-xs-0 col-sm-1 col-md-2 col-lg-3"></div>
-                                    <form id="updateEmployee-form" class="form-horizontal col-xs-12 col-sm-10 col-md-8 col-lg-6" method="post" action="">
+                                    <form id="updateTable-form" class="form-horizontal col-xs-12 col-sm-10 col-md-8 col-lg-6" method="post" action="">
 
                                         <div class="btn-area">
                                             <button id="submit" name="submit" type="submit" class="submit">修改</button>
@@ -280,47 +264,6 @@
             </div>
         </footer>
     </div>
-    <div class="clip-wrapper">
-        <div class="clipArea-head">
-            <button id="cancelBtn" onclick="clipCancel()">取消</button>
-            <button id="clipBtn" onclick="clipFinish()">截取</button>
-        </div>
-        <div id="clipArea">
-            <p class="clip-tip">提示：触摸操作请用双指缩放或旋转；<br>&nbsp;&nbsp;鼠标操作请用滚轮缩放、双击旋转。</p>
-        </div>
-    </div>
-    <script src="../../../js/plugins/cropper/hammer.min.js"></script>
-    <script src="../../../js/plugins/cropper/iscroll-zoom-min.js"></script>
-    <script src="../../../js/plugins/cropper/lrz.all.bundle.js"></script>
-    <script src="../../../js/plugins/cropper/PhotoClip.js"></script>
-    <script>
-        var picData = "";
-        var pc = new PhotoClip('#clipArea', {
-            size: 260,
-            outputSize: 640,
-            file: '#file',
-            view: '#view',
-            ok: '#clipBtn',
-            done: function(dataURL) {
-                picData = dataURL;
-            },
-            fail: function(err) {
-                window.wxc.xcConfirm(err, window.wxc.xcConfirm.typeEnum.error);
-            }
-        });
-
-        function start() {
-            $(".clip-wrapper").fadeIn();
-        }
-
-        function clipCancel() {
-            $(".clip-wrapper").fadeOut();
-        }
-
-        function clipFinish() {
-            $(".clip-wrapper").fadeOut();
-        }
-    </script>
     <div class="del-confirm emp-del-confirm" style="display: none;">
         <h3>确认删除此员工吗？</h3>
         <hr>

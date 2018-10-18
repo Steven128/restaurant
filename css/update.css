@@ -2,30 +2,38 @@
     margin-bottom: 15px;
 }
 
-.employee-info-box {
+.employee-info-box,
+.dish-info-box,
+.table-info-box {
     padding: 10px 30px;
 }
 
-.employee-info-box .employee-pic-wrap {
+.employee-info-box .employee-pic-wrap,
+.dish-info-box .dish-pic-wrap {
     width: 104px;
     height: 104px;
     border: 1px solid #888;
     display: inline-block
 }
 
-.employee-info-box .employeePic {
+.employee-info-box .employeePic,
+.dish-info-box .dishPic {
     width: 100px;
     height: 100px;
 }
 
-.employee-info-box .employee-info-wrap {
+.employee-info-box .employee-info-wrap,
+.dish-info-box .dish-info-wrap,
+.table-info-box .table-info-wrap {
     display: inline-block;
     position: relative;
     left: 20px;
     top: 30px;
 }
 
-.employee-info-box .employee-name {
+.employee-info-box .employee-name,
+.dish-info-box .dish-name,
+.table-info-box .table-number {
     font-size: 24px;
     font-weight: 500;
     display: block;
@@ -33,7 +41,11 @@
     padding: 0 10px;
 }
 
-.employee-info-box .employee-type {
+.employee-info-box .employee-type,
+.dish-info-box .dish-type,
+.dish-info-box .dish-price,
+.table-info-box .table-defNum,
+.table-info-box .table-ordSta {
     padding: 0 20px;
 }
 

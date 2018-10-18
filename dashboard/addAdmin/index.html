@@ -11,6 +11,8 @@
     <link type="text/css" rel="stylesheet" href="../../css/page.css" />
     <link type="text/css" rel="stylesheet" href="../../css/dashboard.css" />
     <link type="text/css" rel="stylesheet" href="../../css/responsive-sidebar.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/form.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/cropper.css" />
 
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
@@ -19,6 +21,7 @@
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../js/Chart.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
+    <script type="text/javascript" src="../../js/plugins/jquery.validate.min.js"></script>
 </head>
 
 <body>
@@ -86,6 +89,46 @@
                 </aside>
                 <div class="mask"></div>
                 <div class="main-bar">
+                    <div class="title">
+                        <h4 class="title-left">增加管理员</h4>
+                    </div>
+                    <div class="box-wrap">
+                        <div class="box box-full">
+                            <div class="inner-top-wrap"></div>
+                            <div class="inner-box row">
+                                <div class="col-xs-0 col-sm-1 col-md-2 col-lg-3"></div>
+                                <form id="addAdmin-form" class="form-horizontal col-xs-12 col-sm-10 col-md-8 col-lg-6" method="post" action="">
+                                    <div class="subform">
+                                        <div class="form-group">
+                                            <div class="section_title">姓名</div>
+                                            <input id="admin_name" type="text" class="input-text form-control" name="admin_name" placeholder="请输入姓名" maxlength="15" />
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="section_title">类别</div>
+                                            <select id="admin_type" class="select form-control" name="admin_type">
+                                                <option class="option" value="1">超级管理员</option>
+                                                <option class="option" value="2">普通管理员</option>
+                                                <option class="option" value="3">财务管理员</option>
+                                                <option class="option" value="4">仓库管理员</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="section_title">头像</div>
+                                            <div class="clip-box" style="text-align: center;padding: 20px 10px 0 10px;">
+                                                <a href="javascript:void(0);" class="a-upload">
+                                                    <input type="file" id="file" onclick="start()" /> 点击选择图片
+                                                </a>
+                                                <div id="view"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="btn-area">
+                                        <button id="submit" name="submit" type="submit" class="submit">添加</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     <script>
                         $(document).ready(() => {
                             barAppend("addAdmin");
@@ -117,6 +160,48 @@
             </div>
         </footer>
     </div>
+    <div class="clip-wrapper">
+        <div class="clipArea-head">
+            <button id="cancelBtn" onclick="clipCancel()">取消</button>
+            <button id="clipBtn" onclick="clipFinish()">截取</button>
+        </div>
+        <div id="clipArea">
+            <p class="clip-tip">提示：触摸操作请用双指缩放或旋转；<br>&nbsp;&nbsp;鼠标操作请用滚轮缩放、双击旋转。</p>
+        </div>
+    </div>
+    <script src="../../js/plugins/cropper/hammer.min.js"></script>
+    <script src="../../js/plugins/cropper/iscroll-zoom-min.js"></script>
+    <script src="../../js/plugins/cropper/lrz.all.bundle.js"></script>
+    <script src="../../js/plugins/cropper/PhotoClip.js"></script>
+    <script>
+        var picData = "";
+        var pc = new PhotoClip('#clipArea', {
+            size: 260,
+            outputSize: 640,
+            file: '#file',
+            view: '#view',
+            ok: '#clipBtn',
+            done: function(dataURL) {
+                picData = dataURL;
+            },
+            fail: function(err) {
+                window.wxc.xcConfirm(err, window.wxc.xcConfirm.typeEnum.error);
+            }
+        });
+
+        function start() {
+            $(".clip-wrapper").fadeIn();
+        }
+
+        function clipCancel() {
+            $(".clip-wrapper").fadeOut();
+        }
+
+        function clipFinish() {
+            $(".clip-wrapper").fadeOut();
+        }
+    </script>
+    <script type="text/javascript" src="../../js/das_mgment/dashboard.add.js"></script>
 </body>
 
 

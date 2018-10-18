@@ -20,13 +20,13 @@ $(document).ready(() => {
             }
             $(".user-type").html(admin_type);
             if (reason == "employee") {
-                var employee_id = Decrypt(href.match(/\?employee_id=(.*?)$/)[1], "employee_id");
+                var employee_id = Decrypt(href.match(/\?employee_id=(.*?)&/)[1], "employee_id");
                 getEmployeeInfo(employee_id);
             } else if (reason == "dish") {
-                var dish_id = Decrypt(href.match(/\?dish_id=(.*?)$/)[1], "dish_id");
+                var dish_id = Decrypt(href.match(/\?dish_id=(.*?)&/)[1], "dish_id");
                 getDishInfo(dish_id);
             } else if (reason == "table") {
-                var table_id = Decrypt(href.match(/\?table_id=(.*?)$/)[1], "table_id");
+                var table_id = Decrypt(href.match(/\?table_id=(.*?)&/)[1], "table_id");
                 getTableInfo(table_id);
             }
 
@@ -120,11 +120,106 @@ $(document).ready(() => {
     }
 
     function getDishInfo(dish_id) {
+        $.ajax({
+            type: "GET",
+            url: "../../../php/admin/dish.php?request=getDishInfo&dish_id=" + dish_id + "&admin_id=" + getUserInfo().admin_id,
+            dataType: "JSON",
+            success: (e) => {
+                console.log(e)
+                if (e.message = "success") {
+                    data = e.data;
+                    $(".dishPic").attr("src", "../" + data.dish_pic);
+                    $(".dish-name").html(data.dish_name);
+                    var type = data.dish_type;
+                    if (type == 1) {
+                        type = "早餐";
+                    } else if (type == 2) {
+                        type = "主食";
+                    } else if (type == 3) {
+                        type = "甜品/饮料";
+                    } else if (type == 4) {
+                        type = "小食";
+                    }
+                    $(".dish-type").html(type);
+                    $(".dish-price").html(data.dish_price + "元");
+                    $(".btn-delete").val(data.dish_id);
 
+                    var appendText =
+                        '<div class="subform">' +
+                        '<div class="form-group">' +
+                        '<div class="section_title">名称</div>' +
+                        '<input id="dish_name" type="text" class="input-text form-control" name="dish_name" placeholder="请输入菜名" maxlength="15" value="' + data.dish_name + '">' +
+                        '</div>' +
+                        '<div class="form-group">' +
+                        '<div class="section_title">售价</div>' +
+                        '<input id="dish_price" type="text" class="input-text form-control" name="dish_price" placeholder="请输入售价" maxlength="7" value="' + data.dish_price + '">' +
+                        '</div>' +
+                        '<div class="form-group">' +
+                        '<div class="section_title">类别</div>' +
+                        '<select id="dish_type" class="select form-control" name="dish_type">';
+                    if (data.dish_type == 1) {
+                        appendText += '<option class="option" value="1" selected="selected">早餐</option>' +
+                            '<option class="option" value="2">主食</option>' +
+                            '<option class="option" value="3">甜品/饮料</option>' +
+                            '<option class="option" value="4">小食</option>';
+                    } else if (data.dish_type == 2) {
+                        appendText += '<option class="option" value="1">早餐</option>' +
+                            '<option class="option" value="2" selected="selected">主食</option>' +
+                            '<option class="option" value="3">甜品/饮料</option>' +
+                            '<option class="option" value="4">小食</option>';
+                    } else if (data.dish_type == 3) {
+                        appendText += '<option class="option" value="1">早餐</option>' +
+                            '<option class="option" value="2">主食</option>' +
+                            '<option class="option" value="3" selected="selected">甜品/饮料</option>' +
+                            '<option class="option" value="4">小食</option>';
+                    } else if (data.dish_type == 4) {
+                        appendText += '<option class="option" value="1">早餐</option>' +
+                            '<option class="option" value="2">主食</option>' +
+                            '<option class="option" value="3">甜品/饮料</option>' +
+                            '<option class="option" value="4" selected="selected">小食</option>';
+                    }
+                    appendText +=
+                        '</select>' +
+                        '</div>' +
+                        '</div>';
+                    $("#updateDish-form").prepend(appendText);
+                    $("#updateEmployee-form").onChange();
+                }
+            },
+            error: (err) => { console.log(err) }
+        })
     }
 
     function getTableInfo(table_id) {
+        $.ajax({
+            type: "GET",
+            url: "../../../php/admin/res_table.php?request=getTableInfo&table_id=" + table_id + "&admin_id=" + getUserInfo().admin_id,
+            dataType: "JSON",
+            success: (e) => {
+                console.log(e)
+                data = e.data;
+                $(".table-number").html(data.table_number);
+                $(".table-defNum").html("规定人数：" + data.default_number);
+                var status = null;
+                if (data.table_order_status == 0) {
+                    status = "无人";
+                } else if (data.table_order_status == 1) {
+                    status = "已预订";
+                } else if (data.table_order_status == 2) {
+                    status = "已上座";
+                }
+                $(".table-ordSta").html("状态：" + status);
 
+                var appendText =
+                    '<div class="form-group">' +
+                    '<div class="section_title">规定人数</div>' +
+                    '<input id="default_number" type="text" class="input-text form-control" name="default_number" placeholder="请输入人数" maxlength="2" value="' + data.default_number + '" />' +
+                    '</div>';
+                $("#updateTable-form").prepend(appendText);
+                $("#updateTable-form").onChange();
+            },
+            error: (err) => { console.log(err) }
+        })
     }
 
     $("#updateEmployee-form").validate({
@@ -224,6 +319,44 @@ $(document).ready(() => {
         var phone = /^1[34578]\d{9}$/;
         return this.optional(element) || (phone.test(value));
     }, "");
+
+    $("#emp-uploadpic").click(() => {
+        if (picData == "") {
+
+        } else {
+            var employee_id = data.employee_id;
+            console.log(employee_id)
+            $.ajax({
+                type: "POST",
+                url: "../../../php/admin/employee.php",
+                dataType: "JSON",
+                data: {
+                    "request": "updateEmployeePic",
+                    "admin_id": getUserInfo().admin_id,
+                    "employee_id": employee_id,
+                    "employeePicData": picData
+                },
+                success: (e) => {
+                    if (e.message == "success") {
+                        window.wxc.xcConfirm("修改成功！", window.wxc.xcConfirm.typeEnum.success, {
+                            onOk: function() {
+                                window.location.reload();
+                            },
+                            onClose: function() {
+                                window.location.reload();
+                            }
+                        });
+                    } else {
+                        window.wxc.xcConfirm("网络开小差啦~", window.wxc.xcConfirm.typeEnum.error);
+                    }
+                },
+                error: (err) => {
+                    console.log(err)
+                }
+            })
+        }
+    })
+
 });
 
 function showBox(obj) {

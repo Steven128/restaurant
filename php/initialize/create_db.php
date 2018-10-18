@@ -272,7 +272,7 @@ if (!$conn) {
         "table_number VARCHAR(20) NOT NULL," .
         "default_number NUMERIC(3,0) NOT NULL," .
         "table_order_status NUMERIC(1,0) DEFAULT 0 NOT NULL," .
-        "tab_status NUMERIC(1,0) DEFAULT 0 NOT NULL)";
+        "tab_status NUMERIC(1,0) DEFAULT 1 NOT NULL)";
     $statement = oci_parse($conn, $sql_create_tab);
     if (oci_execute($statement)) {
         echo "<br>创建餐桌表成功！";

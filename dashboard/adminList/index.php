@@ -150,7 +150,13 @@ session_start();
                                                 $admin_type = "仓库管理员";
                                             }
                                             //
-                                            echo "<tr><td>$count</td><td><img src=\"$admin_pic\" / width=\"50px\" height=\"50px\"></td><td>$name</td><td>$admin_type</td><td>$create_time</td><td><a class=\"table-update-btn update-admin\" href = \"javascript:void(0);\" onclick=\"update_admin('" . $admin_id . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
+                                            echo "<tr><td>$count</td><td><img src=\"$admin_pic\" / width=\"50px\" height=\"50px\"></td><td>$name</td><td>$admin_type</td><td>$create_time</td>";
+                                            if($admin_id != $_SESSION['admin_id']) {
+                                                echo "<td><a class=\"table-update-btn update-admin\" href = \"javascript:void(0);\" onclick=\"delete_admin('" . $admin_id . "')\"><i class=\"iconfont icon-delete\" style='color: darkred;'></i></a></td></tr>";
+                                            }else {
+                                                echo "<td></td></tr>";
+                                            }
+                                            
                                         }
                                         ?>
                                         <script>

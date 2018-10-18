@@ -193,29 +193,15 @@
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-                                <div class="employee-info-box col-xs-12 col-md-4">
-                                    <div class="employee-pic-wrap"><img class="employeePic" /></div>
-                                    <div class="employee-info-wrap">
-                                        <div class="employee-name"></div>
-                                        <div class="employee-type"></div>
-                                        <div class="emp-btn-area">
-                                            <button class="btn-delete emp-btn-delete" type="button" value="">删除菜品</button>
+                                <div class="dish-info-box col-xs-12">
+                                    <div class="dish-pic-wrap"><img class="dishPic" /></div>
+                                    <div class="dish-info-wrap">
+                                        <div class="dish-name" style="font-size: 18px;"></div>
+                                        <div class="dish-type"></div>
+                                        <div class="dish-price"></div>
+                                        <div class="dis-btn-area">
+                                            <button class="btn-delete dis-btn-delete" type="button" value="">删除菜品</button>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="employee-info-box col-xs-12 col-md-8">
-                                    <div class="col-xs-0 col-md-12" style="padding: 5px;"></div>
-                                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                                        <h5 class="emp-gender"></h5>
-                                        <h5 class="emp-age"></h5>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                                        <h5 class="emp-working-year"></h5>
-                                        <h5 class="emp-salary"></h5>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                                        <h5 class="emp-time"></h5>
-                                        <h5 class="emp-phone"></h5>
                                     </div>
                                 </div>
                             </div>
@@ -233,7 +219,7 @@
                                 </div>
                                 <div class="inner-item box-inner-hide" style="display: none;">
                                     <div class="col-xs-0 col-sm-1 col-md-2 col-lg-3"></div>
-                                    <form id="updateEmployee-form" class="form-horizontal col-xs-12 col-sm-10 col-md-8 col-lg-6" method="post" action="">
+                                    <form id="updateDish-form" class="form-horizontal col-xs-12 col-sm-10 col-md-8 col-lg-6" method="post" action="">
 
                                         <div class="btn-area">
                                             <button id="submit" name="submit" type="submit" class="submit">修改</button>
@@ -253,7 +239,7 @@
                                     </div>
                                 </div>
                                 <div class="inner-item box-inner-hide" style="display: none;padding:5px 20px">
-                                    <h5>更换头像</h5>
+                                    <h5>更换图片</h5>
                                     <div class="col-xs-0 col-sm-1 col-md-2 col-lg-3"></div>
                                     <div class="clip-box col-xs-12 col-sm-10 col-md-8 col-lg-6" style="text-align: center;padding: 20px 10px;">
                                         <a href="javascript:void(0);" class="a-upload">

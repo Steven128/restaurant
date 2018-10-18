@@ -96,13 +96,13 @@
                 </div>
             </div>
             <a class="user-box" href="javascript:void(0);" onclick="showInfoBox()">
-                <div class="user-pic-wrap"><img class="userPic" src="(unknown)" /></div>
+                <div class="user-pic-wrap"><img class="userPic" /></div>
                 <div class="user-name"></div>
             </a>
             <div class="info-box">
                 <div class="info-box-block">
                     <div class="info-box-arrow"></div>
-                    <div class="user-pic-wrap"><img class="userPic" src="(unknown)" /></div>
+                    <div class="user-pic-wrap"><img class="userPic" /></div>
                     <div class="user-info-wrap">
                         <div class="user-name"></div>
                         <div class="user-type"></div>
@@ -157,7 +157,7 @@
                                 <h4>个人信息</h4>
                             </div>
                             <div class="user-info-box">
-                                <div class="user-pic-wrap"><img class="userPic" src="(unknown)" /></div>
+                                <div class="user-pic-wrap"><img class="userPic" /></div>
                                 <div class="user-info-wrap">
                                     <div class="user-name"></div>
                                     <div class="user-type"></div>
@@ -167,10 +167,41 @@
                             </div>
                         </div>
                     </div>
+                    <div class="user-update-box col-xs-12">
+                        <div class="box-inner" style="cursor: pointer;" onclick="showBox(this)">
+                            <div class="title">
+                                <h4>修改密码</h4>
+                                <a class="box-arrow box-down-arrow" href="javascript:void(0);"><i class="iconfont icon-down-arrow"></i></a>
+                                <a class="box-arrow box-up-arrow" style="display: none;" href="javascript:void(0);"><i class="iconfont icon-up-arrow"></i></a>
+                            </div>
+                        </div>
+                        <div class="box-inner box-inner-hide" style="display: none;">
+                            <div class="col-sm-1 col-md-2 col-lg-3"></div>
+                            <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
+                                <form id="reset-passwd" method="POST" action="">
+                                    <div class="subform">
+                                        <div class="form-group">
+                                            <input id="oldPasswd" class="input-text form-control" type="password" name="passwd" placeholder="新密码" maxlength="15" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input id="newPasswd" class="input-text form-control" type="password" name="passwd" placeholder="新密码" maxlength="15" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input id="rePasswd" class="input-text form-control" type="password" name="newPasswd" placeholder="确认密码" maxlength="15" />
+                                        </div>
+                                        <div class="clear"></div>
+                                        <div class="btn-area">
+                                            <button id="submit" type="submit" class="submit">修改</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     <div class="user-update-box col-xs-12" style="padding-bottom: 15px;">
                         <div class="box-inner" style="cursor: pointer;" onclick="showBox(this)">
                             <div class="title">
-                                <h4>修改信息</h4>
+                                <h4>更换头像</h4>
                                 <a class="box-arrow box-down-arrow" href="javascript:void(0);"><i class="iconfont icon-down-arrow"></i></a>
                                 <a class="box-arrow box-up-arrow" style="display: none;" href="javascript:void(0);"><i
                                         class="iconfont icon-up-arrow"></i></a>

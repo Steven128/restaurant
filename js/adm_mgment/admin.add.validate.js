@@ -113,6 +113,18 @@ function addEmployeeValidate() {
                 },
                 success: (e) => {
                     console.log(e)
+                    if (e.message == "success") {
+                        window.wxc.xcConfirm("修改成功！", window.wxc.xcConfirm.typeEnum.success, {
+                            onOk: function() {
+                                window.location.reload();
+                            },
+                            onClose: function() {
+                                window.location.reload();
+                            }
+                        });
+                    } else {
+                        window.wxc.xcConfirm("网络开小差啦~", window.wxc.xcConfirm.typeEnum.error);
+                    }
                 },
                 error: (err) => {
                     console.log(err)
@@ -149,10 +161,6 @@ function addDishValidate() {
             }
         },
         submitHandler: function(form) { //通过之后回调
-            var dishPicData = $("#previewResult")[0].src;
-            if (dishPicData.indexOf("data:") < 0) {
-                dishPicData = '';
-            }
             var dish_name = $("#dish_name").val();
             var dish_price = $("#dish_price").val();
             var dish_type = $("#dish_type").val();
@@ -168,7 +176,7 @@ function addDishValidate() {
                     "dish_price": dish_price,
                     "dish_type": dish_type,
                     "salary": salary,
-                    "dishPicData": dishPicData
+                    "dishPicData": picData
                 },
                 success: (e) => {
                     console.log(e)

@@ -4,8 +4,9 @@ function goBack() {
 }
 
 function update_employee(employee_id) {
-    employee_id = Encrypt(employee_id, "employee_id")
-    var href = encodeURIComponent("employee_id=" + employee_id);
+    employee_id = Encrypt(employee_id, "employee_id");
+    var admin_id = Encrypt(getUserInfo().admin_id, "admin_id");
+    var href = encodeURIComponent("employee_id=" + employee_id + "&adm=" + admin_id);
     $.pjax({
         url: "updateEmployee?" + href,
         container: 'html'
@@ -13,8 +14,9 @@ function update_employee(employee_id) {
 }
 
 function update_dish(dish_id) {
-    dish_id = Encrypt(dish_id, "dish_id")
-    var href = encodeURIComponent("dish_id=" + dish_id);
+    dish_id = Encrypt(dish_id, "dish_id");
+    var admin_id = Encrypt(getUserInfo().admin_id, "admin_id");
+    var href = encodeURIComponent("dish_id=" + dish_id + "&adm=" + admin_id);
     $.pjax({
         url: "updateDish?" + href,
         container: 'html'
@@ -22,8 +24,9 @@ function update_dish(dish_id) {
 }
 
 function update_table(table_id) {
-    table_id = Encrypt(table_id, "table_id")
-    var href = encodeURIComponent("table_id=" + table_id);
+    table_id = Encrypt(table_id, "table_id");
+    var admin_id = Encrypt(getUserInfo().admin_id, "admin_id");
+    var href = encodeURIComponent("table_id=" + table_id + "&adm=" + admin_id);
     $.pjax({
         url: "updateTable?" + href,
         container: 'html'
