@@ -1,43 +1,45 @@
+var data = {};
 $(document).ready(() => {
     var href = decodeURIComponent(window.location);
     var reason = href.match(/\/update(.*?)\//)[1].toLowerCase();
     $.ajax({
-        type: "GET",
-        url: "../../../php/check_login.php?request=check",
-        dataType: "JSON",
-        success: (e) => {
-            $(".userPic").attr('src', "../" + e.admin_pic + "?" + num);
-            $(".online-user").html(e.admin_name);
-            admin_type = e.admin_type;
-            if (admin_type == 1) {
-                admin_type = "超级管理员";
-            } else if (admin_type == 2) {
-                admin_type = "管理员";
-            } else if (admin_type == 3) {
-                admin_type = "财务管理";
-            } else if (admin_type == 4) {
-                admin_type = "库存管理";
+            type: "GET",
+            url: "../../../php/check_login.php?request=check",
+            dataType: "JSON",
+            success: (e) => {
+                $(".userPic").attr('src', "../" + e.admin_pic + "?" + num);
+                $(".online-user").html(e.admin_name);
+                admin_type = e.admin_type;
+                if (admin_type == 1) {
+                    admin_type = "超级管理员";
+                } else if (admin_type == 2) {
+                    admin_type = "管理员";
+                } else if (admin_type == 3) {
+                    admin_type = "财务管理";
+                } else if (admin_type == 4) {
+                    admin_type = "库存管理";
+                }
+                $(".user-type").html(admin_type);
+                if (reason == "employee") {
+                    var employee_id = Decrypt(href.match(/\?employee_id=(.*?)&/)[1], "employee_id");
+                    getEmployeeInfo(employee_id);
+                } else if (reason == "dish") {
+                    var dish_id = Decrypt(href.match(/\?dish_id=(.*?)&/)[1], "dish_id");
+                    getDishInfo(dish_id);
+                } else if (reason == "table") {
+                    var table_id = Decrypt(href.match(/\?table_id=(.*?)&/)[1], "table_id");
+                    getTableInfo(table_id);
+                }
+
+            },
+            error: (err) => {
+                console.log(err)
             }
-            $(".user-type").html(admin_type);
-            if (reason == "employee") {
-                var employee_id = Decrypt(href.match(/\?employee_id=(.*?)&/)[1], "employee_id");
-                getEmployeeInfo(employee_id);
-            } else if (reason == "dish") {
-                var dish_id = Decrypt(href.match(/\?dish_id=(.*?)&/)[1], "dish_id");
-                getDishInfo(dish_id);
-            } else if (reason == "table") {
-                var table_id = Decrypt(href.match(/\?table_id=(.*?)&/)[1], "table_id");
-                getTableInfo(table_id);
-            }
-
-        },
-        error: (err) => {
-            console.log(err)
-        }
-    })
-
-    var data = {};
-
+        })
+        /**
+         * 加载员工信息
+         * @param {*} employee_id 
+         */
     function getEmployeeInfo(employee_id) {
         $.ajax({
             type: "GET",
@@ -119,6 +121,10 @@ $(document).ready(() => {
         })
     }
 
+    /**
+     * 加载菜品信息
+     * @param {*} dish_id 
+     */
     function getDishInfo(dish_id) {
         $.ajax({
             type: "GET",
@@ -190,6 +196,10 @@ $(document).ready(() => {
         })
     }
 
+    /**
+     * 加载餐桌信息
+     * @param {*} table_id 
+     */
     function getTableInfo(table_id) {
         $.ajax({
             type: "GET",
@@ -200,6 +210,7 @@ $(document).ready(() => {
                 data = e.data;
                 $(".table-number").html(data.table_number);
                 $(".table-defNum").html("规定人数：" + data.default_number);
+                $(".btn-delete").val(data.table_id);
                 var status = null;
                 if (data.table_order_status == 0) {
                     status = "无人";
@@ -221,7 +232,20 @@ $(document).ready(() => {
             error: (err) => { console.log(err) }
         })
     }
+});
 
+function showBox(obj) {
+    var $box = $(obj).siblings(".box-inner-hide");
+    $box.slideToggle(200);
+    $(obj).find(".box-down-arrow").fadeToggle(100);
+    $(obj).find(".box-up-arrow").fadeToggle(100);
+}
+
+
+$(document).ready(() => {
+    /**
+     * 更新员工信息 - 表单
+     */
     $("#updateEmployee-form").validate({
         onsubmit: true, // 是否在提交是验证
         rules: { //规则
@@ -314,16 +338,16 @@ $(document).ready(() => {
         var chinese = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
         return this.optional(element) || (chinese.test(value));
     }, "");
-
     $.validator.addMethod("phone", function(value, element) {
         var phone = /^1[34578]\d{9}$/;
         return this.optional(element) || (phone.test(value));
     }, "");
 
+    /**
+     * 更新员工照片
+     */
     $("#emp-uploadpic").click(() => {
-        if (picData == "") {
-
-        } else {
+        if (picData == "") {} else {
             var employee_id = data.employee_id;
             console.log(employee_id)
             $.ajax({
@@ -355,18 +379,143 @@ $(document).ready(() => {
                 }
             })
         }
-    })
+    });
 
-});
+    /**
+     * 更新菜品信息 - 表单
+     */
+    $("#updateDish-form").validate({
+        onsubmit: true, // 是否在提交是验证
+        rules: { //规则
+            dish_name: {
+                required: true
+            },
+            dish_price: {
+                required: true,
+                number: true
+            }
+        },
+        messages: { //验证错误信息
 
-function showBox(obj) {
-    var $box = $(obj).siblings(".box-inner-hide");
-    $box.slideToggle(200);
-    $(obj).find(".box-down-arrow").fadeToggle(100);
-    $(obj).find(".box-up-arrow").fadeToggle(100);
-}
+            dish_name: {
+                required: "请输入菜名"
+            },
+            dish_price: {
+                required: "请输入价格",
+                number: "请输入正确的价格"
+            }
+        },
+        submitHandler: function(form) { //通过之后回调
+            var dish_name = $("#dish_name").val();
+            var dish_price = $("#dish_price").val();
+            var dish_type = $("#dish_type").val();
+            var admin_id = getUserInfo().admin_id;
+            $.ajax({
+                type: "POST",
+                url: "../../../php/admin/dish.php",
+                dataType: "JSON",
+                data: {
+                    "request": "update_dish",
+                    "admin_id": admin_id,
+                    "dish_name": dish_name,
+                    "dish_price": dish_price,
+                    "dish_type": dish_type
+                },
+                success: (e) => {
+                    console.log(e)
+                },
+                error: (err) => {
+                    console.log(err)
+                }
+            })
+        }
+    });
 
+    /**
+     * 更新菜品图片
+     */
+    $("#dis-uploadpic").click(() => {
+        if (picData == "") {} else {
+            var dish_id = data.dish_id;
+            console.log(dish_id)
+            $.ajax({
+                type: "POST",
+                url: "../../../php/admin/dish.php",
+                dataType: "JSON",
+                data: {
+                    "request": "updateDishPic",
+                    "admin_id": getUserInfo().admin_id,
+                    "dish_id": dish_id,
+                    "dishPicData": picData
+                },
+                success: (e) => {
+                    if (e.message == "success") {
+                        window.wxc.xcConfirm("修改成功！", window.wxc.xcConfirm.typeEnum.success, {
+                            onOk: function() {
+                                window.location.reload();
+                            },
+                            onClose: function() {
+                                window.location.reload();
+                            }
+                        });
+                    } else {
+                        window.wxc.xcConfirm("网络开小差啦~", window.wxc.xcConfirm.typeEnum.error);
+                    }
+                },
+                error: (err) => {
+                    console.log(err)
+                }
+            })
+        }
+    });
 
-$(document).ready(() => {
+    /**
+     * 更新餐桌信息
+     */
+    $("#updateTable-form").validate({
+        onsubmit: true, // 是否在提交是验证
+        rules: { //规则
+            table_number: {
+                required: true,
+                digits: true
+            },
+            default_number: {
+                required: true,
+                digits: true
+            }
+        },
+        messages: { //验证错误信息
 
+            table_number: {
+                required: "请输入编号",
+                digits: "请输入正确的编号"
+            },
+            default_number: {
+                required: "请输入人数",
+                digits: "请输入正确的人数"
+            }
+        },
+        submitHandler: function(form) { //通过之后回调
+            var table_number = $("#table_number").val();
+            var default_number = $("#default_number").val();
+            var admin_id = getUserInfo().admin_id;
+            $.ajax({
+                type: "POST",
+                url: "../../../php/admin/res_table.php",
+                dataType: "JSON",
+                data: {
+                    "request": "update_table",
+                    "admin_id": admin_id,
+                    "table_number": table_number,
+                    "default_number": default_number,
+                },
+                success: (e) => {
+                    console.log(e)
+                },
+                error: (err) => {
+                    console.log(err)
+                }
+            })
+        }
+    });
 })

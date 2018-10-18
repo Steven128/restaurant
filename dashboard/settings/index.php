@@ -60,7 +60,7 @@ session_start();
                     echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /></div><div class=\"user-info-wrap\"><div class=\"user-name\">" . $_SESSION['admin_name'] . "</div><div class=\"user-type\">" . $admin_type . "</div></div>";
                     ?>
                     <div class="logout-wrap">
-                        <a class="logout" href="../../php/check_login.php?request=logout"><i class="iconfont icon-logout"></i>退出登录</a>
+                        <a class="logout" href="javascript:void();" onclick="adm_logout()"><i class="iconfont icon-logout"></i>退出登录</a>
                     </div>
                 </div>
             </div>

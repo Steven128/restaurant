@@ -24,8 +24,6 @@ $(document).ready(() => {
             console.log(err)
         }
     });
-
-
     $(".emp-btn-delete").click(() => {
         let employee_id = $(".btn-delete").val();
         $.ajax({
@@ -43,8 +41,26 @@ $(document).ready(() => {
             error: (err) => { console.log(err) }
         });
     });
-});
 
+
+    $(".dis-btn-delete").click(() => {
+        var dish_id = $(".dis-btn-delete").val();
+        window.wxc.xcConfirm("确实要删除此菜品？", window.wxc.xcConfirm.typeEnum.confirm, {
+            onOk: function() {
+                deleteDish(dish_id);
+            }
+        });
+    });
+
+    $(".tab-btn-delete").click(() => {
+        var table_id = $(".tab-btn-delete").val();
+        window.wxc.xcConfirm("确实要删除此餐桌？", window.wxc.xcConfirm.typeEnum.confirm, {
+            onOk: function() {
+                deleteTable(table_id);
+            }
+        });
+    })
+});
 
 function cancel() {
     $(".emp-del-confirm").hide(() => {
@@ -79,6 +95,9 @@ function nextStep() {
                 success: (e) => {
                     console.log(e);
                     if (e.message == "success") {
+                        $(".emp-del-confirm").hide(() => {
+                            $(".shelter").fadeOut(100);
+                        });
                         window.wxc.xcConfirm("删除成功", window.wxc.xcConfirm.typeEnum.success, {
                             onOk: function() {
                                 window.location.replace("../");
@@ -97,4 +116,66 @@ function nextStep() {
             })
         }
     }
+}
+
+function deleteDish(dish_id) {
+    $.ajax({
+        type: "POST",
+        url: "../../../php/admin/dish.php",
+        dataType: "JSON",
+        data: {
+            "request": "deleteDish",
+            "admin_id": getUserInfo().admin_id,
+            "dish_id": dish_id,
+        },
+        success: (e) => {
+            console.log(e);
+            if (e.message == "success") {
+                window.wxc.xcConfirm("删除成功", window.wxc.xcConfirm.typeEnum.success, {
+                    onOk: function() {
+                        window.location.replace("../");
+                    },
+                    onClose: function() {
+                        window.location.replace("../");
+                    }
+                });
+            } else {
+                window.wxc.xcConfirm("网络开小差啦~", window.wxc.xcConfirm.typeEnum.error);
+            }
+        },
+        error: (err) => {
+            console.log(err);
+        }
+    })
+}
+
+function deleteTable(table_id) {
+    $.ajax({
+        type: "POST",
+        url: "../../../php/admin/res_table.php",
+        dataType: "JSON",
+        data: {
+            "request": "deleteTable",
+            "admin_id": getUserInfo().admin_id,
+            "table_id": table_id,
+        },
+        success: (e) => {
+            console.log(e);
+            if (e.message == "success") {
+                window.wxc.xcConfirm("删除成功", window.wxc.xcConfirm.typeEnum.success, {
+                    onOk: function() {
+                        window.location.replace("../");
+                    },
+                    onClose: function() {
+                        window.location.replace("../");
+                    }
+                });
+            } else {
+                window.wxc.xcConfirm("网络开小差啦~", window.wxc.xcConfirm.typeEnum.error);
+            }
+        },
+        error: (err) => {
+            console.log(err);
+        }
+    })
 }

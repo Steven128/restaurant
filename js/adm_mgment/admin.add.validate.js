@@ -175,7 +175,6 @@ function addDishValidate() {
                     "dish_name": dish_name,
                     "dish_price": dish_price,
                     "dish_type": dish_type,
-                    "salary": salary,
                     "dishPicData": picData
                 },
                 success: (e) => {

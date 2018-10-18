@@ -55,6 +55,10 @@ function getUserInfo() {
     return JSON.parse(localStorage.getItem("userInfo"));
 }
 
+function adm_logout() {
+    window.location.replace("../../php/check_login.php?request=logout&admin_id=" + getUserInfo().admin_id);
+}
+
 
 // Begin    
 function Encrypt(str, pwd) {
