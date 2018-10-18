@@ -471,6 +471,10 @@ th:last-child {
     color: #1296db;
 }
 
+.dataTables_wrapper {
+    padding: 15px;
+}
+
 
 /* validate */
 

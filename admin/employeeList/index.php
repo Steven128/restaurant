@@ -383,7 +383,6 @@ session_start();
                             changeMainBar("preOrderList");
                             changeMainBar("orderList");
                             changeMainBar("orderHistory");
-
                             changeMainBar("dishList");
                             changeMainBar("addDish");
                             changeMainBar("tableList");
