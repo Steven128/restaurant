@@ -286,73 +286,40 @@ session_start();
                                 <table class="preOrderListTable tablesorter result">
                                     <thead>
                                         <tr>
-                                            <!-- <th>序号</th>
-                                            <th>姓名</th>
-                                            <th>性别</th>
-                                            <th>工龄（年）</th>
-                                            <th>年龄</th>
-                                            <th>工资</th>
-                                            <th>手机号</th>
-                                            <th>类别</th>
-                                            <th>聘用日期</th>
-                                            <th>操作</th> -->
+                                            <th>订单号</th>
+                                            <th>下单时间</th>
+                                            <th>预计到达时间</th>
+                                            <th>菜单</th>
+                                            <th>餐桌</th>
                                         </tr>
                                     </thead>
                                     <tbody class="preOrderListTableBody">
                                         <?php
-                                        // $sql_query = "SELECT EMPLOYEE_ID,NAME,GENDER,WORKING_YEAR,AGE,SALARY,PHONE_NUM,EMPLOYEE_TYPE,EMPLOY_TIME FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 ORDER BY EMPLOYEE_TYPE ASC,EMPLOY_TIME DESC,WORKING_YEAR DESC";
-                                        // $statement = oci_parse($conn, $sql_query);
-                                        // oci_execute($statement);
-                                        // $count = 0;
-                                        // while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-                                        //     $count++;
-                                        //     $employee_id = $row[0];
-                                        //     $name = $row[1];
-                                        //     $gender = $row[2];
-                                        //     $working_year = $row[3];
-                                        //     $age = $row[4];
-                                        //     $salary = $row[5];
-                                        //     $phone_num = $row[6];
-                                        //     $employee_type = $row[7];
-                                        //     $employ_time = $row[8];
-                                        //     //
-                                        //     if ($gender == 1) {
-                                        //         $gender = "男";
-                                        //     } elseif ($gender == 0) {
-                                        //         $gender = "女";
-                                        //     }
-                                        //     //
-                                        //     if (strpos($working_year, ".") == 0) {
-                                        //         $working_year = "0" . $working_year;
-                                        //     }
-                                        //     //
-                                        //     if ($employee_type == 1) {
-                                        //         $employee_type = "管理人员";
-                                        //     } elseif ($employee_type == 2) {
-                                        //         $employee_type = "服务员";
-                                        //     } elseif ($employee_type == 3) {
-                                        //         $employee_type = "前台";
-                                        //     } elseif ($employee_type == 4) {
-                                        //         $employee_type = "厨师";
-                                        //     } elseif ($employee_type == 5) {
-                                        //         $employee_type = "保洁";
-                                        //     } elseif ($employee_type == 6) {
-                                        //         $employee_type = "仓库管理员";
-                                        //     } elseif ($employee_type == 7) {
-                                        //         $employee_type = "会计";
-                                        //     } elseif ($employee_type == 8) {
-                                        //         $employee_type = "其他";
-                                        //     }
-                                        //     //
-                                        //     echo "<tr><td>$count</td><td>$name</td><td>$gender</td><td>$working_year</td><td>$age</td><td>$salary</td><td>$phone_num</td><td>$employee_type</td><td>$employ_time</td><td><a class=\"table-update-btn update-employee\" href = \"javascript:void(0);\" onclick=\"update_employee('" . $employee_id . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
-                                        // }
+                                        $sql_query = "SELECT preorder_id,preorder_time,arrive_time,order_id,dish_list,table_id FROM SCOTT.pre_order WHERE pre_status>0";
+                                        $statement = oci_parse($conn, $sql_query);
+                                        oci_execute($statement);
+                                        $count = 0;
+                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+                                            $count++;
+                                            $preorder_id = $row[0];
+                                            $preorder_time = $row[1];
+                                            $arrive_time = $row[2];
+                                            $order_id = $row[3];
+                                            $dish_list = $row[4];
+                                            $table_id = $row[5];
+                                            $sql_query2 = "SELECT table_number FROM SCOTT.res_table WHERE table_id='$table_id'";
+                                            $statement2 = oci_parse($conn, $sql_query2);
+                                            oci_execute($statement2);
+                                            $row2=oci_fetch_array($statement2, OCI_RETURN_NULLS);
+                                            echo "<tr><td>$preorder_id</td><td>$preorder_time</td><td>$arrive_time</td><td>详情</td><td>$row2[0]</td></tr>";
+                                        }
                                         ?>
                                         <script>
                                         $(() => {
-                                            $(".employeeListTable").tablesorter();
+                                            $(".preOrderListTable").tablesorter();
                                         });
                                         $(() => {
-                                            $(".employeeListTable").filterTable();
+                                            $(".preOrderListTable").filterTable();
                                         });
                                         </script>
                                     </tbody>

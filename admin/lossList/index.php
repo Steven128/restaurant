@@ -214,7 +214,50 @@ session_start();
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-
+                            <table class="lossListTable tablesorter result">
+                                    <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>原料</th>
+                                            <th>价格</th>
+                                            <th>类型</th>
+                                            <th>损失数量</th>
+                                            <th>损失日期</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="lossListTableBody">
+                                        <?php
+                                        $sql_query = "SELECT loss_id,GOODS_ID,QUANTITY,loss_date FROM SCOTT.LOSS WHERE LOS_STATUS>0";
+                                        $statement = oci_parse($conn, $sql_query);
+                                        oci_execute($statement);
+                                        $count = 0;
+                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+                                            $count++;
+                                            $sql_query2 = "SELECT GOODS_NAME, GOODS_PRICE, GOODS_TYPE FROM SCOTT.GOODS WHERE GOO_STATUS>0 AND GOODS_ID = '$row[1]'";
+                                            $statement2 = oci_parse($conn, $sql_query2);
+                                            oci_execute($statement2);
+                                            $row2 = oci_fetch_array($statement2, OCI_RETURN_NULLS);
+                                            
+                                            if ($row2[2] == 1) {
+                                                $row2[2] = "粮食";
+                                            } elseif ($row2[2] == 2) {
+                                                $row2[2] = "调料";
+                                            } elseif ($row2[2] == 3) {
+                                                $row2[2] = "生鲜";
+                                            }
+                                            echo "<tr><td>$count</td><td>$row2[0]</td><td>$row2[1]</td><td>$row2[2]</td><td>$row[2]</td><td>$row[3]</td></tr>";
+                                        }
+                                        ?>
+                                        <script>
+                                        $(() => {
+                                            $(".lossListTable").tablesorter();
+                                        });
+                                        $(() => {
+                                            $(".lossListTable").filterTable();
+                                        });
+                                        </script>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

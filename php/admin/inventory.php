@@ -33,7 +33,7 @@ if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //å¦‚æ
         //     exit();
         // }
         if ($request == "purchase") {
-            echo purchase($conn);
+            purchase($conn);
         }
 
     }

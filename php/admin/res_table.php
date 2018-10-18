@@ -32,13 +32,13 @@ if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //å¦‚æ
         //     exit();
         // }
         if ($request == "addTable") {
-            echo addTable($conn);
+            addTable($conn);
         } else if ($request == "deleteTable") {
-            echo deleteTable($conn);
+            deleteTable($conn);
         } elseif ($request == "getTableInfo") {
-            echo getTableInfo($conn);
+            getTableInfo($conn);
         } elseif ($request == "updateTable") {
-            echo updateTable($conn);
+            updateTable($conn);
         }
 
     }
