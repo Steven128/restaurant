@@ -137,13 +137,12 @@ class Jwt
 }
 
 
+$payload = array('iss' => 'xiaodingdang', 'iat' => time(), 'exp' => time() + 3600, 'nbf' => time(), 'jti' => md5(uniqid('JWT') . time()));
 
-$payload = array('iss' => 'xiaodingdang', 'iat' => time(), 'exp' => time() + 20, 'nbf' => time(), 'jti' => md5(uniqid('JWT') . time()));
-
-$token = $_SERVER['token'];
+$token = $_COOKIE["token"];
 if (isset($token)) {
     $getpayload = Jwt::verifyToken($token);
-    if ($getpayload['sub'] == $payload['sub']) {
+    if ($getpayload['iss'] == $payload['iss']) {
     } else {
         $token = Jwt::getToken($payload);
     }
@@ -151,3 +150,20 @@ if (isset($token)) {
     $token = Jwt::getToken($payload);
 }
 echo $token;
+//var_dump($_COOKIE);
+setcookie("token",$token, time()+5); 
+// function asd(){
+
+// }
+
+// $payload_test=array('iss'=>'admin','iat'=>time(),'exp'=>time()+7200,'nbf'=>time(),'sub'=>'www.admin.com','jti'=>md5(uniqid('JWT').time()));;
+//     $token_test=Jwt::getToken($payload_test);
+//     echo $token_test;
+// $payload_test=array('iss'=>'admin','iat'=>time(),'exp'=>time()+7200,'nbf'=>time(),'sub'=>'www.admin.com','jti'=>md5(uniqid('JWT').time()));;
+//   $token_test=Jwt::getToken($payload_test);
+//   echo "<pre>";
+//   echo $token_test;
+// $getPayload_test=Jwt::verifyToken($token_test);
+//   echo "<br><br>";
+//   var_dump($getPayload_test);
+//   echo "<br><br>";

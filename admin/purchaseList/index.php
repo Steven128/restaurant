@@ -214,7 +214,35 @@ session_start();
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-
+                            <table class="inventoryListTable tablesorter result">
+                                    <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>进货价格</th>
+                                            <th>进货日期</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="inventoryListTableBody">
+                                        <?php
+                                        $sql_query = "SELECT overhead_price,overhead_date FROM SCOTT.overhead WHERE overhead_type=1 and ove_status>0";
+                                        $statement = oci_parse($conn, $sql_query);
+                                        oci_execute($statement);
+                                        $count = 0;
+                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+                                            $count++;
+                                            echo "<tr><td>$count</td><td>$row[0]</td><td>$row[1]</td></tr>";
+                                        }
+                                        ?>
+                                        <script>
+                                        $(() => {
+                                            $(".inventoryListTable").tablesorter();
+                                        });
+                                        $(() => {
+                                            $(".inventoryListTable").filterTable();
+                                        });
+                                        </script>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

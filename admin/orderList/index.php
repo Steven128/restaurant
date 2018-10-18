@@ -288,41 +288,66 @@ session_start();
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-                                <table class="orderListTable" style="display: none;">
+                                <table class="orderListTable tablesorter result">
                                     <thead>
                                         <tr>
-                                            <th>序号</th>
-                                            <th>日期</th>
-                                            <th>餐桌号</th>
-                                            <th>总价</th>
-                                            <th>付款状态</th>
-                                            <th>操作</th>
+                                            <th>订单号</th>
+                                            <th>下单时间</th>
+                                            <th>总金额</th>
+                                            <th>是否付款</th>
+                                            <th>付款时间</th>
+                                            <th>付款方式</th>
+                                            <th>菜单</th>
+                                            <th>餐桌</th>
+                                            <th>备注</th>
                                         </tr>
                                     </thead>
                                     <tbody class="orderListTableBody">
                                         <?php
-                                        $sql_query = "SELECT ORDER_ID,SUBSTR(ORDER_LIST.ORDER_ID,9,8),TABLE_NUMBER,TOTAL_PRICE,PAY_STATUS FROM SCOTT.ORDER_LIST,SCOTT.RES_TABLE WHERE ORDER_LIST.TABLE_ID=RES_TABLE.TABLE_ID AND ORD_STATUS>0 AND TAB_STATUS>0 ORDER BY PAY_STATUS ASC,ORDER_ID DESC,ORDER_LIST.TABLE_ID ASC";
-                                        $statement = oci_parse($conn, $sql_query);
+                                        $sql_query = "SELECT order_id,table_id,dish_list,total_price,pay_method,pay_time,order_note,pay_status FROM SCOTT.ORDER_LIST WHERE ORD_STATUS=1 AND SUBSTR(ORDER_ID,9,8)='".date("Ymd")."'";                                        $statement = oci_parse($conn, $sql_query);
                                         oci_execute($statement);
                                         $count = 0;
                                         while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
                                             $count++;
                                             $order_id = $row[0];
-                                            $date = $row[1];
-                                            $table = $row[2];
-                                            $price = $row[3];
-                                            $pay_sta = $row[4];
-                                            echo "<tr><td>$count</td><td>$date</td><td>$table</td><td>$price</td><td>$pay_sta</td><td><a class=\"table-update-btn update-employee\" href = \"javascript:void(0);\" onclick=\"delete_order('" . $order_id . "')\"><i class=\"iconfont icon-delete\"></i></a></td></tr>";
+                                            $order_time=substr($order_id, 8, 4)."-".substr($order_id, 12, 2)."-".substr($order_id, 14, 2);
+                                            $table_id = $row[1];
+                                            $dish_list = $row[2];
+                                            $total_price = $row[3];
+                                            $pay_method = $row[4];
+                                            if ($pay_method==1) {
+                                                $pay_method = "现金";
+                                            } elseif ($pay_method==2) {
+                                                $pay_method="支付宝";
+                                            } elseif ($pay_method==3) {
+                                                $pay_method="微信";
+                                            } else {
+                                                $pay_method="未知方式";
+                                            }
+                                            $pay_time = $row[5];
+                                            $order_note = $row[6];
+                                            $pay_status = $row[7];
+                                            if ($pay_status==1) {
+                                                $pay_status="已付款";
+                                            } elseif ($pay_status==0) {
+                                                $pay_status="未付款";
+                                            } else {
+                                                $pay_status="未知";
+                                            }
+                                            $sql_query2 = "SELECT table_number FROM SCOTT.res_table WHERE table_id='$table_id'";
+                                            $statement2 = oci_parse($conn, $sql_query2);
+                                            oci_execute($statement2);
+                                            $row2=oci_fetch_array($statement2, OCI_RETURN_NULLS);
+                                            echo "<tr><td>$order_id</td><td>$order_time</td><td>$total_price</td><td>$pay_status</td><td>$pay_time</td><td>$pay_method</td><td>详情</td><td>$row2[0]</td><td>$order_note</td></tr>";
                                         }
                                         ?>
                                         <script>
-                                        $(document).ready(() => {
-                                            $('.orderListTable').DataTable({
-                                                responsive: true,
-                                                fixedHeader: true
-                                            });
-                                            $('.orderListTable').show();
-                                        } );
+                                        $(() => {
+                                            $(".orderListTable").tablesorter();
+                                        });
+                                        $(() => {
+                                            $(".orderListTable").filterTable();
+                                        });
                                         </script>
                                     </tbody>
                                     <!-- <div class="display-box-hide"></div> -->

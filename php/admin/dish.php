@@ -35,15 +35,15 @@ if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //å¦‚æ
         //     exit();
         // }
         if ($request == "addDish") {
-            echo addDish($conn);
+            addDish($conn);
         } else if ($request == "deleteDish") {
-            echo deleteDish($conn);
+            deleteDish($conn);
         }elseif ($request == "getDishInfo") {
-            echo getDishInfo($conn);
+            getDishInfo($conn);
         } elseif($request== "updateDish"){
-            echo updateDish($conn);
+            updateDish($conn);
         } elseif ($request == "updateDishPic") {
-            echo updateDishPic($conn);
+            updateDishPic($conn);
         }
     }
 }
@@ -117,7 +117,9 @@ function getDishInfo($conn)
 function updateDish($conn)
 {
     if (islegalid($_POST['dish_id'])) {
+        
         $dish_id = $_POST['dish_id'];
+        echo $dish_id;
         $dish_name = $_POST["dish_name"];
         $dish_price = $_POST["dish_price"];
         $dish_type = $_POST["dish_type"];
