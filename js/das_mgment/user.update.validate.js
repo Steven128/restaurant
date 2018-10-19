@@ -24,99 +24,98 @@ $(document).ready(() => {
         }
     })
 
-    //     $("#addEmployee-form").validate({
-    //         onsubmit: true, // 是否在提交是验证
-    //         rules: { //规则
-    //             name: {
-    //                 required: true,
-    //                 chinese: true,
-    //             },
-    //             age: {
-    //                 required: true,
-    //                 digits: true,
-    //                 rangelength: [1, 2]
-    //             },
-    //             salary: {
-    //                 required: true,
-    //                 digits: true,
-    //                 rangelength: [3, 5]
-    //             },
-    //             phone: {
-    //                 required: true,
-    //                 phone: true
-    //             }
-    //         },
-    //         messages: { //验证错误信息
+    $("#update-passwd").validate({
+        onsubmit: true, // 是否在提交是验证
+        rules: { //规则
+            oldPasswd: {
+                required: true
+            },
+            age: {
+                required: true,
+                digits: true,
+                rangelength: [1, 2]
+            },
+            salary: {
+                required: true,
+                digits: true,
+                rangelength: [3, 5]
+            },
+            phone: {
+                required: true,
+                phone: true
+            }
+        },
+        messages: { //验证错误信息
 
-    //             name: {
-    //                 required: "请输入姓名",
-    //                 chinese: "请输入正确的姓名"
-    //             },
-    //             age: {
-    //                 required: "请输入年龄",
-    //                 digits: "请输入正确的年龄",
-    //                 rangelength: "请输入正确的年龄"
-    //             },
-    //             salary: {
-    //                 required: "请输入工资",
-    //                 digits: "请输入正确的工资",
-    //                 rangelength: "请输入正确的工资",
-    //             },
-    //             phone: {
-    //                 required: "请输入手机号码",
-    //                 phone: "请输入正确的手机号码"
-    //             }
-    //         },
-    //         submitHandler: function(form) { //通过之后回调
-    //             var userPicData = $("#previewResult")[0].src;
-    //             if (userPicData.indexOf("data:") < 0) {
-    //                 userPicData = '';
-    //             }
-    //             var name = $("#name").val();
-    //             var gender = $("input[name='gender']:checked").val();
-    //             var age = $("#age").val();
-    //             var salary = $("#salary").val();
-    //             var phone_num = $("#phone_num").val();
-    //             var employee_type = $("#employee_type").val();
-    //             var admin_id = getUserInfo().admin_id;
-    //             $.ajax({
-    //                 type: "POST",
-    //                 url: "../../php/admin/admin.add.php",
-    //                 dataType: "JSON",
-    //                 data: {
-    //                     "request": "add_employee",
-    //                     "admin_id": admin_id,
-    //                     "name": name,
-    //                     "gender": gender,
-    //                     "age": age,
-    //                     "salary": salary,
-    //                     "phone_num": phone_num,
-    //                     "employee_type": employee_type,
-    //                     "userPicData": userPicData
-    //                 },
-    //                 success: (e) => {
-    //                     console.log(e)
-    //                 },
-    //                 error: (err) => {
-    //                     console.log(err)
-    //                 }
-    //             })
-    //         }
-    //     });
-    //     $.validator.addMethod("chinese", function(value, element) {
-    //         var chinese = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
-    //         return this.optional(element) || (chinese.test(value));
-    //     }, "");
+            name: {
+                required: "请输入姓名",
+                chinese: "请输入正确的姓名"
+            },
+            age: {
+                required: "请输入年龄",
+                digits: "请输入正确的年龄",
+                rangelength: "请输入正确的年龄"
+            },
+            salary: {
+                required: "请输入工资",
+                digits: "请输入正确的工资",
+                rangelength: "请输入正确的工资",
+            },
+            phone: {
+                required: "请输入手机号码",
+                phone: "请输入正确的手机号码"
+            }
+        },
+        submitHandler: function(form) { //通过之后回调
+            var userPicData = $("#previewResult")[0].src;
+            if (userPicData.indexOf("data:") < 0) {
+                userPicData = '';
+            }
+            var name = $("#name").val();
+            var gender = $("input[name='gender']:checked").val();
+            var age = $("#age").val();
+            var salary = $("#salary").val();
+            var phone_num = $("#phone_num").val();
+            var employee_type = $("#employee_type").val();
+            var admin_id = getUserInfo().admin_id;
+            $.ajax({
+                type: "POST",
+                url: "../../php/admin/admin.add.php",
+                dataType: "JSON",
+                data: {
+                    "request": "add_employee",
+                    "admin_id": admin_id,
+                    "name": name,
+                    "gender": gender,
+                    "age": age,
+                    "salary": salary,
+                    "phone_num": phone_num,
+                    "employee_type": employee_type,
+                    "userPicData": userPicData
+                },
+                success: (e) => {
+                    console.log(e)
+                },
+                error: (err) => {
+                    console.log(err)
+                }
+            })
+        }
+    });
+    $.validator.addMethod("chinese", function(value, element) {
+        var chinese = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
+        return this.optional(element) || (chinese.test(value));
+    }, "");
 
-    //     $.validator.addMethod("phone", function(value, element) {
-    //         var phone = /^1[34578]\d{9}$/;
-    //         return this.optional(element) || (phone.test(value));
-    //     }, "");
+    $.validator.addMethod("phone", function(value, element) {
+        var phone = /^1[34578]\d{9}$/;
+        return this.optional(element) || (phone.test(value));
+    }, "");
 
     $("#uploadpic").click(() => {
         var userPicData = picData;
         if (userPicData.indexOf("data:") < 0) {
-            window.wxc.xcConfirm("请先选择图片哟~", window.wxc.xcConfirm.typeEnum.error);
+            window.wxc.xcConfirm("请先选择图片哟~", window.wxc.xcConfirm.typeEnum.warning);
         } else {
             $.ajax({
                 type: "POST",

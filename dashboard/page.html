@@ -182,7 +182,7 @@ echo "<div class=\"user-pic-wrap\"><img class=\"userPic\" src=\"" . $_SESSION['a
                                 $("#menu-" + itemName + "-item").click(() => {
                                     $.pjax({
                                         url: "../" + itemName,
-                                        container: 'html'
+                                        container: '.main-bar'
                                     });
                                 });
                             }

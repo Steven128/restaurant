@@ -2,7 +2,7 @@ function changeMainBar(itemName) {
     $("#menu-" + itemName + "-item").click(() => {
         $.pjax({
             url: "../" + itemName,
-            container: 'html'
+            container: '.main-bar'
         });
     });
 }
@@ -81,6 +81,6 @@ function update_admin(admin_id) {
     var href = encodeURIComponent("admin_id=" + admin_id);
     $.pjax({
         url: "updateAdmin?" + href,
-        container: 'html'
+        container: '.main-bar'
     });
 }

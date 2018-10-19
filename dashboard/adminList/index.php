@@ -14,6 +14,10 @@ session_start();
     <link type="text/css" rel="stylesheet" href="../../css/page.css" />
     <link type="text/css" rel="stylesheet" href="../../css/dashboard.css" />
     <link type="text/css" rel="stylesheet" href="../../css/responsive-sidebar.css" />
+     <link type="text/css" rel="stylesheet" href="../../css/form.css" />
+     <link type="text/css" rel="stylesheet" href="../../css/update.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/datatables.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/table_plugins/responsive.bootstrap.css" />
 
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
@@ -22,8 +26,11 @@ session_start();
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../js/Chart.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
-    <script type="text/javascript" src="../../js/plugins/jquery.tablesorter.min.js"></script>
-    <script type="text/javascript" src="../../js/plugins/jquery.filtertable.js"></script>
+    <script type="text/javascript" src="../../js/das_mgment/dashboard.admin.delete.js"></script> 
+    <script type="text/javascript" src="../../js/plugins/datatables.js"></script>
+    <script type="text/javascript" src="../../js/plugins/dataTables/dataTables.responsive.js"></script>
+    <script type="text/javascript" src="../../js/plugins/dataTables/responsive.bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/jquery.tabledisplay.js"></script>
     <?php
     if (!isset($_SESSION['admin_id'])) {
         echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
@@ -115,7 +122,7 @@ session_start();
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-                                <table class="adminListTable tablesorter result">
+                                <table class="adminListTable" style="display: none;">
                                     <thead>
                                         <tr>
                                             <th>序号</th>
@@ -150,9 +157,9 @@ session_start();
                                                 $admin_type = "仓库管理员";
                                             }
                                             //
-                                            echo "<tr><td>$count</td><td><img src=\"$admin_pic\" / width=\"50px\" height=\"50px\"></td><td>$name</td><td>$admin_type</td><td>$create_time</td>";
+                                            echo "<tr><td>$count</td><td><img src=\"$admin_pic\" / width=\"50px\" height=\"50px\"></td><td class='admin_name'>$name</td><td>$admin_type</td><td>$create_time</td>";
                                             if($admin_id != $_SESSION['admin_id']) {
-                                                echo "<td><a class=\"table-update-btn update-admin\" href = \"javascript:void(0);\" onclick=\"delete_admin('" . $admin_id . "')\"><i class=\"iconfont icon-delete\" style='color: darkred;'></i></a></td></tr>";
+                                                echo "<td><div class=\"table-update-btn update-admin\" href = \"javascript:void(0);\" onclick=\"delete_admin(this,'" . $admin_id . "')\"><i class=\"iconfont icon-delete\" style='color: darkred;'></i></div></td></tr>";
                                             }else {
                                                 echo "<td></td></tr>";
                                             }
@@ -160,12 +167,14 @@ session_start();
                                         }
                                         ?>
                                         <script>
-                                        $(() => {
-                                            $(".adminListTable").tablesorter();
-                                        });
-                                        $(() => {
-                                            $(".adminListTable").filterTable();
-                                        });
+                                        $(document).ready(() => {
+                                            $(".adminListTable").DataTable({
+                                                autoWidth: true,
+                                                responsive: true
+                                            });
+                                            $(".adminListTable").displayInfo();
+                                            $(".adminListTable").show();
+                                        })
                                         </script>
                                     </tbody>
                                     <!-- <div class="display-box-hide"></div> -->
@@ -184,7 +193,7 @@ session_start();
                                 $("#menu-" + itemName + "-item").click(() => {
                                     $.pjax({
                                         url: "../" + itemName,
-                                        container: 'html'
+                                        container: '.main-bar'
                                     });
                                 });
                             }
@@ -207,6 +216,22 @@ session_start();
         </footer>
     </div>
 </body>
-
+<div class="del-confirm adm-del-confirm" style="display: none;">
+        <h3>确认删除此管理员吗？</h3>
+        <hr>
+        <h5>请输入此管理员的姓名</h5>
+        <div class="subform">
+            <div id="name-box" class="section">
+                <div class="form-group">
+                    <input id="delete_name" class="" type="text" name="name" placeholder="" maxlength="15" />
+                </div>
+                <div class="clear"></div>
+                <div class="btn-area">
+                    <button id="cancel" type="button" class="cancel" onclick="cancel()">取消</button>
+                    <button id="adm-btn-delete" type="button" class="submit submit_delete" onclick="nextStep()">确认删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </html>

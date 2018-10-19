@@ -13,16 +13,19 @@ session_start();
     <link type="text/css" rel="stylesheet" href="../../css/iconfont.css" />
     <link type="text/css" rel="stylesheet" href="../../css/page.css" />
     <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
-    <link type="text/css" rel="stylesheet" href="../../css/tablesorter.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/datatables.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/table_plugins/responsive.bootstrap.css" />
 
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
     <script type="text/javascript" src="../../js/adm_mgment/admin.js"></script>
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
-    <script type="text/javascript" src="../../js/plugins/jquery.tablesorter.min.js"></script>
-    <script type="text/javascript" src="../../js/plugins/jquery.filtertable.js"></script>
+    <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
+    <script type="text/javascript" src="../../js/plugins/datatables.js"></script>
+    <script type="text/javascript" src="../../js/plugins/dataTables/dataTables.responsive.js"></script>
+    <script type="text/javascript" src="../../js/plugins/dataTables/responsive.bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/jquery.tabledisplay.js"></script>
     <style>
         .display-box-hide,
         .display-box {
@@ -283,7 +286,7 @@ session_start();
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-                            <table class="orderListTable tablesorter result">
+                            <table class="orderListTable" style="display: none;">
                                     <thead>
                                         <tr>
                                             <th>订单号</th>
@@ -335,12 +338,14 @@ session_start();
                                         }
                                         ?>
                                         <script>
-                                        $(() => {
-                                            $(".orderListTable").tablesorter();
-                                        });
-                                        $(() => {
-                                            $(".orderListTable").filterTable();
-                                        });
+                                        $(document).ready(() => {
+                                            $(".orderListTable").DataTable({
+                                                autoWidth: true,
+                                                responsive: true
+                                            });
+                                            $(".orderListTable").displayInfo();
+                                            $(".orderListTable").show();
+                                        })
                                         </script>
                                     </tbody>
                                     <!-- <div class="display-box-hide"></div> -->
@@ -357,7 +362,7 @@ session_start();
                                 $("#menu-" + itemName + "-item").click(() => {
                                     $.pjax({
                                         url: "../" + itemName,
-                                        container: 'html'
+                                        container: '.main-bar'
                                     });
                                 });
                             }

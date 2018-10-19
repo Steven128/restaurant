@@ -9,7 +9,7 @@ function update_employee(employee_id) {
     var href = encodeURIComponent("employee_id=" + employee_id + "&adm=" + admin_id);
     $.pjax({
         url: "updateEmployee?" + href,
-        container: 'html'
+        container: '.main-bar'
     });
 }
 
@@ -19,7 +19,7 @@ function update_dish(dish_id) {
     var href = encodeURIComponent("dish_id=" + dish_id + "&adm=" + admin_id);
     $.pjax({
         url: "updateDish?" + href,
-        container: 'html'
+        container: '.main-bar'
     });
 }
 
@@ -29,6 +29,6 @@ function update_table(table_id) {
     var href = encodeURIComponent("table_id=" + table_id + "&adm=" + admin_id);
     $.pjax({
         url: "updateTable?" + href,
-        container: 'html'
+        container: '.main-bar'
     });
 }

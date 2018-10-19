@@ -178,16 +178,16 @@
                         <div class="box-inner box-inner-hide" style="display: none;">
                             <div class="col-sm-1 col-md-2 col-lg-3"></div>
                             <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
-                                <form id="reset-passwd" method="POST" action="">
+                                <form id="update-passwd" method="POST" action="">
                                     <div class="subform">
                                         <div class="form-group">
-                                            <input id="oldPasswd" class="input-text form-control" type="password" name="passwd" placeholder="新密码" maxlength="15" />
+                                            <input id="oldPasswd" class="input-text form-control" type="password" name="oldPasswd" placeholder="新密码" maxlength="15" />
                                         </div>
                                         <div class="form-group">
-                                            <input id="newPasswd" class="input-text form-control" type="password" name="passwd" placeholder="新密码" maxlength="15" />
+                                            <input id="newPasswd" class="input-text form-control" type="password" name="newPasswd" placeholder="新密码" maxlength="15" />
                                         </div>
                                         <div class="form-group">
-                                            <input id="rePasswd" class="input-text form-control" type="password" name="newPasswd" placeholder="确认密码" maxlength="15" />
+                                            <input id="rePasswd" class="input-text form-control" type="password" name="rePasswd" placeholder="确认密码" maxlength="15" />
                                         </div>
                                         <div class="clear"></div>
                                         <div class="btn-area">
@@ -230,7 +230,7 @@
                                 $("#menu-" + itemName + "-item").click(() => {
                                     $.pjax({
                                         url: "../" + itemName,
-                                        container: 'html'
+                                        container: '.main-bar'
                                     });
                                 });
                             }

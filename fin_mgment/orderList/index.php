@@ -200,7 +200,7 @@ session_start();
                                 $("#menu-" + itemName + "-item").click(() => {
                                     $.pjax({
                                         url: "../" + itemName,
-                                        container: 'html'
+                                        container: '.main-bar'
                                     });
                                 });
                             }

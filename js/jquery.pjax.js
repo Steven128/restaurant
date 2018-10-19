@@ -848,7 +848,7 @@ function enable() {
     push: true,
     replace: false,
     type: 'GET',
-    dataType: 'html',
+    dataType: '.main-bar',
     scrollTo: 0,
     maxCacheLength: 20,
     version: findVersion

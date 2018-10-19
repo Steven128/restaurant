@@ -492,6 +492,10 @@ label.error {
     border: 1px solid green;
 }
 
+.display-info-row {
+    display: none;
+}
+
 @media (min-width: 768px) {
     .menu-button {
         display: none;

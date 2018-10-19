@@ -13,15 +13,18 @@ session_start();
     <link type="text/css" rel="stylesheet" href="../../css/iconfont.css" />
     <link type="text/css" rel="stylesheet" href="../../css/page.css" />
     <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
-    <link type="text/css" rel="stylesheet" href="../../css/tablesorter.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/datatables.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/table_plugins/responsive.bootstrap.css" />
 
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
-    <script type="text/javascript" src="../../js/plugins/jquery.tablesorter.min.js"></script>
-    <script type="text/javascript" src="../../js/plugins/jquery.filtertable.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
+    <script type="text/javascript" src="../../js/plugins/datatables.js"></script>
+    <script type="text/javascript" src="../../js/plugins/dataTables/dataTables.responsive.js"></script>
+    <script type="text/javascript" src="../../js/plugins/dataTables/responsive.bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/jquery.tabledisplay.js"></script>
     <?php
     if (!isset($_SESSION['admin_id'])) {
         echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
@@ -214,7 +217,7 @@ session_start();
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-                                <table class="financeListTable tablesorter result">
+                                <table class="financeListTable" style="display: none;">
                                     <thead>
                                         <tr>
                                             <th>序号</th>
@@ -233,25 +236,18 @@ session_start();
                                         $count = 0;
                                         while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
                                             $count++;
-                                            // $finance_id = $row[0];
-                                            // $fin_date = $row[1];
-                                            // $month = $row[2];
-                                            // $turnover = $row[3];
-                                            // $cost = $row[4];
-                                            // $profit = $row[5];
-                                            // //使用一个数组放入一个员工的信息
-                                            // $data_single = array("finance_id" => $finance_id, "fin_date" => $fin_date, "month" => $month, "turnover" => $turnover, "cost" => $cost, "profit" => $profit);
-                                            // array_push($fin_data_array, $data_single);//将单个员工信息的数组添加到$emp_data_array中
                                             echo "<tr><td>$count</td><td>$row[1]</td><td>$row[3]</td><td>$row[4]</td><td>$row[5]</td><td><a class=\"table-update-btn update-finance\" href = \"javascript:void(0);\" onclick=\"update_finance('" . $row[0] . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
                                         }
                                         ?>
                                         <script>
-                                        $(() => {
-                                            $(".financeListTable").tablesorter();
-                                        });
-                                        $(() => {
-                                            $(".financeListTable").filterTable();
-                                        });
+                                        $(document).ready(() => {
+                                            $(".financeListTable").DataTable({
+                                                autoWidth: true,
+                                                responsive: true
+                                            });
+                                            $(".financeListTable").displayInfo();
+                                            $(".financeListTable").show();
+                                        })
                                         </script>
                                     </tbody>
                                 </table>
@@ -264,7 +260,7 @@ session_start();
                                 $("#menu-" + itemName + "-item").click(() => {
                                     $.pjax({
                                         url: "../" + itemName,
-                                        container: 'html'
+                                        container: '.main-bar'
                                     });
                                 });
                             }

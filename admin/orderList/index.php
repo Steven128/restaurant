@@ -13,7 +13,6 @@ session_start();
     <link type="text/css" rel="stylesheet" href="../../css/iconfont.css" />
     <link type="text/css" rel="stylesheet" href="../../css/page.css" />
     <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
-    <link type="text/css" rel="stylesheet" href="../../css/tablesorter.css" />
     <link type="text/css" rel="stylesheet" href="../../css/datatables.css" />
     <link type="text/css" rel="stylesheet" href="../../css/table_plugins/responsive.bootstrap.css" />
 
@@ -23,11 +22,10 @@ session_start();
     <script type="text/javascript" src="../../js/page.js"></script>
     <script type="text/javascript" src="../../js/adm_mgment/admin.js"></script>
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
-    <script type="text/javascript" src="../../js/plugins/jquery.tablesorter.min.js"></script>
-    <script type="text/javascript" src="../../js/plugins/jquery.filtertable.js"></script>
     <script type="text/javascript" src="../../js/plugins/datatables.js"></script>
     <script type="text/javascript" src="../../js/plugins/dataTables/dataTables.responsive.js"></script>
     <script type="text/javascript" src="../../js/plugins/dataTables/responsive.bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/jquery.tabledisplay.js"></script>
     <style>
         .display-box-hide,
         .display-box {
@@ -288,9 +286,10 @@ session_start();
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-                                <table class="orderListTable tablesorter result">
+                                <table class="orderListTable" style="display: none;">
                                     <thead>
                                         <tr>
+                                            <th>操作</th>
                                             <th>订单号</th>
                                             <th>下单时间</th>
                                             <th>总金额</th>
@@ -304,7 +303,8 @@ session_start();
                                     </thead>
                                     <tbody class="orderListTableBody">
                                         <?php
-                                        $sql_query = "SELECT order_id,table_id,dish_list,total_price,pay_method,pay_time,order_note,pay_status FROM SCOTT.ORDER_LIST WHERE ORD_STATUS=1 AND SUBSTR(ORDER_ID,9,8)='".date("Ymd")."'";                                        $statement = oci_parse($conn, $sql_query);
+                                        $sql_query = "SELECT order_id,table_id,dish_list,total_price,pay_method,pay_time,order_note,pay_status FROM SCOTT.ORDER_LIST WHERE ORD_STATUS=1";
+                                        $statement = oci_parse($conn, $sql_query);
                                         oci_execute($statement);
                                         $count = 0;
                                         while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
@@ -338,16 +338,18 @@ session_start();
                                             $statement2 = oci_parse($conn, $sql_query2);
                                             oci_execute($statement2);
                                             $row2=oci_fetch_array($statement2, OCI_RETURN_NULLS);
-                                            echo "<tr><td>$order_id</td><td>$order_time</td><td>$total_price</td><td>$pay_status</td><td>$pay_time</td><td>$pay_method</td><td>详情</td><td>$row2[0]</td><td>$order_note</td></tr>";
+                                            echo "<tr><td class='display-info'><i class=\"iconfont icon-down-arrow\"></i></td><td class='order_id'>$order_id</td><td>$order_time</td><td>$total_price</td><td>$pay_status</td><td>$pay_time</td><td>$pay_method</td><td>详情</td><td>$row2[0]</td><td>$order_note</td></tr>";
                                         }
                                         ?>
                                         <script>
-                                        $(() => {
-                                            $(".orderListTable").tablesorter();
-                                        });
-                                        $(() => {
-                                            $(".orderListTable").filterTable();
-                                        });
+                                        $(document).ready(() => {
+                                            $(".orderListTable").DataTable({
+                                                autoWidth: true,
+                                                responsive: true
+                                            });
+                                            $(".orderListTable").displayInfo();
+                                            $(".orderListTable").show();
+                                        })
                                         </script>
                                     </tbody>
                                     <!-- <div class="display-box-hide"></div> -->
@@ -364,11 +366,12 @@ session_start();
                                 $("#menu-" + itemName + "-item").click(() => {
                                     $.pjax({
                                         url: "../" + itemName,
-                                        container: 'html'
+                                        container: '.main-bar'
                                     });
                                 });
                             }
                             //
+                            changeMainBar('employeeList');
                             changeMainBar('addEmployee');
                             changeMainBar("financeList");
                             changeMainBar("financeHistory");
@@ -378,7 +381,6 @@ session_start();
                             changeMainBar("preOrderList");
                             changeMainBar("orderList");
                             changeMainBar("orderHistory");
-
                             changeMainBar("dishList");
                             changeMainBar("addDish");
                             changeMainBar("tableList");

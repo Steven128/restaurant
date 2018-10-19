@@ -2188,7 +2188,7 @@
 
                             // Only a single match is needed for html type since it is
                             // bottom of the pile and very similar to string
-                            if (detectedType === 'html') {
+                            if (detectedType === '.main-bar') {
                                 break;
                             }
                         }
@@ -11053,7 +11053,7 @@
                  *      } );
                  *    } );
                  */
-                "sInfoFiltered": "(filtered from _MAX_ total entries)",
+                "sInfoFiltered": "(筛选自 共 _MAX_ 条 数据)",
 
 
                 /**
@@ -11195,7 +11195,7 @@
                  *      } );
                  *    } );
                  */
-                "sLoadingRecords": "Loading...",
+                "sLoadingRecords": "正在加载...",
 
 
                 /**
@@ -11216,7 +11216,7 @@
                  *      } );
                  *    } );
                  */
-                "sProcessing": "Processing...",
+                "sProcessing": "正在处理...",
 
 
                 /**
@@ -11309,7 +11309,7 @@
                  *      } );
                  *    } );
                  */
-                "sZeroRecords": "No matching records found"
+                "sZeroRecords": "没有找到符合条件的数据"
             },
 
 
@@ -12391,7 +12391,7 @@
              * HTML tags before ordering)) are currently available. Note that only date
              * formats understood by Javascript's Date() object will be accepted as type
              * date. For example: "Mar 26, 2008 5:03 PM". May take the values: 'string',
-             * 'numeric', 'date' or 'html' (by default). Further types can be adding
+             * 'numeric', 'date' or '.main-bar' (by default). Further types can be adding
              * through plug-ins.
              *  @type string
              *  @default null <i>Auto-detected from raw data</i>
@@ -14208,7 +14208,7 @@
             // HTML (this is strict checking - there must be html)
             function(d, settings) {
                 return _empty(d) || (typeof d === 'string' && d.indexOf('<') !== -1) ?
-                    'html' : null;
+                    '.main-bar' : null;
             }
         ]);
 
@@ -16577,7 +16577,7 @@
 
         $('<div id="datatables_buttons_info" class="dt-button-info"/>')
             .html(title)
-            .append($('<div/>')[typeof message === 'string' ? 'html' : 'append'](message))
+            .append($('<div/>')[typeof message === 'string' ? '.main-bar' : 'append'](message))
             .css('display', 'none')
             .appendTo('body')
             .fadeIn();
@@ -23975,7 +23975,7 @@
 
                 // Ignore elements which have been removed from the DOM (i.e. paging
                 // buttons)
-                if ($(e.target).parents('html').length === 0) {
+                if ($(e.target).parents('.main-bar').length === 0) {
                     return;
                 }
 

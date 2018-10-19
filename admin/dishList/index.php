@@ -12,7 +12,8 @@ session_start();
     <link type="text/css" rel="stylesheet" href="../../css/iconfont.css" />
     <link type="text/css" rel="stylesheet" href="../../css/page.css" />
     <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
-    <link type="text/css" rel="stylesheet" href="../../css/tablesorter.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/datatables.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/table_plugins/responsive.bootstrap.css" />
 
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
@@ -20,8 +21,10 @@ session_start();
     <script type="text/javascript" src="../../js/page.js"></script>
     <script type="text/javascript" src="../../js/adm_mgment/admin.js"></script>
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
-    <script type="text/javascript" src="../../js/plugins/jquery.tablesorter.min.js"></script>
-    <script type="text/javascript" src="../../js/plugins/jquery.filtertable.js"></script>
+    <script type="text/javascript" src="../../js/plugins/datatables.js"></script>
+    <script type="text/javascript" src="../../js/plugins/dataTables/dataTables.responsive.js"></script>
+    <script type="text/javascript" src="../../js/plugins/dataTables/responsive.bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/jquery.tabledisplay.js"></script>
     <?php
 if (!isset($_SESSION['admin_id'])) {
     echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
@@ -214,7 +217,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-                                <table class="dishListTable tablesorter result">
+                                <table class="dishListTable" style="display: none;">
                                     <thead>
                                         <tr>
                                             <th>序号</th>
@@ -252,12 +255,14 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                         }
                                         ?>
                                         <script>
-                                        $(() => {
-                                            $(".dishListTable").tablesorter();
-                                        });
-                                        $(() => {
-                                            $(".dishListTable").filterTable();
-                                        });
+                                        $(document).ready(() => {
+                                            $(".dishListTable").DataTable({
+                                                autoWidth: true,
+                                                responsive: true
+                                            });
+                                            $(".dishListTable").displayInfo();
+                                            $(".dishListTable").show();
+                                        })
                                         </script>
                                     </tbody>
                                 </table>
@@ -270,7 +275,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                 $("#menu-" + itemName + "-item").click(() => {
                                     $.pjax({
                                         url: "../" + itemName,
-                                        container: 'html'
+                                        container: '.main-bar'
                                     });
                                 });
                             }
