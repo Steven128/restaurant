@@ -73,11 +73,7 @@ $(document).ready(() => {
                         if (!getReferer()) {
                             goTo('?x=3&r=' + num + "/");
                         } else {
-                            if (getReferer().indexOf("admin") > -1) {
-                                window.location.replace("../admin");
-                            } else {
-                                window.location.replace("../dashboard");
-                            }
+                            window.location.replace("../dashboard");
                         }
                     }
                 },
