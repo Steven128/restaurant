@@ -11,16 +11,18 @@
 //     }
 // }
 session_start(); //开启php_session
-if (isset($_GET['request'])) {
+if (isset($_GET['request']) && $_GET['request'] != "") {
     $request = $_GET['request'];
     $admin_id = $_GET['admin_id'];
-} elseif (isset($_POST['request'])) {
+} elseif (isset($_POST['request']) && $_POST['request'] != "") {
     $request = $_POST['request'];
     $admin_id = $_POST['admin_id'];
+}else{
+    die();
 }
 if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如果已设置session且session对应用户为当前访问用户
 
-    $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
+    $conn = oci_connect('tab_admin', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
     if (!$conn) { //未连接成功，终止脚本并返回错误信息
         $e = oci_error();
         die(json_encode($e));
@@ -62,7 +64,7 @@ function addTable($conn)
         $TABLE_ID += "0";
     }
     $TABLE_ID += $str;
-    $sql_query = "INSERT INTO RES_TABLE (TABLE_ID, TABLE_NUMBER, DEFAULT_NUMBER, TABLE_ORDER_STATUS, TAB_STATUS) VALUES ('$TABLE_ID', '" . $_POST['table_number'] . "', " . $_POST['default_number'] . ", 0, 1)";
+    $sql_query = "INSERT INTO scott.RES_TABLE (TABLE_ID, TABLE_NUMBER, DEFAULT_NUMBER, TABLE_ORDER_STATUS, TAB_STATUS) VALUES ('$TABLE_ID', '" . $_POST['table_number'] . "', " . $_POST['default_number'] . ", 0, 1)";
     $statement = oci_parse($conn, $sql_query);
     if (oci_execute($statement) == true) {
         echo json_encode(array("message" => "success"));
@@ -74,7 +76,7 @@ function addTable($conn)
 function deleteTable($conn)
 {
     if (islegalid($_POST['table_id'])) {
-        $sql_query = "UPDATE RES_TABLE SET TAB_STATUS = 0 WHERE TABLE_ID = '" . $_POST['table_id'] . "'";
+        $sql_query = "UPDATE scott.RES_TABLE SET TAB_STATUS = 0 WHERE TABLE_ID = '" . $_POST['table_id'] . "'";
         $statement = oci_parse($conn, $sql_query);
         if (oci_execute($statement) == true) {
             echo json_encode(array("message" => "success"));

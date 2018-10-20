@@ -35,7 +35,7 @@ session_start();
 
 <body>
     <?php
-    $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
+    $conn = oci_connect('fin', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
     ?>
     <div class="container">
         <header class="head-content">
