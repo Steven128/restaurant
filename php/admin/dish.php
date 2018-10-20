@@ -13,17 +13,19 @@ session_start(); //开启php_session
 //     }
 // }
 include "../updatePic.php";
-if (isset($_GET['request'])) {
+if (isset($_GET['request']) && $_GET['request'] != "") {
     $request = $_GET['request'];
     $admin_id = $_GET['admin_id'];
-} elseif (isset($_POST['request'])) {
+} elseif (isset($_POST['request']) && $_POST['request'] != "") {
     $request = $_POST['request'];
     $admin_id = $_POST['admin_id'];
+}else{
+    die();
 }
 if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如果已设置session且session对应用户为当前访问用户
     
 
-    $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
+    $conn = oci_connect('dis_admin', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
     if (!$conn) { //未连接成功，终止脚本并返回错误信息
         $e = oci_error();
         die(json_encode($e));
@@ -68,7 +70,7 @@ function addDish($conn)
     }
     $DISH_ID += $str;
 
-    $sql_query = "INSERT INTO DISH (DISH_ID, DISH_NAME, DISH_PIC, DISH_PRICE, DISH_TYPE, DIS_STATUS) VALUES ('$DISH_ID', '" . $_POST['dish_name'] . "', '" . $_POST['dish_pic'] . "', " . $_POST['dish_price'] . ", " . $_POST['dish_type'] . ", 1)";
+    $sql_query = "INSERT INTO scott.DISH (DISH_ID, DISH_NAME, DISH_PIC, DISH_PRICE, DISH_TYPE, DIS_STATUS) VALUES ('$DISH_ID', '" . $_POST['dish_name'] . "', '" . $_POST['dish_pic'] . "', " . $_POST['dish_price'] . ", " . $_POST['dish_type'] . ", 1)";
 
     $statement = oci_parse($conn, $sql_query);
     if (oci_execute($statement)) {
@@ -81,7 +83,7 @@ function addDish($conn)
 function deleteDish($conn)
 {
     if (islegalid($_POST['dish_id'])) {
-        $sql_query = "UPDATE DISH SET DIS_STATUS = 0 WHERE DISH_ID = '" . $_POST['dish_id'] . "'";
+        $sql_query = "UPDATE scott.DISH SET DIS_STATUS = 0 WHERE DISH_ID = '" . $_POST['dish_id'] . "'";
         $statement = oci_parse($conn, $sql_query);
         if (oci_execute($statement)) {
             echo json_encode(array("message" => "success"));
