@@ -1,5 +1,5 @@
 <?php
-$conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8");
+$conn = oci_connect('system', '123456', 'localhost:1521/ORCL', "AL32UTF8");
 if (!$conn) {
     $e = oci_error();
     print htmlentities($e['message']);
@@ -434,6 +434,7 @@ if (!$conn) {
     for ($i = 0; $i < count($user); $i++) {
         $sql_create_user = "CREATE USER $user[$i]" .
             " IDENTIFIED BY 123456";
+        echo "$sql_create_user<br>";
         $statement = oci_parse($conn, $sql_create_user);
         if (oci_execute($statement)) {
             echo "<br>创建用户$user[$i]成功！";
@@ -447,7 +448,7 @@ if (!$conn) {
     $user = array("emp_admin", "fin_admin", "fin_admin", "inv_admin", "inv_admin", "inv_admin", "ord_admin", "ord_admin", "ord_admin", "ord_admin", "dis_admin", "tab_admin");
     $table = array("employee", "finance",   "overhead",  "inventory", "loss", "goods",          "pre_order", "order_list", "dish", "res_table",      "dish",      "res_table");
     for ($i = 0; $i < count($user); $i++) {
-        $sql_grant = "grant select on $table[$i] to $user[$i]";
+        $sql_grant = "grant select on SCOTT.$table[$i] to $user[$i]";
         $statement = oci_parse($conn, $sql_grant);
         if (oci_execute($statement)) {
             echo "<br>授予用户$user[$i]对$table[$i]表的查询权限成功！";
@@ -458,7 +459,7 @@ if (!$conn) {
 
     for ($i = 0; $i < count($user); $i++) {
 
-        $sql_grant = "grant insert on $table[$i] to $user[$i]";
+        $sql_grant = "grant insert on SCOTT.$table[$i] to $user[$i]";
         $statement = oci_parse($conn, $sql_grant);
         if (oci_execute($statement)) {
             echo "<br>授予用户$user[$i]对$table[$i]表的插入权限成功！";
@@ -469,7 +470,7 @@ if (!$conn) {
     $user = array("emp_admin", "fin_admin", "fin_admin", "inv_admin", "inv_admin", "inv_admin", "ord_admin", "dis_admin", "tab_admin");
     $table = array("employee", "finance",   "overhead",  "inventory", "loss", "goods",          "order_list", "dish",      "res_table");
     for ($i = 0; $i < count($user); $i++) {
-        $sql_grant = "grant update on $table[$i] to $user[$i]";
+        $sql_grant = "grant update on SCOTT.$table[$i] to $user[$i]";
         $statement = oci_parse($conn, $sql_grant);
         if (oci_execute($statement)) {
             echo "<br>授予用户$user[$i]对$table[$i]表的更新权限成功！";
