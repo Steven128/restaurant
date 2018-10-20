@@ -26,13 +26,13 @@ if (!$conn) {
     createFinanceData($conn, 1095);
     echo "<br>写入财务表数据成功";
 
-    createOverheadData($conn,3585);
+    createOverheadData($conn, 3585);
     echo "<br>写入开销表数据成功";
 
     createInventoryData($conn);
     echo "<br>写入库存表数据成功";
 
-    createLossData($conn,80);
+    createLossData($conn, 80);
     echo"<br>写入损失表数据成功";
 
     createDishData($conn);
@@ -85,7 +85,7 @@ function createEmployeeData($conn, $quantity)
     $name_obj = new rndChinaName();
     require 'uniquePhoneNumber.class.php';
     $phone_obj = new Util();
-    $_date = date("Y-m-d", time());
+    $_date = date("Y-m-d", time() + 30 * 24 * 3600);
 
     for ($i = 0; $i < $quantity; $i++) {
         $working_year = mt_rand(0, 50) / 10;
@@ -127,7 +127,7 @@ function createEmployeeData($conn, $quantity)
 
 function createPresenceData($conn)
 {
-    $_date = date("Y-m-d", time());
+    $_date = date("Y-m-d", time() + 30 * 24 * 3600);
     //查询employee表
     $query = "SELECT * FROM SCOTT.employee";
     $statement1 = oci_parse($conn, $query);
@@ -217,7 +217,7 @@ function createInventoryData($conn)
 
 function createOverheadData($conn, $quantity)//id根据进货单创建时间,31种,进货单号由发票号码12+8组成
 {
-    $date=date("Y-m-d", time());
+    $date=date("Y-m-d", time() + 30 * 24 * 3600);
     $begin_time=strtotime(date("Y-m-d", time()-3*365*24*3600)." 07:00:00");
     $end_time=strtotime("$date 20:00:00");
     for ($i=0;$i<$quantity;$i++) {
@@ -225,8 +225,8 @@ function createOverheadData($conn, $quantity)//id根据进货单创建时间,31�
         $ove_id=date("Ymd_His", $rand);
         $ove_date=date("Y-m-d", $rand);
         $ove_id="ove_$ove_id";
-        $price = mt_rand(5000,15000);
-        $ove_type = mt_rand(0,10);
+        $price = mt_rand(5000, 15000);
+        $ove_type = mt_rand(0, 10);
         $ove_type = $ove_type<6?1:($ove_type<8?2:($ove_type<9?3:4));
         $sql_insert="INSERT INTO SCOTT.overhead".
             "(overhead_id,overhead_type,overhead_price,overhead_date)".
@@ -239,9 +239,9 @@ function createOverheadData($conn, $quantity)//id根据进货单创建时间,31�
     oci_free_statement($statement);
 }
 
-function createLossData($conn,$quantity)//id根据los_日期
+function createLossData($conn, $quantity)//id根据los_日期
 {
-    $date=date("Y-m-d", time());
+    $date=date("Y-m-d", time() + 30 * 24 * 3600);
     $sql1="SELECT goods_id FROM SCOTT.goods";
     $statement=oci_parse($conn, $sql1);
     $res=oci_execute($statement);
@@ -332,7 +332,7 @@ function createTableData($conn, $quantity)
 
 function createOrderData($conn, $quantity)//订单编号用ord_餐桌号_下单时间
 {
-    $date=date("Y-m-d", time());
+    $date=date("Y-m-d", time() + 30 * 24 * 3600);
     $dish_list=file_get_contents("dish.json");
     $dish_data=json_decode($dish_list, true);
     $dish_count=sizeof($dish_data, 0);
@@ -345,7 +345,7 @@ function createOrderData($conn, $quantity)//订单编号用ord_餐桌号_下单�
         $tables_array[]=$row[0];
         $count++;
     }
-    $begin_time=strtotime("2010-01-01 07:00:00");
+    $begin_time=strtotime(time()- 3 * 365 * 24 * 3600);
     $end_time=strtotime("$date 23:59:59");
     for ($x=0;$x<$quantity;$x++) {
         $dish_list=null;//点菜列表
