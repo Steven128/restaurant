@@ -15,14 +15,11 @@ session_start();
     <link type="text/css" rel="stylesheet" href="../../css/iconfont.css" />
     <link type="text/css" rel="stylesheet" href="../../css/page.css" />
     <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
-    <link type="text/css" rel="stylesheet" href="../../css/tablesorter.css" />
 
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
-    <script type="text/javascript" src="../../js/plugins/jquery.tablesorter.min.js"></script>
-    <script type="text/javascript" src="../../js/plugins/jquery.filtertable.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
     <?php
     if (!isset($_SESSION['admin_id'])) {

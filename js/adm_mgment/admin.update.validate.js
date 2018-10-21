@@ -406,6 +406,8 @@ $(document).ready(() => {
             }
         },
         submitHandler: function(form) { //通过之后回调
+            var dish_id = data.dish_id;
+            console.log(dish_id)
             var dish_name = $("#dish_name").val();
             var dish_price = $("#dish_price").val();
             var dish_type = $("#dish_type").val();
@@ -417,6 +419,7 @@ $(document).ready(() => {
                 data: {
                     "request": "update_dish",
                     "admin_id": admin_id,
+                    "dish_id": dish_id,
                     "dish_name": dish_name,
                     "dish_price": dish_price,
                     "dish_type": dish_type
@@ -437,7 +440,6 @@ $(document).ready(() => {
     $("#dis-uploadpic").click(() => {
         if (picData == "") {} else {
             var dish_id = data.dish_id;
-            console.log(dish_id)
             $.ajax({
                 type: "POST",
                 url: "../../../php/admin/dish.php",
@@ -496,6 +498,7 @@ $(document).ready(() => {
             }
         },
         submitHandler: function(form) { //通过之后回调
+            var table_id = data.table_id;
             var table_number = $("#table_number").val();
             var default_number = $("#default_number").val();
             var admin_id = getUserInfo().admin_id;
@@ -506,6 +509,7 @@ $(document).ready(() => {
                 data: {
                     "request": "update_table",
                     "admin_id": admin_id,
+                    "table_id": table_id,
                     "table_number": table_number,
                     "default_number": default_number,
                 },

@@ -345,7 +345,7 @@ function createOrderData($conn, $quantity)//订单编号用ord_餐桌号_下单�
         $tables_array[]=$row[0];
         $count++;
     }
-    $begin_time=strtotime(time()- 3 * 365 * 24 * 3600);
+    $begin_time=time()- 3 * 365 * 24 * 3600;
     $end_time=strtotime("$date 23:59:59");
     for ($x=0;$x<$quantity;$x++) {
         $dish_list=null;//点菜列表
