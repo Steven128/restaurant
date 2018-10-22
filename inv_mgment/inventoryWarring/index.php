@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 
@@ -10,15 +13,31 @@
     <link type="text/css" rel="stylesheet" href="../../css/iconfont.css" />
     <link type="text/css" rel="stylesheet" href="../../css/page.css" />
     <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/datatables.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/table_plugins/responsive.bootstrap.css" />
 
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
+    <script type="text/javascript" src="../../js/plugins/datatables.js"></script>
+    <script type="text/javascript" src="../../js/plugins/dataTables/dataTables.responsive.js"></script>
+    <script type="text/javascript" src="../../js/plugins/dataTables/responsive.bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/jquery.tabledisplay.js"></script>
+     <?php
+    if (!isset($_SESSION['admin_id'])) {
+        echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
+    } elseif ($_SESSION['admin_type'] != 3) {
+        echo "<script>$(document).ready(() => {window.location.replace(\"../../dashboard\");});</script>";
+    }
+    ?>
 </head>
 
 <body>
+     <?php
+    $conn = oci_connect('fin', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
+    ?>
     <div class="container">
         <header class="head-content">
             <div class="site-branding">
@@ -69,11 +88,11 @@
                                 </a>
                                 <ul class="treeview-menu menu-open">
                                     <li>
-                                        <a id="menu-inventoryList-item" href="javascript:void(0);">
+                                        <a id="menu-inventoryList-item" href="javascript:void(0);" class="innerActive">
                                             <i class="iconfont icon-search"></i>当前库存查询</a>
                                     </li>
                                     <li>
-                                        <a id="menu-inventoryWarring-item" href="javascript:void(0);" class="innerActive">
+                                        <a id="menu-inventoryWarring-item" href="javascript:void(0);">
                                             <i class="iconfont icon-warning"></i>库存预警</a>
                                     </li>
                                 </ul>
@@ -125,7 +144,7 @@
                             }
                             //
                             changeMainBar("invOverview");
-                            changeMainBar("inventoryList");
+                            changeMainBar("inventoryWarring");
                             changeMainBar("addPurchase");
                             changeMainBar("purchaseHistory");
                         });

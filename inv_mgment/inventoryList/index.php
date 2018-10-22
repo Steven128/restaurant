@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 
@@ -6,19 +9,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>仓库管理-餐饮店管理系统</title>
-    <link type="text/css" rel="stylesheet" href="../css/bootstrap.css" />
-    <link type="text/css" rel="stylesheet" href="../css/iconfont.css" />
-    <link type="text/css" rel="stylesheet" href="../css/page.css" />
-    <link type="text/css" rel="stylesheet" href="../css/sidebar-menu.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/iconfont.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/page.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/datatables.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/table_plugins/responsive.bootstrap.css" />
 
-    <script type="text/javascript" src="../js/jQuery/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../js/page.js"></script>
-    <script type="text/javascript" src="../js/xcConfirm.js"></script>
-    <script type="text/javascript" src="../js/jquery.pjax.js"></script>
+    <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/page.js"></script>
+    <script type="text/javascript" src="../../js/xcConfirm.js"></script>
+    <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
+    <script type="text/javascript" src="../../js/plugins/datatables.js"></script>
+    <script type="text/javascript" src="../../js/plugins/dataTables/dataTables.responsive.js"></script>
+    <script type="text/javascript" src="../../js/plugins/dataTables/responsive.bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/jquery.tabledisplay.js"></script>
+     <?php
+    if (!isset($_SESSION['admin_id'])) {
+        echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
+    } elseif ($_SESSION['admin_type'] != 3) {
+        echo "<script>$(document).ready(() => {window.location.replace(\"../../dashboard\");});</script>";
+    }
+    ?>
 </head>
 
 <body>
+     <?php
+    $conn = oci_connect('fin', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
+    ?>
     <div class="container">
         <header class="head-content">
             <div class="site-branding">
@@ -28,7 +47,7 @@
                     </div>
                 </a>
                 <div class="site-title">
-                    <a herf="../dashboard" rel="home">餐饮店管理系统</a>
+                    <a herf="../../dashboard" rel="home">餐饮店管理系统</a>
                     <h5>仓库管理系统</h5>
                 </div>
             </div>
@@ -44,7 +63,7 @@
                     </div>
                     <section class="sidebar">
                         <ul class="sidebar-menu">
-                            <li class="treeview active">
+                            <li class="treeview">
                                 <a href="javascript:void(0);">
                                     <i class="iconfont icon-overview"></i>
                                     <span>总览</span>
@@ -52,14 +71,14 @@
                                         <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu menu-open">
+                                <ul class="treeview-menu">
                                     <li>
-                                        <a id="menu-invOverview-item" href="javascript:void(0);" class="innerActive">
+                                        <a id="menu-invOverview-item" href="javascript:void(0);">
                                             <i class="iconfont icon-list"></i>库存总览</a>
                                     </li>
                                 </ul>
                             </li>
-                            <li class="treeview">
+                            <li class="treeview active">
                                 <a href="javascript:void(0);">
                                     <i class="iconfont icon-inventory"></i>
                                     <span>库存管理</span>
@@ -67,9 +86,9 @@
                                         <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu">
+                                <ul class="treeview-menu menu-open">
                                     <li>
-                                        <a id="menu-inventoryList-item" href="javascript:void(0);">
+                                        <a id="menu-inventoryList-item" href="javascript:void(0);" class="innerActive">
                                             <i class="iconfont icon-search"></i>当前库存查询</a>
                                     </li>
                                     <li>
@@ -105,7 +124,7 @@
                             </li>
                         </ul>
                     </section>
-                    <script src="../js/sidebar-menu.js"></script>
+                    <script src="../../js/sidebar-menu.js"></script>
                     <script>
                         $.sidebarMenu($('.sidebar-menu'))
                     </script>
@@ -114,19 +133,17 @@
                 <div class="main-bar">
                     <script>
                         $(document).ready(() => {
-                            window.location.replace("invOverview");
 
                             function changeMainBar(itemName) {
                                 $("#menu-" + itemName + "-item").click(() => {
                                     $.pjax({
-                                        url: "" + itemName,
+                                        url: "../" + itemName,
                                         container: '.main-bar'
                                     });
                                 });
                             }
                             //
                             changeMainBar("invOverview");
-                            changeMainBar("inventoryList");
                             changeMainBar("inventoryWarring");
                             changeMainBar("addPurchase");
                             changeMainBar("purchaseHistory");
