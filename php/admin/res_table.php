@@ -17,7 +17,7 @@ if (isset($_GET['request']) && $_GET['request'] != "") {
 } elseif (isset($_POST['request']) && $_POST['request'] != "") {
     $request = $_POST['request'];
     $admin_id = $_POST['admin_id'];
-}else{
+} else {
     die();
 }
 if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如果已设置session且session对应用户为当前访问用户
@@ -33,13 +33,13 @@ if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如�
         // if ($admin_type != 1 and $admin_type != 2) {
         //     exit();
         // }
-        if ($request == "addTable") {
+        if ($request == "add_table") {
             addTable($conn);
         } else if ($request == "deleteTable") {
             deleteTable($conn);
         } elseif ($request == "getTableInfo") {
             getTableInfo($conn);
-        } elseif ($request == "updateTable") {
+        } elseif ($request == "update_table") {
             updateTable($conn);
         }
 
@@ -57,26 +57,25 @@ function addTable($conn)
 {
     $sql_query = "SELECT COUNT(TABLE_ID) FROM SCOTT.RES_TABLE";
     $statement = oci_parse($conn, $sql_query);
-    $sum = oci_execute($statement);
-    $str = strval($sum);
-    $TABLE_ID = date('m');
-    for ($i = 6 - strlen($str); $i > 0; $i--) {
-        $TABLE_ID += "0";
-    }
-    $TABLE_ID += $str;
-    $sql_query = "INSERT INTO scott.RES_TABLE (TABLE_ID, TABLE_NUMBER, DEFAULT_NUMBER, TABLE_ORDER_STATUS, TAB_STATUS) VALUES ('$TABLE_ID', '" . $_POST['table_number'] . "', " . $_POST['default_number'] . ", 0, 1)";
+    oci_execute($statement);
+    $count = oci_fetch_array($statement, OCI_RETURN_NULLS)[0];
+    $default_number = $_POST['default_number'];
+    $count = $count < 10 ? "00$count" : "0$count";
+    $table_id = "tab_$count";
+    $table_number = $_POST['table_number'];
+    $sql_query = "BEGIN scott.addTable('$table_id','$table_number',$default_number); END;";
     $statement = oci_parse($conn, $sql_query);
     if (oci_execute($statement) == true) {
         echo json_encode(array("message" => "success"));
     } else {
         echo json_encode(array("message" => "false"));
     }
-
 }
 function deleteTable($conn)
 {
     if (islegalid($_POST['table_id'])) {
-        $sql_query = "UPDATE scott.RES_TABLE SET TAB_STATUS = 0 WHERE TABLE_ID = '" . $_POST['table_id'] . "'";
+        $table_id = $_POST['table_id'];
+        $sql_query = "BEGIN scott.deleteTable('$table_id'); END;";
         $statement = oci_parse($conn, $sql_query);
         if (oci_execute($statement) == true) {
             echo json_encode(array("message" => "success"));
@@ -114,7 +113,7 @@ function updateTable($conn)
         $table_number = $_POST["table_number"];
         $default_number = $_POST["default_number"];
         $table_order_status = $_POST["table_order_status"];
-        $sql_insert = "UPDATE SCOTT.RES_TABLE SET table_number='$table_number',default_number=$default_number,table_order_status=$table_order_status WHERE table_id='$table_id'";
+        $sql_insert = "BEGIN scott.updateTable('$table_id','$table_number',$default_number); END;";
         $statement = oci_parse($conn, $sql_insert);
 
         if (oci_execute($statement)) {

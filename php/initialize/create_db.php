@@ -430,51 +430,215 @@ if (!$conn) {
     // } else {
     //     echo $statement;
     // }
-    $user = array("emp_admin", "fin_admin", "inv_admin", "ord_admin", "dis_admin", "tab_admin");
-    for ($i = 0; $i < count($user); $i++) {
-        $sql_create_user = "CREATE USER $user[$i]" .
-            " IDENTIFIED BY 123456";
-        echo "$sql_create_user<br>";
-        $statement = oci_parse($conn, $sql_create_user);
-        if (oci_execute($statement)) {
-            echo "<br>创建用户$user[$i]成功！";
-        }
-        $sql_grant = "grant connect to $user[$i]";
-        $statement = oci_parse($conn, $sql_grant);
-        if (oci_execute($statement)) {
-            echo "<br>授予用户$user[$i]连接权限成功！";
-        }
-    }
-    $user = array("emp_admin", "fin_admin", "fin_admin", "inv_admin", "inv_admin", "inv_admin", "ord_admin", "ord_admin", "ord_admin", "ord_admin", "dis_admin", "tab_admin");
-    $table = array("employee", "finance",   "overhead",  "inventory", "loss", "goods",          "pre_order", "order_list", "dish", "res_table",      "dish",      "res_table");
-    for ($i = 0; $i < count($user); $i++) {
-        $sql_grant = "grant select on SCOTT.$table[$i] to $user[$i]";
-        $statement = oci_parse($conn, $sql_grant);
-        if (oci_execute($statement)) {
-            echo "<br>授予用户$user[$i]对$table[$i]表的查询权限成功！";
-        }
-    }
-    $user = array("emp_admin", "fin_admin", "fin_admin", "inv_admin", "inv_admin", "inv_admin", "ord_admin",  "dis_admin", "tab_admin");
-    $table = array("employee", "finance",   "overhead",  "inventory", "loss", "goods",          "order_list",  "dish",      "res_table");
+    // $user = array("emp_admin", "fin_admin", "inv_admin", "ord_admin", "dis_admin", "tab_admin");
+    // for ($i = 0; $i < count($user); $i++) {
+    //     $sql_create_user = "CREATE USER $user[$i]" .
+    //         " IDENTIFIED BY 123456";
+    //     echo "$sql_create_user<br>";
+    //     $statement = oci_parse($conn, $sql_create_user);
+    //     if (oci_execute($statement)) {
+    //         echo "<br>创建用户$user[$i]成功！";
+    //     }
+    //     $sql_grant = "grant connect to $user[$i]";
+    //     $statement = oci_parse($conn, $sql_grant);
+    //     if (oci_execute($statement)) {
+    //         echo "<br>授予用户$user[$i]连接权限成功！";
+    //     }
+    // }
+    // $user = array("emp_admin", "fin_admin", "fin_admin", "inv_admin", "inv_admin", "inv_admin", "ord_admin", "ord_admin", "ord_admin", "ord_admin", "dis_admin", "tab_admin");
+    // $table = array("employee", "finance", "overhead", "inventory", "loss", "goods", "pre_order", "order_list", "dish", "res_table", "dish", "res_table");
+    // for ($i = 0; $i < count($user); $i++) {
+    //     $sql_grant = "grant select on SCOTT.$table[$i] to $user[$i]";
+    //     $statement = oci_parse($conn, $sql_grant);
+    //     if (oci_execute($statement)) {
+    //         echo "<br>授予用户$user[$i]对$table[$i]表的查询权限成功！";
+    //     }
+    // }
+    // $user = array("emp_admin", "fin_admin", "fin_admin", "inv_admin", "inv_admin", "inv_admin", "ord_admin", "dis_admin", "tab_admin");
+    // $table = array("employee", "finance", "overhead", "inventory", "loss", "goods", "order_list", "dish", "res_table");
 
-    for ($i = 0; $i < count($user); $i++) {
+    // for ($i = 0; $i < count($user); $i++) {
 
-        $sql_grant = "grant insert on SCOTT.$table[$i] to $user[$i]";
-        $statement = oci_parse($conn, $sql_grant);
+    //     $sql_grant = "grant insert on SCOTT.$table[$i] to $user[$i]";
+    //     $statement = oci_parse($conn, $sql_grant);
+    //     if (oci_execute($statement)) {
+    //         echo "<br>授予用户$user[$i]对$table[$i]表的插入权限成功！";
+    //     }
+
+    // }
+
+    // $user = array("emp_admin", "fin_admin", "fin_admin", "inv_admin", "inv_admin", "inv_admin", "ord_admin", "dis_admin", "tab_admin");
+    // $table = array("employee", "finance", "overhead", "inventory", "loss", "goods", "order_list", "dish", "res_table");
+    // for ($i = 0; $i < count($user); $i++) {
+    //     $sql_grant = "grant update on SCOTT.$table[$i] to $user[$i]";
+    //     $statement = oci_parse($conn, $sql_grant);
+    //     if (oci_execute($statement)) {
+    //         echo "<br>授予用户$user[$i]对$table[$i]表的更新权限成功！";
+    //     }
+    // }
+
+    
+//employee
+    $sql_ins = "CREATE OR REPLACE PROCEDURE updateEmployee 
+    (v_employee_id IN employee.employee_id%TYPE, 
+    v_name IN employee.name%TYPE,
+    v_gender IN employee.gender%TYPE,
+    v_age IN employee.age%TYPE,
+    v_salary IN employee.salary%TYPE,
+    v_phone_num IN employee.phone_num%TYPE,
+    v_employee_type IN employee.employee_type%TYPE) 
+    IS 
+    BEGIN 
+    UPDATE SCOTT.EMPLOYEE SET name=v_name,gender=v_gender,age=v_age,salary=v_salary,phone_num=v_phone_num,employee_type=v_employee_type WHERE EMPLOYEE_ID=v_employee_id;
+    END updateEmployee; 
+    ";
+    $statement = oci_parse($conn, $sql_ins);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else
+        echo "n";
+
+    $sql_ins = "CREATE OR REPLACE PROCEDURE addEmployee 
+    (v_employee_id IN employee.employee_id%TYPE, 
+    v_name IN employee.name%TYPE,
+    v_gender IN employee.gender%TYPE,
+    v_age IN employee.age%TYPE,
+    v_salary IN employee.salary%TYPE,
+    v_phone_num IN employee.phone_num%TYPE,
+    v_employee_type IN employee.employee_type%TYPE,
+    v_employ_time IN employee.employ_time%TYPE) 
+    IS 
+    BEGIN 
+    INSERT INTO SCOTT.EMPLOYEE VALUES (v_employee_id, v_name, v_gender, 0, v_age, v_salary, v_phone_num, v_employee_type, v_employ_time,'../../src/employee_pic/default.png', 1);
+    END addEmployee; 
+    ";
+    $statement = oci_parse($conn, $sql_ins);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else
+        echo "n";
+
+    $sql_ins = "CREATE OR REPLACE PROCEDURE deleteEmployee 
+    (v_employee_id IN employee.employee_id%TYPE) 
+    IS 
+    BEGIN 
+    UPDATE SCOTT.EMPLOYEE SET emp_status=0 WHERE EMPLOYEE_ID=v_employee_id;
+    END deleteEmployee; 
+    ";
+    $statement = oci_parse($conn, $sql_ins);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else
+        echo "n";
+
+//dish
+    $sql_ins = "CREATE OR REPLACE PROCEDURE updateDish 
+    (v_dish_id IN dish.dish_id%TYPE, 
+    v_dish_name IN dish.dish_name%TYPE,
+    v_dish_price IN dish.dish_price%TYPE,
+    v_dish_type IN dish.dish_type%TYPE) 
+    IS 
+    BEGIN 
+    UPDATE SCOTT.dish SET dish_name=v_dish_name,dish_price=v_dish_price,dish_type=v_dish_type WHERE dish_id=v_dish_id;
+    END updateDish; 
+    ";
+    $statement = oci_parse($conn, $sql_ins);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else
+        echo "n";
+
+    $sql_ins = "CREATE OR REPLACE PROCEDURE addDish 
+    (v_dish_id IN dish.dish_id%TYPE, 
+    v_dish_name IN dish.dish_name%TYPE,
+    v_dish_price IN dish.dish_price%TYPE,
+    v_dish_type IN dish.dish_type%TYPE) 
+    IS 
+    BEGIN 
+    INSERT INTO SCOTT.dish VALUES (v_dish_id, v_dish_name,'../../src/dish_pic/default.php', v_dish_price, v_dish_type, 1);
+    END addDish; 
+    ";
+    $statement = oci_parse($conn, $sql_ins);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else
+        echo "n";
+
+    $sql_ins = "CREATE OR REPLACE PROCEDURE deleteDish 
+    (v_dish_id IN dish.dish_id%TYPE) 
+    IS 
+    BEGIN 
+    UPDATE SCOTT.dish SET dis_status=0 WHERE dish_id=v_dish_id;
+    END deleteDish; 
+    ";
+    //grant execute on scott.addEmployee to emp_admin;
+    $statement = oci_parse($conn, $sql_ins);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else
+        echo "n";
+
+//table
+    $sql_ins = "CREATE OR REPLACE PROCEDURE updateTable 
+(v_table_id IN res_table.table_id%TYPE, 
+v_table_number IN res_table.table_number%TYPE,
+v_default_number IN res_table.default_number%TYPE) 
+IS 
+BEGIN 
+UPDATE SCOTT.res_table SET table_number=v_table_number,default_number=v_default_number WHERE table_id=v_table_id;
+END updateTable; 
+";
+    $statement = oci_parse($conn, $sql_ins);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else
+        echo "n";
+
+    $sql_ins = "CREATE OR REPLACE PROCEDURE addTable 
+(v_table_id IN res_table.table_id%TYPE, 
+v_table_number IN res_table.table_number%TYPE,
+v_default_number IN res_table.default_number%TYPE) 
+IS 
+BEGIN 
+INSERT INTO SCOTT.res_table VALUES (v_table_id, v_table_number,v_default_number, 0, 1);
+END addTable; 
+";
+    $statement = oci_parse($conn, $sql_ins);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else
+        echo "n";
+
+    $sql_ins = "CREATE OR REPLACE PROCEDURE deleteTable 
+(v_table_id IN res_table.table_id%TYPE) 
+IS 
+BEGIN 
+UPDATE SCOTT.res_table SET tab_status=0 WHERE table_id=v_table_id;
+END deleteTable; 
+";
+    $statement = oci_parse($conn, $sql_ins);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else
+        echo "n";
+
+    $sql = "grant execute on scott.updateEmployee to emp_admin;
+    grant execute on scott.addEmployee to emp_admin;
+    grant execute on scott.deleteEmployee to emp_admin;
+    grant execute on scott.updateDish to dis_admin;
+    grant execute on scott.addDish to dis_admin;
+    grant execute on scott.deleteDish to dis_admin;
+    grant execute on scott.updateTable to tab_admin;
+    grant execute on scott.addTable to tab_admin;
+    grant execute on scott.deleteTable to tab_admin";
+
+    $sql_grant = explode(";", $sql);
+    foreach ($sql_grant as $k => $v) {
+        $statement = oci_parse($conn, $sql_grant[$k]);
         if (oci_execute($statement)) {
-            echo "<br>授予用户$user[$i]对$table[$i]表的插入权限成功！";
-        }
-
-    }
-
-    $user = array("emp_admin", "fin_admin", "fin_admin", "inv_admin", "inv_admin", "inv_admin", "ord_admin", "dis_admin", "tab_admin");
-    $table = array("employee", "finance",   "overhead",  "inventory", "loss", "goods",          "order_list", "dish",      "res_table");
-    for ($i = 0; $i < count($user); $i++) {
-        $sql_grant = "grant update on SCOTT.$table[$i] to $user[$i]";
-        $statement = oci_parse($conn, $sql_grant);
-        if (oci_execute($statement)) {
-            echo "<br>授予用户$user[$i]对$table[$i]表的更新权限成功！";
-        }
+            echo "y";
+        } else
+            echo "n";
     }
     oci_free_statement($statement);
     oci_close($conn);
