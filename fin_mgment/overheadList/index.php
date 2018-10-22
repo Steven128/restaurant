@@ -168,38 +168,53 @@ session_start();
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-                                <!-- <table class="financeListTable tablesorter result">
+                                <table class="overheadListTable">
                                     <thead>
                                         <tr>
                                             <th>序号</th>
-                                            <th>日期</th>
-                                            <th>营业额</th>
-                                            <th>花销</th>
-                                            <th>盈利</th>
-                                            <th>操作</th>
+                                            <th>开销类型</th>
+                                            <th>总金额</th>
+                                            <th>开销日期</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="financeListTableBody">
-                                        <?php
-                                        $sql_query = "SELECT FINANCE_ID,FIN_DATE,MONTH,TURNOVER,COST,PROFIT FROM SCOTT.FINANCE ORDER BY FIN_DATE DESC";
+                                    <tbody class="overheadListTableBody">
+                                    <?php
+                                        $today=date("Y-m-d");
+                                        $sql_query = "SELECT overhead_type,overhead_price,overhead_date,ove_invoice_pic FROM SCOTT.overhead WHERE ove_status>0 AND overhead_date='$today'";
                                         $statement = oci_parse($conn, $sql_query);
                                         oci_execute($statement);
                                         $count = 0;
                                         while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
                                             $count++;
-                                            echo "<tr><td>$count</td><td>$row[1]</td><td>$row[3]</td><td>$row[4]</td><td>$row[5]</td><td><a class=\"table-update-btn update-finance\" href = \"javascript:void(0);\" onclick=\"update_finance('" . $row[0] . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
+                                            $overhead_type = $row[0];
+                                            if ($overhead_type == 1)
+                                                $overhead_type = "进货";
+                                            elseif ($overhead_type == 2)
+                                                $overhead_type = "水电费";
+                                            elseif ($overhead_type == 3)
+                                                $overhead_type = "房租";
+                                            elseif ($overhead_type == 4)
+                                                $overhead_type = "其他";
+                                            $overhead_price = $row[1];
+                                            $overhead_date = $row[2];
+                                            $ove_invoice_pic = $row[3];
+                                            echo "<tr><td>$count</td><td>$overhead_type</td><td>$overhead_price</td><td>$overhead_date</td></tr>";
+                                            
                                         }
                                         ?>
-                                <script>
-                                    $(() => {
-                                        $(".financeListTable").tablesorter();
-                                    });
-                                    $(() => {
-                                        $(".financeListTable").filterTable();
-                                    });
-                                </script>
-                                </tbody>
-                                </table> -->
+                                        <script>
+                                        $(document).ready(() => {
+                                            $(".overheadListTable").DataTable({
+                                                autoWidth: true,
+                                                responsive: true
+                                            });
+                                            $(".overheadListTable").displayInfo();
+                                            $(".overheadListTable").show();
+                                        })
+                                        </script>
+                                    </tbody>
+                                </table>
+                                
                             </div>
                         </div>
                     </div>

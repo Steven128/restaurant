@@ -38,7 +38,7 @@ session_start();
 
 <body>
     <?php
-    $conn = oci_connect('fin', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
+    $conn = oci_connect('emp_admin', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
     ?>
     <div class="container">
         <header class="head-content">
@@ -168,38 +168,83 @@ session_start();
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-                                <!-- <table class="financeListTable tablesorter result">
+                            <table class="employeeListTable" style="display: none;">
                                     <thead>
                                         <tr>
-                                            <th>序号</th>
-                                            <th>日期</th>
-                                            <th>营业额</th>
-                                            <th>花销</th>
-                                            <th>盈利</th>
+                                            <th>ID</th>
+                                            <th>姓名</th>
+                                            <th>性别</th>
+                                            <th>工龄（年）</th>
+                                            <th>年龄</th>
+                                            <th>工资</th>
+                                            <th>手机号</th>
+                                            <th>类别</th>
+                                            <th>聘用日期</th>
                                             <th>操作</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="financeListTableBody">
+                                    <tbody class="employeeListTableBody">
                                         <?php
-                                        $sql_query = "SELECT FINANCE_ID,FIN_DATE,MONTH,TURNOVER,COST,PROFIT FROM SCOTT.FINANCE ORDER BY FIN_DATE DESC";
+                                        $sql_query = "SELECT EMPLOYEE_ID,NAME,GENDER,WORKING_YEAR,AGE,SALARY,PHONE_NUM,EMPLOYEE_TYPE,EMPLOY_TIME FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 ORDER BY EMPLOYEE_TYPE ASC,EMPLOY_TIME DESC,WORKING_YEAR DESC";
                                         $statement = oci_parse($conn, $sql_query);
                                         oci_execute($statement);
                                         $count = 0;
                                         while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
                                             $count++;
-                                            echo "<tr><td>$count</td><td>$row[1]</td><td>$row[3]</td><td>$row[4]</td><td>$row[5]</td><td><a class=\"table-update-btn update-finance\" href = \"javascript:void(0);\" onclick=\"update_finance('" . $row[0] . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
+                                            $employee_id = $row[0];
+                                            $name = $row[1];
+                                            $gender = $row[2];
+                                            $working_year = $row[3];
+                                            $age = $row[4];
+                                            $salary = $row[5];
+                                            $phone_num = $row[6];
+                                            $employee_type = $row[7];
+                                            $employ_time = $row[8];
+                                            //
+                                            if ($gender == 1) {
+                                                $gender = "男";
+                                            } elseif ($gender == 0) {
+                                                $gender = "女";
+                                            }
+                                            //
+                                            if (strpos($working_year, ".") == 0) {
+                                                $working_year = "0" . $working_year;
+                                            }
+                                            //
+                                            if ($employee_type == 1) {
+                                                $employee_type = "管理人员";
+                                            } elseif ($employee_type == 2) {
+                                                $employee_type = "服务员";
+                                            } elseif ($employee_type == 3) {
+                                                $employee_type = "前台";
+                                            } elseif ($employee_type == 4) {
+                                                $employee_type = "厨师";
+                                            } elseif ($employee_type == 5) {
+                                                $employee_type = "保洁";
+                                            } elseif ($employee_type == 6) {
+                                                $employee_type = "仓库管理员";
+                                            } elseif ($employee_type == 7) {
+                                                $employee_type = "会计";
+                                            } elseif ($employee_type == 8) {
+                                                $employee_type = "其他";
+                                            }
+                                            //
+                                            echo "<tr><td>$employee_id</td><td>$name</td><td>$gender</td><td>$working_year</td><td>$age</td><td>$salary</td><td>$phone_num</td><td>$employee_type</td><td>$employ_time</td><td><a class=\"table-update-btn update-employee\" href = \"javascript:void(0);\" onclick=\"update_employee('" . $employee_id . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
                                         }
                                         ?>
-                                <script>
-                                    $(() => {
-                                        $(".financeListTable").tablesorter();
-                                    });
-                                    $(() => {
-                                        $(".financeListTable").filterTable();
-                                    });
-                                </script>
-                                </tbody>
-                                </table> -->
+                                        <script>
+                                        $(document).ready(() => {
+                                            $(".employeeListTable").DataTable({
+                                                autoWidth: true,
+                                                responsive: true
+                                            });
+                                            $(".employeeListTable").displayInfo();
+                                            $(".employeeListTable").show();
+                                        })
+                                        </script>
+                                    </tbody>
+                                    <!-- <div class="display-box-hide"></div> -->
+                                </table>
                             </div>
                         </div>
                     </div>
