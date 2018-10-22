@@ -19,11 +19,11 @@ if (isset($_GET['request']) && $_GET['request'] != "") {
 } elseif (isset($_POST['request']) && $_POST['request'] != "") {
     $request = $_POST['request'];
     $admin_id = $_POST['admin_id'];
-}else{
+} else {
     die();
 }
 if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如果已设置session且session对应用户为当前访问用户
-    
+
 
     $conn = oci_connect('dis_admin', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
     if (!$conn) { //未连接成功，终止脚本并返回错误信息
@@ -32,20 +32,20 @@ if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如�
     } else { //连接成功
         // $sql_query = "SELECT ADMIN_TYPE FROM SCOTT.dish WHERE ADMIN_ID = '$admin_id'";
         // $statement = oci_parse($conn, $sql_query);
-        // $admin_type = oci_execute($statement);
+        // $admin_type = oci_execute($statement)[0];
         // if ($admin_type != 1 and $admin_type != 2) {
         //     exit();
         // }
-        if ($request == "addDish") {
+        if ($request == "add_dish") {
             addDish($conn);
         } else if ($request == "deleteDish") {
             deleteDish($conn);
-        }elseif ($request == "getDishInfo") {
+        } elseif ($request == "getDishInfo") {
             getDishInfo($conn);
-        } elseif($request== "updateDish"){
+        } elseif ($request == "update_dish") {
             updateDish($conn);
         } elseif ($request == "updateDishPic") {
-            updateDishPic($conn);
+            updateDishPic($conn,"ds");
         }
     }
 }
@@ -62,28 +62,32 @@ function addDish($conn)
 {
     $sql_query = "SELECT COUNT(DISH_ID) FROM SCOTT.DISH";
     $statement = oci_parse($conn, $sql_query);
-    $sum = oci_execute($statement);
-    $str = strval($sum);
-    $DISH_ID = date('m');
-    for ($i = 6 - strlen($str); $i > 0; $i--) {
-        $DISH_ID += "0";
-    }
-    $DISH_ID += $str;
-
-    $sql_query = "INSERT INTO scott.DISH (DISH_ID, DISH_NAME, DISH_PIC, DISH_PRICE, DISH_TYPE, DIS_STATUS) VALUES ('$DISH_ID', '" . $_POST['dish_name'] . "', '" . $_POST['dish_pic'] . "', " . $_POST['dish_price'] . ", " . $_POST['dish_type'] . ", 1)";
+    oci_execute($statement);
+    $count = oci_fetch_array($statement, OCI_RETURN_NULLS)[0];
+    $x = $count + 1;
+    $dish_name = $_POST['dish_name'];
+    $dish_price = $_POST['dish_price'];
+    $dish_type = $_POST['dish_type'];
+    $param = $x < 10 ? "000$x" : ($x < 100 ? "00$x" : "0$x");
+    $dish_id = "dis_$dish_type" . "_$param";
+    $sql_query = "BEGIN scott.addDish('$dish_id','$dish_name',$dish_price,$dish_type); END;";
 
     $statement = oci_parse($conn, $sql_query);
     if (oci_execute($statement)) {
-        echo json_encode(array("message" => "success"));
+        if (isset($_POST['dishPicData']) && $_POST['dishPicData'] != "")
+            updateDishPic($conn, $dish_id);
+        else
+            echo json_encode(array("message" => "success"));
     } else {
-        echo json_encode(array("message" => "false"));
+        echo json_encode(array("message" => "error", "reason" => oci_error()));
     }
 
 }
 function deleteDish($conn)
 {
     if (islegalid($_POST['dish_id'])) {
-        $sql_query = "UPDATE scott.DISH SET DIS_STATUS = 0 WHERE DISH_ID = '" . $_POST['dish_id'] . "'";
+        $dish_id = $_POST['dish_id'];
+        $sql_query = "BEGIN scott.deleteDish('$dish_id'); END;";
         $statement = oci_parse($conn, $sql_query);
         if (oci_execute($statement)) {
             echo json_encode(array("message" => "success"));
@@ -118,25 +122,28 @@ function getDishInfo($conn)
 
 function updateDish($conn)
 {
-    if (islegalid($_POST['dish_id'])) {
-        
-        $dish_id = $_POST['dish_id'];
-        echo $dish_id;
-        $dish_name = $_POST["dish_name"];
-        $dish_price = $_POST["dish_price"];
-        $dish_type = $_POST["dish_type"];
-        $sql_insert = "UPDATE SCOTT.DISH SET dish_name='$dish_name',dish_price=$dish_price,dish_type=$dish_type WHERE dish_id='$dish_id'";
-        $statement = oci_parse($conn, $sql_insert);
+    // if (islegalid($_POST['dish_id'])) {
+    //echo $dish_id;
+    $dish_id = $_POST['dish_id'];
+    $dish_name = $_POST['dish_name'];
+    $dish_price = $_POST['dish_price'];
+    $dish_type = $_POST['dish_type'];
 
-        if (oci_execute($statement)) {
-            echo json_encode(array("message" => "success"));
-        } else {
-            echo json_encode(array("message" => "error", "reason" => oci_error()));
-        }
+    $sql_insert = "BEGIN scott.updateDish('$dish_id','$dish_name',$dish_price,$dish_type); END;";
+    $statement = oci_parse($conn, $sql_insert);
+
+    if (oci_execute($statement)) {
+        echo json_encode(array("message" => "success"));
     } else {
         echo json_encode(array("message" => "error", "reason" => oci_error()));
     }
+    // } else {
+    //     echo json_encode(array("message" => "error", "reason" => oci_error()));
+    // }
 }
-function updateDishPic($conn){
-    new updatePic().upload("upload_dish_pic");
+function updateDishPic($conn, $upid)
+{
+    echo $_POST['dish_id'];
+    $sd = new uploadPic();
+    $sd->upload("upload_dish_pic", $upid);
 }

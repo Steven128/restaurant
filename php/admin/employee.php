@@ -71,20 +71,26 @@ function addEmployee($conn)
     $sql_query = "SELECT COUNT(EMPLOYEE_ID) FROM SCOTT.EMPLOYEE";
     $statement = oci_parse($conn, $sql_query);
     oci_execute($statement);
-    $row = oci_fetch_array($statement, OCI_RETURN_NULLS);
-    $count = $row[0];
+    $count = oci_fetch_array($statement, OCI_RETURN_NULLS)[0];
+    $employ_time = date("Y-m-d");
     $gender = $_POST['gender'];
-
     if ($gender != 1 && $gender != 0)
         return;
-    $employ_time = date("Y-m-d");
     $employee_id = date("ymd", strtotime($employ_time));
     $employee_id = "emp_" . $employee_id . "_$gender" . "_";
     $param = $count < 10 ? "000$count" : ($count < 100 ? "00$count" : "0$count");
     $employee_id = "$employee_id" . "$param";
-
-    $sql_query = "INSERT INTO scott.EMPLOYEE (EMPLOYEE_ID, NAME, GENDER,  WORKING_YEAR, AGE, SALARY, PHONE_NUM, EMPLOYEE_TYPE, EMPLOY_TIME, EMPLOYEE_PIC, EMP_STATUS) VALUES ('$employee_id', '" . $_POST['name'] . "', $gender, 0, " . $_POST['age'] . ", " . $_POST['salary'] . ", '" . $_POST['phone_num'] . "', " . $_POST['employee_type'] . ", '" . $employ_time . "', 'd', 1)";
-
+    $name=$_POST['name'];
+    $working_year=0;
+    $age=$_POST['age'];
+    $salary = $_POST['salary'];
+    $phone_num = $_POST['phone_num'];
+    $employee_type= $_POST['employee_type'];
+    $employee_pic = "../../src/employee_pic/default.png";
+    $emp_status = 1;
+    
+    //$sql_query = "INSERT INTO scott.EMPLOYEE (EMPLOYEE_ID, NAME, GENDER,  WORKING_YEAR, AGE, SALARY, PHONE_NUM, EMPLOYEE_TYPE, EMPLOY_TIME, EMPLOYEE_PIC, EMP_STATUS) VALUES ('$employee_id', '" . $_POST['name'] . "', $gender, 0, " . $_POST['age'] . ", " . $_POST['salary'] . ", '" . $_POST['phone_num'] . "', " . $_POST['employee_type'] . ", '" . $employ_time . "', 'd', 1)";
+    $sql_query = "BEGIN scott.addEmployee('$employee_id','$name',$gender,$age,$salary,'$phone_num',$employee_type,'$employ_time'); END;";
     $statement = oci_parse($conn, $sql_query);
     if (oci_execute($statement)) {
         if (isset($_POST['employeePicData']) && $_POST['employeePicData'] != "")
@@ -99,7 +105,9 @@ function addEmployee($conn)
 function deleteEmployee($conn)
 {
     if (islegalid($_POST['employee_id'])) {
-        $sql_query = "UPDATE scott.EMPLOYEE SET EMP_STATUS = 0 WHERE EMPLOYEE_ID = '" . $_POST['employee_id'] . "'";
+        $employee_id=$_POST['employee_id'];
+        //$sql_query = "UPDATE scott.EMPLOYEE SET EMP_STATUS = 0 WHERE EMPLOYEE_ID = '" . $_POST['employee_id'] . "'";
+        $sql_query = "BEGIN scott.deleteEmployee('$employee_id'); END;";
         $statement = oci_parse($conn, $sql_query);
         if (oci_execute($statement)) {
             echo json_encode(array("message" => "success"));
@@ -153,7 +161,9 @@ function updateEmployee($conn)
         $salary = $_POST['salary'];
         $phone_num = $_POST['phone_num'];
         $employee_type = $_POST['employee_type'];
-        $sql_insert = "UPDATE SCOTT.EMPLOYEE SET name='$name',gender=$gender,age=$age,salary=$salary,phone_num='$phone_num',employee_type=$employee_type WHERE EMPLOYEE_ID='$employee_id'";
+        //$sql_insert = "UPDATE SCOTT.EMPLOYEE SET name='$name',gender=$gender,age=$age,salary=$salary,phone_num='$phone_num',employee_type=$employee_type WHERE EMPLOYEE_ID='$employee_id'";
+        $sql_insert = "BEGIN scott.updateEmployee('$employee_id','$name',$gender,$age,$salary,'$phone_num',$employee_type); END;";
+        //echo $sql_insert;
         $statement = oci_parse($conn, $sql_insert);
 
         if (oci_execute($statement)) {

@@ -111,6 +111,7 @@ class uploadPic
     public function upload($request,$upid)
     {
         if ($request == "upload_admin_pic") {
+            $admin="scott";
             $table="admin";
             $admin_id = $_POST['admin_id'];
             $id=$admin_id;
@@ -128,6 +129,7 @@ class uploadPic
                 }
             }
         } else if ($request == "upload_employee_pic") {
+            $admin="emp_admin";
             $table="employee";
             $base64_image_content = $_POST['employeePicData'];
             if(isset($_POST['employee_id'])){
@@ -152,9 +154,15 @@ class uploadPic
                 }
             }
         } else if ($request == "upload_dish_pic") {
+            $admin="dis_admin";
             $table="dish";
             $base64_image_content = $_POST['dishPicData'];
-            $dish_id = $_POST['dish_id'];
+            if(isset($_POST['dish_id'])&&$_POST['dish_id']!=""){
+                $dish_id = $_POST['dish_id'];
+            }
+            else{
+                $dish_id = $upid;
+            }
             $id=$dish_id;
             //匹配出图片的格式
             if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64_image_content, $result)) {
@@ -166,18 +174,17 @@ class uploadPic
                 }
                 $new_file = $new_file . $dish_id . ".{$type}";
 
-                if (file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64_image_content)))) {
-                    echo json_encode(array("message" => "success"));
+                if (!file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64_image_content)))) {
+                    echo json_encode(array("message" => "error"));
                 }
             }
         }
         $this->percent = 1; #原图压缩，不缩放，但体积大大降低
         $this->src=$new_file;
-        //$image = $this->compressImg($new_file);
-        $conn = oci_connect('emp_admin', '123456', 'localhost:1521/ORCL', "AL32UTF8");
+        $image = $this->compressImg($new_file);
+        $conn = oci_connect($admin, '123456', 'localhost:1521/ORCL', "AL32UTF8");
         $sql_insert = "UPDATE SCOTT.$table SET $table"."_pic='$new_file' WHERE $table"."_id='$id'";
         $statement = oci_parse($conn, $sql_insert);
-        oci_execute($statement);
         if (oci_execute($statement)) {
             echo json_encode(array("message" => "success"));
         } else {
