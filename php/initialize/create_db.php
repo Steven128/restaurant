@@ -1,5 +1,5 @@
 <?php
-$conn = oci_connect('system', '123456', 'localhost:1521/ORCL', "AL32UTF8");
+$conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8");
 if (!$conn) {
     $e = oci_error();
     print htmlentities($e['message']);
@@ -430,6 +430,9 @@ if (!$conn) {
     // } else {
     //     echo $statement;
     // }
+
+    // $conn = oci_connect('system', '123456', 'localhost:1521/ORCL', "AL32UTF8");
+
     // $user = array("emp_admin", "fin_admin", "inv_admin", "ord_admin", "dis_admin", "tab_admin");
     // for ($i = 0; $i < count($user); $i++) {
     //     $sql_create_user = "CREATE USER $user[$i]" .
@@ -476,7 +479,8 @@ if (!$conn) {
     //         echo "<br>授予用户$user[$i]对$table[$i]表的更新权限成功！";
     //     }
     // }
-
+    
+    $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8");
     
 //employee
     $sql_ins = "CREATE OR REPLACE PROCEDURE updateEmployee 
