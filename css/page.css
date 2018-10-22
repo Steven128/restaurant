@@ -372,6 +372,7 @@ td.alt {
 
 .box {
     padding: 0;
+    margin-bottom: 15px;
     -webkit-overflow-scrolling: touch;
     background-color: #fff;
 }
@@ -473,6 +474,11 @@ th:last-child {
 
 .dataTables_wrapper {
     padding: 15px;
+}
+
+table img {
+    width: 130px;
+    height: 100px;
 }
 
 
