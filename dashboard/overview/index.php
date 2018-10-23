@@ -20,7 +20,7 @@ session_start();
     <script type="text/javascript" src="../../js/page.js"></script>
     <script type="text/javascript" src="../../js/das_mgment/dashboard.js"></script>
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
-    <script type="text/javascript" src="../../js/Chart.js"></script>
+    <script type="text/javascript" src="../../js/plugins/Chart.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
     <?php
     if (!isset($_SESSION['admin_id'])) {

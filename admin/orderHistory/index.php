@@ -25,7 +25,7 @@ session_start();
     <script type="text/javascript" src="../../js/plugins/datatables.js"></script>
     <script type="text/javascript" src="../../js/plugins/dataTables/dataTables.responsive.js"></script>
     <script type="text/javascript" src="../../js/plugins/dataTables/responsive.bootstrap.js"></script>
-    <script type="text/javascript" src="../../js/jquery.tabledisplay.js"></script>
+    <script type="text/javascript" src="../../js/plugins/dataTables/jquery.tabledisplay.js"></script>
     <style>
         .display-box-hide,
         .display-box {
