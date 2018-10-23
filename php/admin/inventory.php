@@ -1,19 +1,19 @@
 <?php
-$ref = $_SERVER['REFERER'];
-if (isset($_SERVER['HTTP_REFERER']))
-    $ref = $_SERVER['HTTP_REFERER'];
-else
-    $ref = "";
-if ($ref == "") {
-    echo "不允许从地址栏访问";
-    exit();
-} else {
-    $url = parse_url($ref);
-    if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" && $url['host'] != "47.95.212.18") {
-        echo "get out";
-        exit();
-    }
-}
+// $ref = $_SERVER['REFERER'];
+// if (isset($_SERVER['HTTP_REFERER']))
+//     $ref = $_SERVER['HTTP_REFERER'];
+// else
+//     $ref = "";
+// if ($ref == "") {
+//     echo "不允许从地址栏访问";
+//     exit();
+// } else {
+//     $url = parse_url($ref);
+//     if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" && $url['host'] != "47.95.212.18") {
+//         echo "get out";
+//         exit();
+//     }
+// }
 session_start(); //开启php_session
 if (isset($_GET['request']) && $_GET['request'] != "") {
     $request = $_GET['request'];
@@ -38,7 +38,7 @@ if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如�
         // if ($admin_type != 1 and $admin_type != 4) {
         //     exit();
         // }
-        if ($request == "purchase") {
+        if ($request == "addInventory") {
             purchase($conn);
         }
     }
@@ -61,25 +61,35 @@ function islegalnum($str)
 }
 function purchase($conn)
 {
-    if (islegalid($_POST['goods_id']) and islegalnum($_POST['quantity'])) {
-        $sql_query = "SELECT COUNT(inventory_id) FROM SCOTT.inventory";
-        $statement = oci_parse($conn, $sql_query);
-        oci_execute($statement);
-        $count = oci_fetch_row($statement, OCI_RETURN_NULLS)[0]+1;
-        
+    $sql_query = "SELECT COUNT(inventory_id) FROM SCOTT.inventory";
+    $statement = oci_parse($conn, $sql_query);
+    oci_execute($statement);
+    $count = oci_fetch_array($statement, OCI_RETURN_NULLS)[0];
+    // echo $count;
+    $data = $_POST['data'];
+        //var_dump($data);
+    $num = count($data);
+    $sum=0;
+    foreach ($data as $value) { 
+            // echo $value['name']." ";
+            // echo $value['quantity']." ";
         $_inventory_id = $count < 10 ? "00000$count" : ($count < 100 ? "0000$count" : ($count < 1000 ? "000$count" : "00$count"));
         $inventory_id = "inv_$_inventory_id";
-        $goods_name = $_POST['goods_name'];
-        $quantity = $_POST['quantity'];
+        $goods_name = $value['name'];
+        $quantity = $value['quantity'];
         $sql_query = "BEGIN scott.addInventory('$inventory_id','$goods_name',$quantity); END;";
 
         $statement = oci_parse($conn, $sql_query);
         if (!oci_execute($statement)) {
-            echo json_encode(array("message" => "error"));
+            
         } else {
-            echo json_encode(array("message" => "success"));
+            $sum++;
         }
-    } else {
+
+    }
+    if ($sum!=$num) {
         echo json_encode(array("message" => "error"));
+    } else {
+        echo json_encode(array("message" => "success"));
     }
 }

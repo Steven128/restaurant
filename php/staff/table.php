@@ -1,10 +1,9 @@
 <?php
 
-if (isset($_POST['request']) && $_POST['request'] != "") {
-    $request = $_POST['request'];
-} else {
-    die();
-}
+
+$data = json_decode($_POST['param']);
+$request = $data->request;
+
 
 $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
 if (!$conn) { //未连接成功，终止脚本并返回错误信息
@@ -18,6 +17,20 @@ if (!$conn) { //未连接成功，终止脚本并返回错误信息
         useTable($conn);
     }
 }
+
+// function object_to_array($obj) {
+//     $obj = (array)$obj;
+//     foreach ($obj as $k => $v) {
+//         if (gettype($v) == 'resource') {
+//             return;
+//         }
+//         if (gettype($v) == 'object' || gettype($v) == 'array') {
+//             $obj[$k] = (array)object_to_array($v);
+//         }
+//     }
+ 
+//     return $obj;
+// }
 
 function getTables($conn)
 {
@@ -40,7 +53,7 @@ function getTables($conn)
 
 function useTable($conn)//餐桌使用，预定餐桌写在preorder里
 {  
-    $table_number=$_POST['table_number'];
+    $table_number=$data->number;
     $sql_update1="UPDATE SCOTT.RES_TABLE SET TABLE_ORDER_STATUS=2 WHERE TABLE_NUMBER=$table_number";
     $statement1=oci_parse($conn,$sql_update1);
     oci_execute($statement1);

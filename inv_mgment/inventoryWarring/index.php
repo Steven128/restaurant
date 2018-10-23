@@ -152,53 +152,33 @@ session_start();
                                         <tr>
                                             <th>序号</th>
                                             <th>原料</th>
-                                            <th>数量(kg)</th>
                                             <th>价格</th>
                                             <th>类型</th>
+                                            <th>数量(kg)</th>
                                         </tr>
                                     </thead>
                                     <tbody class="inventoryListTableBody">
                                         <?php
-                                        $sql_query = "SELECT INVENTORY_ID,GOODS_ID,QUANTITY FROM SCOTT.INVENTORY WHERE INV_STATUS>0 AND QUANTITY<=100";
+                                        $sql_query = "SELECT GOODS_ID,GOODS_NAME,goods_price,goods_type,QUANTITY FROM SCOTT.GOODS WHERE GOO_STATUS>0 AND quantity<100";
                                         $statement = oci_parse($conn, $sql_query);
                                         oci_execute($statement);
                                         $count = 0;
                                         while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
                                             $count++;
-                                            $sql_query2 = "SELECT GOODS_NAME, GOODS_PRICE, GOODS_TYPE FROM SCOTT.GOODS WHERE GOO_STATUS>0 AND GOODS_ID = '$row[1]'";
-                                            $statement2 = oci_parse($conn, $sql_query2);
-                                            oci_execute($statement2);
-                                            $row2 = oci_fetch_array($statement2, OCI_RETURN_NULLS);
-                                            if ($row2[2] == 1) {
-                                                $row2[2] = "粮食";
-                                            } elseif ($row2[2] == 2) {
-                                                $row2[2] = "调料";
-                                            } elseif ($row2[2] == 3) {
-                                                $row2[2] = "生鲜";
+                                            $goods_id = $row[0];
+                                            $goods_name = $row[1];
+                                            $goods_price = $row[2];
+                                            $goods_type = $row[3];
+                                            $quantity = $row[4];
+                                            if ($goods_type == 1) {
+                                                $goods_type = "粮食";
+                                            } elseif ($goods_type == 2) {
+                                                $goods_type = "调料";
+                                            } elseif ($goods_type == 3) {
+                                                $goods_type = "生鲜";
                                             }
-                                            echo "<tr><td>$count</td><td>$row2[0]</td><td>$row[2]</td><td>$row2[1]</td><td>$row2[2]</td></tr>";
+                                            echo "<tr><td>$count</td><td>$goods_name</td><td>$goods_price</td><td>$goods_type</td><td>$quantity</td></tr>";
                                         }
-
-                                        // $sql_query = "SELECT GOODS_ID,GOODS_NAME,goods_price,goods_type,QUANTITY FROM SCOTT.GOODS WHERE GOO_STATUS>0 AND quantity<100";
-                                        // $statement = oci_parse($conn, $sql_query);
-                                        // oci_execute($statement);
-                                        // $count = 0;
-                                        // while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-                                        //     $count++;
-                                        //     $goods_id=$row[0];
-                                        //     $goods_name=$row[1];
-                                        //     $goods_price=$row[2];
-                                        //     $goods_type=$row[3];
-                                        //     $quantity=$row[4];
-                                        //     if ($goods_type == 1) {
-                                        //         $goods_type = "粮食";
-                                        //     } elseif ($goods_type == 2) {
-                                        //         $goods_type = "调料";
-                                        //     } elseif ($goods_type == 3) {
-                                        //         $goods_type = "生鲜";
-                                        //     }
-                                        //     echo "<tr><td>$count</td><td>$goods_name</td><td>$goods_price</td><td>$goods_type</td><td>$quantity</td></tr>";
-                                        // }
                                         ?>
                                         <script>
                                         $(document).ready(() => {
