@@ -28,7 +28,7 @@ session_start();
      <?php
     if (!isset($_SESSION['admin_id'])) {
         echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
-    } elseif ($_SESSION['admin_type'] != 3) {
+    } elseif ($_SESSION['admin_type'] != 4) {
         echo "<script>$(document).ready(() => {window.location.replace(\"../../dashboard\");});</script>";
     }
     ?>
@@ -88,11 +88,11 @@ session_start();
                                 </a>
                                 <ul class="treeview-menu menu-open">
                                     <li>
-                                        <a id="menu-inventoryList-item" href="javascript:void(0);" class="innerActive">
+                                        <a id="menu-inventoryList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-search"></i>当前库存查询</a>
                                     </li>
                                     <li>
-                                        <a id="menu-inventoryWarring-item" href="javascript:void(0);">
+                                        <a id="menu-inventoryWarring-item" href="javascript:void(0);" class="innerActive">
                                             <i class="iconfont icon-warning"></i>库存预警</a>
                                     </li>
                                 </ul>
@@ -144,7 +144,7 @@ session_start();
                             }
                             //
                             changeMainBar("invOverview");
-                            changeMainBar("inventoryWarring");
+                            changeMainBar("inventoryList");
                             changeMainBar("addPurchase");
                             changeMainBar("purchaseHistory");
                         });

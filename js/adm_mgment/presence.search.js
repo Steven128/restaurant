@@ -71,8 +71,8 @@ $(document).ready(() => {
             var $param = $("input:radio[name=season]:checked").val()
             searchBySeason($param);
         } else if (presenceTypeSelect == "employee") {
-            var $employee_id = $("input.employee-input").val()
-            searchByEmployee($employee_id)
+            var $employee_name = $("input.employee-input").val()
+            searchByEmployee($employee_name)
         }
     });
 });
@@ -141,6 +141,62 @@ function addEmployeeSelect() {
     $(".search-radio-wrap").append(html);
 }
 
+/**
+ * 将返回签到信息转换为html表格
+ * @param {*} $dataArray 
+ * @return html
+ */
+function fetchHTML($dataArray) {
+    var i = 0;
+    var html = '';
+    while ($dataArray[i]) {
+        var count = i + 1;
+        var gender = $dataArray[i].gender;
+        if (gender == 1) {
+            gender = "男";
+        } else if (gender == 0) {
+            gender = "女";
+        }
+        var $employee_type = $dataArray[i].employee_type;
+        if ($employee_type == 1) {
+            $employee_type = "管理人员";
+        } else if ($employee_type == 2) {
+            $employee_type = "服务员";
+        } else if ($employee_type == 3) {
+            $employee_type = "前台";
+        } else if ($employee_type == 4) {
+            $employee_type = "厨师";
+        } else if ($employee_type == 5) {
+            $employee_type = "保洁";
+        } else if ($employee_type == 6) {
+            $employee_type = "仓库管理员";
+        } else if ($employee_type == 7) {
+            $employee_type = "会计";
+        } else if ($employee_type == 8) {
+            $employee_type = "其他";
+        }
+        var hasPresented = '';
+        if ($dataArray[i].hasPresented == 1) {
+            hasPresented = '是';
+        } else if ($dataArray[i].hasPresented == 0) {
+            hasPresented = '否';
+        }
+        html += '<tr>' +
+            '<td>' + count + '</td>' +
+            '<td>' + $dataArray[i].name + '</td>' +
+            '<td>' + gender + '</td>' +
+            '<td>' + $employee_type + '</td>' +
+            '<td>' + $dataArray[i].sign_time + '</td>' +
+            '<td>' + hasPresented + '</td>' +
+            '<td><a class="table-update-btn update-employee" href = "javascript:void(0);" onclick="update_presence("' +
+            $dataArray[i].employee_id +
+            '")"><i class="iconfont icon-update"></i></a></td>' +
+            '</tr>';
+        i++;
+    }
+    return html;
+}
+
 
 /**
  * 按日期查询
@@ -179,46 +235,7 @@ function searchByDate(param, date) {
                     '</tr>' +
                     '</thead>' +
                     '<tbody>';
-                var i = 0;
-                while (e.data[i]) {
-                    var count = i + 1;
-                    var $employee_type = e.data[i].employee_type;
-                    if ($employee_type == 1) {
-                        $employee_type = "管理人员";
-                    } else if ($employee_type == 2) {
-                        $employee_type = "服务员";
-                    } else if ($employee_type == 3) {
-                        $employee_type = "前台";
-                    } else if ($employee_type == 4) {
-                        $employee_type = "厨师";
-                    } else if ($employee_type == 5) {
-                        $employee_type = "保洁";
-                    } else if ($employee_type == 6) {
-                        $employee_type = "仓库管理员";
-                    } else if ($employee_type == 7) {
-                        $employee_type = "会计";
-                    } else if ($employee_type == 8) {
-                        $employee_type = "其他";
-                    }
-                    var hasPresented = '';
-                    if (e.data[i].hasPresented == 1) {
-                        hasPresented = '是';
-                    } else if (e.data[i].hasPresented == 0) {
-                        hasPresented = '否';
-                    }
-                    html += '<tr>' +
-                        '<td>' + count + '</td>' +
-                        '<td>' + e.data[i].name + '</td>' +
-                        '<td>' + e.data[i].gender + '</td>' +
-                        '<td>' + $employee_type + '</td>' +
-                        '<td>' + e.data[i].sign_time + '</td>' +
-                        '<td>' + hasPresented + '</td>' +
-                        '<td><a class="table-update-btn update-employee" href = "javascript:void(0);" onclick="update_presence("' +
-                        e.data[i].employee_id +
-                        '")"><i class="iconfont icon-update"></i></a></td>' +
-                        '</tr>';
-                    i++;
-                }
+                html += fetchHTML(e.data);
                 html += '</tbody>' +
                     '</table>' +
                     '<script>' +
@@ -275,46 +292,7 @@ function searchByWeek(param) {
                     '</tr>' +
                     '</thead>' +
                     '<tbody>';
-                var i = 0;
-                while (e.data[i]) {
-                    var count = i + 1;
-                    var $employee_type = e.data[i].employee_type;
-                    if ($employee_type == 1) {
-                        $employee_type = "管理人员";
-                    } else if ($employee_type == 2) {
-                        $employee_type = "服务员";
-                    } else if ($employee_type == 3) {
-                        $employee_type = "前台";
-                    } else if ($employee_type == 4) {
-                        $employee_type = "厨师";
-                    } else if ($employee_type == 5) {
-                        $employee_type = "保洁";
-                    } else if ($employee_type == 6) {
-                        $employee_type = "仓库管理员";
-                    } else if ($employee_type == 7) {
-                        $employee_type = "会计";
-                    } else if ($employee_type == 8) {
-                        $employee_type = "其他";
-                    }
-                    var hasPresented = '';
-                    if (e.data[i].hasPresented == 1) {
-                        hasPresented = '是';
-                    } else if (e.data[i].hasPresented == 0) {
-                        hasPresented = '否';
-                    }
-                    html += '<tr>' +
-                        '<td>' + count + '</td>' +
-                        '<td>' + e.data[i].name + '</td>' +
-                        '<td>' + e.data[i].gender + '</td>' +
-                        '<td>' + $employee_type + '</td>' +
-                        '<td>' + e.data[i].sign_time + '</td>' +
-                        '<td>' + hasPresented + '</td>' +
-                        '<td><a class="table-update-btn update-employee" href = "javascript:void(0);" onclick="update_presence("' +
-                        e.data[i].employee_id +
-                        '")"><i class="iconfont icon-update"></i></a></td>' +
-                        '</tr>';
-                    i++;
-                }
+                html += fetchHTML(e.data);
                 html += '</tbody>' +
                     '</table>' +
                     '<script>' +
@@ -356,6 +334,46 @@ function searchByMonth(param, month) {
         dataType: "JSON",
         success: (e) => {
             console.log(e)
+            if (e.data.length == 0) {
+                var html = '<h4>未查询到数据</h4>';
+                $("#search-result-wrap").empty();
+                $("#search-result-wrap").append(html);
+            } else {
+                var html = '<div class="col-xs-12" style="text-align: center;">' +
+                    '<h3 style="color: #000;">出勤率</h3>' +
+                    '<h2 style="color: #1296db;">' + e.ratio + '</h2>' +
+                    '<hr></div>' +
+                    '<h4 style="text-align: center;">未签到员工列表</h4>' +
+                    '<table class="presenceListTable" style="display: none;">' +
+                    '<thead>' +
+                    '<tr>' +
+                    '<th>序号</th>' +
+                    '<th>姓名</th>' +
+                    '<th>性别</th>' +
+                    '<th>员工类型</th>' +
+                    '<th>签到时间</th>' +
+                    '<th>是否签到</th>' +
+                    '<th>操作</th>' +
+                    '</tr>' +
+                    '</thead>' +
+                    '<tbody>';
+
+                html += fetchHTML(e.data);
+                html += '</tbody>' +
+                    '</table>' +
+                    '<script>' +
+                    '$(document).ready(() => {' +
+                    '$(".presenceListTable").DataTable({' +
+                    'autoWidth: true,' +
+                    'responsive: true' +
+                    '});' +
+                    '$(".presenceListTable").displayInfo();' +
+                    '$(".presenceListTable").show();' +
+                    '})' +
+                    '</script>';
+                $("#search-result-wrap").empty();
+                $("#search-result-wrap").append(html);
+            }
         },
         error: (err) => {
             console.log(err)
@@ -374,6 +392,45 @@ function searchBySeason(param) {
         dataType: "JSON",
         success: (e) => {
             console.log(e)
+            if (e.data.length == 0) {
+                var html = '<h4>未查询到数据</h4>';
+                $("#search-result-wrap").empty();
+                $("#search-result-wrap").append(html);
+            } else {
+                var html = '<div class="col-xs-12" style="text-align: center;">' +
+                    '<h3 style="color: #000;">出勤率</h3>' +
+                    '<h2 style="color: #1296db;">' + e.ratio + '</h2>' +
+                    '<hr></div>' +
+                    '<h4 style="text-align: center;">未签到员工列表</h4>' +
+                    '<table class="presenceListTable" style="display: none;">' +
+                    '<thead>' +
+                    '<tr>' +
+                    '<th>序号</th>' +
+                    '<th>姓名</th>' +
+                    '<th>性别</th>' +
+                    '<th>员工类型</th>' +
+                    '<th>签到时间</th>' +
+                    '<th>是否签到</th>' +
+                    '<th>操作</th>' +
+                    '</tr>' +
+                    '</thead>' +
+                    '<tbody>';
+                html += fetchHTML(e.data);
+                html += '</tbody>' +
+                    '</table>' +
+                    '<script>' +
+                    '$(document).ready(() => {' +
+                    '$(".presenceListTable").DataTable({' +
+                    'autoWidth: true,' +
+                    'responsive: true' +
+                    '});' +
+                    '$(".presenceListTable").displayInfo();' +
+                    '$(".presenceListTable").show();' +
+                    '})' +
+                    '</script>';
+                $("#search-result-wrap").empty();
+                $("#search-result-wrap").append(html);
+            }
         },
         error: (err) => {
             console.log(err)
@@ -383,15 +440,97 @@ function searchBySeason(param) {
 
 /**
  * 按员工查询
- * @param {*} employee_id 员工ID
+ * @param {*} employee_name 员工ID
  */
-function searchByEmployee(employee_id) {
+function searchByEmployee(employee_name) {
     $.ajax({
         type: "GET",
-        url: "../../php/admin/presence.search.php?request=employee&employee_id=" + employee_id + "&admin_id=" + getUserInfo().admin_id,
+        url: "../../php/admin/presence.search.php?request=employee&employee_name='" + employee_name + "'&admin_id=" + getUserInfo().admin_id,
         dataType: "JSON",
         success: (e) => {
             console.log(e)
+            if (e.employee_info.length == 1) {
+                var gender = e.employee_info.gender;
+                if (gender == 1) {
+                    gender = "男";
+                } else if (gender == 0) {
+                    gender = "女";
+                }
+                var $employee_type = e.employee_info.employee_type;
+                if ($employee_type == 1) {
+                    $employee_type = "管理人员";
+                } else if ($employee_type == 2) {
+                    $employee_type = "服务员";
+                } else if ($employee_type == 3) {
+                    $employee_type = "前台";
+                } else if ($employee_type == 4) {
+                    $employee_type = "厨师";
+                } else if ($employee_type == 5) {
+                    $employee_type = "保洁";
+                } else if ($employee_type == 6) {
+                    $employee_type = "仓库管理员";
+                } else if ($employee_type == 7) {
+                    $employee_type = "会计";
+                } else if ($employee_type == 8) {
+                    $employee_type = "其他";
+                }
+                var html = '<div class="employee-info-box col-xs-12 col-md-4">' +
+                    '<div class="employee-pic-wrap"><img class="employeePic" src="' + e.employee_info.employee_pic + '" /></div>' +
+                    '<div class="employee-info-wrap">' +
+                    '<div class="employee-name">' + e.employee_info.name + '</div>' +
+                    '<div class="employee-type">' + $employee_type + '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="employee-info-box col-xs-12 col-md-8">' +
+                    '<div class="col-xs-0 col-md-12" style="padding: 5px;"></div>' +
+                    '<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">' +
+                    '<h5 class="emp-gender">性别： ' + gender + '</h5>' +
+                    '<h5 class="emp-age">年龄： ' + e.employee_info.age + '</h5>' +
+                    '</div>' +
+                    '<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">' +
+                    '<h5 class="emp-working-year">工龄： ' + e.employee_info.working_year + '</h5>' +
+                    '<h5 class="emp-salary">工资： ' + e.employee_info.salary + '</h5>' +
+                    '</div>' +
+                    '<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">' +
+                    '<h5 class="emp-time">入职时间： ' + e.employee_info.employ_time + '</h5>' +
+                    '<h5 class="emp-phone">手机号码： ' + e.employee_info.phone_num + '</h5>' +
+                    '</div>' +
+                    '<hr></div>';
+                html += '<h4 style="text-align: center;">未签到日期</h4>' +
+                    '<table class="presenceListTable" style="display: none;">' +
+                    '<thead>' +
+                    '<tr>' +
+                    '<th>序号</th>' +
+                    '<th>签到时间</th>' +
+                    '</tr>' +
+                    '</thead>' +
+                    '<tbody>';
+                var i = 0;
+                while (e.presence_data[i]) {
+                    var count = i + 1;
+                    html += '<tr>' +
+                        '<td>' + count + '</td>' +
+                        '<td>' + e.presence_data[i].sign_time.substring(0, 10) + '</td>' +
+                        '</tr>'
+                    i++;
+                }
+                html += '</tbody>' +
+                    '</table>' +
+                    '<script>' +
+                    '$(document).ready(() => {' +
+                    '$(".presenceListTable").DataTable({' +
+                    'autoWidth: true,' +
+                    'responsive: true' +
+                    '});' +
+                    '$(".presenceListTable").displayInfo();' +
+                    '$(".presenceListTable").show();' +
+                    '})' +
+                    '</script>';
+                $("#search-result-wrap").empty();
+                $("#search-result-wrap").append(html);
+            } else {
+
+            }
         },
         error: (err) => {
             console.log(err)

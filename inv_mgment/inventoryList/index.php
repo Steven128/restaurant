@@ -28,7 +28,7 @@ session_start();
      <?php
     if (!isset($_SESSION['admin_id'])) {
         echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
-    } elseif ($_SESSION['admin_type'] != 3) {
+    } elseif ($_SESSION['admin_type'] != 4) {
         echo "<script>$(document).ready(() => {window.location.replace(\"../../dashboard\");});</script>";
     }
     ?>

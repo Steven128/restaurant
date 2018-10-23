@@ -28,7 +28,7 @@ session_start();
     <?php
     if (!isset($_SESSION['admin_id'])) {
         echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
-    } elseif ($_SESSION['admin_type'] != 3) {
+    } elseif ($_SESSION['admin_type'] != 4) {
         echo "<script>$(document).ready(() => {window.location.replace(\"../../dashboard\");});</script>";
     }
     ?>
@@ -63,7 +63,7 @@ session_start();
                     </div>
                     <section class="sidebar">
                         <ul class="sidebar-menu">
-                            <li class="treeview">
+                            <li class="treeview active">
                                 <a href="javascript:void(0);">
                                     <i class="iconfont icon-overview"></i>
                                     <span>总览</span>
@@ -71,14 +71,14 @@ session_start();
                                         <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu">
+                                <ul class="treeview-menu menu-open">
                                     <li>
-                                        <a id="menu-invOverview-item" href="javascript:void(0);">
+                                        <a id="menu-invOverview-item" href="javascript:void(0);" class="innerActive">
                                             <i class="iconfont icon-list"></i>库存总览</a>
                                     </li>
                                 </ul>
                             </li>
-                            <li class="treeview active">
+                            <li class="treeview">
                                 <a href="javascript:void(0);">
                                     <i class="iconfont icon-inventory"></i>
                                     <span>库存管理</span>
@@ -86,9 +86,9 @@ session_start();
                                         <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu menu-open">
+                                <ul class="treeview-menu">
                                     <li>
-                                        <a id="menu-inventoryList-item" href="javascript:void(0);" class="innerActive">
+                                        <a id="menu-inventoryList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-search"></i>当前库存查询</a>
                                     </li>
                                     <li>
@@ -143,7 +143,7 @@ session_start();
                                 });
                             }
                             //
-                            changeMainBar("invOverview");
+                            changeMainBar("inventoryList");
                             changeMainBar("inventoryWarring");
                             changeMainBar("addPurchase");
                             changeMainBar("purchaseHistory");

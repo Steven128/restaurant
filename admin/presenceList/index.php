@@ -15,6 +15,7 @@ session_start();
     <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
     <link type="text/css" rel="stylesheet" href="../../css/datatables.css" />
     <link type="text/css" rel="stylesheet" href="../../css/table_plugins/responsive.bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/update.css" />
     <link type="text/css" rel="stylesheet" href="../../css/search.css" />
 
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
