@@ -229,7 +229,6 @@ session_start();
                                             <th>营业额</th>
                                             <th>花销</th>
                                             <th>盈利</th>
-                                            <th>操作</th>
                                         </tr>
                                     </thead>
                                     <tbody class="financeListTableBody">
@@ -240,7 +239,7 @@ session_start();
                                         $count = 0;
                                         while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
                                             $count++;
-                                            echo "<tr><td>$count</td><td>$row[1]</td><td>$row[3]</td><td>$row[4]</td><td>$row[5]</td><td><a class=\"table-update-btn update-finance\" href = \"javascript:void(0);\" onclick=\"update_finance('" . $row[0] . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
+                                            echo "<tr><td>$count</td><td>$row[1]</td><td>$row[3]</td><td>$row[4]</td><td>$row[5]</td></tr>";
                                         }
                                         ?>
                                         <script>

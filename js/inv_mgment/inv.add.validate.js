@@ -100,9 +100,10 @@ $(document).ready(() => {
         }
         $.ajax({
             type: "POST",
-            url: "",
+            url: "../../php/admin/inventory.php",
             dataType: "JSON",
             data: {
+                "admin_id": getUserInfo().admin_id,
                 "request": "addInventory",
                 "data": data
             },
@@ -120,8 +121,9 @@ $(document).ready(() => {
                 } else {
                     window.wxc.xcConfirm("网络开小差啦~", window.wxc.xcConfirm.typeEnum.error);
                 }
-            }，
-            error: (err) => { console.log(err) }
+            },
+            error: (err) => { console.log(err) 
+            console.log(err.responseText)}
         })
     })
 })

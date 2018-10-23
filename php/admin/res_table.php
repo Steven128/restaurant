@@ -113,10 +113,10 @@ function updateTable($conn)
 {
     if (islegalid($_POST['table_id'])) {
         $table_id = $_POST['table_id'];
-        $table_number = $_POST["table_number"];
+        //$table_number = $_POST["table_number"];
         $default_number = $_POST["default_number"];
-        $table_order_status = $_POST["table_order_status"];
-        $sql_insert = "BEGIN scott.updateTable('$table_id','$table_number',$default_number); END;";
+        //$table_order_status = $_POST["table_order_status"];
+        $sql_insert = "BEGIN scott.updateTable('$table_id',$default_number); END;";
         $statement = oci_parse($conn, $sql_insert);
 
         if (oci_execute($statement)) {
