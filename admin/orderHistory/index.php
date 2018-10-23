@@ -302,14 +302,15 @@ session_start();
                                     </thead>
                                     <tbody class="preOrderListTableBody">
                                         <?php
-                                        $sql_query = "SELECT order_id,table_id,dish_list,total_price,pay_method,pay_time,order_note,pay_status FROM SCOTT.ORDER_LIST WHERE ORD_STATUS=1 AND SUBSTR(ORDER_ID,9,8)!='".date("Ymd")."'";                                        $statement = oci_parse($conn, $sql_query);
+                                        $sql_query = "SELECT order_id,scott.res_table.table_number,dish_list,total_price,pay_method,pay_time,order_note,pay_status FROM SCOTT.ORDER_LIST,SCOTT.RES_TABLE WHERE ORD_STATUS=1 AND TAB_STATUS=1 AND SCOTT.ORDER_LIST.TABLE_ID=SCOTT.RES_TABLE.TABLE_ID AND SUBSTR(ORDER_ID,9,8)!='".date("Ymd")."' ORDER BY pay_time DESC";                                        
+                                        $statement = oci_parse($conn, $sql_query);
                                         oci_execute($statement);
                                         $count = 0;
                                         while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
                                             $count++;
                                             $order_id = $row[0];
                                             $order_time=substr($order_id,8,4)."-".substr($order_id,12,2)."-".substr($order_id,14,2);
-                                            $table_id = $row[1];
+                                            $table_number=$row[1];
                                             $dish_list = $row[2];
                                             $total_price = $row[3];
                                             $pay_method = $row[4];
@@ -330,11 +331,7 @@ session_start();
                                                 $pay_status="未付款";
                                             else
                                                 $pay_status="未知";
-                                            $sql_query2 = "SELECT table_number FROM SCOTT.res_table WHERE table_id='$table_id'";
-                                            $statement2 = oci_parse($conn, $sql_query2);
-                                            oci_execute($statement2);
-                                            $row2=oci_fetch_array($statement2, OCI_RETURN_NULLS);
-                                            echo "<tr><td>$order_id</td><td>$order_time</td><td>$total_price</td><td>$pay_status</td><td>$pay_time</td><td>$pay_method</td><td>详情</td><td>$row2[0]</td><td>$order_note</td></tr>";
+                                            echo "<tr><td>$order_id</td><td>$order_time</td><td>$total_price</td><td>$pay_status</td><td>$pay_time</td><td>$pay_method</td><td>详情</td><td>$table_number</td><td>$order_note</td></tr>";
                                         }
                                         ?>
                                         <script>

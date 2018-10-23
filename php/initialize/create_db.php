@@ -431,32 +431,31 @@ if (!$conn) {
     //     echo $statement;
     // }
 
-    // $conn = oci_connect('system', '123456', 'localhost:1521/ORCL', "AL32UTF8");
 
-    // $user = array("emp_admin", "fin_admin", "inv_admin", "ord_admin", "dis_admin", "tab_admin");
-    // for ($i = 0; $i < count($user); $i++) {
-    //     $sql_create_user = "CREATE USER $user[$i]" .
-    //         " IDENTIFIED BY 123456";
-    //     echo "$sql_create_user<br>";
-    //     $statement = oci_parse($conn, $sql_create_user);
-    //     if (oci_execute($statement)) {
-    //         echo "<br>创建用户$user[$i]成功！";
-    //     }
-    //     $sql_grant = "grant connect to $user[$i]";
-    //     $statement = oci_parse($conn, $sql_grant);
-    //     if (oci_execute($statement)) {
-    //         echo "<br>授予用户$user[$i]连接权限成功！";
-    //     }
-    // }
-    // $user = array("emp_admin", "fin_admin", "fin_admin", "inv_admin", "inv_admin", "inv_admin", "ord_admin", "ord_admin", "ord_admin", "ord_admin", "dis_admin", "tab_admin");
-    // $table = array("employee", "finance", "overhead", "inventory", "loss", "goods", "pre_order", "order_list", "dish", "res_table", "dish", "res_table");
-    // for ($i = 0; $i < count($user); $i++) {
-    //     $sql_grant = "grant select on SCOTT.$table[$i] to $user[$i]";
-    //     $statement = oci_parse($conn, $sql_grant);
-    //     if (oci_execute($statement)) {
-    //         echo "<br>授予用户$user[$i]对$table[$i]表的查询权限成功！";
-    //     }
-    // }
+    $user = array("emp_admin", "fin_admin", "inv_admin", "ord_admin", "dis_admin", "tab_admin");
+    for ($i = 0; $i < count($user); $i++) {
+        $sql_create_user = "CREATE USER $user[$i]" .
+            " IDENTIFIED BY 123456";
+        echo "$sql_create_user<br>";
+        $statement = oci_parse($conn, $sql_create_user);
+        if (oci_execute($statement)) {
+            echo "<br>创建用户$user[$i]成功！";
+        }
+        $sql_grant = "grant connect to $user[$i]";
+        $statement = oci_parse($conn, $sql_grant);
+        if (oci_execute($statement)) {
+            echo "<br>授予用户$user[$i]连接权限成功！";
+        }
+    }
+    $user = array("emp_admin", "emp_admin", "fin_admin", "fin_admin", "inv_admin", "inv_admin", "inv_admin", "ord_admin", "ord_admin", "ord_admin", "ord_admin", "dis_admin", "tab_admin");
+    $table = array("employee", "presence", "finance", "overhead", "inventory", "loss", "goods", "pre_order", "order_list", "dish", "res_table", "dish", "res_table");
+    for ($i = 0; $i < count($user); $i++) {
+        $sql_grant = "grant select on SCOTT.$table[$i] to $user[$i]";
+        $statement = oci_parse($conn, $sql_grant);
+        if (oci_execute($statement)) {
+            echo "<br>授予用户$user[$i]对$table[$i]表的查询权限成功！";
+        }
+    }
     // $user = array("emp_admin", "fin_admin", "fin_admin", "inv_admin", "inv_admin", "inv_admin", "ord_admin", "dis_admin", "tab_admin");
     // $table = array("employee", "finance", "overhead", "inventory", "loss", "goods", "order_list", "dish", "res_table");
 
@@ -479,8 +478,7 @@ if (!$conn) {
     //         echo "<br>授予用户$user[$i]对$table[$i]表的更新权限成功！";
     //     }
     // }
-    
-    $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8");
+
     
 //employee
     $sql_ins = "CREATE OR REPLACE PROCEDURE updateEmployee 

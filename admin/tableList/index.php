@@ -234,8 +234,9 @@ session_start();
                                         $sql_query = "SELECT TABLE_ID,TABLE_NUMBER,DEFAULT_NUMBER,TABLE_ORDER_STATUS FROM SCOTT.RES_TABLE WHERE TAB_STATUS>0 ORDER BY TABLE_ID ASC";
                                         $statement = oci_parse($conn, $sql_query);
                                         oci_execute($statement);
-                                        //$count = 0;
+                                        $count = 0;
                                         while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+                                            $count++;
                                             if ($row[3] == 0) {
                                                 $row[3] = "无人";
                                             } elseif ($row[3] == 1) {
@@ -243,7 +244,7 @@ session_start();
                                             } elseif ($row[3] == 2) {
                                                 $row[3] = "有人";
                                             }
-                                            echo "<tr><td>".substr($row[0], 9, 12)."</td><td>$row[1]</td><td>$row[2]</td><td>$row[3]</td><td><a class=\"table-update-btn update-table\" href = \"javascript:void(0);\" onclick=\"update_table('" . $row[0] . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
+                                            echo "<tr><td>$count</td><td>$row[1]</td><td>$row[2]</td><td>$row[3]</td><td><a class=\"table-update-btn update-table\" href = \"javascript:void(0);\" onclick=\"update_table('" . $row[0] . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
                                         }
 
                                         ?>
