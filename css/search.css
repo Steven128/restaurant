@@ -1,0 +1,51 @@
+.search-top-wrap {
+    padding: 10px 15px;
+}
+
+.search-top label {
+    font-weight: normal;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.search-top label select {
+    display: inline-block;
+    width: 90px;
+}
+
+.search-top .search-radio-wrap {
+    padding: 0 15px;
+}
+
+.search-top .search-radio-wrap .search-radio {
+    padding: 0 5px;
+}
+
+.search-top .search-btn {
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-top .date-select,
+.search-top .month-select,
+.search-top .employee-input {
+    display: inline-block;
+    width: 150px;
+    margin-left: 5px;
+}
+
+::-webkit-inner-spin-button {
+    visibility: hidden;
+}
+
+#search-result-wrap h4 {
+    font-size: 16px;
+    padding: 10px 30px;
+    color: rgb(201, 5, 5);
+}

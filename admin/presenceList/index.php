@@ -2,10 +2,11 @@
 session_start();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>管理员系统-餐饮店管理系统</title>
     <link type="text/css" rel="stylesheet" href="../../css/bootstrap.css" />
@@ -14,6 +15,7 @@ session_start();
     <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
     <link type="text/css" rel="stylesheet" href="../../css/datatables.css" />
     <link type="text/css" rel="stylesheet" href="../../css/table_plugins/responsive.bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/search.css" />
 
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
@@ -25,6 +27,73 @@ session_start();
     <script type="text/javascript" src="../../js/plugins/dataTables/dataTables.responsive.js"></script>
     <script type="text/javascript" src="../../js/plugins/dataTables/responsive.bootstrap.js"></script>
     <script type="text/javascript" src="../../js/jquery.tabledisplay.js"></script>
+    <script type="text/javascript" src="../../js/adm_mgment/presence.search.js"></script>
+    <style>
+        .display-box-hide,
+        .display-box {
+            width: 0px;
+            height: 0px;
+            position: absolute;
+            left: 50px !important;
+            top: 0px;
+            border: 0px solid #666;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.85);
+            z-index: 10;
+        }
+
+        .display-box:before {
+            position: absolute;
+            content: "";
+            width: 0;
+            height: 0;
+            left: 30px;
+            top: -29px;
+            border-bottom: 30px solid #666;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+        }
+
+        .display-box:after {
+            position: absolute;
+            content: "";
+            width: 0;
+            height: 0;
+            left: 30px;
+            top: -26px;
+            border-bottom: 30px solid #fff;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+        }
+
+        .display-box-hide:before {
+            display: "none";
+            content: "";
+        }
+
+        .display-box-hide:after {
+            display: "none";
+            content: "";
+        }
+
+        @media(min-width:768px) {
+            .display-box:before {
+                left: -30px;
+                top: 23px;
+                border-right: 30px solid #666;
+                border-top: 10px solid transparent;
+                border-bottom: 10px solid transparent;
+            }
+
+            .display-box:after {
+                left: -27px;
+                top: 23px;
+                border-right: 30px solid #fff;
+                border-top: 10px solid transparent;
+                border-bottom: 10px solid transparent;
+            }
+        }
+    </style>
     <?php
     if (!isset($_SESSION['admin_id'])) {
         echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
@@ -32,18 +101,12 @@ session_start();
         echo "<script>$(document).ready(() => {window.location.replace(\"../../dashboard\");});</script>";
     }
     ?>
-    <style>
-    table img {
-        width: 130px;
-        height: 100px;
-    }
-    </style>
 </head>
 
 <body>
     <?php
-$conn = oci_connect('dis_admin', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
-?>
+    $conn = oci_connect('emp_admin', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
+    ?>
     <div class="container">
         <header class="head-content">
             <div class="site-branding">
@@ -63,22 +126,23 @@ $conn = oci_connect('dis_admin', '123456', 'localhost:1521/ORCL', "AL32UTF8"); /
                 <aside class="left-bar">
                     <div class="admin-box">
                         <?php
-$admin_type = $_SESSION['admin_type'];
-if ($admin_type == 1) {
-    $admin_type = "超级管理员";
-} elseif ($admin_type == 2) {
-    $admin_type = "管理员";
-} elseif ($admin_type == 3) {
-    $admin_type = "财务管理";
-} elseif ($admin_type == 4) {
-    $admin_type = "库存管理";
-}
-echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /><h4 class=\"online-user\">" . $_SESSION['admin_name'] . "</h4><i class=\"iconfont icon-certificated\" style=\"color: #1afa29;\"></i><h5 class=\"user-type\">" . $admin_type . "</h5>";
-?>
+                        $admin_type = $_SESSION['admin_type'];
+                        if ($admin_type == 1) {
+                            $admin_type = "超级管理员";
+                        } elseif ($admin_type == 2) {
+                            $admin_type = "管理员";
+                        } elseif ($admin_type == 3) {
+                            $admin_type = "财务管理";
+                        } elseif ($admin_type == 4) {
+                            $admin_type = "库存管理";
+                        }
+                        echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /><h4 class=\"online-user\">" . $_SESSION['admin_name'] . "</h4><i class=\"iconfont icon-certificated\" style=\"color: #1afa29;\"></i><h5 class=\"user-type\">" . $admin_type . "</h5>";
+                        ?>
                     </div>
                     <section class="sidebar">
                         <ul class="sidebar-menu">
-                            <li class="treeview">
+                            <!-- <li class="header">导航</li> -->
+                            <li class="treeview active">
                                 <a href="javascript:void(0);">
                                     <i class="iconfont icon-employee"></i>
                                     <span>员工管理</span>
@@ -86,10 +150,14 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                         <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu">
+                                <ul class="treeview-menu menu-open">
                                     <li>
                                         <a id="menu-employeeList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-list"></i>员工列表</a>
+                                    </li>
+                                    <li>
+                                        <a id="menu-presenceList-item" href="javascript:void(0);" class="innerActive">
+                                            <i class="iconfont icon-presence"></i>出勤查询</a>
                                     </li>
                                     <li>
                                         <a id="menu-addEmployee-item" href="javascript:void(0);">
@@ -154,7 +222,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                     </li>
                                     <li>
                                         <a id="menu-orderList-item" href="javascript:void(0);">
-                                            <i class="iconfont icon-display"></i>查询订单
+                                            <i class="iconfont icon-display"></i>今日订单
                                         </a>
                                     </li>
                                     <li>
@@ -163,7 +231,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                     </li>
                                 </ul>
                             </li>
-                            <li class="treeview active">
+                            <li class="treeview">
                                 <a href="javascript:void(0);">
                                     <i class="iconfont icon-dish"></i>
                                     <span>菜单管理</span>
@@ -171,9 +239,9 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                         <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
                                 </a>
-                                <ul class="treeview-menu menu-open">
+                                <ul class="treeview-menu">
                                     <li>
-                                        <a id="menu-dishList-item" href="javascript:void(0);" class="innerActive">
+                                        <a id="menu-dishList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-list"></i>查看菜单</a>
                                     </li>
                                     <li>
@@ -217,61 +285,46 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                 <div class="mask"></div>
                 <div class="main-bar">
                     <div class="title">
-                        <h4 class="title-left">查看菜单</h4>
+                        <h4 class="title-left">出勤查询</h4>
                     </div>
                     <div class="box-wrap">
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-                                <table class="dishListTable" style="display: none;">
-                                    <thead>
-                                        <tr>
-                                            <th>序号</th>
-                                            <th>类型</th>
-                                            <th>图片</th>
-                                            <th>名称</th>
-                                            <th>价格</th>
-                                            <th>操作</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="dishListTableBody">
-                                        <?php
-                                        $sql_query = "SELECT DISH_ID,DISH_NAME,DISH_PIC,DISH_PRICE,DISH_TYPE FROM SCOTT.DISH WHERE DIS_STATUS>0 ORDER BY DISH_TYPE,DISH_NAME DESC";
-                                        $statement = oci_parse($conn, $sql_query);
-                                        oci_execute($statement);
-                                        $count = 0;
-                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-                                            $count++;
-                                            // $dish_id = $row[0];
-                                            // $dish_name = $row[1];
-                                            // $dish_pic = $row[2];
-                                            // $dish_price = $row[3];
-                                            // $dish_type = $row[4];
-                                            if ($row[4] == 1) {
-                                                $row[4] = "早餐";
-                                            } elseif ($row[4] == 2) {
-                                                $row[4] = "主食";
-                                            } elseif ($row[4] == 3) {
-                                                $row[4] = "甜品/饮料";
-                                            } elseif ($row[4] == 4) {
-                                                $row[4] = "小食";
-                                            }
-                                            $row[3] = $row[3] . ".00";
-                                            echo "<tr><td>$count</td><td>$row[4]</td><td><img src=\"$row[2]\" /></td><td>$row[1]</td><td>$row[3]</td><td><a class=\"table-update-btn update-dish\" href = \"javascript:void(0);\" onclick=\"update_dish('" . $row[0] . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
-                                        }
-                                        ?>
-                                        <script>
-                                        $(document).ready(() => {
-                                            $(".dishListTable").DataTable({
-                                                autoWidth: true,
-                                                responsive: true
-                                            });
-                                            $(".dishListTable").displayInfo();
-                                            $(".dishListTable").show();
-                                        })
-                                        </script>
-                                    </tbody>
-                                </table>
+                                <div class="search-top-wrap">
+                                    <div class="search-top" id="presence-search-top">
+                                        <label>查询方式
+                                            <select id="presence-type-select" class="form-control">
+                                                <option value="day">按日</option>
+                                                <option value="week">按周</option>
+                                                <option value="month">按月</option>
+                                                <option value="season">按季度</option>
+                                                <option value="employee">按员工</option>
+                                            </select>
+                                        </label>
+                                        <label class="search-radio-wrap">
+                                            <label class="search-radio">
+                                                <input type="radio" class=".radio-inline" name="day" value="today"
+                                                    checked="checked" />今天
+                                            </label>
+                                            <label class="search-radio">
+                                                <input type="radio" class=".radio-inline" name="day" value="yesterday" />昨天
+                                            </label>
+                                            <label class="search-radio presence-select-date">
+                                                <input type="radio" class=".radio-inline" name="day" value="select" />选择日期
+                                            </label>
+                                        </label>
+                                        <label>
+                                            <button type="button" class="search-btn presence-search-btn">查询</button>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="box">
+                            <div id="search-result-wrap" class="inner-box">
+
                             </div>
                         </div>
                     </div>
@@ -286,8 +339,8 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                 });
                             }
                             //
-                            changeMainBar("employeeList");
-                            changeMainBar("addEmployee");
+                            changeMainBar('employeeList');
+                            changeMainBar('addEmployee');
                             changeMainBar("financeList");
                             changeMainBar("financeHistory");
                             changeMainBar("inventoryList");
@@ -296,11 +349,13 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                             changeMainBar("preOrderList");
                             changeMainBar("orderList");
                             changeMainBar("orderHistory");
+                            changeMainBar("dishList");
                             changeMainBar("addDish");
                             changeMainBar("tableList");
                             changeMainBar("addTable");
                         });
                     </script>
+                    <div class="shelter" onclick="hideBox()"></div>
                 </div>
             </div>
         </div>
