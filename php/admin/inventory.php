@@ -9,7 +9,7 @@ if ($ref == "") {
     exit();
 } else {
     $url = parse_url($ref);
-    if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" &&$url['host']!="47.95.212.18") {
+    if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" && $url['host'] != "47.95.212.18") {
         echo "get out";
         exit();
     }
@@ -21,11 +21,11 @@ if (isset($_GET['request']) && $_GET['request'] != "") {
 } elseif (isset($_POST['request']) && $_POST['request'] != "") {
     $request = $_POST['request'];
     $admin_id = $_POST['admin_id'];
-}else{
+} else {
     die();
 }
 if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如果已设置session且session对应用户为当前访问用户
-    
+
 
     $conn = oci_connect('inv_admin', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
     if (!$conn) { //未连接成功，终止脚本并返回错误信息
@@ -41,7 +41,6 @@ if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如�
         if ($request == "purchase") {
             purchase($conn);
         }
-
     }
 }
 function islegalid($str)
@@ -62,28 +61,25 @@ function islegalnum($str)
 }
 function purchase($conn)
 {
-    if (islegalid($_POST['goods_id']) and islegalnum($_POST['purchase_quantity'])) {
-        $sql_query = "SELECT COUNT(PURCHASE_ID) FROM SCOTT.PURCHASE";
+    if (islegalid($_POST['goods_id']) and islegalnum($_POST['quantity'])) {
+        $sql_query = "SELECT COUNT(inventory_id) FROM SCOTT.inventory";
         $statement = oci_parse($conn, $sql_query);
-        $sum = oci_execute($statement);
-        $str = strval($sum);
-        $PURCHASE_ID = "pur_" . date("ymd_hms", time());
-
-        $sql_query = "INSERT INTO soctt.PURCHASE (PURCHASE_ID, PURCHASE_NUMBER, GOODS_ID, PURCHASE_QUANTITY, PURCHASE_DATE, PUR_STATUS) VALUES ('$PURCHASE_ID', '" . $_POST['purchase_number'] . "', '" . $_POST['goods_id'] . "', " . $_POST['purchase_quantity'] . ", '" . $_POST['purchase_date'] . "', 1)";
+        oci_execute($statement);
+        $count = oci_fetch_row($statement, OCI_RETURN_NULLS)[0]+1;
+        
+        $_inventory_id = $count < 10 ? "00000$count" : ($count < 100 ? "0000$count" : ($count < 1000 ? "000$count" : "00$count"));
+        $inventory_id = "inv_$_inventory_id";
+        $goods_name = $_POST['goods_name'];
+        $quantity = $_POST['quantity'];
+        $sql_query = "BEGIN scott.addInventory('$inventory_id','$goods_name',$quantity); END;";
 
         $statement = oci_parse($conn, $sql_query);
         if (!oci_execute($statement)) {
-            echo json_encode(array("message" => "false"));
-        }
-
-        $sql_query = "UPDATE soctt.INVENTORY SET QUANTITY = " . $_POST['purchase_quantity'] . " WHERE GOODS_ID = '" . $_POST['goods_id'] . "'";
-        $statement = oci_parse($conn, $sql_query);
-        if (oci_execute($statement)) {
-            echo json_encode(array("message" => "success"));
+            echo json_encode(array("message" => "error"));
         } else {
-            echo json_encode(array("message" => "false"));
+            echo json_encode(array("message" => "success"));
         }
     } else {
-        echo json_encode(array("message" => "false"));
+        echo json_encode(array("message" => "error"));
     }
 }

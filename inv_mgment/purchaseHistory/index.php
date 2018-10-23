@@ -131,6 +131,61 @@ session_start();
                 </aside>
                 <div class="mask"></div>
                 <div class="main-bar">
+                <div class="title">
+                        <h4 class="title-left">查看进货信息</h4>
+                    </div>
+                    <div class="box-wrap">
+                        <div class="box">
+                            <div class="inner-top-wrap"></div>
+                            <div class="inner-box">
+                <table class="purchaseListTable" style="display: none;">
+                                    <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>进货价格</th>
+                                            <th>进货日期</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="inventoryListTableBody">
+                                        <?php
+                                        
+
+                                        $sql_query = "SELECT scott.inventory.inventory_id,scott.goods.SCOTT.GOODS_goods_name,scott.inventory.QUANTITY FROM SCOTT.INVENTORY,SCOTT>GOODS WHERE SCOTT.GOODS.GOO_STATUS>0 AND SCOTT.INVENTORY.INV_STATUS>0 ADN SCOTT.INVENTORY.GOODS_ID=GOODS.GOODS_ID";
+                                        $statement = oci_parse($conn, $sql_query);
+                                        oci_execute($statement);
+                                        $count = 0;
+                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+                                            $count++;
+                                            $goods_id=$row[0];
+                                            $goods_name=$row[1];
+                                            $goods_price=$row[2];
+                                            $goods_type=$row[3];
+                                            $quantity=$row[4];
+                                            if ($goods_type == 1) {
+                                                $goods_type = "粮食";
+                                            } elseif ($goods_type == 2) {
+                                                $goods_type = "调料";
+                                            } elseif ($goods_type == 3) {
+                                                $goods_type = "生鲜";
+                                            }
+                                            echo "<tr><td>$count</td><td>$goods_name</td><td>$goods_price</td><td>$goods_type</td><td>$quantity</td></tr>";
+                                        }
+                                        ?>
+                                        <script>
+                                        $(document).ready(() => {
+                                            $(".purchaseListTable").DataTable({
+                                                autoWidth: true,
+                                                responsive: true
+                                            });
+                                            $(".purchaseListTable").displayInfo();
+                                            $(".purchaseListTable").show();
+                                        })
+                                        </script>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                     <script>
                         $(document).ready(() => {
 
