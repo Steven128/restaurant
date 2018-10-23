@@ -1,10 +1,9 @@
 <?php
 
-if (isset($_POST['request']) && $_POST['request'] != "") {
-    $request = $_POST['request'];
-} else {
-    die();
-}
+
+$data = json_decode($_POST['param']);
+$request = $data->request;
+
 
 $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
 if (!$conn) { //未连接成功，终止脚本并返回错误信息
@@ -34,6 +33,20 @@ if (!$conn) { //未连接成功，终止脚本并返回错误信息
     }
 }
 
+function object_to_array($obj) {
+    $obj = (array)$obj;
+    foreach ($obj as $k => $v) {
+        if (gettype($v) == 'resource') {
+            return;
+        }
+        if (gettype($v) == 'object' || gettype($v) == 'array') {
+            $obj[$k] = (array)object_to_array($v);
+        }
+    }
+ 
+    return $obj;
+}
+
 function getMenu($conn)
 { //图片传输未解决
     $sql_select1 = "SELECT DISH_ID,DISH_NAME,DISH_PIC,DISH_PRICE,DISH_TYPE FROM SCOTT.DISH WHERE DIS_STATUS=1";
@@ -46,7 +59,7 @@ function getMenu($conn)
         $dish_pic = $row[2];
         $dish_price = $row[3];
         $dish_type = $row[4];
-        $menu_info1 = array('dish_id' => $dish_id, 'dish_name' => $dish_name, 'dish_pic' => $dish_pic, 'dish_price' => $dish_price, ' dish_type' => $dish_type);
+        $menu_info1 = array('id' => $dish_id, 'name' => $dish_name, 'picture' => $dish_pic, 'price' => $dish_price, ' type' => $dish_type);
         array_push($menu_info, $menu_info1);
     }
     echo json_encode(array("message" => "success", "data" => $menu_info));
@@ -54,14 +67,13 @@ function getMenu($conn)
 
 function createOrder($conn)
 {
-    $dishes = $_POST["dishes"];
+    $dishes = object_to_array($data->dishes);
     //$order_note = $_POST["order_note"];
     $order_note = null;
     $dish_list = null;
     $total_price = null;
-    $table = $_POST['table'];
-    $table_id = $table['table_id'];
-    $table_number = $table['table_number'];
+    $table_id = $data->table->id;
+    $table_number = $data->table->number;
     $sql_select1 = "SELECT ORDER_ID FROM SCOTT.ORDER_LIST WHERE TABLE_ID='" . $table_id . "' AND PAY_STATUS=0";
     $statement3 = oci_parse($conn, $sql_select1);
     oci_execute($statement3);
@@ -73,9 +85,9 @@ function createOrder($conn)
         $count = 0;
         foreach ($dishes as $dish) {
             $count++;
-            $dish_id = $dish['dish_id'];
+            $dish_id = $dish['id'];
             $dish_list = "$dish_list" . "," . "$dish_id";
-            $dish_price = $dish['dish_price'];
+            $dish_price = $dish['price'];
             $total_price += $dish_price;
             $_count = $count;
             $_count = $_count < 10 ? "00$_count" : ($c_ount < 100 ? "0$_count" : "$_count");
@@ -97,12 +109,12 @@ function createOrder($conn)
         $count = $row1[0];
         foreach ($dishes as $dish) {
             $count++;
-            $dish_id = $dish['dish_id'];
+            $dish_id = $dish['id'];
             $dish_list = "$dish_list" . "," . "$dish_id";
-            $dish_price = $dish['dish_price'];
+            $dish_price = $dish['price'];
             $total_price += $dish_price;
             $_count = $count;
-            $_count = $_count < 10 ? "00$_count" : ($c_ount < 100 ? "0$_count" : "$_count");
+            $_count = $_count < 10 ? "00$_count" : ($_count < 100 ? "0$_count" : "$_count");
             $sales_id = "sal_" . substr($order_id, -18) . "_" . "$_count";
             $sql_insert2 = "INSERT INTO SCOTT.SALES (SALES_ID,DISH_ID,DISH_PRICE,ORDER_ID,SAL_STATUS) VALUES ('$sales_id','$dish_id',$dish_price,'$order_id',1)";
             $statement2 = oci_parse($conn, $sql_insert2);
@@ -121,7 +133,7 @@ function createOrder($conn)
 
 }
 
-function deleteDish($conn)
+function deleteDish($conn)//业务逻辑需要改
 {
     $order_id = $_POST['order_id'];
     $dish_id = $_POST['dish_id'];

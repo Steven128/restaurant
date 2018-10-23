@@ -1,23 +1,78 @@
 cook.php
+需要：
+request:getCookDishs
+返回：
+message:success
+data:{id:
+    name:
+}
 
-
-
-
+需要：
+request:changeCookStatus
+id:
+name:
+返回：
+message:success
 
 
 login.php
-
-
+需要：
+request:login
+id:
+返回：
+成功:message:success
+    data:
+失败:message:error
 
 
 order.php
+需要：
+request:getMenu
+返回：
+message:success
+data{id:
+    name:
+    picture:
+    price:
+    type:
+}
+
+需要：
+request:createOrder
+dishes:{dish对象}
+table:{table对象}
+返回:
+message:success
+
+需要：//需要修改
+request:deleteDish
+返回：
+message:success
+
+需要：
 
 
 
 pay.php
+需要：
 
+
+返回：
 
 
 table.php
+需要：
+request:getTables
+返回：
+message:success
+data:{
+    id:
+    tableName:
+    seatsCount:
+    status:
+}
 
-
+需要：
+request:useTable
+返回：
+message:success
