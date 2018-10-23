@@ -2,17 +2,20 @@
 
 require '../updatePic.php';
 session_start(); //开启php_session
-//$ref = $_SERVER['HTTP_REFERER'];
-// if ($ref == "") {
-//     echo "不允许从地址栏访问";
-//     exit();
-// } else {
-//     $url = parse_url($ref);
-//     if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost") {
-//         echo "no";
-//         exit();
-//     }
-// }
+if (isset($_SERVER['HTTP_REFERER']))
+    $ref = $_SERVER['HTTP_REFERER'];
+else
+    $ref = "";
+if ($ref == "") {
+    echo "不允许从地址栏访问";
+    exit();
+} else {
+    $url = parse_url($ref);
+    if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" &&$url['host']!="47.95.212.18") {
+        echo "get out";
+        exit();
+    }
+}
 
 if (isset($_GET['request']) && $_GET['request'] != "") {
     $request = $_GET['request'];
@@ -20,7 +23,7 @@ if (isset($_GET['request']) && $_GET['request'] != "") {
 } elseif (isset($_POST['request']) && $_POST['request'] != "") {
     $request = $_POST['request'];
     $admin_id = $_POST['admin_id'];
-}else{
+} else {
     die();
 }
 if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如果已设置session且session对应用户为当前访问用户
@@ -80,12 +83,12 @@ function addEmployee($conn)
     $employee_id = "emp_" . $employee_id . "_$gender" . "_";
     $param = $count < 10 ? "000$count" : ($count < 100 ? "00$count" : "0$count");
     $employee_id = "$employee_id" . "$param";
-    $name=$_POST['name'];
-    $working_year=0;
-    $age=$_POST['age'];
+    $name = $_POST['name'];
+    $working_year = 0;
+    $age = $_POST['age'];
     $salary = $_POST['salary'];
     $phone_num = $_POST['phone_num'];
-    $employee_type= $_POST['employee_type'];
+    $employee_type = $_POST['employee_type'];
     $employee_pic = "../../src/employee_pic/default.png";
     $emp_status = 1;
     
@@ -105,7 +108,7 @@ function addEmployee($conn)
 function deleteEmployee($conn)
 {
     if (islegalid($_POST['employee_id'])) {
-        $employee_id=$_POST['employee_id'];
+        $employee_id = $_POST['employee_id'];
         //$sql_query = "UPDATE scott.EMPLOYEE SET EMP_STATUS = 0 WHERE EMPLOYEE_ID = '" . $_POST['employee_id'] . "'";
         $sql_query = "BEGIN scott.deleteEmployee('$employee_id'); END;";
         $statement = oci_parse($conn, $sql_query);

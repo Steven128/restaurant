@@ -303,7 +303,7 @@ session_start();
                                     </thead>
                                     <tbody class="orderListTableBody">
                                         <?php
-                                        $sql_query = "SELECT order_id,table_id,dish_list,total_price,pay_method,pay_time,order_note,pay_status FROM SCOTT.ORDER_LIST WHERE ORD_STATUS=1";
+                                        $sql_query = "SELECT order_id,table_id,dish_list,total_price,pay_method,pay_time,order_note,pay_status FROM SCOTT.ORDER_LIST WHERE ORD_STATUS=1 AND SUBSTR(ORDER_ID,9,8)='".date("Ymd")."' ORDER BY pay_time DESC";
                                         $statement = oci_parse($conn, $sql_query);
                                         oci_execute($statement);
                                         $count = 0;

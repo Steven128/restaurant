@@ -1,12 +1,16 @@
 <?php
 $ref = $_SERVER['REFERER'];
+if (isset($_SERVER['HTTP_REFERER']))
+    $ref = $_SERVER['HTTP_REFERER'];
+else
+    $ref = "";
 if ($ref == "") {
     echo "不允许从地址栏访问";
     exit();
 } else {
     $url = parse_url($ref);
-    if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost") {
-        echo "no";
+    if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" &&$url['host']!="47.95.212.18") {
+        echo "get out";
         exit();
     }
 }
