@@ -30,19 +30,22 @@
             margin: 0 !important;
         }
         
-        .goods-add-btn {
+        .goods-add-btn,
+        .goods-del-btn {
             position: relative;
             background-color: transparent;
             border: 0;
-            top: 6px;
-            right: -473px;
+            right: 15px;
+            float: right;
         }
         
-        .goods-add-btn:hover {
+        .goods-add-btn:hover,
+        .goods-del-btn:hover {
             text-decoration: transparent;
         }
         
-        .goods-add-btn i {
+        .goods-add-btn i,
+        .goods-del-btn i {
             font-size: 24px;
             color: #1286db;
         }
@@ -151,11 +154,11 @@
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box row">
                                 <div class="col-xs-0 col-sm-1 col-md-2 col-lg-3"></div>
-                                <form id="addTable-form" class="form-horizontal col-xs-12 col-sm-10 col-md-8 col-lg-6" method="post" action="">
+                                <form id="addPurchase-form" class="form-horizontal col-xs-12 col-sm-10 col-md-8 col-lg-6" method="post" action="">
                                     <div class="subform col-xs-12">
                                         <div class="goods-select-wrap form-group col-xs-12 col-sm-6">
                                             <div class="section_title">原料</div>
-                                            <select id="goods-select-1" class="goods-select form-control">
+                                            <select id="goods-select-1" class="goods-select form-control" disabled="disabled">
                                                 
                                             </select>
                                         </div>
@@ -163,14 +166,12 @@
                                             <div class="section_title">数量（公斤）</div>
                                             <input type="text" class="goods-quantity input-text form-control" name="default_number" placeholder="请输入数量" maxlength="2" />
                                         </div>
-                                        <div class="form-group col-xs-12">
-                                            <a class="goods-add-btn" onclick="addGoods(this)">
-                                                <i class="iconfont icon-add"></i>
-                                            </a>
-                                        </div>
+                                        <a class="goods-add-btn" onclick="addGoods(this)">
+                                            <i class="iconfont icon-add"></i>
+                                        </a>
                                     </div>
                                     <div class="btn-area">
-                                        <button id="submit" name="submit" type="submit" class="submit">添加</button>
+                                        <button id="submit" name="submit" type="button" class="submit">添加</button>
                                     </div>
                                 </form>
                             </div>

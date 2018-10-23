@@ -1,19 +1,19 @@
 <?php
-$ref = $_SERVER['REFERER'];
-if (isset($_SERVER['HTTP_REFERER']))
-    $ref = $_SERVER['HTTP_REFERER'];
-else
-    $ref = "";
-if ($ref == "") {
-    echo "不允许从地址栏访问";
-    exit();
-} else {
-    $url = parse_url($ref);
-    if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" && $url['host'] != "47.95.212.18") {
-        echo "get out";
-        exit();
-    }
-}
+// $ref = $_SERVER['REFERER'];
+// if (isset($_SERVER['HTTP_REFERER']))
+//     $ref = $_SERVER['HTTP_REFERER'];
+// else
+//     $ref = "";
+// if ($ref == "") {
+//     echo "不允许从地址栏访问";
+//     exit();
+// } else {
+//     $url = parse_url($ref);
+//     if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" && $url['host'] != "47.95.212.18") {
+//         echo "get out";
+//         exit();
+//     }
+// }
 session_start(); //开启php_session
 if (isset($_GET['request']) && $_GET['request'] != "") {
     $request = $_GET['request'];
@@ -65,8 +65,8 @@ function getGoodsName($conn)
     $statement = oci_parse($conn, $sql_query);
     oci_execute($statement);
     $goodsName=array();
-    while($row = oci_fetch_array($statement, OCI_RETURN_NULLS)){
-        array_push($goodsName,$row[0]);
+    while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) {
+        array_push($goodsName, $row[0]);
     }
     echo json_encode($goodsName);
 }
