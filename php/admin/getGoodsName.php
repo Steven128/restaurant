@@ -38,8 +38,8 @@ if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //å¦‚æ
         // if ($admin_type != 1 and $admin_type != 4) {
         //     exit();
         // }
-        if ($request == "purchase") {
-            purchase($conn);
+        if ($request == "getGoodsName") {
+            getGoodsName($conn);
         }
     }
 }
@@ -59,27 +59,14 @@ function islegalnum($str)
         return false;
     }
 }
-function purchase($conn)
+function getGoodsName($conn)
 {
-    if (islegalid($_POST['goods_id']) and islegalnum($_POST['quantity'])) {
-        $sql_query = "SELECT COUNT(inventory_id) FROM SCOTT.inventory";
-        $statement = oci_parse($conn, $sql_query);
-        oci_execute($statement);
-        $count = oci_fetch_row($statement, OCI_RETURN_NULLS)[0]+1;
-        
-        $_inventory_id = $count < 10 ? "00000$count" : ($count < 100 ? "0000$count" : ($count < 1000 ? "000$count" : "00$count"));
-        $inventory_id = "inv_$_inventory_id";
-        $goods_name = $_POST['goods_name'];
-        $quantity = $_POST['quantity'];
-        $sql_query = "BEGIN scott.addInventory('$inventory_id','$goods_name',$quantity); END;";
-
-        $statement = oci_parse($conn, $sql_query);
-        if (!oci_execute($statement)) {
-            echo json_encode(array("message" => "error"));
-        } else {
-            echo json_encode(array("message" => "success"));
-        }
-    } else {
-        echo json_encode(array("message" => "error"));
+    $sql_query = "SELECT goods_name FROM SCOTT.goods";
+    $statement = oci_parse($conn, $sql_query);
+    oci_execute($statement);
+    $goodsName=array();
+    while($row = oci_fetch_array($statement, OCI_RETURN_NULLS)){
+        array_push($goodsName,$row[0]);
     }
+    echo json_encode($goodsName);
 }

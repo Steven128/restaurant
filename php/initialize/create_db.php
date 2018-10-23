@@ -162,6 +162,30 @@ if (!$conn) {
     //     echo $statement;
     // }
 
+    $sql_create_tab = "CREATE TABLE add_inventory(" .
+        "inventory_id VARCHAR(20) NOT NULL," .
+        "goods_id VARCHAR(20) NOT NULL," .
+        "quantity NUMERIC(12,2) NOT NULL," .
+        "inv_status NUMERIC(1,0) DEFAULT 1 NOT NULL," .
+        "FOREIGN KEY (goods_id) REFERENCES goods(goods_id) ON DELETE CASCADE)";
+    $statement = oci_parse($conn, $sql_create_tab);
+    if (oci_execute($statement)) {
+        echo "<br>创建库存表成功！";
+        $statement = oci_parse($conn, "COMMENT ON TABLE inventory IS '库存表'");
+        oci_execute($statement);
+        $statement = oci_parse($conn, "COMMENT ON COLUMN inventory.inventory_id IS '库存ID'");
+        oci_execute($statement);
+        $statement = oci_parse($conn, "COMMENT ON COLUMN inventory.goods_id IS '原料ID（外键）'");
+        oci_execute($statement);
+        $statement = oci_parse($conn, "COMMENT ON COLUMN inventory.quantity IS '数量'");
+        oci_execute($statement);
+        $statement = oci_parse($conn, "COMMENT ON COLUMN inventory.inv_status IS '状态，0已删除 1有效'");
+        oci_execute($statement);
+    } else {
+        echo $statement;
+    }
+
+
     // $sql_create_tab = "CREATE TABLE inventory(" .
     //     "inventory_id VARCHAR(20) NOT NULL PRIMARY KEY," .
     //     "goods_id VARCHAR(20) NOT NULL," .
@@ -449,8 +473,8 @@ if (!$conn) {
             echo "<br>授予用户$user[$i]连接权限成功！";
         }
     }
-    $user = array("emp_admin", "emp_admin", "fin_admin", "fin_admin", "inv_admin", "inv_admin", "inv_admin", "ord_admin", "ord_admin", "ord_admin", "ord_admin", "dis_admin", "tab_admin");
-    $table = array("employee", "presence", "finance", "overhead", "inventory", "loss", "goods", "pre_order", "order_list", "dish", "res_table", "dish", "res_table");
+    $user = array("emp_admin", "emp_admin", "fin_admin", "fin_admin", "inv_admin", "inv_admin", "inv_admin", "inv_admin", "ord_admin", "ord_admin", "ord_admin", "ord_admin", "dis_admin", "tab_admin");
+    $table = array("employee", "presence", "finance", "overhead", "overhead", "inventory", "loss", "goods", "pre_order", "order_list", "dish", "res_table", "dish", "res_table");
     for ($i = 0; $i < count($user); $i++) {
         $sql_grant = "grant select on SCOTT.$table[$i] to $user[$i]";
         $statement = oci_parse($conn, $sql_grant);
@@ -627,8 +651,28 @@ END deleteTable;
     } else
         echo "n";
 
-    $conn = oci_connect('system', '123456', 'localhost:1521/ORCL', "AL32UTF8");
-    
+
+
+    $sql_ins = "CREATE OR REPLACE PROCEDURE addInventory 
+        (v_inventory_id IN inventory.inventory_id%TYPE, 
+        v_goods_name IN goods.goods_name%TYPE,
+        v_quantity IN inventory.quantity%TYPE) 
+        IS 
+        v_goods_id goods.goods_id%TYPE;
+        BEGIN 
+        select goods_id into v_goods_id from scott.goods where goods_name=v_goods_name;
+        INSERT INTO SCOTT.inventory VALUES (v_inventory_id, v_goods_id,v_quantity,1);
+
+        UPDATE SCOTT.GOODS SET quantity=quantity+v_quantity WHERE goods_id=v_goods_id;
+        END addInventory; 
+        ";
+    $statement = oci_parse($conn, $sql_ins);
+    if (oci_execute($statement)) {
+        echo "addInventory";
+    } else
+        echo "n";
+
+
     $sql = "grant execute on scott.updateEmployee to emp_admin;
     grant execute on scott.addEmployee to emp_admin;
     grant execute on scott.deleteEmployee to emp_admin;
@@ -637,7 +681,8 @@ END deleteTable;
     grant execute on scott.deleteDish to dis_admin;
     grant execute on scott.updateTable to tab_admin;
     grant execute on scott.addTable to tab_admin;
-    grant execute on scott.deleteTable to tab_admin";
+    grant execute on scott.deleteTable to tab_admin;
+    grant execute on scott.addInventory to inv_admin";
 
     $sql_grant = explode(";", $sql);
     foreach ($sql_grant as $k => $v) {

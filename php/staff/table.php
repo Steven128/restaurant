@@ -21,15 +21,18 @@ if (!$conn) { //未连接成功，终止脚本并返回错误信息
 
 function getTables($conn)
 {
-    $sql_select1 = "SELECT TABLE_NUMBER,DEFAULT_NUMBER,TABLE_ORDER_STATUS FROM SCOTT.RES_TABLE WHERE TAB_STATUS=1";
+    //应该是大于0 tab_status >0 因为1 2 3都是有效的;要返回table_id
+    $sql_select1 = "SELECT TABLE_ID,TABLE_NUMBER,DEFAULT_NUMBER,TABLE_ORDER_STATUS FROM SCOTT.RES_TABLE WHERE TAB_STATUS>0";
     $statement1 = oci_parse($conn, $sql_select1);
     oci_execute($statement1);
     $table_info = array();
     while ($row = oci_fetch_array($statement1, OCI_RETURN_NULLS)) {
-        $table_number = $row[0];
-        $default_number = $row[1];
-        $table_order_status = $row[2];
-        $table_info1 = array('table_number' => $table_number, 'default_number' => $default_number, 'table_order_status' => $table_order_status);
+        $table_id=$row[o];
+        $table_number = $row[1];
+        $default_number = $row[2];
+        $table_order_status = $row[3];
+        //属性名应该改
+        $table_info1 = array('id'=>$table_id, /*'table_number'*/'tableName' => $table_number, /*'default_number'*/'seatsCount' => $default_number, /*'table_order_status'*/'status' => $table_order_status);
         array_push($table_info, $table_info1);
     }
     echo json_encode(array("message" => "success", "data" => $table_info));

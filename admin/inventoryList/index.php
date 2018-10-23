@@ -226,7 +226,7 @@ session_start();
                                         <tr>
                                             <th>序号</th>
                                             <th>原料</th>
-                                            <th>数量</th>
+                                            <th>数量(kg)</th>
                                             <th>价格</th>
                                             <th>类型</th>
                                         </tr>
@@ -252,6 +252,29 @@ session_start();
                                             }
                                             echo "<tr><td>$count</td><td>$row2[0]</td><td>$row[2]</td><td>$row2[1]</td><td>$row2[2]</td></tr>";
                                         }
+
+                                        // $sql_query = "SELECT GOODS_ID,GOODS_NAME,goods_price,goods_type,QUANTITY FROM SCOTT.GOODS WHERE GOO_STATUS>0";
+                                        // $statement = oci_parse($conn, $sql_query);
+                                        // oci_execute($statement);
+                                        // $count = 0;
+                                        // while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+                                        //     $count++;
+                                        //     $goods_id=$row[0];
+                                        //     $goods_name=$row[1];
+                                        //     $goods_price=$row[2];
+                                        //     $goods_type=$row[3];
+                                        //     $quantity=$row[4];
+                                        //     if ($goods_type == 1) {
+                                        //         $goods_type = "粮食";
+                                        //     } elseif ($goods_type == 2) {
+                                        //         $goods_type = "调料";
+                                        //     } elseif ($goods_type == 3) {
+                                        //         $goods_type = "生鲜";
+                                        //     }
+                                        //     echo "<tr><td>$count</td><td>$goods_name</td><td>$goods_price</td><td>$goods_type</td><td>$quantity</td></tr>";
+                                        // }
+
+
                                         ?>
                                         <script>
                                         $(document).ready(() => {
