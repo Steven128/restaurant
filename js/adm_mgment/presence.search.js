@@ -449,7 +449,7 @@ function searchByEmployee(employee_name) {
         dataType: "JSON",
         success: (e) => {
             console.log(e)
-            if (e.employee_info.length == 1) {
+            if (1) {
                 var gender = e.employee_info.gender;
                 if (gender == 1) {
                     gender = "男";
@@ -495,8 +495,8 @@ function searchByEmployee(employee_name) {
                     '<h5 class="emp-time">入职时间： ' + e.employee_info.employ_time + '</h5>' +
                     '<h5 class="emp-phone">手机号码： ' + e.employee_info.phone_num + '</h5>' +
                     '</div>' +
-                    '<hr></div>';
-                html += '<h4 style="text-align: center;">未签到日期</h4>' +
+                    '</div>';
+                html += '<div class="col-xs-12"><hr></div><h4 class="col-xs-12" style="text-align: center;">未签到日期</h4>' +
                     '<table class="presenceListTable" style="display: none;">' +
                     '<thead>' +
                     '<tr>' +

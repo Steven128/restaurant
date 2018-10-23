@@ -227,67 +227,20 @@ session_start();
                     </div>
                     <div class="chart-box col-xs-12 col-md-6 col-lg-4">
                         <div class="chart-box-inner">
-                            <h4 class="chart-title">当前营业额</h4>
-                            <div style="font-size: 48px; color: #1296db;text-align: center;">
-                                <?php
-                                $sql_query = "SELECT SUM(DISH_PRICE) FROM SCOTT.SALES WHERE SAL_STATUS>=1 AND SUBSTR(ORDER_ID,9,8)='".date("Ymd", time()-2*24*3600)."'";
-                                $statement = oci_parse($conn, $sql_query);
-                                oci_execute($statement);
-                                $row = oci_fetch_array($statement, OCI_RETURN_NULLS);
-                                if ($row[0] == "") {
-                                    $row[0]=0;
-                                }
-                                echo $row[0];
-                                ?>
-                                <span style="font-size: 36px;">元</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chart-box col-xs-12 col-md-6 col-lg-4">
-                        <div class="chart-box-inner">
-                            <h4 class="chart-title">用户综合评价</h4>
-                            <div style="font-size: 48px; color: #1296db;text-align: center;">
-                                <?php
-                                $sql_query = "SELECT SUM(RATING)，COUNT(RATING) FROM SCOTT.EVALUATE WHERE EVA_STATUS=1 AND SUBSTR(ORDER_ID,9,8)='".date("Ymd", time()-2*24*3600)."'";
-                                $statement = oci_parse($conn, $sql_query);
-                                oci_execute($statement);
-                                $row = oci_fetch_array($statement, OCI_RETURN_NULLS);
-                                if ($row[1] == 0) {
-                                    $row[1]=1;
-                                }
-                                echo substr($row[0]/$row[1], 0, 3);
-                                ?>
-                                <span style="font-size: 36px;">星</span>
-                            </div>
-                            <hr>
-                            <h4 class="chart-title">差评数</h4>
-                            <h1 style="font-size: 48px; color: #1296db;text-align: center;">
-                                <?php
-                                $sql_query = "SELECT COUNT(RATING) FROM SCOTT.EVALUATE WHERE EVA_STATUS=1 AND RATING<=2 AND SUBSTR(ORDER_ID,9,8)='".date("Ymd", time()-2*24*3600)."'";
-                                $statement = oci_parse($conn, $sql_query);
-                                oci_execute($statement);
-                                $row = oci_fetch_array($statement, OCI_RETURN_NULLS);
-                                echo $row[0];
-                                ?>
-                            </h1>
-                        </div>
-                    </div>
-                    <div class="chart-box col-xs-12 col-md-6 col-lg-4">
-                        <div class="chart-box-inner">
                             <h4 class="chart-title">出勤情况</h4>
                             <div style="font-size: 36px; color: #1296db;text-align: center;">
                                 <?php
-                                    $sql_query = "SELECT COUNT(UNIQUE(PRESENCE.EMPLOYEE_ID)) FROM SCOTT.EMPLOYEE,SCOTT.PRESENCE WHERE SCOTT.EMPLOYEE.EMPLOYEE_ID=SCOTT.PRESENCE.EMPLOYEE_ID AND EMP_STATUS=1 AND PRE_STATUS=1 AND HASPRESENTED=1 AND SUBSTR(SIGN_TIME,0,10)='".date("Y-m-d", time()-24*3600)."'";
-                                    $statement = oci_parse($conn, $sql_query);
-                                    oci_execute($statement);
-                                    $row = oci_fetch_array($statement, OCI_RETURN_NULLS);
-                                    $haspresenced = "$row[0]";
-                                    $sql_query = "SELECT COUNT(*) FROM SCOTT.EMPLOYEE WHERE EMP_STATUS=1";
-                                    $statement = oci_parse($conn, $sql_query);
-                                    oci_execute($statement);
-                                    $row = oci_fetch_array($statement, OCI_RETURN_NULLS);
-                                    $quantity = "$row[0]";
-                                    echo "$haspresenced/$quantity";
+                                $sql_query = "SELECT COUNT(UNIQUE(PRESENCE.EMPLOYEE_ID)) FROM SCOTT.EMPLOYEE,SCOTT.PRESENCE WHERE SCOTT.EMPLOYEE.EMPLOYEE_ID=SCOTT.PRESENCE.EMPLOYEE_ID AND EMP_STATUS=1 AND PRE_STATUS=1 AND HASPRESENTED=1 AND SUBSTR(SIGN_TIME,0,10)='" . date("Y-m-d", time() - 24 * 3600) . "'";
+                                $statement = oci_parse($conn, $sql_query);
+                                oci_execute($statement);
+                                $row = oci_fetch_array($statement, OCI_RETURN_NULLS);
+                                $haspresenced = "$row[0]";
+                                $sql_query = "SELECT COUNT(*) FROM SCOTT.EMPLOYEE WHERE EMP_STATUS=1";
+                                $statement = oci_parse($conn, $sql_query);
+                                oci_execute($statement);
+                                $row = oci_fetch_array($statement, OCI_RETURN_NULLS);
+                                $quantity = "$row[0]";
+                                echo "$haspresenced/$quantity";
                                 ?>
                                 <span style="font-size: 24px;">人</span>
                             </div>
@@ -381,6 +334,53 @@ session_start();
                                 }
                                 });
                             </script>
+                        </div>
+                    </div>
+                    <div class="chart-box col-xs-12 col-md-6 col-lg-4">
+                        <div class="chart-box-inner">
+                            <h4 class="chart-title">用户综合评价</h4>
+                            <div style="font-size: 48px; color: #1296db;text-align: center;">
+                                <?php
+                                $sql_query = "SELECT SUM(RATING)，COUNT(RATING) FROM SCOTT.EVALUATE WHERE EVA_STATUS=1 AND SUBSTR(ORDER_ID,9,8)='".date("Ymd", time()-2*24*3600)."'";
+                                $statement = oci_parse($conn, $sql_query);
+                                oci_execute($statement);
+                                $row = oci_fetch_array($statement, OCI_RETURN_NULLS);
+                                if ($row[1] == 0) {
+                                    $row[1]=1;
+                                }
+                                echo substr($row[0]/$row[1], 0, 3);
+                                ?>
+                                <span style="font-size: 36px;">星</span>
+                            </div>
+                            <hr>
+                            <h4 class="chart-title">差评数</h4>
+                            <h1 style="font-size: 48px; color: #1296db;text-align: center;">
+                                <?php
+                                $sql_query = "SELECT COUNT(RATING) FROM SCOTT.EVALUATE WHERE EVA_STATUS=1 AND RATING<=2 AND SUBSTR(ORDER_ID,9,8)='".date("Ymd", time()-2*24*3600)."'";
+                                $statement = oci_parse($conn, $sql_query);
+                                oci_execute($statement);
+                                $row = oci_fetch_array($statement, OCI_RETURN_NULLS);
+                                echo $row[0];
+                                ?>
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="chart-box col-xs-12 col-md-6 col-lg-4">
+                        <div class="chart-box-inner">
+                            <h4 class="chart-title">当前营业额</h4>
+                            <div style="font-size: 48px; color: #1296db;text-align: center;">
+                                <?php
+                                $sql_query = "SELECT SUM(DISH_PRICE) FROM SCOTT.SALES WHERE SAL_STATUS>=1 AND SUBSTR(ORDER_ID,9,8)='" . date("Ymd", time() - 2 * 24 * 3600) . "'";
+                                $statement = oci_parse($conn, $sql_query);
+                                oci_execute($statement);
+                                $row = oci_fetch_array($statement, OCI_RETURN_NULLS);
+                                if ($row[0] == "") {
+                                    $row[0] = 0;
+                                }
+                                echo $row[0];
+                                ?>
+                                <span style="font-size: 36px;">元</span>
+                            </div>
                         </div>
                     </div>
                     <div class="chart-box col-xs-12 col-md-6 col-lg-4">

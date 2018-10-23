@@ -92,6 +92,10 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                                             <i class="iconfont icon-list"></i>员工列表</a>
                                     </li>
                                     <li>
+                                        <a id="menu-presenceList-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-presence"></i>出勤查询</a>
+                                    </li>
+                                    <li>
                                         <a id="menu-addEmployee-item" href="javascript:void(0);">
                                             <i class="iconfont icon-add-paper"></i>增加员工</a>
                                     </li>
@@ -287,6 +291,7 @@ echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10
                             }
                             //
                             changeMainBar("employeeList");
+                            changeMainBar('presenceList');
                             changeMainBar("addEmployee");
                             changeMainBar("financeList");
                             changeMainBar("financeHistory");

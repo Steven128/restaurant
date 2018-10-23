@@ -10978,7 +10978,7 @@
                  *      } );
                  *    } );
                  */
-                "sEmptyTable": "No data available in table",
+                "sEmptyTable": "没有可显示的数据",
 
 
                 /**

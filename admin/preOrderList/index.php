@@ -155,6 +155,10 @@ session_start();
                                             <i class="iconfont icon-list"></i>员工列表</a>
                                     </li>
                                     <li>
+                                        <a id="menu-presenceList-item" href="javascript:void(0);">
+                                            <i class="iconfont icon-presence"></i>出勤查询</a>
+                                    </li>
+                                    <li>
                                         <a id="menu-addEmployee-item" href="javascript:void(0);">
                                             <i class="iconfont icon-add-paper"></i>增加员工</a>
                                     </li>
@@ -348,6 +352,7 @@ session_start();
                             }
                             //
                             changeMainBar('addEmployee');
+                            changeMainBar('presenceList');
                             changeMainBar("financeList");
                             changeMainBar("financeHistory");
                             changeMainBar("inventoryList");
@@ -356,7 +361,6 @@ session_start();
                             changeMainBar("preOrderList");
                             changeMainBar("orderList");
                             changeMainBar("orderHistory");
-
                             changeMainBar("dishList");
                             changeMainBar("addDish");
                             changeMainBar("tableList");

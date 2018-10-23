@@ -10,12 +10,43 @@
     <link type="text/css" rel="stylesheet" href="../../css/iconfont.css" />
     <link type="text/css" rel="stylesheet" href="../../css/page.css" />
     <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/form.css" />
 
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/page.js"></script>
     <script type="text/javascript" src="../../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../../js/jquery.pjax.js"></script>
+    <script type="text/javascript" src="../../js/inv_mgment/inv.add.validate.js"></script>
+    <style>
+        .subform {
+            padding: 15px 30px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .form-group {
+            margin: 0 !important;
+        }
+        
+        .goods-add-btn {
+            position: relative;
+            background-color: transparent;
+            border: 0;
+            top: 6px;
+            right: -473px;
+        }
+        
+        .goods-add-btn:hover {
+            text-decoration: transparent;
+        }
+        
+        .goods-add-btn i {
+            font-size: 24px;
+            color: #1286db;
+        }
+    </style>
 </head>
 
 <body>
@@ -112,9 +143,41 @@
                 </aside>
                 <div class="mask"></div>
                 <div class="main-bar">
+                    <div class="title">
+                        <h4 class="title-left">入库登记</h4>
+                    </div>
+                    <div class="box-wrap">
+                        <div class="box box-full">
+                            <div class="inner-top-wrap"></div>
+                            <div class="inner-box row">
+                                <div class="col-xs-0 col-sm-1 col-md-2 col-lg-3"></div>
+                                <form id="addTable-form" class="form-horizontal col-xs-12 col-sm-10 col-md-8 col-lg-6" method="post" action="">
+                                    <div class="subform col-xs-12">
+                                        <div class="goods-select-wrap form-group col-xs-12 col-sm-6">
+                                            <div class="section_title">原料</div>
+                                            <select id="goods-select-1" class="goods-select form-control">
+                                                
+                                            </select>
+                                        </div>
+                                        <div class="goods-quantity-wrap form-group col-xs-12 col-sm-6">
+                                            <div class="section_title">数量（公斤）</div>
+                                            <input type="text" class="goods-quantity input-text form-control" name="default_number" placeholder="请输入数量" maxlength="2" />
+                                        </div>
+                                        <div class="form-group col-xs-12">
+                                            <a class="goods-add-btn" onclick="addGoods(this)">
+                                                <i class="iconfont icon-add"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="btn-area">
+                                        <button id="submit" name="submit" type="submit" class="submit">添加</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     <script>
                         $(document).ready(() => {
-
                             function changeMainBar(itemName) {
                                 $("#menu-" + itemName + "-item").click(() => {
                                     $.pjax({

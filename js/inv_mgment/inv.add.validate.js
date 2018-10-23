@@ -25,5 +25,32 @@ $(document).ready(() => {
             console.log(err)
         }
     })
-
 })
+
+function addGoods(_this) {
+    var $quantity = $(_this).parent().siblings(".goods-quantity-wrap").find("input");
+    if ($quantity.val() == "") {
+        if (!$quantity.hasClass("error"))
+            $quantity.addClass("error");
+    } else {
+        $quantity.removeClass("error");
+        var html = '<div class="subform col-xs-12">' +
+            '<div class="goods-select-wrap form-group col-xs-12 col-sm-6">' +
+            '<div class="section_title">原料</div>' +
+            '<select id="goods-select-1" class="goods-select form-control">' +
+            '' +
+            '</select>' +
+            '</div>' +
+            '<div class="goods-quantity-wrap form-group col-xs-12 col-sm-6">' +
+            '<div class="section_title">数量（公斤）</div>' +
+            '<input type="text" class="goods-quantity input-text form-control" name="default_number" placeholder="请输入数量" maxlength="2" />' +
+            '</div>' +
+            '<div class="form-group col-xs-12">' +
+            '<a class="goods-add-btn" onclick="addGoods(this)">' +
+            '<i class="iconfont icon-add"></i>' +
+            '</a>' +
+            '</div>' +
+            '</div>';
+        $(".subform").last().after(html);
+    }
+}

@@ -432,6 +432,8 @@ if (!$conn) {
     // }
 
 
+    $conn = oci_connect('system', '123456', 'localhost:1521/ORCL', "AL32UTF8");
+
     $user = array("emp_admin", "fin_admin", "inv_admin", "ord_admin", "dis_admin", "tab_admin");
     for ($i = 0; $i < count($user); $i++) {
         $sql_create_user = "CREATE USER $user[$i]" .
@@ -479,7 +481,8 @@ if (!$conn) {
     //     }
     // }
 
-    
+
+    $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8");
 //employee
     $sql_ins = "CREATE OR REPLACE PROCEDURE updateEmployee 
     (v_employee_id IN employee.employee_id%TYPE, 
@@ -624,6 +627,8 @@ END deleteTable;
     } else
         echo "n";
 
+    $conn = oci_connect('system', '123456', 'localhost:1521/ORCL', "AL32UTF8");
+    
     $sql = "grant execute on scott.updateEmployee to emp_admin;
     grant execute on scott.addEmployee to emp_admin;
     grant execute on scott.deleteEmployee to emp_admin;

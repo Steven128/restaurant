@@ -56,10 +56,19 @@ session_start();
             <div class="bar-box">
                 <aside class="left-bar">
                     <div class="admin-box">
-                        <img class="userPic" />
-                        <h4 class="online-user"></h4>
-                        <i class="iconfont icon-certificated" style="color: #1afa29;"></i>
-                        <h5 class="user-type"></h5>
+                        <?php
+                        $admin_type = $_SESSION['admin_type'];
+                        if ($admin_type == 1) {
+                            $admin_type = "超级管理员";
+                        } elseif ($admin_type == 2) {
+                            $admin_type = "管理员";
+                        } elseif ($admin_type == 3) {
+                            $admin_type = "财务管理";
+                        } elseif ($admin_type == 4) {
+                            $admin_type = "库存管理";
+                        }
+                        echo "<img class=\"userPic\" src=\"" . $_SESSION['admin_pic'] . "?" . mt_rand(10000, 99999) . "\" /><h4 class=\"online-user\">" . $_SESSION['admin_name'] . "</h4><i class=\"iconfont icon-certificated\" style=\"color: #1afa29;\"></i><h5 class=\"user-type\">" . $admin_type . "</h5>";
+                        ?>
                     </div>
                     <section class="sidebar">
                         <ul class="sidebar-menu">
