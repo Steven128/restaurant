@@ -426,6 +426,18 @@ $(document).ready(() => {
                 },
                 success: (e) => {
                     console.log(e)
+                    if (e.message == "success") {
+                        window.wxc.xcConfirm("修改成功！", window.wxc.xcConfirm.typeEnum.success, {
+                            onOk: function() {
+                                window.location.reload();
+                            },
+                            onClose: function() {
+                                window.location.reload();
+                            }
+                        });
+                    } else {
+                        window.wxc.xcConfirm("网络开小差啦~", window.wxc.xcConfirm.typeEnum.error);
+                    }
                 },
                 error: (err) => {
                     console.log(err)
@@ -515,6 +527,18 @@ $(document).ready(() => {
                 },
                 success: (e) => {
                     console.log(e)
+                    if (e.message == "success") {
+                        window.wxc.xcConfirm("修改成功！", window.wxc.xcConfirm.typeEnum.success, {
+                            onOk: function() {
+                                window.location.reload();
+                            },
+                            onClose: function() {
+                                window.location.reload();
+                            }
+                        });
+                    } else {
+                        window.wxc.xcConfirm("网络开小差啦~", window.wxc.xcConfirm.typeEnum.error);
+                    }
                 },
                 error: (err) => {
                     console.log(err)
