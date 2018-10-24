@@ -15,7 +15,7 @@ if (!$conn) { //未连接成功，终止脚本并返回错误信息
     die(json_encode($e));
 } else {
     if ($request == "login") {
-        login($conn);
+        login($conn,$data);
     }
 }
 
@@ -33,14 +33,14 @@ if (!$conn) { //未连接成功，终止脚本并返回错误信息
 //     return $obj;
 // }
 
-function login($conn)
+function login($conn,$data)
 {
     $employee_id = $data->id;
     $sql_select = "SELECT EMPLOYEE_TYPE FROM SCOTT.EMPLOYEE WHERE EMPLOYEE_ID='" . $employee_id . "'";
     $statement = oci_parse($conn, $sql_select);
     oci_execute($statement);
     $row = oci_fetch_array($statement);
-    if ($row = null) {
+    if ($row == null) {
         echo json_encode(array("message"));
     } else {
         echo json_encode(array("message" => "success", "data" => $row[0]));
