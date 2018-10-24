@@ -52,11 +52,7 @@ function useTable($conn, $data)//餐桌使用，预定餐桌写在preorder里
 {
     $table_number=$data->id;
     $sql_update1="UPDATE SCOTT.RES_TABLE SET TABLE_ORDER_STATUS=2 WHERE TABLE_ID='".$table_number."'";
-<<<<<<< HEAD
     $statement1=oci_parse($conn,$sql_update1);
-=======
-    $statement1=oci_parse($conn, $sql_update1);
->>>>>>> a495ba42cd1c9dcb4ec6dbd1564d916e299f36ea
     oci_execute($statement1);
     echo json_encode(array("message" => "success"));
 }
