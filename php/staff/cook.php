@@ -11,10 +11,10 @@ if (!$conn) { //未连接成功，终止脚本并返回错误信息
     die(json_encode($e));
 } else {
     if ($request == "getCookDishs") {
-        getCookDishs($conn);
+        getCookDishs($conn,$data);
     } else
     if ($request == "changeCookStatus") {
-        changeCookStatus($conn);
+        changeCookStatus($conn,$data);
     }
 }
 
@@ -32,10 +32,10 @@ if (!$conn) { //未连接成功，终止脚本并返回错误信息
 //     return $obj;
 // }
 
-function getCookDishs($conn)
+function getCookDishs($conn,$data)
 {
     $sql_select = "SELECT SALES.SALES_ID,DISH.DISH_NAME FROM SCOTT.SALES JOIN DISH ON SALES.DISH_ID=DISH.DISH_ID WHERE SAL_STATUS=1 OR SAL_STATUS=2";
-    $statement = oci_parse($conn, $sql_select);
+    $statement = oci_parse($conn,$data, $sql_select);
     oci_execute($statement);
     $cook_info = null;
     while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) {
@@ -47,7 +47,7 @@ function getCookDishs($conn)
     echo json_encode(array("message" => "success", "data" => $cook_info));
 }
 
-function changeCookStatus($conn)
+function changeCookStatus($conn,$data)
 {
     $dish_name = $data->dish->name;
     $sales_id = $data->dish->id;

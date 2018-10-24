@@ -9,11 +9,11 @@ if (!$conn) { //未连接成功，终止脚本并返回错误信息
     die(json_encode($e));
 } else {
     if ($request == "checkin") {
-        checkin($conn);
+        checkin($conn,$data);
     }
 }
 
-function checkin($conn)
+function checkin($conn,$data)
 {
 
 }

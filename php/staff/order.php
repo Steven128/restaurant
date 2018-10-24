@@ -11,25 +11,25 @@ if (!$conn) { //未连接成功，终止脚本并返回错误信息
     die(json_encode($e));
 } else {
     if ($request == "getMenu") {
-        getMenu($conn);
+        getMenu($conn,$data);
     } else
     if ($request == "createOrder") {
-        createOrder($conn);
+        createOrder($conn,$data);
     } else
     if ($request == "deleteDish") {
-        deleteDish($conn);
+        deleteDish($conn,$data);
     } else
     if ($request == "getOrder") {
-        getOrder($conn);
+        getOrder($conn,$data);
     } else
     if ($request == "payOrder") {
-        payOrder($conn);
+        payOrder($conn,$data);
     } else
     if ($request == "preOrder") {
-        perOrder($conn);
+        perOrder($conn,$data);
     } else
     if ($request == "deleteOrder") {
-        deleteOrder($conn);
+        deleteOrder($conn,$data);
     }
 }
 
@@ -47,7 +47,7 @@ function object_to_array($obj) {
     return $obj;
 }
 
-function getMenu($conn)
+function getMenu($conn,$data)
 { //图片传输未解决
     $sql_select1 = "SELECT DISH_ID,DISH_NAME,DISH_PIC,DISH_PRICE,DISH_TYPE FROM SCOTT.DISH WHERE DIS_STATUS=1";
     $statement1 = oci_parse($conn, $sql_select1);
@@ -65,7 +65,7 @@ function getMenu($conn)
     echo json_encode(array("message" => "success", "data" => $menu_info));
 }
 
-function createOrder($conn)
+function createOrder($conn,$data)
 {
     $dishes = object_to_array($data->dishes);
     //$order_note = $_POST["order_note"];
@@ -133,7 +133,7 @@ function createOrder($conn)
 
 }
 
-function deleteDish($conn)//业务逻辑需要改
+function deleteDish($conn,$data)//业务逻辑需要改
 {
     $order_id = $_POST['order_id'];
     $dish_id = $_POST['dish_id'];
@@ -171,7 +171,7 @@ function deleteDish($conn)//业务逻辑需要改
     }
 }
 
-function getOrder($conn)
+function getOrder($conn,$data)
 {
     $table_id = $_POST['table_id'];
     $sql_select1 = "SELECT * FROM SCOTT.ORDER_LIST WHERE TABLE_ID='" . $table_id . "' AND PAY_STATUS=0";
@@ -186,7 +186,7 @@ function getOrder($conn)
     }
 }
 
-function payOrder($conn)
+function payOrder($conn,$data)
 {
     $table_id = $_POST['table_id'];
     $method = $_POST['pay_method'];
@@ -197,14 +197,14 @@ function payOrder($conn)
     echo json_encode(array("message" => "success"));
 }
 
-function perOrder($conn)//未完成
+function perOrder($conn,$data)//未完成
 {
     $pre_order_time=date("Y-m-d H:i:s", time());
     $arrive_time=$_POST['arrive_time'];
 
 }
 
-function deleteOrder($conn)
+function deleteOrder($conn,$data)
 {
 
 }

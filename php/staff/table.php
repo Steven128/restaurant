@@ -40,7 +40,7 @@ function getTables($conn)
     oci_execute($statement1);
     $table_info = array();
     while ($row = oci_fetch_array($statement1, OCI_RETURN_NULLS)) {
-        $table_id=$row[o];
+        $table_id=$row[0];
         $table_number = $row[1];
         $default_number = $row[2];
         $table_order_status = $row[3];
@@ -53,8 +53,8 @@ function getTables($conn)
 
 function useTable($conn)//餐桌使用，预定餐桌写在preorder里
 {  
-    $table_number=$data->number;
-    $sql_update1="UPDATE SCOTT.RES_TABLE SET TABLE_ORDER_STATUS=2 WHERE TABLE_NUMBER=$table_number";
+    $table_number=$data->id;
+    $sql_update1="UPDATE SCOTT.RES_TABLE SET TABLE_ORDER_STATUS=2 WHERE TABLE_ID=$table_number";
     $statement1=oci_parse($conn,$sql_update1);
     oci_execute($statement1);
     echo json_encode(array("message" => "success"));
