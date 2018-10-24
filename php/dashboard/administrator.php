@@ -51,7 +51,7 @@ if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //å¦‚æ
         } elseif ($request == "updateAdmin") {
             updateEmployee($conn);
         } elseif ($request == "updateAdminPic") {
-            updateEmployeePic($conn, "sd");
+            updateEmployeePic($conn, "");
         }
     }
 }
@@ -75,7 +75,7 @@ function addEmployee($conn)
     oci_execute($statement);
     $count = oci_fetch_array($statement, OCI_RETURN_NULLS)[0];
 
-    $create_time = date("Y-m-d");
+    $create_time = date("Y-m-d h:i:s");
     if ($admin_type == 1) {
         $type="def";
     } elseif ($admin_type==2) {
