@@ -33,7 +33,7 @@ if (!$conn) { //未连接成功，终止脚本并返回错误信息
 
 function getTables($conn, $data)
 {
-    $sql_select1 = "SELECT TABLE_ID,TABLE_NUMBER,DEFAULT_NUMBER,TABLE_ORDER_STATUS FROM SCOTT.RES_TABLE WHERE TAB_STATUS>0";
+    $sql_select1 = "SELECT TABLE_ID,TABLE_NUMBER,DEFAULT_NUMBER,TABLE_ORDER_STATUS FROM SCOTT.RES_TABLE WHERE TAB_STATUS=0";
     $statement1 = oci_parse($conn, $sql_select1);
     oci_execute($statement1);
     $table_info = array();
@@ -52,7 +52,11 @@ function useTable($conn, $data)//餐桌使用，预定餐桌写在preorder里
 {
     $table_number=$data->id;
     $sql_update1="UPDATE SCOTT.RES_TABLE SET TABLE_ORDER_STATUS=2 WHERE TABLE_ID='".$table_number."'";
+<<<<<<< HEAD
+    $statement1=oci_parse($conn,$sql_update1);
+=======
     $statement1=oci_parse($conn, $sql_update1);
+>>>>>>> a495ba42cd1c9dcb4ec6dbd1564d916e299f36ea
     oci_execute($statement1);
     echo json_encode(array("message" => "success"));
 }
