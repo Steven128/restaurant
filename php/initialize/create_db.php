@@ -497,15 +497,15 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8");
 
 //     // }
 
-//     // $user = array("emp_admin", "fin_admin", "fin_admin", "inv_admin", "inv_admin", "inv_admin", "ord_admin", "dis_admin", "tab_admin");
-//     // $table = array("employee", "finance", "overhead", "inventory", "loss", "goods", "order_list", "dish", "res_table");
-//     // for ($i = 0; $i < count($user); $i++) {
-//     //     $sql_grant = "grant update on SCOTT.$table[$i] to $user[$i]";
-//     //     $statement = oci_parse($conn, $sql_grant);
-//     //     if (oci_execute($statement)) {
-//     //         echo "<br>授予用户$user[$i]对$table[$i]表的更新权限成功！";
-//     //     }
-//     // }
+    $user = array("adm_admin","emp_admin", "fin_admin", "fin_admin", "inv_admin", "inv_admin", "inv_admin", "ord_admin", "dis_admin", "tab_admin");
+    $table = array("admin","employee", "finance", "overhead", "inventory", "loss", "goods", "order_list", "dish", "res_table");
+    for ($i = 0; $i < count($user); $i++) {
+        $sql_grant = "grant update on SCOTT.$table[$i] to $user[$i]";
+        $statement = oci_parse($conn, $sql_grant);
+        if (oci_execute($statement)) {
+            echo "<br>授予用户$user[$i]对$table[$i]表的更新权限成功！";
+        }
+    }
 
 
 // //employee
@@ -693,43 +693,43 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8");
 //         echo "n";
 
 
-    $sql_ins = "CREATE OR REPLACE PROCEDURE deleteAdmin 
-(v_admin_name IN admin.admin_name%TYPE) 
-IS 
-BEGIN 
-UPDATE SCOTT.admin SET adm_status=0 WHERE admin_name=v_admin_name;
-END deleteAdmin; 
-";
-    $statement = oci_parse($conn, $sql_ins);
-    if (oci_execute($statement)) {
-        echo "y";
-    } else
-        echo "n";
+//     $sql_ins = "CREATE OR REPLACE PROCEDURE deleteAdmin 
+// (v_admin_name IN admin.admin_name%TYPE) 
+// IS 
+// BEGIN 
+// UPDATE SCOTT.admin SET adm_status=0 WHERE admin_name=v_admin_name;
+// END deleteAdmin; 
+// ";
+//     $statement = oci_parse($conn, $sql_ins);
+//     if (oci_execute($statement)) {
+//         echo "y";
+//     } else
+//         echo "n";
 
 
 
 
-    $sql = "grant execute on scott.updateEmployee to emp_admin;
-    grant execute on scott.addEmployee to emp_admin;
-    grant execute on scott.deleteEmployee to emp_admin;
-    grant execute on scott.updateDish to dis_admin;
-    grant execute on scott.addDish to dis_admin;
-    grant execute on scott.deleteDish to dis_admin;
-    grant execute on scott.updateTable to tab_admin;
-    grant execute on scott.addTable to tab_admin;
-    grant execute on scott.deleteTable to tab_admin;
-    grant execute on scott.addInventory to inv_admin;
-    grant execute on scott.addAdmin to adm_admin;
-    grant execute on scott.deleteAdmin to adm_admin";
+//     $sql = "grant execute on scott.updateEmployee to emp_admin;
+//     grant execute on scott.addEmployee to emp_admin;
+//     grant execute on scott.deleteEmployee to emp_admin;
+//     grant execute on scott.updateDish to dis_admin;
+//     grant execute on scott.addDish to dis_admin;
+//     grant execute on scott.deleteDish to dis_admin;
+//     grant execute on scott.updateTable to tab_admin;
+//     grant execute on scott.addTable to tab_admin;
+//     grant execute on scott.deleteTable to tab_admin;
+//     grant execute on scott.addInventory to inv_admin;
+//     grant execute on scott.addAdmin to adm_admin;
+//     grant execute on scott.deleteAdmin to adm_admin";
 
-    $sql_grant = explode(";", $sql);
-    foreach ($sql_grant as $k => $v) {
-        $statement = oci_parse($conn, $sql_grant[$k]);
-        if (oci_execute($statement)) {
-            echo "y";
-        } else
-            echo "n";
-    }
+//     $sql_grant = explode(";", $sql);
+//     foreach ($sql_grant as $k => $v) {
+//         $statement = oci_parse($conn, $sql_grant[$k]);
+//         if (oci_execute($statement)) {
+//             echo "y";
+//         } else
+//             echo "n";
+//     }
     oci_free_statement($statement);
     oci_close($conn);
 

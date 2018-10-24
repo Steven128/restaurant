@@ -128,12 +128,12 @@ class uploadPic
             $admin="adm_admin";
             $table="admin";
             $base64_image_content = $_POST['adminPicData'];
-            if(isset($_POST['admin_id'])){
-
-                $admin_id = $_POST['admin_id'];
-            }
-            else{
+            if($upid!="" and isset($upid)){
+                
                 $admin_id = $upid;
+            }
+            elseif(isset($_POST['admin_id'])){
+                $admin_id = $_POST['admin_id'];
             }
             $id=$admin_id;
             //匹配出图片的格式
