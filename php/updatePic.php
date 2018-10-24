@@ -1,19 +1,19 @@
 <?php
 @header("content-type:text/html;charset=utf8");
-if (isset($_SERVER['HTTP_REFERER']))
-    $ref = $_SERVER['HTTP_REFERER'];
-else
-    $ref = "";
-if ($ref == "") {
-    echo "不允许从地址栏访问";
-    exit();
-} else {
-    $url = parse_url($ref);
-    if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" &&$url['host']!="47.95.212.18") {
-        echo "get out";
-        exit();
-    }
-}
+// if (isset($_SERVER['HTTP_REFERER']))
+//     $ref = $_SERVER['HTTP_REFERER'];
+// else
+//     $ref = "";
+// if ($ref == "") {
+//     echo "不允许从地址栏访问";
+//     exit();
+// } else {
+//     $url = parse_url($ref);
+//     if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" &&$url['host']!="47.95.212.18") {
+//         echo "get out";
+//         exit();
+//     }
+// }
 class uploadPic
 {
     private $src;
@@ -125,9 +125,16 @@ class uploadPic
     public function upload($request,$upid)
     {
         if ($request == "upload_admin_pic") {
-            $admin="scott";
+            $admin="adm_admin";
             $table="admin";
-            $admin_id = $_POST['admin_id'];
+            $base64_image_content = $_POST['adminPicData'];
+            if(isset($_POST['admin_id'])){
+
+                $admin_id = $_POST['admin_id'];
+            }
+            else{
+                $admin_id = $upid;
+            }
             $id=$admin_id;
             //匹配出图片的格式
             if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64_image_content, $result)) {

@@ -122,7 +122,7 @@ session_start();
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-                                <table class="adminListTable" style="display: none;">
+                                <table class="adminListTable">
                                     <thead>
                                         <tr>
                                             <th>序号</th>

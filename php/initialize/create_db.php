@@ -460,7 +460,7 @@ if (!$conn) {
 
 
 
-    $user = array("emp_admin", "fin_admin", "inv_admin", "ord_admin", "dis_admin", "tab_admin");
+    $user = array("adm_admin", "emp_admin", "fin_admin", "inv_admin", "ord_admin", "dis_admin", "tab_admin");
     for ($i = 0; $i < count($user); $i++) {
         $sql_create_user = "CREATE USER $user[$i]" .
             " IDENTIFIED BY 123456";
@@ -673,6 +673,42 @@ END deleteTable;
         echo "n";
 
 
+//admin
+
+    $sql_ins = "CREATE OR REPLACE PROCEDURE addAdmin 
+(v_admin_id IN admin.admin_id%TYPE, 
+v_admin_name IN admin.admin_name%TYPE,
+v_admin_passwd IN admin.admin_passwd%TYPE,
+v_admin_type IN admin.admin_type%TYPE,
+v_create_time IN admin.create_time%TYPE) 
+IS 
+BEGIN 
+INSERT INTO SCOTT.admin VALUES (v_admin_id, v_admin_name,v_admin_passwd,v_admin_type, v_create_time,'../../src/admin_pic/default.png', 1);
+END addAdmin; 
+";
+    $statement = oci_parse($conn, $sql_ins);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else
+        echo "n";
+
+
+    $sql_ins = "CREATE OR REPLACE PROCEDURE deleteAdmin 
+(v_admin_id IN admin.admin_id%TYPE) 
+IS 
+BEGIN 
+UPDATE SCOTT.admin SET adm_status=0 WHERE admin_id=v_admin_id;
+END deleteAdmin; 
+";
+    $statement = oci_parse($conn, $sql_ins);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else
+        echo "n";
+
+
+
+
     $sql = "grant execute on scott.updateEmployee to emp_admin;
     grant execute on scott.addEmployee to emp_admin;
     grant execute on scott.deleteEmployee to emp_admin;
@@ -682,7 +718,9 @@ END deleteTable;
     grant execute on scott.updateTable to tab_admin;
     grant execute on scott.addTable to tab_admin;
     grant execute on scott.deleteTable to tab_admin;
-    grant execute on scott.addInventory to inv_admin";
+    grant execute on scott.addInventory to inv_admin;
+    grant execute on scott.addAdmin to adm_admin;
+    grant execute on scott.deleteAdmin to adm_admin";
 
     $sql_grant = explode(";", $sql);
     foreach ($sql_grant as $k => $v) {
@@ -694,4 +732,5 @@ END deleteTable;
     }
     oci_free_statement($statement);
     oci_close($conn);
+
 }
