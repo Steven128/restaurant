@@ -302,7 +302,7 @@ session_start();
                                     </thead>
                                     <tbody class="preOrderListTableBody">
                                         <?php
-                                        $sql_query = "SELECT preorder_id,preorder_time,arrive_time,order_id,dish_list,table_id FROM SCOTT.pre_order WHERE pre_status>0";
+                                        $sql_query = "SELECT preorder_id,preorder_time,arrive_time,order_id,dish_list,table_id FROM SCOTT.pre_order WHERE pre_status>0 AND SUBSTR(PREORDER_ID,9,8)='".date("Ymd")."'";
                                         $statement = oci_parse($conn, $sql_query);
                                         oci_execute($statement);
                                         $count = 0;

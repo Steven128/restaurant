@@ -2,10 +2,11 @@
 
 require '../updatePic.php';
 session_start(); //开启php_session
-if (isset($_SERVER['HTTP_REFERER']))
+if (isset($_SERVER['HTTP_REFERER'])) {
     $ref = $_SERVER['HTTP_REFERER'];
-else
+} else {
     $ref = "";
+}
 if ($ref == "") {
     echo "不允许从地址栏访问";
     exit();
@@ -43,7 +44,7 @@ if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如�
 
         if ($request == "add_admin") {
             addEmployee($conn);
-        } else if ($request == "deleteAdmin") {
+        } elseif ($request == "deleteAdmin") {
             deleteEmployee($conn);
         } elseif ($request == "getAdminInfo") {
             getEmployeeInfo($conn);
@@ -52,7 +53,6 @@ if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如�
         } elseif ($request == "updateAdminPic") {
             updateEmployeePic($conn, "sd");
         }
-
     }
 }
 function islegalid($str)
@@ -76,19 +76,20 @@ function addEmployee($conn)
     $count = oci_fetch_array($statement, OCI_RETURN_NULLS)[0];
 
     $create_time = date("Y-m-d");
-    if ($admin_type == 1)
+    if ($admin_type == 1) {
         $type="def";
-        elseif($admin_type==2)
+    } elseif ($admin_type==2) {
         $type="com";
-        elseif($admin_type==3)
+    } elseif ($admin_type==3) {
         $type="fin";
-        elseif($admin_type==4)
+    } elseif ($admin_type==4) {
         $type="inv";
+    }
     $admin_id = date("ymd");
     $param = $count < 10 ? "0$count" : $count;
     $admin_id = "adm_$type" .  "_$admin_id" . "_$count";
     
-    $admin_name = $_POST['name'];
+    $admin_name = $_POST['admin_name'];
     $admin_passwd = "restaurant$admin_name" . "123456";
     $admin_passwd = md5($admin_passwd);
     
@@ -96,10 +97,11 @@ function addEmployee($conn)
     $sql_query = "BEGIN scott.addAdmin('$admin_id','$admin_name','$admin_passwd',$admin_type,'$create_time'); END;";
     $statement = oci_parse($conn, $sql_query);
     if (oci_execute($statement)) {
-        if (isset($_POST['adminPicData']) && $_POST['adminPicData'] != "")
+        if (isset($_POST['adminPicData']) && $_POST['adminPicData'] != "") {
             updateEmployeePic($conn, $admin_id);
-        else
+        } else {
             echo json_encode(array("message" => "success"));
+        }
     } else {
         echo json_encode(array("message" => "error", "reason" => oci_error()));
     }
@@ -107,72 +109,68 @@ function addEmployee($conn)
 }
 function deleteEmployee($conn)
 {
-        $admin_id = $_POST['admin_id'];
-        //$sql_query = "UPDATE scott.EMPLOYEE SET EMP_STATUS = 0 WHERE EMPLOYEE_ID = '" . $_POST['employee_id'] . "'";
-        $sql_query = "BEGIN scott.deleteAdmin('$admin_id'); END;";
-        $statement = oci_parse($conn, $sql_query);
-        if (oci_execute($statement)) {
-            echo json_encode(array("message" => "success"));
-        } else {
-            echo json_encode(array("message" => "error", "reason" => oci_error()));
-        }
-
+    $admin_id = $_POST['admin_id'];
+    //$sql_query = "UPDATE scott.EMPLOYEE SET EMP_STATUS = 0 WHERE EMPLOYEE_ID = '" . $_POST['employee_id'] . "'";
+    $sql_query = "BEGIN scott.deleteAdmin('$admin_id'); END;";
+    $statement = oci_parse($conn, $sql_query);
+    if (oci_execute($statement)) {
+        echo json_encode(array("message" => "success"));
+    } else {
+        echo json_encode(array("message" => "error", "reason" => oci_error()));
+    }
 }
 function getEmployeeInfo($conn)
 {
-        $admin_id = $_GET['admin_id'];
-        //$sql_query = "SELECT EMPLOYEE_ID,NAME,GENDER,WORKING_YEAR,AGE,SALARY,PHONE_NUM,EMPLOYEE_TYPE,EMPLOY_TIME,EMPLOYEE_PIC FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND EMPLOYEE_ID='$employee_id'";
-        $sql_query = "SELECT * FROM SCOTT.admin WHERE ADM_STATUS>0 AND admin_id='$admin_id'";
-        $statement = oci_parse($conn, $sql_query);
-        oci_execute($statement);
-        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-            $admin_id = $row[0];
-            $name = $row[1];
-            $gender = $row[2];
-            if ($gender == 1)
-                $gender = "男";
-            else
-                $gender = "女";
-            $working_year = $row[3];
-            $age = $row[4];
-            $salary = $row[5];
-            $phone_num = $row[6];
-            $employee_type = $row[7];
-            $employ_time = $row[8];
-            $employee_pic = $row[9];
-            $employee_info = array("employee_id" => $employee_id, "name" => $name, "gender" => $gender, "working_year" => $working_year, "age" => $age, "salary" => $salary, "phone_num" => $phone_num, "employee_type" => $employee_type, "employ_time" => $employ_time, "employee_pic" => $employee_pic);
+    $admin_id = $_GET['admin_id'];
+    //$sql_query = "SELECT EMPLOYEE_ID,NAME,GENDER,WORKING_YEAR,AGE,SALARY,PHONE_NUM,EMPLOYEE_TYPE,EMPLOY_TIME,EMPLOYEE_PIC FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND EMPLOYEE_ID='$employee_id'";
+    $sql_query = "SELECT * FROM SCOTT.admin WHERE ADM_STATUS>0 AND admin_id='$admin_id'";
+    $statement = oci_parse($conn, $sql_query);
+    oci_execute($statement);
+    while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
+        $admin_id = $row[0];
+        $name = $row[1];
+        $gender = $row[2];
+        if ($gender == 1) {
+            $gender = "男";
+        } else {
+            $gender = "女";
         }
-        echo json_encode(array("message" => "success", "data" => $employee_info));
-    
+        $working_year = $row[3];
+        $age = $row[4];
+        $salary = $row[5];
+        $phone_num = $row[6];
+        $employee_type = $row[7];
+        $employ_time = $row[8];
+        $employee_pic = $row[9];
+        $employee_info = array("employee_id" => $employee_id, "name" => $name, "gender" => $gender, "working_year" => $working_year, "age" => $age, "salary" => $salary, "phone_num" => $phone_num, "employee_type" => $employee_type, "employ_time" => $employ_time, "employee_pic" => $employee_pic);
+    }
+    echo json_encode(array("message" => "success", "data" => $employee_info));
 }
 function updateEmployee($conn)
 {
-        $admin_id = $_POST['admin_id'];
-        $name = $_POST['name'];
-        $gender = $_POST['gender'];
-        if ($gender != 1 && $gender != 0)
-            return;
-        $age = $_POST['age'];
-        $salary = $_POST['salary'];
-        $phone_num = $_POST['phone_num'];
-        $admin_type = $_POST['employee_type'];
-        //$sql_insert = "UPDATE SCOTT.EMPLOYEE SET name='$name',gender=$gender,age=$age,salary=$salary,phone_num='$phone_num',employee_type=$employee_type WHERE EMPLOYEE_ID='$employee_id'";
-        $sql_insert = "BEGIN scott.updateAdmin('$admin_id','$name',$gender,$age,$salary,'$phone_num',$employee_type); END;";
-        //echo $sql_insert;
-        $statement = oci_parse($conn, $sql_insert);
+    $admin_id = $_POST['admin_id'];
+    $name = $_POST['name'];
+    $gender = $_POST['gender'];
+    if ($gender != 1 && $gender != 0) {
+        return;
+    }
+    $age = $_POST['age'];
+    $salary = $_POST['salary'];
+    $phone_num = $_POST['phone_num'];
+    $admin_type = $_POST['employee_type'];
+    //$sql_insert = "UPDATE SCOTT.EMPLOYEE SET name='$name',gender=$gender,age=$age,salary=$salary,phone_num='$phone_num',employee_type=$employee_type WHERE EMPLOYEE_ID='$employee_id'";
+    $sql_insert = "BEGIN scott.updateAdmin('$admin_id','$name',$gender,$age,$salary,'$phone_num',$employee_type); END;";
+    //echo $sql_insert;
+    $statement = oci_parse($conn, $sql_insert);
 
-        if (oci_execute($statement)) {
-            echo json_encode(array("message" => "success"));
-        } else {
-            echo json_encode(array("message" => "error", "reason" => oci_error()));
-        }
-   
+    if (oci_execute($statement)) {
+        echo json_encode(array("message" => "success"));
+    } else {
+        echo json_encode(array("message" => "error", "reason" => oci_error()));
+    }
 }
 function updateEmployeePic($conn, $upid)
 {
     $sd = new uploadPic();
     $sd->upload("upload_admin_pic", $upid);
-
 }
-
-
