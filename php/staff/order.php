@@ -51,7 +51,7 @@ function getMenu($conn,$data)
 { //图片传输未解决
     $sql_select1 = "SELECT DISH_ID,DISH_NAME,DISH_PIC,DISH_PRICE,DISH_TYPE FROM SCOTT.DISH WHERE DIS_STATUS=1";
     $statement1 = oci_parse($conn, $sql_select1);
-    coi_execute($statement1);
+    oci_execute($statement1);
     $menu_info = null;
     while ($row = oci_fetch_array($statement1, OCI_RETURN_NULL)) {
         $dish_id = $row[0];
