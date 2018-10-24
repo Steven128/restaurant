@@ -11,10 +11,9 @@ if (!$conn) { //未连接成功，终止脚本并返回错误信息
     die(json_encode($e));
 } else {
     if ($request == "getTables") {
-        getTables($conn,$data);
-    } else
-    if ($request == "useTable") {
-        useTable($conn,$data);
+        getTables($conn, $data);
+    } elseif ($request == "useTable") {
+        useTable($conn, $data);
     }
 }
 
@@ -32,7 +31,7 @@ if (!$conn) { //未连接成功，终止脚本并返回错误信息
 //     return $obj;
 // }
 
-function getTables($conn,$data)
+function getTables($conn, $data)
 {
     $sql_select1 = "SELECT TABLE_ID,TABLE_NUMBER,DEFAULT_NUMBER,TABLE_ORDER_STATUS FROM SCOTT.RES_TABLE WHERE TAB_STATUS>0";
     $statement1 = oci_parse($conn, $sql_select1);
@@ -49,11 +48,11 @@ function getTables($conn,$data)
     echo json_encode(array("message" => "success", "data" => $table_info));
 }
 
-function useTable($conn,$data)//餐桌使用，预定餐桌写在preorder里
-{  
+function useTable($conn, $data)//餐桌使用，预定餐桌写在preorder里
+{
     $table_number=$data->id;
-    $sql_update1="UPDATE SCOTT.RES_TABLE SET TABLE_ORDER_STATUS=2 WHERE TABLE_ID=$table_number";
-    $statement1=oci_parse($conn,$sql_update1);
+    $sql_update1="UPDATE SCOTT.RES_TABLE SET TABLE_ORDER_STATUS=2 WHERE TABLE_ID='".$table_number."'";
+    $statement1=oci_parse($conn, $sql_update1);
     oci_execute($statement1);
     echo json_encode(array("message" => "success"));
 }

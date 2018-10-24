@@ -52,8 +52,8 @@ function getMenu($conn,$data)
     $sql_select1 = "SELECT DISH_ID,DISH_NAME,DISH_PIC,DISH_PRICE,DISH_TYPE FROM SCOTT.DISH WHERE DIS_STATUS=1";
     $statement1 = oci_parse($conn, $sql_select1);
     oci_execute($statement1);
-    $menu_info = null;
-    while ($row = oci_fetch_array($statement1, OCI_RETURN_NULL)) {
+    $menu_info = array();
+    while ($row = oci_fetch_array($statement1, OCI_RETURN_NULLS)) {
         $dish_id = $row[0];
         $dish_name = $row[1];
         $dish_pic = $row[2];
