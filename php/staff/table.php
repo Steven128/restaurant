@@ -11,10 +11,10 @@ if (!$conn) { //未连接成功，终止脚本并返回错误信息
     die(json_encode($e));
 } else {
     if ($request == "getTables") {
-        getTables($conn);
+        getTables($conn,$data);
     } else
     if ($request == "useTable") {
-        useTable($conn);
+        useTable($conn,$data);
     }
 }
 
@@ -32,7 +32,7 @@ if (!$conn) { //未连接成功，终止脚本并返回错误信息
 //     return $obj;
 // }
 
-function getTables($conn)
+function getTables($conn,$data)
 {
     //应该是大于0 tab_status >0 因为1 2 3都是有效的;要返回table_id
     $sql_select1 = "SELECT TABLE_ID,TABLE_NUMBER,DEFAULT_NUMBER,TABLE_ORDER_STATUS FROM SCOTT.RES_TABLE WHERE TAB_STATUS>0";
@@ -51,7 +51,7 @@ function getTables($conn)
     echo json_encode(array("message" => "success", "data" => $table_info));
 }
 
-function useTable($conn)//餐桌使用，预定餐桌写在preorder里
+function useTable($conn,$data)//餐桌使用，预定餐桌写在preorder里
 {  
     $table_number=$data->id;
     $sql_update1="UPDATE SCOTT.RES_TABLE SET TABLE_ORDER_STATUS=2 WHERE TABLE_ID=$table_number";

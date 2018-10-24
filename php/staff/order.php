@@ -204,7 +204,7 @@ function perOrder($conn,$data)//未完成
 
 }
 
-function deleteOrder($conn,$data)
+function deleteOrder($conn,$datsa)
 {
 
 }
