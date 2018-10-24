@@ -19,7 +19,7 @@ $("#addAdmin-form").validate({
         var admin_id = getUserInfo().admin_id;
         $.ajax({
             type: "POST",
-            url: "../../php/admin/",
+            url: "../../php/dashboard/administrator.php",
             dataType: "JSON",
             data: {
                 "request": "add_admin",
