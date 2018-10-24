@@ -49,7 +49,7 @@ function nextStep() {
                 success: (e) => {
                     console.log(e);
                     if (e.message == "success") {
-                        $(".emp-del-confirm").hide(() => {
+                        $(".adm-del-confirm").hide(() => {
                             $(".shelter").fadeOut(100, () => {
                                 window.wxc.xcConfirm("删除成功", window.wxc.xcConfirm.typeEnum.success, {
                                     onOk: function() {
