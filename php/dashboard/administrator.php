@@ -85,20 +85,20 @@ function addEmployee($conn)
     } elseif ($admin_type==4) {
         $type="inv";
     }
-    $admin_id = date("ymd");
+    $admin_id2 = date("ymd");
     $param = $count < 10 ? "0$count" : $count;
-    $admin_id = "adm_$type" .  "_$admin_id" . "_$count";
+    $admin_id2 = "adm_$type" .  "_$admin_id2" . "_$count";
     
     $admin_name = $_POST['admin_name'];
     $admin_passwd = "restaurant$admin_name" . "123456";
     $admin_passwd = md5($admin_passwd);
     
     //$sql_query = "INSERT INTO scott.EMPLOYEE (EMPLOYEE_ID, NAME, GENDER,  WORKING_YEAR, AGE, SALARY, PHONE_NUM, EMPLOYEE_TYPE, EMPLOY_TIME, EMPLOYEE_PIC, EMP_STATUS) VALUES ('$employee_id', '" . $_POST['name'] . "', $gender, 0, " . $_POST['age'] . ", " . $_POST['salary'] . ", '" . $_POST['phone_num'] . "', " . $_POST['employee_type'] . ", '" . $employ_time . "', 'd', 1)";
-    $sql_query = "BEGIN scott.addAdmin('$admin_id','$admin_name','$admin_passwd',$admin_type,'$create_time'); END;";
+    $sql_query = "BEGIN scott.addAdmin('$admin_id2','$admin_name','$admin_passwd',$admin_type,'$create_time'); END;";
     $statement = oci_parse($conn, $sql_query);
     if (oci_execute($statement)) {
         if (isset($_POST['adminPicData']) && $_POST['adminPicData'] != "") {
-            updateEmployeePic($conn, $admin_id);
+            updateEmployeePic($conn, $admin_id2);
         } else {
             echo json_encode(array("message" => "success"));
         }
@@ -109,9 +109,9 @@ function addEmployee($conn)
 }
 function deleteEmployee($conn)
 {
-    $admin_id = $_POST['admin_id'];
+    $admin_name = $_POST['admin_name'];
     //$sql_query = "UPDATE scott.EMPLOYEE SET EMP_STATUS = 0 WHERE EMPLOYEE_ID = '" . $_POST['employee_id'] . "'";
-    $sql_query = "BEGIN scott.deleteAdmin('$admin_id'); END;";
+    $sql_query = "BEGIN scott.deleteAdmin('$admin_name'); END;";
     $statement = oci_parse($conn, $sql_query);
     if (oci_execute($statement)) {
         echo json_encode(array("message" => "success"));
@@ -121,7 +121,7 @@ function deleteEmployee($conn)
 }
 function getEmployeeInfo($conn)
 {
-    $admin_id = $_GET['admin_id'];
+    $admin_id2 = $_GET['admin_id'];
     //$sql_query = "SELECT EMPLOYEE_ID,NAME,GENDER,WORKING_YEAR,AGE,SALARY,PHONE_NUM,EMPLOYEE_TYPE,EMPLOY_TIME,EMPLOYEE_PIC FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND EMPLOYEE_ID='$employee_id'";
     $sql_query = "SELECT * FROM SCOTT.admin WHERE ADM_STATUS>0 AND admin_id='$admin_id'";
     $statement = oci_parse($conn, $sql_query);

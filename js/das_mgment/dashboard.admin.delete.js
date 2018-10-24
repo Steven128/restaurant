@@ -37,15 +37,14 @@ function nextStep() {
             $("#delete_name").addClass("error");
             $("#delete_name").after("<label id=\"name-error\" class=\"error\" for=\"name\">输入错误</label>");
         } else {
-            let employee_id = global_employee_id;
             $.ajax({
                 type: "POST",
-                url: "../../../php/admin/employee.php",
+                url: "../../php/dashboard/administrator.php",
                 dataType: "JSON",
                 data: {
-                    "request": "deleteEmployee",
+                    "request": "deleteAdmin",
                     "admin_id": getUserInfo().admin_id,
-                    "employee_id": employee_id,
+                    "admin_name": admin_name,
                 },
                 success: (e) => {
                     console.log(e);
