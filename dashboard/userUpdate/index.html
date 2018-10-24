@@ -181,16 +181,16 @@
                                 <form id="update-passwd" method="POST" action="">
                                     <div class="subform">
                                         <div class="form-group">
-                                            <div class="section_title">工资</div>
-                                            <input id="oldPasswd" class="input-text form-control" type="password" name="oldPasswd" placeholder="新密码" maxlength="15" />
+                                            <div class="section_title">原密码</div>
+                                            <input id="oldPasswd" class="input-text form-control" type="password" name="oldPasswd" placeholder="请输入原密码" maxlength="32" />
                                         </div>
                                         <div class="form-group">
-                                            <div class="section_title">工资</div>
-                                            <input id="newPasswd" class="input-text form-control" type="password" name="newPasswd" placeholder="新密码" maxlength="15" />
+                                            <div class="section_title">新密码</div>
+                                            <input id="newPasswd" class="input-text form-control" type="password" name="newPasswd" placeholder="请输入新密码" maxlength="32" />
                                         </div>
                                         <div class="form-group">
-                                            <div class="section_title">工资</div>
-                                            <input id="rePasswd" class="input-text form-control" type="password" name="rePasswd" placeholder="确认密码" maxlength="15" />
+                                            <div class="section_title">再次输入新密码</div>
+                                            <input id="rePasswd" class="input-text form-control" type="password" name="rePasswd" placeholder="请再次输入新密码" maxlength="32" />
                                         </div>
                                         <div class="clear"></div>
                                         <div class="btn-area">
@@ -296,6 +296,7 @@
             $(".clip-wrapper").fadeOut();
         }
     </script>
+    <script type="text/javascript" src="../../js/plugins/md5.js"></script>
     <script type="text/javascript" src="../../js/das_mgment/user.update.validate.js"></script>
 </body>
 
