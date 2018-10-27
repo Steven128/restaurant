@@ -9,7 +9,7 @@
 //     exit();
 // } else {
 //     $url = parse_url($ref);
-//     if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" && $url['host'] != "47.95.212.18") {
+//     if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" && $url['host'] != "localhost") {
 //         echo "get out";
 //         exit();
 //     }
@@ -61,7 +61,7 @@ function islegalnum($str)
 }
 function getGoodsName($conn)
 {
-    $sql_query = "SELECT goods_name FROM SCOTT.goods";
+    $sql_query = "SELECT goods_name FROM SCOTT.gooRead";
     $statement = oci_parse($conn, $sql_query);
     oci_execute($statement);
     $goodsName=array();

@@ -233,7 +233,7 @@ session_start();
                                     </thead>
                                     <tbody class="financeListTableBody">
                                         <?php
-                                        $sql_query = "SELECT FINANCE_ID,FIN_DATE,MONTH,TURNOVER,COST,PROFIT FROM SCOTT.FINANCE WHERE FIN_DATE='".date("Y-m-d")."' ORDER BY FIN_DATE DESC ";
+                                        $sql_query = "SELECT FINANCE_ID,FIN_DATE,MONTH,TURNOVER,COST,PROFIT FROM SCOTT.finRead WHERE FIN_DATE='".date("Y-m-d")."' ORDER BY FIN_DATE DESC ";
                                         $statement = oci_parse($conn, $sql_query);
                                         oci_execute($statement);
                                         $count = 0;

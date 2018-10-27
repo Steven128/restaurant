@@ -231,7 +231,7 @@ session_start();
                                     </thead>
                                     <tbody class="inventoryListTableBody">
                                         <?php
-                                        $sql_query = "SELECT overhead_price,overhead_date FROM SCOTT.overhead WHERE overhead_type=1 and ove_status>0";
+                                        $sql_query = "SELECT overhead_price,overhead_date FROM SCOTT.purRead WHERE overhead_type=1";
                                         $statement = oci_parse($conn, $sql_query);
                                         oci_execute($statement);
                                         $count = 0;

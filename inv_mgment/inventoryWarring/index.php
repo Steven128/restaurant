@@ -159,7 +159,7 @@ session_start();
                                     </thead>
                                     <tbody class="inventoryListTableBody">
                                         <?php
-                                        $sql_query = "SELECT GOODS_ID,GOODS_NAME,goods_price,goods_type,QUANTITY FROM SCOTT.GOODS WHERE GOO_STATUS>0 AND quantity<100";
+                                        $sql_query = "SELECT GOODS_ID,GOODS_NAME,goods_price,goods_type,QUANTITY FROM SCOTT.GOORead WHERE quantity<100";
                                         $statement = oci_parse($conn, $sql_query);
                                         oci_execute($statement);
                                         $count = 0;

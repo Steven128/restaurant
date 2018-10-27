@@ -8,7 +8,7 @@
 //     exit();
 // } else {
 //     $url = parse_url($ref);
-//     if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" && $url['host'] != "47.95.212.18") {
+//     if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" && $url['host'] != "localhost") {
 //         echo "get out";
 //         exit();
 //     }
@@ -58,7 +58,7 @@ function islegalid($str)
 }
 function addTable($conn)
 {
-    $sql_query = "SELECT COUNT(TABLE_ID) FROM SCOTT.RES_TABLE";
+    $sql_query = "SELECT COUNT(TABLE_ID) FROM SCOTT.tabRead";
     $statement = oci_parse($conn, $sql_query);
     oci_execute($statement);
     $count = oci_fetch_array($statement, OCI_RETURN_NULLS)[0];
@@ -93,7 +93,7 @@ function getTableInfo($conn)
 {
     if (islegalid($_GET['table_id'])) {
         $table_id = $_GET['table_id'];
-        $sql_query = "SELECT * FROM SCOTT.RES_TABLE WHERE TAB_STATUS>0 AND TABLE_ID='$table_id'";
+        $sql_query = "SELECT * FROM SCOTT.tabRead WHERE TABLE_ID='$table_id'";
         $statement = oci_parse($conn, $sql_query);
         oci_execute($statement);
         $table_info = null;

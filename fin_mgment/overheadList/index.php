@@ -180,7 +180,7 @@ session_start();
                                     <tbody class="overheadListTableBody">
                                     <?php
                                         $today=date("Y-m-d");
-                                        $sql_query = "SELECT overhead_type,overhead_price,overhead_date,ove_invoice_pic FROM SCOTT.overhead WHERE ove_status>0 AND overhead_date='$today'";
+                                        $sql_query = "SELECT overhead_type,overhead_price,overhead_date,ove_invoice_pic FROM SCOTT.purRead WHERE overhead_date='$today'";
                                         $statement = oci_parse($conn, $sql_query);
                                         oci_execute($statement);
                                         $count = 0;

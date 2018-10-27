@@ -11,7 +11,7 @@ session_start(); //开启php_session
 //     exit();
 // } else {
 //     $url = parse_url($ref);
-//     if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" &&$url['host']!="47.95.212.18") {
+//     if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" &&$url['host']!="localhost") {
 //         echo "get out";
 //         exit();
 //     }
@@ -71,7 +71,7 @@ function addEmployee($conn)
     // oci_execute($statement);
 
 
-    $sql_query = "SELECT COUNT(EMPLOYEE_ID) FROM SCOTT.EMPLOYEE";
+    $sql_query = "SELECT COUNT(EMPLOYEE_ID) FROM SCOTT.empRead";
     $statement = oci_parse($conn, $sql_query);
     oci_execute($statement);
     $count = oci_fetch_array($statement, OCI_RETURN_NULLS)[0];
@@ -127,7 +127,7 @@ function getEmployeeInfo($conn)
     if (islegalid($_GET['employee_id'])) {
         $employee_id = $_GET['employee_id'];
         //$sql_query = "SELECT EMPLOYEE_ID,NAME,GENDER,WORKING_YEAR,AGE,SALARY,PHONE_NUM,EMPLOYEE_TYPE,EMPLOY_TIME,EMPLOYEE_PIC FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND EMPLOYEE_ID='$employee_id'";
-        $sql_query = "SELECT * FROM SCOTT.EMPLOYEE WHERE EMP_STATUS>0 AND EMPLOYEE_ID='$employee_id'";
+        $sql_query = "SELECT * FROM SCOTT.empRead WHERE EMPLOYEE_ID='$employee_id'";
         $statement = oci_parse($conn, $sql_query);
         oci_execute($statement);
         while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集

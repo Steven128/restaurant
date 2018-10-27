@@ -179,7 +179,7 @@ session_start();
                                     </thead>
                                     <tbody class="orderListTableBody">
                                         <?php
-                                        $sql_query = "SELECT order_id,table_id,dish_list,total_price,pay_method,pay_time,order_note,pay_status FROM SCOTT.ORDER_LIST WHERE ORD_STATUS=1 AND SUBSTR(ORDER_ID,9,8)='".date("Ymd")."'";
+                                        $sql_query = "SELECT order_id,table_number,dish_list,total_price,pay_method,pay_time,order_note,pay_status FROM SCOTT.ordRead WHERE SUBSTR(ORDER_ID,9,8)='".date("Ymd")."'";
                                         $statement = oci_parse($conn, $sql_query);
                                         oci_execute($statement);
                                         $count = 0;
@@ -187,7 +187,7 @@ session_start();
                                             $count++;
                                             $order_id = $row[0];
                                             $order_time=substr($order_id, 8, 4)."-".substr($order_id, 12, 2)."-".substr($order_id, 14, 2);
-                                            $table_id = $row[1];
+                                            $table_number = $row[1];
                                             $dish_list = $row[2];
                                             $total_price = $row[3];
                                             $pay_method = $row[4];
@@ -210,11 +210,7 @@ session_start();
                                             } else {
                                                 $pay_status="未知";
                                             }
-                                            $sql_query2 = "SELECT table_number FROM SCOTT.res_table WHERE table_id='$table_id'";
-                                            $statement2 = oci_parse($conn, $sql_query2);
-                                            oci_execute($statement2);
-                                            $row2=oci_fetch_array($statement2, OCI_RETURN_NULLS);
-                                            echo "<tr><td class='display-info'><i class=\"iconfont icon-down-arrow\"></i></td><td class='order_id'>$order_id</td><td>$order_time</td><td>$total_price</td><td>$pay_status</td><td>$pay_time</td><td>$pay_method</td><td>详情</td><td>$row2[0]</td><td>$order_note</td></tr>";
+                                            echo "<tr><td class='display-info'><i class=\"iconfont icon-down-arrow\"></i></td><td class='order_id'>$order_id</td><td>$order_time</td><td>$total_price</td><td>$pay_status</td><td>$pay_time</td><td>$pay_method</td><td>详情</td><td>$table_number</td><td>$order_note</td></tr>";
                                         }
                                         ?>
                                         <script>

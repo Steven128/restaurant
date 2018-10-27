@@ -234,7 +234,7 @@ session_start();
                                     </thead>
                                     <tbody class="lossListTableBody">
                                         <?php
-                                        $sql_query = "SELECT loss_id,GOODS_ID,QUANTITY,loss_date FROM SCOTT.LOSS WHERE LOS_STATUS>0";
+                                        $sql_query = "SELECT loss_id,GOODS_ID,QUANTITY,loss_date,GOODS_NAME, GOODS_PRICE, GOODS_TYPE FROM SCOTT.losRead";
                                         $statement = oci_parse($conn, $sql_query);
                                         oci_execute($statement);
                                         $count = 0;

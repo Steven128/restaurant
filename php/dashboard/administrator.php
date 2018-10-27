@@ -12,7 +12,7 @@ if ($ref == "") {
     exit();
 } else {
     $url = parse_url($ref);
-    if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" &&$url['host']!="47.95.212.18") {
+    if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" &&$url['host']!="localhost") {
         echo "get out";
         exit();
     }

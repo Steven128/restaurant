@@ -162,7 +162,7 @@ session_start();
                                         <?php
                                        
 
-                                        $sql_query = "SELECT GOODS_ID,GOODS_NAME,goods_price,goods_type,QUANTITY FROM SCOTT.GOODS WHERE GOO_STATUS>0";
+                                        $sql_query = "SELECT GOODS_ID,GOODS_NAME,goods_price,goods_type,QUANTITY FROM SCOTT.gooRead";
                                         $statement = oci_parse($conn, $sql_query);
                                         oci_execute($statement);
                                         $count = 0;

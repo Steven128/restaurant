@@ -1,5 +1,6 @@
 <?php
 $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8");
+
 // if (!$conn) {
 //     $e = oci_error();
 //     print htmlentities($e['message']);
@@ -497,15 +498,15 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8");
 
 //     // }
 
-    $user = array("adm_admin","emp_admin", "fin_admin", "fin_admin", "inv_admin", "inv_admin", "inv_admin", "ord_admin", "dis_admin", "tab_admin");
-    $table = array("admin","employee", "finance", "overhead", "inventory", "loss", "goods", "order_list", "dish", "res_table");
-    for ($i = 0; $i < count($user); $i++) {
-        $sql_grant = "grant update on SCOTT.$table[$i] to $user[$i]";
-        $statement = oci_parse($conn, $sql_grant);
-        if (oci_execute($statement)) {
-            echo "<br>授予用户$user[$i]对$table[$i]表的更新权限成功！";
-        }
-    }
+    // $user = array("adm_admin","emp_admin", "fin_admin", "fin_admin", "inv_admin", "inv_admin", "inv_admin", "ord_admin", "dis_admin", "tab_admin");
+    // $table = array("admin","employee", "finance", "overhead", "inventory", "loss", "goods", "order_list", "dish", "res_table");
+    // for ($i = 0; $i < count($user); $i++) {
+    //     $sql_grant = "grant update on SCOTT.$table[$i] to $user[$i]";
+    //     $statement = oci_parse($conn, $sql_grant);
+    //     if (oci_execute($statement)) {
+    //         echo "<br>授予用户$user[$i]对$table[$i]表的更新权限成功！";
+    //     }
+    // }
 
 
 // //employee
@@ -730,7 +731,118 @@ $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8");
 //         } else
 //             echo "n";
 //     }
-    oci_free_statement($statement);
-    oci_close($conn);
+//employee_id,name,gender,working_year,age,salary,phone_num,employee_type,employ_time ,employee_pic,emp_status
+$sql_create_view = "create or replace view empRead as select * from scott.employee where emp_status>0 with read only";
+$statement = oci_parse($conn, $sql_create_view);
+if (oci_execute($statement)) {
+    echo "y";
+} else
+    echo "n";
 
-// }
+$sql_create_view = "create or replace view disRead as select * from scott.dish where dis_status>0 with read only";
+$statement = oci_parse($conn, $sql_create_view);
+if (oci_execute($statement)) {
+    echo "y";
+} else
+    echo "n";
+
+$sql_create_view = "create or replace view finRead as select * from scott.finance with read only";
+$statement = oci_parse($conn, $sql_create_view);
+if (oci_execute($statement)) {
+    echo "y";
+} else
+    echo "n";
+
+$sql_create_view = "create or replace view invRead as select * from scott.inventory where inv_status>0 with read only";
+$statement = oci_parse($conn, $sql_create_view);
+if (oci_execute($statement)) {
+    echo "y";
+} else
+    echo "n";
+
+$sql_create_view = "create or replace view gooRead as select * from scott.goods where goo_status>0 with read only";
+$statement = oci_parse($conn, $sql_create_view);
+if (oci_execute($statement)) {
+    echo "y";
+} else
+    echo "n";
+
+$sql_create_view = "create or replace view losRead as select loss_id,loss.GOODS_ID,loss.QUANTITY,loss_date,GOODS_NAME, GOODS_PRICE, GOODS_TYPE from scott.loss,scott.goods where loss.goods_id=goods.goods_id and goo_status>0 and los_status>0 with read only";
+$statement = oci_parse($conn, $sql_create_view);
+if (oci_execute($statement)) {
+    echo "y";
+} else
+    echo "n";
+
+$sql_create_view = "create or replace view ordRead as select order_id,scott.res_table.table_number,dish_list,total_price,pay_method,pay_time,order_note,pay_status FROM SCOTT.ORDER_LIST,SCOTT.RES_TABLE WHERE ORD_STATUS=1 AND TAB_STATUS=1 AND SCOTT.ORDER_LIST.TABLE_ID=SCOTT.RES_TABLE.TABLE_ID with read only";
+$statement = oci_parse($conn, $sql_create_view);
+if (oci_execute($statement)) {
+    echo "y";
+} else
+    echo "n";
+
+$sql_create_view = "create or replace view purRead as select * FROM SCOTT.overhead WHERE ove_status>0 with read only";
+$statement = oci_parse($conn, $sql_create_view);
+if (oci_execute($statement)) {
+    echo "y";
+} else
+    echo "n";
+
+$sql_create_view = "create or replace view porRead as select preorder_id,preorder_time,arrive_time,order_id,dish_list,table_number FROM SCOTT.pre_order,scott.res_table WHERE res_table.table_id=pre_order.table_id AND pre_status>0 AND tab_status>0 with read only";
+$statement = oci_parse($conn, $sql_create_view);
+if (oci_execute($statement)) {
+    echo "y";
+} else
+    echo "n";
+
+$sql_create_view = "create or replace view tabRead as select * FROM SCOTT.res_table WHERE tab_status>0 with read only";
+$statement = oci_parse($conn, $sql_create_view);
+if (oci_execute($statement)) {
+    echo "y";
+} else
+    echo "n";
+
+    $sql_create_view = "create or replace view preRead as select EMPLOYEE.EMPLOYEE_ID,NAME,GENDER,PHONE_NUM,EMPLOYEE_TYPE,PRESENCE_ID,SIGN_TIME,HASPRESENTED FROM SCOTT.PRESENCE,SCOTT.EMPLOYEE WHERE EMPLOYEE.EMPLOYEE_ID=PRESENCE.EMPLOYEE_ID AND EMP_STATUS>0 AND PRE_STATUS>0 with read only";
+    $statement = oci_parse($conn, $sql_create_view);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else
+        echo "n";
+    
+
+$sql = "grant select on scott.empRead to emp_admin;
+grant select on scott.disRead to dis_admin;
+grant select on scott.finRead to fin_admin;
+grant select on scott.invRead to inv_admin;
+grant select on scott.gooRead to inv_admin;
+grant select on scott.losRead to inv_admin;
+grant select on scott.ordRead to ord_admin;
+grant select on scott.purRead to fin_admin;
+grant select on scott.porRead to ord_admin;
+grant select on scott.tabRead to tab_admin;
+grant select on scott.preRead to emp_admin
+";
+
+$sql_grant = explode(";", $sql);
+foreach ($sql_grant as $k => $v) {
+    $statement = oci_parse($conn, $sql_grant[$k]);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else
+        echo "n";
+}
+oci_free_statement($statement);
+oci_close($conn);
+    //$sql_create_tab = "CREATE TABLE employee(" .
+    //         "employee_id VARCHAR(20) NOT NULL PRIMARY KEY," .
+    //         "name VARCHAR(20) NOT NULL," .
+    //         "gender NUMERIC(1,0) NOT NULL," .
+    //         "working_year NUMBER(2,1) NOT NULL," .
+    //         "age NUMERIC(2,0) NOT NULL," .
+    //         "salary NUMERIC(10,2) NOT NULL," .
+    //         "phone_num VARCHAR(11)," .
+    //         "employee_type NUMERIC(1,0) NOT NULL," .
+    //         "employ_time VARCHAR(10) NOT NULL," .
+    //         "employee_pic VARCHAR(100) NOT NULL," .
+    //         "emp_status NUMERIC(1,0) DEFAULT 1 NOT NULL)";
+//}

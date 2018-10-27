@@ -149,7 +149,7 @@ session_start();
                                     </thead>
                                     <tbody class="inventoryListTableBody">
                                         <?php
-                                        $sql_query = "SELECT inventory_id,goods_name,inventory.quantity FROM SCOTT.GOODS,scott.inventory WHERE GOO_STATUS>0 AND INV_STATUS>0 AND inventory.goods_id=goods.goods_id";
+                                        $sql_query = "SELECT inventory_id,goods_name,invRead.quantity FROM SCOTT.gooRead,scott.invRead WHERE invRead.goods_id=gooRead.goods_id";
                                         $statement = oci_parse($conn, $sql_query);
                                         oci_execute($statement);
                                         $count = 0;

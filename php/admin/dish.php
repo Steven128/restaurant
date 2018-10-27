@@ -10,7 +10,7 @@ session_start(); //开启php_session
 //     exit();
 // } else {
 //     $url = parse_url($ref);
-//     if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" &&$url['host']!="47.95.212.18") {
+//     if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" &&$url['host']!="localhost") {
 //         echo "get out";
 //         exit();
 //     }
@@ -63,7 +63,7 @@ function islegalid($str)
 
 function addDish($conn)
 {
-    $sql_query = "SELECT COUNT(DISH_ID) FROM SCOTT.DISH";
+    $sql_query = "SELECT COUNT(DISH_ID) FROMss SCOTT.disRead";
     $statement = oci_parse($conn, $sql_query);
     oci_execute($statement);
     $count = oci_fetch_array($statement, OCI_RETURN_NULLS)[0];
@@ -106,7 +106,7 @@ function getDishInfo($conn)
 {
     if (islegalid($_GET['dish_id'])) {
         $dish_id = $_GET['dish_id'];
-        $sql_query = "SELECT * FROM SCOTT.DISH WHERE DIS_STATUS>0 AND DISH_ID='$dish_id'";
+        $sql_query = "SELECT * FROM SCOTT.disRead WHERE DISH_ID='$dish_id'";
         $statement = oci_parse($conn, $sql_query);
         oci_execute($statement);
         while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集

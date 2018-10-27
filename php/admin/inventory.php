@@ -9,7 +9,7 @@
 //     exit();
 // } else {
 //     $url = parse_url($ref);
-//     if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" && $url['host'] != "47.95.212.18") {
+//     if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" && $url['host'] != "localhost") {
 //         echo "get out";
 //         exit();
 //     }
@@ -61,7 +61,7 @@ function islegalnum($str)
 }
 function purchase($conn)
 {
-    $sql_query = "SELECT COUNT(inventory_id) FROM SCOTT.inventory";
+    $sql_query = "SELECT COUNT(inventory_id) FROM SCOTT.invRead";
     $statement = oci_parse($conn, $sql_query);
     oci_execute($statement);
     $count = oci_fetch_array($statement, OCI_RETURN_NULLS)[0];

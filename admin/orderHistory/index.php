@@ -306,7 +306,7 @@ session_start();
                                     </thead>
                                     <tbody class="preOrderListTableBody">
                                         <?php
-                                        $sql_query = "SELECT order_id,scott.res_table.table_number,dish_list,total_price,pay_method,pay_time,order_note,pay_status FROM SCOTT.ORDER_LIST,SCOTT.RES_TABLE WHERE ORD_STATUS=1 AND TAB_STATUS=1 AND SCOTT.ORDER_LIST.TABLE_ID=SCOTT.RES_TABLE.TABLE_ID AND SUBSTR(ORDER_ID,9,8)!='".date("Ymd")."' ORDER BY pay_time DESC";                                        
+                                        $sql_query = "SELECT order_id,table_number,dish_list,total_price,pay_method,pay_time,order_note,pay_status FROM SCOTT.ordRead WHERE SUBSTR(ORDER_ID,9,8)!='".date("Ymd")."' ORDER BY pay_time DESC";                                        
                                         $statement = oci_parse($conn, $sql_query);
                                         oci_execute($statement);
                                         $count = 0;

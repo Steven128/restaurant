@@ -302,7 +302,7 @@ session_start();
                                     </thead>
                                     <tbody class="preOrderListTableBody">
                                         <?php
-                                        $sql_query = "SELECT preorder_id,preorder_time,arrive_time,order_id,dish_list,table_id FROM SCOTT.pre_order WHERE pre_status>0 AND SUBSTR(PREORDER_ID,9,8)='".date("Ymd")."'";
+                                        $sql_query = "SELECT preorder_id,preorder_time,arrive_time,order_id,dish_list,table_number FROM SCOTT.porRead WHERE SUBSTR(PREORDER_ID,9,8)='".date("Ymd")."'";
                                         $statement = oci_parse($conn, $sql_query);
                                         oci_execute($statement);
                                         $count = 0;
@@ -313,12 +313,8 @@ session_start();
                                             $arrive_time = $row[2];
                                             $order_id = $row[3];
                                             $dish_list = $row[4];
-                                            $table_id = $row[5];
-                                            $sql_query2 = "SELECT table_number FROM SCOTT.res_table WHERE table_id='$table_id'";
-                                            $statement2 = oci_parse($conn, $sql_query2);
-                                            oci_execute($statement2);
-                                            $row2=oci_fetch_array($statement2, OCI_RETURN_NULLS);
-                                            echo "<tr><td>$preorder_id</td><td>$preorder_time</td><td>$arrive_time</td><td>详情</td><td>$row2[0]</td></tr>";
+                                            $table_number = $row[5];
+                                            echo "<tr><td>$preorder_id</td><td>$preorder_time</td><td>$arrive_time</td><td>详情</td><td>$table_number</td></tr>";
                                         }
                                         ?>
                                         <script>
