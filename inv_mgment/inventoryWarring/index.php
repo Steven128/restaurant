@@ -36,7 +36,7 @@ session_start();
 
 <body>
      <?php
-    $conn = oci_connect('inv_admin', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
+    $conn = oci_connect('inv_admin', '123456', '47.95.212.18/ORCL', "AL32UTF8"); //连接oracle数据库
     ?>
     <div class="container">
         <header class="head-content">

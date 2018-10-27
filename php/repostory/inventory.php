@@ -21,7 +21,7 @@ if (isset($_GET['request'])) {
 if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如果已设置session且session对应用户为当前访问用户
     
 
-    $conn = oci_connect('inv', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
+    $conn = oci_connect('inv', '123456', '47.95.212.18/ORCL', "AL32UTF8"); //连接oracle数据库
     if (!$conn) { //未连接成功，终止脚本并返回错误信息
         $e = oci_error();
         die(json_encode($e));

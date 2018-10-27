@@ -10,7 +10,7 @@ if (isset($_SESSION['admin_id'])) {
     $name = $_POST['name'];
     $password = $_POST['password'];
 
-    $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8");
+    $conn = oci_connect('scott', '123456', '47.95.212.18/ORCL', "AL32UTF8");
     if (!$conn) {
         $e = oci_error();
         die(json_encode($e));

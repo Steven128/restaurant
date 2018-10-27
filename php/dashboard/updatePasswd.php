@@ -12,7 +12,7 @@ if (isset($_GET['request']) && $_GET['request'] != "") {
 if (!isset($_SESSION['admin_id']) || $_SESSION['admin_id'] != $admin_id) {
     die();
 }
-$conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8");
+$conn = oci_connect('scott', '123456', '47.95.212.18/ORCL', "AL32UTF8");
 if (!$conn) { //未连接成功，终止脚本并返回错误信息
     $e = oci_error();
     die(json_encode($e));
