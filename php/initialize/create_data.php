@@ -1,6 +1,6 @@
 <?php
 set_time_limit(0);
-$conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', 'AL32UTF8');
+$conn = oci_connect('scott', '123456', '47.95.212.18/ORCL', 'AL32UTF8');
 if (!$conn) {
     $e = oci_error();
     print htmlentities($e['message']);
@@ -38,10 +38,10 @@ if (!$conn) {
     createDishData($conn);
     echo"<br>写入菜品表数据成功";
 
-    createOrderData($conn, 1000);
+    createOrderData($conn, 109500);
     echo"<br>写入订单表数据成功";
 
-    createPreOrderData($conn, 50);
+    createPreOrderData($conn, 27400);
     echo"<br>写入预定表数据成功";
 
     createSalesData($conn);   //有问题

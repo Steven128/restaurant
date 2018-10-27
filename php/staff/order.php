@@ -3,30 +3,25 @@
 $data = json_decode($_POST['param']);
 $request = $data->request;
 
-$conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
+
+$conn = oci_connect('scott', '123456', '47.95.212.18/ORCL', "AL32UTF8"); //连接oracle数据库
 if (!$conn) { //未连接成功，终止脚本并返回错误信息
     $e = oci_error();
     die(json_encode($e));
 } else {
     if ($request == "getMenu") {
         getMenu($conn, $data);
-    } else
-    if ($request == "createOrder") {
+    } elseif ($request == "createOrder") {
         createOrder($conn, $data);
-    } else
-    if ($request == "deleteDish") {
+    } elseif ($request == "deleteDish") {
         deleteDish($conn, $data);
-    } else
-    if ($request == "getOrder") {
+    } elseif ($request == "getOrder") {
         getOrder($conn, $data);
-    } else
-    if ($request == "payOrder") {
+    } elseif ($request == "payOrder") {
         payOrder($conn, $data);
-    } else
-    if ($request == "preOrder") {
+    } elseif ($request == "preOrder") {
         perOrder($conn, $data);
-    } else
-    if ($request == "deleteOrder") {
+    } elseif ($request == "deleteOrder") {
         deleteOrder($conn, $data);
     }
 }
@@ -133,11 +128,9 @@ function createOrder($conn, $data)
         // $statement6 = oci_parse($conn, $sql_update);
         echo json_encode(array("message" => "success"));
     }
-
 }
 
 function deleteDish($conn, $data) //业务逻辑需要改
-
 {
     $order_id = $_POST['order_id'];
     $dish_id = $_POST['dish_id'];
@@ -202,14 +195,11 @@ function payOrder($conn, $data)
 }
 
 function perOrder($conn, $data) //未完成
-
 {
     $pre_order_time = date("Y-m-d H:i:s", time());
     $arrive_time = $_POST['arrive_time'];
-
 }
 
 function deleteOrder($conn, $datsa)
 {
-
 }

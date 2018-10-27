@@ -203,7 +203,7 @@ class uploadPic
         $this->percent = 1; #原图压缩，不缩放，但体积大大降低
         $this->src=$new_file;
         $image = $this->compressImg($new_file);
-        $conn = oci_connect($admin, '123456', 'localhost:1521/ORCL', "AL32UTF8");
+        $conn = oci_connect($admin, '123456', '47.95.212.18/ORCL', "AL32UTF8");
         $sql_insert = "UPDATE SCOTT.$table SET $table"."_pic='$new_file' WHERE $table"."_id='$id'";
         $statement = oci_parse($conn, $sql_insert);
         if (oci_execute($statement)) {

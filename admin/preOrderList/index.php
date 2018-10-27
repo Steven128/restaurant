@@ -26,72 +26,6 @@ session_start();
     <script type="text/javascript" src="../../js/plugins/dataTables/dataTables.responsive.js"></script>
     <script type="text/javascript" src="../../js/plugins/dataTables/responsive.bootstrap.js"></script>
     <script type="text/javascript" src="../../js/plugins/dataTables/jquery.tabledisplay.js"></script>
-    <style>
-        .display-box-hide,
-        .display-box {
-            width: 0px;
-            height: 0px;
-            position: absolute;
-            left: 50px !important;
-            top: 0px;
-            border: 0px solid #666;
-            border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.85);
-            z-index: 10;
-        }
-
-        .display-box:before {
-            position: absolute;
-            content: "";
-            width: 0;
-            height: 0;
-            left: 30px;
-            top: -29px;
-            border-bottom: 30px solid #666;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-        }
-
-        .display-box:after {
-            position: absolute;
-            content: "";
-            width: 0;
-            height: 0;
-            left: 30px;
-            top: -26px;
-            border-bottom: 30px solid #fff;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-        }
-
-        .display-box-hide:before {
-            display: "none";
-            content: "";
-        }
-
-        .display-box-hide:after {
-            display: "none";
-            content: "";
-        }
-
-        @media(min-width:768px) {
-            .display-box:before {
-                left: -30px;
-                top: 23px;
-                border-right: 30px solid #666;
-                border-top: 10px solid transparent;
-                border-bottom: 10px solid transparent;
-            }
-
-            .display-box:after {
-                left: -27px;
-                top: 23px;
-                border-right: 30px solid #fff;
-                border-top: 10px solid transparent;
-                border-bottom: 10px solid transparent;
-            }
-        }
-    </style>
     <?php
     if (!isset($_SESSION['admin_id'])) {
         echo "<script>$(document).ready(() => {window.location.replace(\"../../login\");});</script>";
@@ -104,7 +38,7 @@ session_start();
 
 <body>
     <?php
-    $conn = oci_connect('ord_admin', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
+    $conn = oci_connect('ord_admin', '123456', '47.95.212.18/ORCL', "AL32UTF8"); //连接oracle数据库
     ?>
     <div class="container">
         <header class="head-content">
@@ -328,11 +262,7 @@ session_start();
                                         })
                                         </script>
                                     </tbody>
-                                    <!-- <div class="display-box-hide"></div> -->
                                 </table>
-                                <div id="back_to_top">
-                                    <i class="iconfont icon-up-arrow"></i>
-                                </div>
                             </div>
                         </div>
                     </div>

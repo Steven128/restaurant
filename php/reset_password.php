@@ -6,7 +6,7 @@ session_start();
 $request = $_POST['request'];
 if ($request == "check") {
     $name = $_POST['name'];
-    $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8");
+    $conn = oci_connect('scott', '123456', '47.95.212.18/ORCL', "AL32UTF8");
     if (!$conn) {
         $e = oci_error();
         die(json_encode($e));
@@ -32,7 +32,7 @@ if ($request == "check") {
     $password = $_POST['password'];
     $phpsessid = $_POST['phpsessid'];
     if ($phpsessid == session_id()) {
-        $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8");
+        $conn = oci_connect('scott', '123456', '47.95.212.18/ORCL', "AL32UTF8");
         $exist = 0;
         $login = 0;
         $admin_id = "";
@@ -70,7 +70,7 @@ if ($request == "check") {
     $password = $_POST['password'];
     $phpsessid = $_POST['phpsessid'];
     if ($phpsessid == session_id()) {
-        $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8");
+        $conn = oci_connect('scott', '123456', '47.95.212.18/ORCL', "AL32UTF8");
         $sql_update = "UPDATE admin SET admin_passwd='$password' WHERE adm_status>0 AND admin_name='$name'";
         $statement = oci_parse($conn, $sql_update);
         oci_execute($statement);

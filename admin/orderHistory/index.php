@@ -15,6 +15,7 @@ session_start();
     <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
     <link type="text/css" rel="stylesheet" href="../../css/datatables.css" />
     <link type="text/css" rel="stylesheet" href="../../css/table_plugins/responsive.bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/search.css" />
 
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
@@ -26,71 +27,11 @@ session_start();
     <script type="text/javascript" src="../../js/plugins/dataTables/dataTables.responsive.js"></script>
     <script type="text/javascript" src="../../js/plugins/dataTables/responsive.bootstrap.js"></script>
     <script type="text/javascript" src="../../js/plugins/dataTables/jquery.tabledisplay.js"></script>
+    <script type="text/javascript" src="../../js/adm_mgment/order.search.js"></script>
     <style>
-        .display-box-hide,
-        .display-box {
-            width: 0px;
-            height: 0px;
-            position: absolute;
-            left: 50px !important;
-            top: 0px;
-            border: 0px solid #666;
-            border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.85);
-            z-index: 10;
-        }
-
-        .display-box:before {
-            position: absolute;
-            content: "";
-            width: 0;
-            height: 0;
-            left: 30px;
-            top: -29px;
-            border-bottom: 30px solid #666;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-        }
-
-        .display-box:after {
-            position: absolute;
-            content: "";
-            width: 0;
-            height: 0;
-            left: 30px;
-            top: -26px;
-            border-bottom: 30px solid #fff;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-        }
-
-        .display-box-hide:before {
-            display: "none";
-            content: "";
-        }
-
-        .display-box-hide:after {
-            display: "none";
-            content: "";
-        }
-
-        @media(min-width:768px) {
-            .display-box:before {
-                left: -30px;
-                top: 23px;
-                border-right: 30px solid #666;
-                border-top: 10px solid transparent;
-                border-bottom: 10px solid transparent;
-            }
-
-            .display-box:after {
-                left: -27px;
-                top: 23px;
-                border-right: 30px solid #fff;
-                border-top: 10px solid transparent;
-                border-bottom: 10px solid transparent;
-            }
-        }
+    #order-type-select {
+        width:120px;
+    }
     </style>
     <?php
     if (!isset($_SESSION['admin_id'])) {
@@ -104,7 +45,7 @@ session_start();
 
 <body>
     <?php
-    $conn = oci_connect('ord_admin', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
+    $conn = oci_connect('ord_admin', '123456', '47.95.212.18/ORCL', "AL32UTF8"); //连接oracle数据库
     ?>
     <div class="container">
         <header class="head-content">
@@ -286,74 +227,33 @@ session_start();
                     <div class="title">
                         <h4 class="title-left">历史订单查询</h4>
                     </div>
+                    
                     <div class="box-wrap">
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-                            <table class="orderListTable" style="display: none;">
-                                    <thead>
-                                        <tr>
-                                            <th>订单号</th>
-                                            <th>下单时间</th>
-                                            <th>总金额</th>
-                                            <th>是否付款</th>
-                                            <th>付款时间</th>
-                                            <th>付款方式</th>
-                                            <th>菜单</th>
-                                            <th>餐桌</th>
-                                            <th>备注</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="preOrderListTableBody">
-                                        <?php
-                                        $sql_query = "SELECT order_id,table_number,dish_list,total_price,pay_method,pay_time,order_note,pay_status FROM SCOTT.ordRead WHERE SUBSTR(ORDER_ID,9,8)!='".date("Ymd")."' ORDER BY pay_time DESC";                                        
-                                        $statement = oci_parse($conn, $sql_query);
-                                        oci_execute($statement);
-                                        $count = 0;
-                                        while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
-                                            $count++;
-                                            $order_id = $row[0];
-                                            $order_time=substr($order_id,8,4)."-".substr($order_id,12,2)."-".substr($order_id,14,2);
-                                            $table_number=$row[1];
-                                            $dish_list = $row[2];
-                                            $total_price = $row[3];
-                                            $pay_method = $row[4];
-                                            if($pay_method==1)
-                                                $pay_method = "现金";
-                                            elseif($pay_method==2)
-                                                $pay_method="支付宝";
-                                            elseif($pay_method==3)
-                                                $pay_method="微信";
-                                            else
-                                                $pay_method="未知方式";
-                                            $pay_time = $row[5];
-                                            $order_note = $row[6];
-                                            $pay_status = $row[7];
-                                            if($pay_status==1)
-                                                $pay_status="已付款";
-                                            elseif($pay_status==0)
-                                                $pay_status="未付款";
-                                            else
-                                                $pay_status="未知";
-                                            echo "<tr><td>$order_id</td><td>$order_time</td><td>$total_price</td><td>$pay_status</td><td>$pay_time</td><td>$pay_method</td><td>详情</td><td>$table_number</td><td>$order_note</td></tr>";
-                                        }
-                                        ?>
-                                        <script>
-                                        $(document).ready(() => {
-                                            $(".orderListTable").DataTable({
-                                                autoWidth: true,
-                                                responsive: true
-                                            });
-                                            $(".orderListTable").displayInfo();
-                                            $(".orderListTable").show();
-                                        })
-                                        </script>
-                                    </tbody>
-                                    <!-- <div class="display-box-hide"></div> -->
-                                </table>
-                                <div id="back_to_top">
-                                    <i class="iconfont icon-up-arrow"></i>
+                                <div class="search-top-wrap">
+                                    <div class="search-top" id="order-search-top">
+                                        <label>查询方式
+                                            <select id="order-type-select" class="form-control">
+                                                <option value="current">当前未付款</option>
+                                                <option value="day">按日</option>
+                                                <option value="order">按订单号</option>
+                                            </select>
+                                        </label>
+                                        
+                                        <label class="search-radio-wrap"></label>
+                                        <label>
+                                            <button type="button" class="search-btn order-search-btn">查询</button>
+                                        </label>
+                                    </div>
                                 </div>
+                            </div>
+
+                        </div>
+                        <div class="box">
+                            <div id="search-result-wrap" class="inner-box">
+
                             </div>
                         </div>
                     </div>

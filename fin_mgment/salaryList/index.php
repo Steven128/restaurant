@@ -38,7 +38,7 @@ session_start();
 
 <body>
     <?php
-    $conn = oci_connect('emp_admin', '123456', 'localhost:1521/ORCL', "AL32UTF8"); //连接oracle数据库
+    $conn = oci_connect('emp_admin', '123456', '47.95.212.18/ORCL', "AL32UTF8"); //连接oracle数据库
     ?>
     <div class="container">
         <header class="head-content">
@@ -243,7 +243,6 @@ session_start();
                                         })
                                         </script>
                                     </tbody>
-                                    <!-- <div class="display-box-hide"></div> -->
                                 </table>
                             </div>
                         </div>
