@@ -177,11 +177,7 @@ session_start();
                                         })
                                         </script>
                                     </tbody>
-                                    <!-- <div class="display-box-hide"></div> -->
                                 </table>
-                                <div id="back_to_top">
-                                    <i class="iconfont icon-up-arrow"></i>
-                                </div>
                             </div>
                         </div>
                     </div>

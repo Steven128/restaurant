@@ -243,7 +243,6 @@ session_start();
                                         })
                                         </script>
                                     </tbody>
-                                    <!-- <div class="display-box-hide"></div> -->
                                 </table>
                             </div>
                         </div>

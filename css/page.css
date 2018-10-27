@@ -10,14 +10,6 @@ body,
     overflow: hidden;
 }
 
-#back_to_top {
-    position: fixed;
-    bottom: 60px;
-    right: 20px;
-    display: none;
-    cursor: pointer;
-}
-
 header {
     height: 52px;
     background-color: #303a4d;

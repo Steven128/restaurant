@@ -1,19 +1,3 @@
-$(document).ready(() => {
-    $(function() {
-        $(".inner-box").scroll(function() {
-            if ($(".inner-box").scrollTop() >= 50) {
-                $('#back_to_top').fadeIn();
-            } else {
-                $('#back_to_top').fadeOut();
-            }
-        });
-    });
-    $('#back_to_top').click(function() {
-        $('.inner-box').animate({ scrollTop: 0 }, 500);
-    });
-})
-
-
 //获取referer，兼容IE
 function goTo(url) {
     var ua = navigator.userAgent;
