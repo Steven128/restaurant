@@ -34,6 +34,79 @@ session_start();
         echo "<script>$(document).ready(() => {window.location.replace(\"../../dashboard\");});</script>";
     }
     ?>
+    <style>
+    .update-salary {
+        margin-left: 9px;
+        padding-left: 9px;
+        border-left: 2px solid #ccc !important;
+    }
+    
+    .update-salary-box {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -160px;
+        margin-top: -200px;
+        z-index: 100;
+        width: 320px;
+        padding: 20px;
+        border-radius: 1px;
+        color: #000;
+        background-color: #fff;
+    }
+
+    .update-salary-box .subform {
+        padding: 10px 10px 20px 10px;
+    }
+
+    .update-salary-box h4 {
+        padding: 0 10px;
+    }
+
+    .update-salary-box .form-group input {
+        margin: auto;
+        border: 0;
+        width: 100%;
+    }
+
+    .update-salary-box .form-group input#salary {
+        border-bottom: 1px solid #4b9cfa;
+    }
+
+    .update-salary-box input.error {
+        border-bottom: 1px solid red !important;
+    }
+
+    .update-salary-box label.error {
+        width: 100%;
+    }
+
+    .update-salary-box .btn-area {
+        text-align: right;
+        margin: 0;
+        padding: 15px 0 !important;
+    }
+
+    .update-salary-box button {
+        display: inline-block;
+        border-radius: 1px;
+        border: 0.5px solid #cccccc;
+        border-bottom: 0.5px solid #b2b2b2;
+        background-color: rgba(0, 0, 0, 0.2);
+        text-align: center;
+        margin-top: 10px;
+        height: 30px;
+        width: 100px;
+        color: #303a4d;
+    }
+
+    .update-salary-box .submit {
+        display: inline-block;
+        width: 100px !important;
+        color: #fff;
+        background-color: #0067b8 !important;
+    }
+    </style>
 </head>
 
 <body>
@@ -153,7 +226,7 @@ session_start();
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-                            <table class="employeeListTable" style="display: none;">
+                                <table class="employeeListTable" style="display: none;">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -161,11 +234,10 @@ session_start();
                                             <th>性别</th>
                                             <th>工龄（年）</th>
                                             <th>年龄</th>
-                                            <th>工资</th>
                                             <th>手机号</th>
                                             <th>类别</th>
                                             <th>聘用日期</th>
-                                            <th>操作</th>
+                                            <th>工资</th>
                                         </tr>
                                     </thead>
                                     <tbody class="employeeListTableBody">
@@ -214,7 +286,7 @@ session_start();
                                                 $employee_type = "其他";
                                             }
                                             //
-                                            echo "<tr><td>$employee_id</td><td>$name</td><td>$gender</td><td>$working_year</td><td>$age</td><td>$salary</td><td>$phone_num</td><td>$employee_type</td><td>$employ_time</td><td><a class=\"table-update-btn update-employee\" href = \"javascript:void(0);\" onclick=\"update_employee('" . $employee_id . "')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
+                                            echo "<tr><td>$employee_id</td><td>$name</td><td>$gender</td><td>$working_year</td><td>$age</td><td>$phone_num</td><td>$employee_type</td><td>$employ_time</td><td>$salary<a class=\"table-update-btn update-salary\" href = \"javascript:void(0);\" onclick=\"update_salary('" . $employee_id . "','".$name."','".$salary."')\"><i class=\"iconfont icon-update\"></i></a></td></tr>";
                                         }
                                         ?>
                                         <script>
@@ -258,6 +330,31 @@ session_start();
                 <h5 class="copyright-text">&copy;&nbsp;餐饮店管理系统&nbsp;&nbsp;2018</h5>
             </div>
         </footer>
+        <div class="shelter" onclick="hideBox()" style="background-color: rgba(0, 0, 0, 0.5); z-index: 100; display: none;"></div>
+    </div>
+    <script type="text/javascript" src="../../js/plugins/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="../../js/fin_mgment/fin.update.validate.js"></script>
+    <div class="update-salary-box" style="display: none;">
+        <h3>修改工资</h3>
+        <hr>
+        <h4 class="emp_name"></h4>
+        <form id="updateSalary-form" method="POST">
+            <div class="subform">
+                <div class="form-group">
+                    <div class="section_title">原工资</div>
+                    <input id="oldSalary" type="text" class="input-text form-control" name="oldSalary" value="" disabled="disabled" />
+                </div>
+                <div class="form-group">
+                    <div class="section_title">修改后工资</div>
+                    <input id="salary" type="text" class="input-text form-control" name="salary" placeholder="请输入工资" />
+                </div>
+                <div class="clear"></div>
+                <div class="btn-area">
+                    <button id="cancel" type="button" class="cancel" onclick="cancel()">取消</button>
+                    <button id="submit" type="submit" class="submit">确认修改</button>
+                </div>
+            </div>
+        </form>
     </div>
 </body>
 
