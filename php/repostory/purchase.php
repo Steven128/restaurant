@@ -1,15 +1,15 @@
 <?php
-$ref = $_SERVER['REFERER'];
-if ($ref == "") {
-    echo "不允许从地址栏访问";
-    exit();
-} else {
-    $url = parse_url($ref);
-    if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost") {
-        echo "no";
-        exit();
-    }
-}
+// $ref = $_SERVER['REFERER'];
+// if ($ref == "") {
+//     echo "不允许从地址栏访问";
+//     exit();
+// } else {
+//     $url = parse_url($ref);
+//     if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost") {
+//         echo "no";
+//         exit();
+//     }
+// }
 session_start(); //开启php_session
 if (isset($_GET['request'])) {
     $request = $_GET['request'];
@@ -32,7 +32,7 @@ if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如�
         // if ($admin_type != 1 and $admin_type != 4) {
         //     exit();
         // }
-        if ($request == "purchase") {
+        if ($request == "add_overhead") {
             echo purchase($conn);
         }
 
@@ -58,9 +58,9 @@ function purchase($conn)
 {
     $overhead_id = date("Ymd_His");
     $overhead_id = "ove_$overhead_id";
-    $overhead_type = $_POST['overhead_type'];
-    $overhead_price = $_POST['overhead_price'];
-    $overhead_date = date("Y-m-d");
+    $overhead_type = $_POST['type'];
+    $overhead_price = $_POST['price'];
+    $overhead_date = $_POST['date'];
 
     $sql_query = "BEGIN scott.addOverhead('$overhead_id',$overhead_type,$overhead_price,'$overhead_date'); END;";
 

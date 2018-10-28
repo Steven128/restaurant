@@ -728,27 +728,28 @@ if (oci_execute($statement)) {
 
 
 
-//     $sql = "grant execute on scott.updateEmployee to emp_admin;
-//     grant execute on scott.addEmployee to emp_admin;
-//     grant execute on scott.deleteEmployee to emp_admin;
-//     grant execute on scott.updateDish to dis_admin;
-//     grant execute on scott.addDish to dis_admin;
-//     grant execute on scott.deleteDish to dis_admin;
-//     grant execute on scott.updateTable to tab_admin;
-//     grant execute on scott.addTable to tab_admin;
-//     grant execute on scott.deleteTable to tab_admin;
-//     grant execute on scott.addInventory to inv_admin;
-//     grant execute on scott.addAdmin to adm_admin;
-//     grant execute on scott.deleteAdmin to adm_admin";
+    $sql = "grant execute on scott.updateEmployee to emp_admin;
+    grant execute on scott.addEmployee to emp_admin;
+    grant execute on scott.deleteEmployee to emp_admin;
+    grant execute on scott.updateDish to dis_admin;
+    grant execute on scott.addDish to dis_admin;
+    grant execute on scott.deleteDish to dis_admin;
+    grant execute on scott.updateTable to tab_admin;
+    grant execute on scott.addTable to tab_admin;
+    grant execute on scott.deleteTable to tab_admin;
+    grant execute on scott.addInventory to inv_admin;
+    grant execute on scott.addAdmin to adm_admin;
+    grant execute on scott.deleteAdmin to adm_admin;
+grant execute on scott.addOverhead to inv_admin";
 
-//     $sql_grant = explode(";", $sql);
-//     foreach ($sql_grant as $k => $v) {
-//         $statement = oci_parse($conn, $sql_grant[$k]);
-//         if (oci_execute($statement)) {
-//             echo "y";
-//         } else
-//             echo "n";
-//     }
+    $sql_grant = explode(";", $sql);
+    foreach ($sql_grant as $k => $v) {
+        $statement = oci_parse($conn, $sql_grant[$k]);
+        if (oci_execute($statement)) {
+            echo "y";
+        } else
+            echo "n";
+    }
 // //employee_id,name,gender,working_year,age,salary,phone_num,employee_type,employ_time ,employee_pic,emp_status
 //     $sql_create_view = "create or replace view empRead as select * from scott.employee where emp_status>0 with read only";
 //     $statement = oci_parse($conn, $sql_create_view);
