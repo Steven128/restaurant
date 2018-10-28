@@ -77,7 +77,7 @@ function createOrder($conn, $data)
     $row = oci_fetch_array($statement3);
     if ($row == null) {
         $order_time = date("YmdHis", time());
-        $table_number = $table_number < 10 ? "00$table_number " : ($table_number < 100 ? "0$table_number" : "$table_number");
+        //$table_number = $table_number < 10 ? "00$table_number " : ($table_number < 100 ? "0$table_number" : "$table_number");
         $order_id = "ord_" . "$table_number" . "_" . "$order_time";
         $count = 0;
         $sql_insert1 = "INSERT INTO SCOTT.ORDER_LIST (order_id,table_id,pay_status) VALUES ('$order_id','$table_id',0)";
@@ -124,7 +124,7 @@ function createOrder($conn, $data)
 
 function deleteDish($conn, $data) //业务逻辑需要改
 {
-    $order_id = $data->order->id;
+    $order_id = $data->order;
     $dish_id = $data->dish->id;
     $sql_select = "SELECT SAL_STATUS FROM SCOTT.SALES WHERE ORDER_ID='" . $order_id . "' AND DISH_ID='" . $dish_id . "'";
     $statement2 = oci_parse($conn, $sql_select);
@@ -142,35 +142,35 @@ function deleteDish($conn, $data) //业务逻辑需要改
 
 function getOrder($conn, $data)
 {
-    $table_id = $data->table->id;
+    $table_id = $data->table;
     $sql_select1 = "SELECT * FROM SCOTT.ORDER_LIST WHERE TABLE_ID='" . $table_id . "' AND PAY_STATUS=0 AND ORD_STATUS=1";
     $statement1 = oci_parse($conn, $sql_select1);
     oci_execute($statement1);
     $row = oci_fetch_array($statement1);
     $order_id = $row[0];
-    $sql_select2="SELECT DISH_ID,DISH_PRICE FROM SCOTT.SALES WHERE ORDER_ID='".$order_id."' AND SAL_STATUS>0";
+    $sql_select2="SELECT SALES.DISH_ID,SALES.DISH_PRICE,DISH.DISH_NAME FROM SCOTT.SALES JOIN SCOTT.DISH ON SALES.DISH_ID=DISH.DISH_ID WHERE ORDER_ID='".$order_id."' AND SAL_STATUS>0";
     $statement2=oci_parse($conn,$sql_select2);
     oci_execute($statement2);
-    $total_price=0;
     $dishes_info=array();
     while($row1=oci_fetch_array($statement2,OCI_RETURN_NULLS)){
-        $dish_id=$row1[0];
-        $total_price+=$row1[1];
-        array_push($dishes_info,$dish_id);
+        $dish_info=array("id"=>$row1[0],"name"=>$row1[2],"price"=>$row1[1]);
+        array_push($dishes_info,$dish_info);
     }
-    $order_info = array("order_id" => $order_id, "table_id" => $table_id,  "total_price" => $total_price);
-    echo json_encode(array("message" => "success", "order" => "$order_info","dishes"=>"$dishes_info"));
+    echo json_encode(array("message" => "success", "order" => $order_id,"dishes"=>$dishes_info));
 }
 
 function payOrder($conn, $data)
 {
     $order_id = $data->order->order_id;
+    $table_id=$data->order->table_id;
     $total_price=$data->order->total_price;
     $method = $data->method;
-    $pay_time = data("Y-m-d H:i:s", time());
+    $pay_time = date("Y-m-d H:i:s", time());
     $sql_update1 = "UPDATE SCOTT.ORDER_LIST SET PAY_METHOD=$method,PAY_STATUS=1,TOTAL_PRICE=$total_price,PAY_TIME='" . $pay_time . "' WHERE ORDER_ID='" . $order_id . "' AND PAY_STATUS=0 AND ORD_STATUS=1";
     $statement1 = oci_parse($conn, $sql_update1);
-    if(oci_execute($statement1)){
+    $sql_update2="UPDATE SCOTT.RES_TABLE SET TABLE_ORDER_STATUS=0 WHERE TABLE_ID='".$table_id."'";
+    $statement2=oci_parse($conn,$sql_update2);
+    if(oci_execute($statement1)&&oci_execute($statement2)){
         echo json_encode(array("message" => "success"));
     }else{
         echo json_encode(array("message" => "error"));
