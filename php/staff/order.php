@@ -118,14 +118,6 @@ function createOrder($conn, $data)
             $statement2 = oci_parse($conn, $sql_insert2);
             oci_execute($statement2); //创建sales表并提交
         }
-        // $sql_select3 = "SELECT DISH_LIST FROM SCOTT.ORDER_LIST WHERE ORDER_ID='" . $order_id . "'";
-        // $statement5 = oci_parse($conn, $sql_select3);
-        // oci_execute($statement5);
-        // $row2 = oci_fetch_array($statement5);
-        // $dish_list1 = $row2[0];
-        // $dish_list = $dish_list . "," . $dish_list1;
-        // $sql_update = "UPDATE SCOTT.ORDER_LIST SET DISH_LIST='" . $dish_list . "' WHERE ORDER_ID='" . $order_id . "'";
-        // $statement6 = oci_parse($conn, $sql_update);
         echo json_encode(array("message" => "success"));
     }
 }
@@ -176,9 +168,8 @@ function getOrder($conn, $data)
     oci_execute($statement1);
     while ($row = oci_fetch_array($statement1, OCI_RETURN_NULLS)) {
         $order_id = $row[0];
-        $dish_list = $row[2];
-        $total_price = $row[3];
-        $order_info = array("order_id" => $order_id, "table_id" => $table_id, "dish_list" => $dish_list, "total_price" => $total_price);
+        $total_price = $row[2];
+        $order_info = array("order_id" => $order_id, "table_id" => $table_id,  "total_price" => $total_price);
         echo json_encode(array("message" => "success", "data" => "$order_info"));
     }
 }

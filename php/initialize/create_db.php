@@ -1,6 +1,9 @@
 <?php
 $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8");
+<<<<<<< HEAD
+=======
 
+>>>>>>> 0950f14801b9df9da39e2a8895e9727ccbbaa54c
 if (!$conn) {
     $e = oci_error();
     print htmlentities($e['message']);
@@ -457,7 +460,11 @@ if (!$conn) {
         echo $statement;
     }
 
+<<<<<<< HEAD
+    //$conn = oci_connect('system', '123456', 'localhost:1521/ORCL', "AL32UTF8");
+=======
     $conn = oci_connect('system', '123456', 'localhost:1521/ORCL', "AL32UTF8");
+>>>>>>> 0950f14801b9df9da39e2a8895e9727ccbbaa54c
 
 
 
@@ -476,6 +483,17 @@ if (!$conn) {
             echo "<br>授予用户$user[$i]连接权限成功！";
         }
     }
+<<<<<<< HEAD
+    $user = array("emp_admin", "emp_admin", "fin_admin", "fin_admin", "inv_admin", "inv_admin", "inv_admin", "inv_admin", "ord_admin", "ord_admin", "ord_admin", "ord_admin", "dis_admin", "tab_admin");
+    $table = array("employee", "presence", "finance", "overhead", "overhead", "inventory", "loss", "goods", "pre_order", "order_list", "dish", "res_table", "dish", "res_table");
+    for ($i = 0; $i < count($user); $i++) {
+        $sql_grant = "grant select on SCOTT.$table[$i] to $user[$i]";
+        $statement = oci_parse($conn, $sql_grant);
+        if (oci_execute($statement)) {
+            echo "<br>授予用户$user[$i]对$table[$i]表的查询权限成功！";
+        }
+    }
+=======
     // $user = array("emp_admin", "emp_admin", "fin_admin", "fin_admin", "inv_admin", "inv_admin", "inv_admin", "inv_admin", "ord_admin", "ord_admin", "ord_admin", "ord_admin", "dis_admin", "tab_admin");
     // $table = array("employee", "presence", "finance", "overhead", "overhead", "inventory", "loss", "goods", "pre_order", "order_list", "dish", "res_table", "dish", "res_table");
     // for ($i = 0; $i < count($user); $i++) {
@@ -485,6 +503,7 @@ if (!$conn) {
     //         echo "<br>授予用户$user[$i]对$table[$i]表的查询权限成功！";
     //     }
     // }
+>>>>>>> 0950f14801b9df9da39e2a8895e9727ccbbaa54c
     // $user = array("emp_admin", "fin_admin", "fin_admin", "inv_admin", "inv_admin", "inv_admin", "ord_admin", "dis_admin", "tab_admin");
     // $table = array("employee", "finance", "overhead", "inventory", "loss", "goods", "order_list", "dish", "res_table");
 
@@ -497,7 +516,10 @@ if (!$conn) {
     //     }
 
     // }
+<<<<<<< HEAD
+=======
     $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8");
+>>>>>>> 0950f14801b9df9da39e2a8895e9727ccbbaa54c
 
     $user = array("adm_admin","emp_admin", "fin_admin", "fin_admin", "inv_admin", "inv_admin", "inv_admin", "ord_admin", "dis_admin", "tab_admin");
     $table = array("admin","employee", "finance", "overhead", "inventory", "loss", "goods", "order_list", "dish", "res_table");
@@ -732,6 +754,12 @@ END deleteAdmin;
         } else
             echo "n";
     }
+<<<<<<< HEAD
+    oci_free_statement($statement);
+    oci_close($conn);
+
+}
+=======
 //employee_id,name,gender,working_year,age,salary,phone_num,employee_type,employ_time ,employee_pic,emp_status
 $sql_create_view = "create or replace view empRead as select * from scott.employee where emp_status>0 with read only";
 $statement = oci_parse($conn, $sql_create_view);
@@ -847,3 +875,4 @@ oci_close($conn);
             "employee_pic VARCHAR(100) NOT NULL," .
             "emp_status NUMERIC(1,0) DEFAULT 1 NOT NULL)";
 }
+>>>>>>> 0950f14801b9df9da39e2a8895e9727ccbbaa54c

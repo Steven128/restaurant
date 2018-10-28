@@ -33,7 +33,7 @@ if (!$conn) { //未连接成功，终止脚本并返回错误信息
 
 function getTables($conn, $data)
 {
-    $sql_select1 = "SELECT TABLE_ID,TABLE_NUMBER,DEFAULT_NUMBER,TABLE_ORDER_STATUS FROM SCOTT.RES_TABLE WHERE TAB_STATUS=0";
+    $sql_select1 = "SELECT TABLE_ID,TABLE_NUMBER,DEFAULT_NUMBER,TABLE_ORDER_STATUS FROM SCOTT.RES_TABLE WHERE TAB_STATUS=1";
     $statement1 = oci_parse($conn, $sql_select1);
     oci_execute($statement1);
     $table_info = array();
