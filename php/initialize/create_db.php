@@ -725,7 +725,21 @@ if (oci_execute($statement)) {
 } else
     echo "n";
 
-
+    $sql_ins = "CREATE OR REPLACE PROCEDURE updateSalary 
+    (v_employee_id IN employee.employee_id%TYPE,
+    v_salary IN employee.salary%TYPE
+    ) 
+    IS 
+    BEGIN 
+    UPDATE SCOTT.employee SET salary=v_salary WHERE employee_id=v_employee_id;
+    END updateSalary; 
+    ";
+    $statement = oci_parse($conn, $sql_ins);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else
+        echo "n";
+    
 
 
     $sql = "grant execute on scott.updateEmployee to emp_admin;
@@ -740,7 +754,8 @@ if (oci_execute($statement)) {
     grant execute on scott.addInventory to inv_admin;
     grant execute on scott.addAdmin to adm_admin;
     grant execute on scott.deleteAdmin to adm_admin;
-grant execute on scott.addOverhead to inv_admin";
+grant execute on scott.addOverhead to inv_admin;
+grant execute on scott.updateSalary to fin_admin";
 
     $sql_grant = explode(";", $sql);
     foreach ($sql_grant as $k => $v) {
@@ -829,27 +844,28 @@ grant execute on scott.addOverhead to inv_admin";
 //         echo "n";
 
 
-//     $sql = "grant select on scott.empRead to emp_admin;
-// grant select on scott.disRead to dis_admin;
-// grant select on scott.finRead to fin_admin;
-// grant select on scott.invRead to inv_admin;
-// grant select on scott.gooRead to inv_admin;
-// grant select on scott.losRead to inv_admin;
-// grant select on scott.ordRead to ord_admin;
-// grant select on scott.purRead to fin_admin;
-// grant select on scott.porRead to ord_admin;
-// grant select on scott.tabRead to tab_admin;
-// grant select on scott.preRead to emp_admin
-// ";
+    $sql = "grant select on scott.empRead to emp_admin;
+    grant select on scott.empRead to fin_admin;
+grant select on scott.disRead to dis_admin;
+grant select on scott.finRead to fin_admin;
+grant select on scott.invRead to inv_admin;
+grant select on scott.gooRead to inv_admin;
+grant select on scott.losRead to inv_admin;
+grant select on scott.ordRead to ord_admin;
+grant select on scott.purRead to fin_admin;
+grant select on scott.porRead to ord_admin;
+grant select on scott.tabRead to tab_admin;
+grant select on scott.preRead to emp_admin
+";
 
-//     $sql_grant = explode(";", $sql);
-//     foreach ($sql_grant as $k => $v) {
-//         $statement = oci_parse($conn, $sql_grant[$k]);
-//         if (oci_execute($statement)) {
-//             echo "y";
-//         } else
-//             echo "n";
-//     }
+    $sql_grant = explode(";", $sql);
+    foreach ($sql_grant as $k => $v) {
+        $statement = oci_parse($conn, $sql_grant[$k]);
+        if (oci_execute($statement)) {
+            echo "y";
+        } else
+            echo "n";
+    }
 
 
 $sql_create_trigger = "create or replace trigger addInventory_updateGoods
