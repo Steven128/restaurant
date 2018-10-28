@@ -3,7 +3,6 @@
 $data = json_decode($_POST['param']);
 $request = $data->request;
 
-
 $conn = oci_connect('scott', '123456', '47.95.212.18/ORCL', "AL32UTF8"); //连接oracle数据库
 if (!$conn) { //未连接成功，终止脚本并返回错误信息
     $e = oci_error();
@@ -96,7 +95,7 @@ function createOrder($conn, $data)
             $statement2 = oci_parse($conn, $sql_insert2);
             oci_execute($statement2); //创建sales表并提交
         }
-        
+
         echo json_encode(array("message" => "success"));
     } else {
         $order_id = $row[0];
@@ -123,6 +122,7 @@ function createOrder($conn, $data)
 }
 
 function deleteDish($conn, $data) //业务逻辑需要改
+
 {
     $order_id = $data->order;
     $dish_id = $data->dish->id;
@@ -148,36 +148,37 @@ function getOrder($conn, $data)
     oci_execute($statement1);
     $row = oci_fetch_array($statement1);
     $order_id = $row[0];
-    $sql_select2="SELECT SALES.DISH_ID,SALES.DISH_PRICE,DISH.DISH_NAME FROM SCOTT.SALES JOIN SCOTT.DISH ON SALES.DISH_ID=DISH.DISH_ID WHERE ORDER_ID='".$order_id."' AND SAL_STATUS>0";
-    $statement2=oci_parse($conn,$sql_select2);
+    $sql_select2 = "SELECT SALES.DISH_ID,SALES.DISH_PRICE,DISH.DISH_NAME FROM SCOTT.SALES JOIN SCOTT.DISH ON SALES.DISH_ID=DISH.DISH_ID WHERE ORDER_ID='" . $order_id . "' AND SAL_STATUS>0";
+    $statement2 = oci_parse($conn, $sql_select2);
     oci_execute($statement2);
-    $dishes_info=array();
-    while($row1=oci_fetch_array($statement2,OCI_RETURN_NULLS)){
-        $dish_info=array("id"=>$row1[0],"name"=>$row1[2],"price"=>$row1[1]);
-        array_push($dishes_info,$dish_info);
+    $dishes_info = array();
+    while ($row1 = oci_fetch_array($statement2, OCI_RETURN_NULLS)) {
+        $dish_info = array("id" => $row1[0], "name" => $row1[2], "price" => $row1[1]);
+        array_push($dishes_info, $dish_info);
     }
-    echo json_encode(array("message" => "success", "order" => $order_id,"dishes"=>$dishes_info));
+    echo json_encode(array("message" => "success", "order" => $order_id, "dishes" => $dishes_info));
 }
 
 function payOrder($conn, $data)
 {
     $order_id = $data->order->order_id;
-    $table_id=$data->order->table_id;
-    $total_price=$data->order->total_price;
+    $table_id = $data->order->table_id;
+    $total_price = $data->order->total_price;
     $method = $data->method;
     $pay_time = date("Y-m-d H:i:s", time());
-    $sql_update1 = "UPDATE SCOTT.ORDER_LIST SET PAY_METHOD=$method,PAY_STATUS=1,TOTAL_PRICE=$total_price,PAY_TIME='" . $pay_time . "' WHERE ORDER_ID='" . $order_id . "' AND PAY_STATUS=0 AND ORD_STATUS=1";
+    $sql_update1 = "UPDATE SCOTT.ORDER_LIST SET PAY_METHOD=$method,PAY_STATUS=1,TOTAL_PRICE=$total_price,PAY_TIME='" . $pay_time . "' WHERE ORDER_ID='" . $order_id . "'";
     $statement1 = oci_parse($conn, $sql_update1);
-    $sql_update2="UPDATE SCOTT.RES_TABLE SET TABLE_ORDER_STATUS=0 WHERE TABLE_ID='".$table_id."'";
-    $statement2=oci_parse($conn,$sql_update2);
-    if(oci_execute($statement1)&&oci_execute($statement2)){
+    $sql_update2 = "UPDATE SCOTT.RES_TABLE SET TABLE_ORDER_STATUS=0 WHERE TABLE_ID='" . $table_id . "'";
+    $statement2 = oci_parse($conn, $sql_update2);
+    if (oci_execute($statement1) && oci_execute($statement2)) {
         echo json_encode(array("message" => "success"));
-    }else{
+    } else {
         echo json_encode(array("message" => "error"));
     }
 }
 
 function preOrder($conn, $data) //未完成
+
 {
     $pre_order_time = date("Y-m-d H:i:s", time());
     $arrive_time = $_POST['arrive_time'];
@@ -186,13 +187,13 @@ function preOrder($conn, $data) //未完成
 function deleteOrder($conn, $datsa)
 {
     $order_id = $data->order->order_id;
-    $sql_update1="UPDATE SCOTT.ORDER_LIST SET ORD_STATUS=0 WHERE ORDER_ID='".$order_id."'";
-    $statement1=oci_parse($conn,$sql_update1);
-    $sql_update2="UPDATE SCOTT.SALES SET SAL_STATUS=0 WHERE ORDER_ID='".$order_id."'"; 
-    $statement2=oci_parse($conn,$sql_update2);
-    if(oci_execute($statement1)&&oci_execute($statement2)){
+    $sql_update1 = "UPDATE SCOTT.ORDER_LIST SET ORD_STATUS=0 WHERE ORDER_ID='" . $order_id . "'";
+    $statement1 = oci_parse($conn, $sql_update1);
+    $sql_update2 = "UPDATE SCOTT.SALES SET SAL_STATUS=0 WHERE ORDER_ID='" . $order_id . "'";
+    $statement2 = oci_parse($conn, $sql_update2);
+    if (oci_execute($statement1) && oci_execute($statement2)) {
         echo json_encode(array("message" => "success"));
-    }else{
+    } else {
         echo json_encode(array("message" => "error"));
     }
 }
