@@ -15,5 +15,5 @@ if (!$conn) { //未连接成功，终止脚本并返回错误信息
 
 function checkin($conn,$data)
 {
-
+    
 }

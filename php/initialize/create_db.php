@@ -1,6 +1,5 @@
 <?php
 $conn = oci_connect('scott', '123456', 'localhost:1521/ORCL', "AL32UTF8");
-
 if (!$conn) {
     $e = oci_error();
     print htmlentities($e['message']);

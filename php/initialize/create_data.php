@@ -50,6 +50,9 @@ if (!$conn) {
     createEvaluateData($conn);
     echo"写入评价表数据成功\n";
 
+    deletedishlist($conn);
+
+
     oci_close($conn);
 }
 // echo date("y_m_d", time());
@@ -502,4 +505,14 @@ function createFinanceData($conn, $quantity)
         $_date = date("Y-m-d", (strtotime($_date) - 3600 * 24));
     }
     oci_free_statement($statement);
+}
+
+
+
+function deletedishlist($conn){
+    $sql_delete="ALTER table order_list drop column dish_list";
+    $statement=oci_parse($conn,$sql_delete);
+    oci_execute($statement);
+    oci_free_statement($statement);
+    echo "已删除order_list表的dish_list列";
 }

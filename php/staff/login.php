@@ -41,8 +41,24 @@ function login($conn,$data)
     oci_execute($statement);
     $row = oci_fetch_array($statement);
     if ($row == null) {
-        echo json_encode(array("message"));
+        echo json_encode(array("message"=>"error"));
     } else {
         echo json_encode(array("message" => "success", "data" => $row[0]));
     }
 }
+
+
+//使用员工姓名和电话号进行登陆的login
+// function login($conn,$data){
+//     $employee_name=$data->name;
+//     $employee_tel=$data->tel;
+//     $sql_select = "SELECT EMPLOYEE_TYPE FROM SCOTT.EMPLOYEE WHERE NAME='" . $employee_name . "' AND PHONE_NUM='".$employee_tel."'";
+//     $statement=oci_parse($conn,$sql_select);
+//     oci_execute($statement);
+//     $row=oci_fetch_array($statement);
+//     if ($row == null) {
+//         echo json_encode(array("message"=>"error"));
+//     } else {
+//         echo json_encode(array("message" => "success", "data" => $row[0]));
+//     }
+// }

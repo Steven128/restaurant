@@ -9,8 +9,9 @@ data:{id:
 
 需要：
 request:changeCookStatus
-id:
-name:
+dish:{id:
+    name:
+}
 返回：
 message:success
 
@@ -50,6 +51,7 @@ request:deleteDish
 message:success
 
 需要：
+request:deleteDish
 
 
 
