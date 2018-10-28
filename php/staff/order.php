@@ -20,7 +20,7 @@ if (!$conn) { //未连接成功，终止脚本并返回错误信息
     } elseif ($request == "payOrder") {
         payOrder($conn, $data);
     } elseif ($request == "preOrder") {
-        perOrder($conn, $data);
+        preOrder($conn, $data);
     } elseif ($request == "deleteOrder") {
         deleteOrder($conn, $data);
     }
@@ -118,51 +118,23 @@ function createOrder($conn, $data)
             $statement2 = oci_parse($conn, $sql_insert2);
             oci_execute($statement2); //创建sales表并提交
         }
-        // $sql_select3 = "SELECT DISH_LIST FROM SCOTT.ORDER_LIST WHERE ORDER_ID='" . $order_id . "'";
-        // $statement5 = oci_parse($conn, $sql_select3);
-        // oci_execute($statement5);
-        // $row2 = oci_fetch_array($statement5);
-        // $dish_list1 = $row2[0];
-        // $dish_list = $dish_list . "," . $dish_list1;
-        // $sql_update = "UPDATE SCOTT.ORDER_LIST SET DISH_LIST='" . $dish_list . "' WHERE ORDER_ID='" . $order_id . "'";
-        // $statement6 = oci_parse($conn, $sql_update);
         echo json_encode(array("message" => "success"));
     }
 }
 
 function deleteDish($conn, $data) //业务逻辑需要改
 {
-    $order_id = $_POST['order_id'];
-    $dish_id = $_POST['dish_id'];
-    $sql_select = "SELECT SAL_STATUS,DISH_PRICE FROM SCOTT.SALES WHERE ORDER_ID='" . $order_id . "' AND DISH_ID='" . $dish_id . "'";
-    $statement3 = oci_parse($conn, $statement3);
-    oci_execute($statement3);
-    $row1 = oci_fetch_array($statement3);
-    if ($row1[0] >= 2) {
+    $order_id = $data->order->id;
+    $dish_id = $data->dish->id;
+    $sql_select = "SELECT SAL_STATUS FROM SCOTT.SALES WHERE ORDER_ID='" . $order_id . "' AND DISH_ID='" . $dish_id . "'";
+    $statement2 = oci_parse($conn, $sql_select);
+    oci_execute($statement2);
+    $row = oci_fetch_array($statement2);
+    if ($row[0] >= 2) {
         echo json_encode(array("message" => "error"));
     } else {
         $sql_update1 = "UPDATE SCOTT.SALES SET SAL_STATUS=0 WHERE ORDER_ID='" . $order_id . "' AND DISH_ID='" . $dish_id . "'";
         $statement1 = oci_parse($conn, $sql_update1);
-        $sql_select1 = "SELECT DISH_LIST,TOTAL_PRICE FROM SCOTT.ORDER_LIST WHERE ORDER_ID='" . $order_id . "'";
-        $statement2 = oci_parse($conn, $sql_select1);
-        oci_execute($statement2);
-        $dish_list1 = null;
-        $total_price = null;
-        while ($row2 = oci_fetch_array($statement, OCI_RETURN_NULLS)) {
-            $dish_list1 = $row2[0];
-            $total_price = $row2[1];
-        }
-        $total_price = $total_price - $row1[1];
-        $dish_array1 = explode(",", $dish_list1);
-        $dish_list2 = null;
-        foreach ($dish_array1 as $dish) {
-            if ($dish != $dish_id) {
-                $dish_list2 = $dish_list2 . "," . $dish;
-            }
-        }
-        $sql_update2 = "UPDATE SCOTT.ORDER_LIST SET DISH_LIST='" . $dish_list2 . "',TOTAL_PRICE=$total_price WHERE ORDER_ID='" . $order_id . "'";
-        $statement3 = oci_parse($conn, $sql_update2);
-        oci_execute($statement3);
         oci_execute($statement1);
         echo json_encode(array("message" => "success"));
     }
@@ -170,31 +142,42 @@ function deleteDish($conn, $data) //业务逻辑需要改
 
 function getOrder($conn, $data)
 {
-    $table_id = $_POST['table_id'];
-    $sql_select1 = "SELECT * FROM SCOTT.ORDER_LIST WHERE TABLE_ID='" . $table_id . "' AND PAY_STATUS=0";
+    $table_id = $data->table->id;
+    $sql_select1 = "SELECT * FROM SCOTT.ORDER_LIST WHERE TABLE_ID='" . $table_id . "' AND PAY_STATUS=0 AND ORD_STATUS=1";
     $statement1 = oci_parse($conn, $sql_select1);
     oci_execute($statement1);
-    while ($row = oci_fetch_array($statement1, OCI_RETURN_NULLS)) {
-        $order_id = $row[0];
-        $dish_list = $row[2];
-        $total_price = $row[3];
-        $order_info = array("order_id" => $order_id, "table_id" => $table_id, "dish_list" => $dish_list, "total_price" => $total_price);
-        echo json_encode(array("message" => "success", "data" => "$order_info"));
+    $row = oci_fetch_array($statement1);
+    $order_id = $row[0];
+    $sql_select2="SELECT DISH_ID,DISH_PRICE FROM SCOTT.SALES WHERE ORDER_ID='".$order_id."' AND SAL_STATUS>0";
+    $statement2=oci_parse($conn,$sql_select2);
+    oci_execute($statement2);
+    $total_price=0;
+    $dishes_info=array();
+    while($row1=oci_fetch_array($statement2,OCI_RETURN_NULLS)){
+        $dish_id=$row1[0];
+        $total_price+=$row1[1];
+        array_push($dishes_info,$dish_id);
     }
+    $order_info = array("order_id" => $order_id, "table_id" => $table_id,  "total_price" => $total_price);
+    echo json_encode(array("message" => "success", "order" => "$order_info","dishes"=>"$dishes_info"));
 }
 
 function payOrder($conn, $data)
 {
-    $table_id = $_POST['table_id'];
-    $method = $_POST['pay_method'];
+    $order_id = $data->order->order_id;
+    $total_price=$data->order->total_price;
+    $method = $data->method;
     $pay_time = data("Y-m-d H:i:s", time());
-    $sql_update1 = "UPDATE SCOTT.ORDER_LIST SET PAY_METHOD=$method,PAY_STATUS=1,PAY_TIME='" . $pay_time . "' WHERE TABLE_ID='" . $table_id . "' AND PAY_STATUS=0";
+    $sql_update1 = "UPDATE SCOTT.ORDER_LIST SET PAY_METHOD=$method,PAY_STATUS=1,TOTAL_PRICE=$total_price,PAY_TIME='" . $pay_time . "' WHERE ORDER_ID='" . $order_id . "' AND PAY_STATUS=0 AND ORD_STATUS=1";
     $statement1 = oci_parse($conn, $sql_update1);
-    oci_execute($statement1);
-    echo json_encode(array("message" => "success"));
+    if(oci_execute($statement1)){
+        echo json_encode(array("message" => "success"));
+    }else{
+        echo json_encode(array("message" => "error"));
+    }
 }
 
-function perOrder($conn, $data) //未完成
+function preOrder($conn, $data) //未完成
 {
     $pre_order_time = date("Y-m-d H:i:s", time());
     $arrive_time = $_POST['arrive_time'];
@@ -202,4 +185,14 @@ function perOrder($conn, $data) //未完成
 
 function deleteOrder($conn, $datsa)
 {
+    $order_id = $data->order->order_id;
+    $sql_update1="UPDATE SCOTT.ORDER_LIST SET ORD_STATUS=0 WHERE ORDER_ID='".$order_id."'";
+    $statement1=oci_parse($conn,$sql_update1);
+    $sql_update2="UPDATE SCOTT.SALES SET SAL_STATUS=0 WHERE ORDER_ID='".$order_id."'"; 
+    $statement2=oci_parse($conn,$sql_update2);
+    if(oci_execute($statement1)&&oci_execute($statement2)){
+        echo json_encode(array("message" => "success"));
+    }else{
+        echo json_encode(array("message" => "error"));
+    }
 }

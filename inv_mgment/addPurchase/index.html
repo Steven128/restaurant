@@ -77,66 +77,50 @@
                         <h5 class="user-type"></h5>
                     </div>
                     <section class="sidebar">
-                        <ul class="sidebar-menu">
-                            <li class="treeview">
-                                <a href="javascript:void(0);">
-                                    <i class="iconfont icon-overview"></i>
-                                    <span>总览</span>
-                                    <span class="pull-right">
+                        <li class="treeview">
+                            <a href="javascript:void(0);">
+                                <i class="iconfont icon-inventory"></i>
+                                <span>库存管理</span>
+                                <span class="pull-right">
                                         <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li>
-                                        <a id="menu-invOverview-item" href="javascript:void(0);">
-                                            <i class="iconfont icon-list"></i>库存总览</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="treeview">
-                                <a href="javascript:void(0);">
-                                    <i class="iconfont icon-inventory"></i>
-                                    <span>库存管理</span>
-                                    <span class="pull-right">
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <a id="menu-inventoryList-item" href="javascript:void(0);">
+                                        <i class="iconfont icon-search"></i>当前库存查询</a>
+                                </li>
+                                <li>
+                                    <a id="menu-inventoryWarring-item" href="javascript:void(0);">
+                                        <i class="iconfont icon-warning"></i>库存预警</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="treeview active">
+                            <a href="javascript:void(0);">
+                                <i class="iconfont icon-inventory2"></i>
+                                <span>入库管理</span>
+                                <span class="pull-right">
                                         <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
                                     </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li>
-                                        <a id="menu-inventoryList-item" href="javascript:void(0);">
-                                            <i class="iconfont icon-search"></i>当前库存查询</a>
-                                    </li>
-                                    <li>
-                                        <a id="menu-inventoryWarring-item" href="javascript:void(0);">
-                                            <i class="iconfont icon-warning"></i>库存预警</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="treeview active">
-                                <a href="javascript:void(0);">
-                                    <i class="iconfont icon-inventory2"></i>
-                                    <span>入库管理</span>
-                                    <span class="pull-right">
-                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu menu-open">
-                                    <li>
-                                        <a id="menu-addPurchase-item" href="javascript:void(0);" class="innerActive">
-                                            <i class="iconfont icon-add"></i>入库登记</a>
-                                    </li>
-                                    <li>
-                                        <a id="menu-purchaseHistory-item" href="javascript:void(0);">
-                                            <i class="iconfont icon-list-search"></i>历史查询</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="treeview">
-                                <a href="javascript:void(0);" onclick="goBack()">
-                                    <i class="iconfont icon-back"></i>
-                                    <span>返回主页</span>
-                                </a>
-                            </li>
+                            </a>
+                            <ul class="treeview-menu menu-open">
+                                <li>
+                                    <a id="menu-addPurchase-item" href="javascript:void(0);" class="innerActive">
+                                        <i class="iconfont icon-add"></i>入库登记</a>
+                                </li>
+                                <li>
+                                    <a id="menu-purchaseHistory-item" href="javascript:void(0);">
+                                        <i class="iconfont icon-list-search"></i>历史查询</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="javascript:void(0);" onclick="goBack()">
+                                <i class="iconfont icon-back"></i>
+                                <span>返回主页</span>
+                            </a>
+                        </li>
                         </ul>
                     </section>
                     <script src="../../js/sidebar-menu.js"></script>
@@ -188,7 +172,6 @@
                                 });
                             }
                             //
-                            changeMainBar("invOverview");
                             changeMainBar("inventoryList");
                             changeMainBar("inventoryWarring");
                             changeMainBar("purchaseHistory");

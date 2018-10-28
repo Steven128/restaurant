@@ -65,21 +65,6 @@ session_start();
                         <ul class="sidebar-menu">
                             <li class="treeview">
                                 <a href="javascript:void(0);">
-                                    <i class="iconfont icon-overview"></i>
-                                    <span>总览</span>
-                                    <span class="pull-right">
-                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li>
-                                        <a id="menu-invOverview-item" href="javascript:void(0);">
-                                            <i class="iconfont icon-list"></i>库存总览</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="treeview">
-                                <a href="javascript:void(0);">
                                     <i class="iconfont icon-inventory"></i>
                                     <span>库存管理</span>
                                     <span class="pull-right">
@@ -188,7 +173,6 @@ session_start();
                                 });
                             }
                             //
-                            changeMainBar("invOverview");
                             changeMainBar("inventoryList");
                             changeMainBar("inventoryWarring");
                             changeMainBar("addPurchase");

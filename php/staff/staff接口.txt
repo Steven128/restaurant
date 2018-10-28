@@ -9,8 +9,9 @@ data:{id:
 
 需要：
 request:changeCookStatus
-id:
-name:
+dish:{id:
+    name:
+}
 返回：
 message:success
 
@@ -44,13 +45,37 @@ table:{table对象}
 返回:
 message:success
 
-需要：//需要修改
+需要：
 request:deleteDish
+order:id
+dish:id
+返回：
+message:success  or  error
+
+需要:
+request:getOrder
+table:id
 返回：
 message:success
+order{order_id,table_id,total_price}
+dishes:{dish_id}//(dish_id的数组)
 
 需要：
+request:payOrder
+order:{order_id,total_price}
+method:
+返回：
+message:success  or  error
 
+需要：//未完成
+request:preOrder
+返回：
+
+需要：
+request:deleteOrder
+order:{order_id}
+返回：
+message:success  or  error
 
 
 pay.php
