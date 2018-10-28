@@ -19,7 +19,7 @@ if (isset($_GET['request'])) {
     $admin_id = $_POST['admin_id'];
 }
 if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) { //如果已设置session且session对应用户为当前访问用户
-    
+
 
     $conn = oci_connect('inv_admin', '123456', '47.95.212.18/ORCL', "AL32UTF8"); //连接oracle数据库
     if (!$conn) { //未连接成功，终止脚本并返回错误信息
@@ -56,35 +56,19 @@ function islegalnum($str)
 }
 function purchase($conn)
 {
-    if (islegalid($_POST['goods_id']) and islegalnum($_POST['purchase_quantity'])) {
-        $sql_query = "SELECT COUNT(PURCHASE_ID) FROM SCOTT.PURCHASE";
-        $statement = oci_parse($conn, $sql_query);
-        $sum = oci_execute($statement);
-        $str = strval($sum);
+    $overhead_id = date("Ymd_His");
+    $overhead_id = "ove_$overhead_id";
+    $overhead_type = $_POST['overhead_type'];
+    $overhead_price = $_POST['overhead_price'];
+    $overhead_date = date("Y-m-d");
 
-        $date=date("Y-m-d", time());
-        $begin_time=strtotime(date("Y-m-d", time()-3*365*24*3600)." 07:00:00");
-        $end_time=strtotime("$date 20:00:00");
-        $rand=mt_rand($begin_time, $end_time);
-        $ove_id=date("Ymd_His", $rand);
-        $ove_date=date("Y-m-d", $rand);
-        $ove_id="ove_$ove_id";
+    $sql_query = "BEGIN scott.addOverhead('$overhead_id',$overhead_type,$overhead_price,'$overhead_date'); END;";
 
-        $sql_query = "INSERT INTO overhead (overhead_id, overhead_type, overhead_price, overhead_date, ove_invoice_pic, ove_status) VALUES ('$ove_id', 1, " . $_POST['overhead_price'] . ", '" . date("ymd_hms", time()) . "', '" . $_POST['purchase_date'] . "', 1)";
-
-        $statement = oci_parse($conn, $sql_query);
-        // if (!oci_execute($statement)) {
-        //     echo json_encode(array("message" => "false"));
-        // }
-
-        // $sql_query = "UPDATE INVENTORY SET QUANTITY = " . $_POST['purchase_quantity'] . " WHERE GOODS_ID = '" . $_POST['goods_id'] . "'";
-        // $statement = oci_parse($conn, $sql_query);
-        if (oci_execute($statement)) {
-            echo json_encode(array("message" => "success"));
-        } else {
-            echo json_encode(array("message" => "false"));
-        }
+    $statement = oci_parse($conn, $sql_query);
+    if (oci_execute($statement)) {
+        echo json_encode(array("message" => "success"));
     } else {
-        echo json_encode(array("message" => "false"));
+        echo json_encode(array("message" => "error"));
     }
+
 }
