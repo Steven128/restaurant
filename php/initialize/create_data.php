@@ -6,49 +6,49 @@ if (!$conn) {
     print htmlentities($e['message']);
     exit;
 } else {
-    echo "连接oracle成功！";
+    echo "连接oracle成功！\n";
 
     createAdminData($conn);
-    echo "<br>写入管理员表数据成功";
+    echo "写入管理员表数据成功\n";
 
     createEmployeeData($conn, 30);
-    echo "<br>写入员工表数据成功";
+    echo "写入员工表数据成功\n";
 
     createPresenceData($conn);
-    echo "<br>写入出勤表数据成功";
+    echo "写入出勤表数据成功\n";
 
     createGoodsData($conn);
-    echo "<br>写入原料表数据成功";
+    echo "写入原料表数据成功\n";
 
     createTableData($conn, 20);
-    echo "<br>写入餐桌表数据成功";
+    echo "写入餐桌表数据成功\n";
 
     createFinanceData($conn, 1095);
-    echo "<br>写入财务表数据成功";
+    echo "写入财务表数据成功\n";
 
     createOverheadData($conn, 3585);
-    echo "<br>写入开销表数据成功";
+    echo "写入开销表数据成功\n";
 
     createInventoryData($conn);
-    echo "<br>写入库存表数据成功";
+    echo "写入库存表数据成功\n";
 
     createLossData($conn, 80);
-    echo"<br>写入损失表数据成功";
+    echo"写入损失表数据成功\n";
 
     createDishData($conn);
-    echo"<br>写入菜品表数据成功";
+    echo"写入菜品表数据成功\n";
 
     createOrderData($conn, 109500);
-    echo"<br>写入订单表数据成功";
+    echo"写入订单表数据成功\n";
 
     createPreOrderData($conn, 27400);
-    echo"<br>写入预定表数据成功";
+    echo"写入预定表数据成功\n";
 
     createSalesData($conn);   //有问题
-    echo"<br>写入销售表数据成功";
+    echo"写入销售表数据成功\n";
 
     createEvaluateData($conn);
-    echo"<br>写入评价表数据成功";
+    echo"写入评价表数据成功\n";
 
     oci_close($conn);
 }

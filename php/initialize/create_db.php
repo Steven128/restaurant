@@ -510,7 +510,7 @@ if (!$conn) {
     }
 
 
-//employee
+    //employee
     $sql_ins = "CREATE OR REPLACE PROCEDURE updateEmployee 
     (v_employee_id IN employee.employee_id%TYPE, 
     v_name IN employee.name%TYPE,
@@ -527,8 +527,9 @@ if (!$conn) {
     $statement = oci_parse($conn, $sql_ins);
     if (oci_execute($statement)) {
         echo "y";
-    } else
+    } else {
         echo "n";
+    }
 
     $sql_ins = "CREATE OR REPLACE PROCEDURE addEmployee 
     (v_employee_id IN employee.employee_id%TYPE, 
@@ -547,8 +548,9 @@ if (!$conn) {
     $statement = oci_parse($conn, $sql_ins);
     if (oci_execute($statement)) {
         echo "y";
-    } else
+    } else {
         echo "n";
+    }
 
     $sql_ins = "CREATE OR REPLACE PROCEDURE deleteEmployee 
     (v_employee_id IN employee.employee_id%TYPE) 
@@ -560,10 +562,11 @@ if (!$conn) {
     $statement = oci_parse($conn, $sql_ins);
     if (oci_execute($statement)) {
         echo "y";
-    } else
+    } else {
         echo "n";
+    }
 
-//dish
+    //dish
     $sql_ins = "CREATE OR REPLACE PROCEDURE updateDish 
     (v_dish_id IN dish.dish_id%TYPE, 
     v_dish_name IN dish.dish_name%TYPE,
@@ -577,8 +580,9 @@ if (!$conn) {
     $statement = oci_parse($conn, $sql_ins);
     if (oci_execute($statement)) {
         echo "y";
-    } else
+    } else {
         echo "n";
+    }
 
     $sql_ins = "CREATE OR REPLACE PROCEDURE addDish 
     (v_dish_id IN dish.dish_id%TYPE, 
@@ -593,8 +597,9 @@ if (!$conn) {
     $statement = oci_parse($conn, $sql_ins);
     if (oci_execute($statement)) {
         echo "y";
-    } else
+    } else {
         echo "n";
+    }
 
     $sql_ins = "CREATE OR REPLACE PROCEDURE deleteDish 
     (v_dish_id IN dish.dish_id%TYPE) 
@@ -607,10 +612,11 @@ if (!$conn) {
     $statement = oci_parse($conn, $sql_ins);
     if (oci_execute($statement)) {
         echo "y";
-    } else
+    } else {
         echo "n";
+    }
 
-//table
+    //table
     $sql_ins = "CREATE OR REPLACE PROCEDURE updateTable 
 (v_table_id IN res_table.table_id%TYPE, 
 v_default_number IN res_table.default_number%TYPE) 
@@ -622,8 +628,9 @@ END updateTable;
     $statement = oci_parse($conn, $sql_ins);
     if (oci_execute($statement)) {
         echo "y";
-    } else
+    } else {
         echo "n";
+    }
 
     $sql_ins = "CREATE OR REPLACE PROCEDURE addTable 
 (v_table_id IN res_table.table_id%TYPE, 
@@ -637,8 +644,9 @@ END addTable;
     $statement = oci_parse($conn, $sql_ins);
     if (oci_execute($statement)) {
         echo "y";
-    } else
+    } else {
         echo "n";
+    }
 
     $sql_ins = "CREATE OR REPLACE PROCEDURE deleteTable 
 (v_table_id IN res_table.table_id%TYPE) 
@@ -650,8 +658,9 @@ END deleteTable;
     $statement = oci_parse($conn, $sql_ins);
     if (oci_execute($statement)) {
         echo "y";
-    } else
+    } else {
         echo "n";
+    }
 
 
 
@@ -671,11 +680,12 @@ END deleteTable;
     $statement = oci_parse($conn, $sql_ins);
     if (oci_execute($statement)) {
         echo "addInventory";
-    } else
+    } else {
         echo "n";
+    }
 
 
-//admin
+    //admin
 
     $sql_ins = "CREATE OR REPLACE PROCEDURE addAdmin 
 (v_admin_id IN admin.admin_id%TYPE, 
@@ -691,8 +701,9 @@ END addAdmin;
     $statement = oci_parse($conn, $sql_ins);
     if (oci_execute($statement)) {
         echo "y";
-    } else
+    } else {
         echo "n";
+    }
 
 
     $sql_ins = "CREATE OR REPLACE PROCEDURE deleteAdmin 
@@ -705,8 +716,9 @@ END deleteAdmin;
     $statement = oci_parse($conn, $sql_ins);
     if (oci_execute($statement)) {
         echo "y";
-    } else
+    } else {
         echo "n";
+    }
 
 
 
@@ -729,89 +741,105 @@ END deleteAdmin;
         $statement = oci_parse($conn, $sql_grant[$k]);
         if (oci_execute($statement)) {
             echo "y";
-        } else
+        } else {
             echo "n";
+        }
     }
-//employee_id,name,gender,working_year,age,salary,phone_num,employee_type,employ_time ,employee_pic,emp_status
-$sql_create_view = "create or replace view empRead as select * from scott.employee where emp_status>0 with read only";
-$statement = oci_parse($conn, $sql_create_view);
-if (oci_execute($statement)) {
-    echo "y";
-} else
-    echo "n";
 
-$sql_create_view = "create or replace view disRead as select * from scott.dish where dis_status>0 with read only";
-$statement = oci_parse($conn, $sql_create_view);
-if (oci_execute($statement)) {
-    echo "y";
-} else
-    echo "n";
 
-$sql_create_view = "create or replace view finRead as select * from scott.finance with read only";
-$statement = oci_parse($conn, $sql_create_view);
-if (oci_execute($statement)) {
-    echo "y";
-} else
-    echo "n";
 
-$sql_create_view = "create or replace view invRead as select * from scott.inventory where inv_status>0 with read only";
-$statement = oci_parse($conn, $sql_create_view);
-if (oci_execute($statement)) {
-    echo "y";
-} else
-    echo "n";
+    //employee_id,name,gender,working_year,age,salary,phone_num,employee_type,employ_time ,employee_pic,emp_status
+    $sql_create_view = "create or replace view empRead as select * from scott.employee where emp_status>0 with read only";
+    $statement = oci_parse($conn, $sql_create_view);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else {
+        echo "n";
+    }
 
-$sql_create_view = "create or replace view gooRead as select * from scott.goods where goo_status>0 with read only";
-$statement = oci_parse($conn, $sql_create_view);
-if (oci_execute($statement)) {
-    echo "y";
-} else
-    echo "n";
+    $sql_create_view = "create or replace view disRead as select * from scott.dish where dis_status>0 with read only";
+    $statement = oci_parse($conn, $sql_create_view);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else {
+        echo "n";
+    }
 
-$sql_create_view = "create or replace view losRead as select loss_id,loss.GOODS_ID,loss.QUANTITY,loss_date,GOODS_NAME, GOODS_PRICE, GOODS_TYPE from scott.loss,scott.goods where loss.goods_id=goods.goods_id and goo_status>0 and los_status>0 with read only";
-$statement = oci_parse($conn, $sql_create_view);
-if (oci_execute($statement)) {
-    echo "y";
-} else
-    echo "n";
+    $sql_create_view = "create or replace view finRead as select * from scott.finance with read only";
+    $statement = oci_parse($conn, $sql_create_view);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else {
+        echo "n";
+    }
 
-$sql_create_view = "create or replace view ordRead as select order_id,scott.res_table.table_number,dish_list,total_price,pay_method,pay_time,order_note,pay_status FROM SCOTT.ORDER_LIST,SCOTT.RES_TABLE WHERE ORD_STATUS=1 AND TAB_STATUS=1 AND SCOTT.ORDER_LIST.TABLE_ID=SCOTT.RES_TABLE.TABLE_ID with read only";
-$statement = oci_parse($conn, $sql_create_view);
-if (oci_execute($statement)) {
-    echo "y";
-} else
-    echo "n";
+    $sql_create_view = "create or replace view invRead as select * from scott.inventory where inv_status>0 with read only";
+    $statement = oci_parse($conn, $sql_create_view);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else {
+        echo "n";
+    }
 
-$sql_create_view = "create or replace view purRead as select * FROM SCOTT.overhead WHERE ove_status>0 with read only";
-$statement = oci_parse($conn, $sql_create_view);
-if (oci_execute($statement)) {
-    echo "y";
-} else
-    echo "n";
+    $sql_create_view = "create or replace view gooRead as select * from scott.goods where goo_status>0 with read only";
+    $statement = oci_parse($conn, $sql_create_view);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else {
+        echo "n";
+    }
 
-$sql_create_view = "create or replace view porRead as select preorder_id,preorder_time,arrive_time,order_id,dish_list,table_number FROM SCOTT.pre_order,scott.res_table WHERE res_table.table_id=pre_order.table_id AND pre_status>0 AND tab_status>0 with read only";
-$statement = oci_parse($conn, $sql_create_view);
-if (oci_execute($statement)) {
-    echo "y";
-} else
-    echo "n";
+    $sql_create_view = "create or replace view losRead as select loss_id,loss.GOODS_ID,loss.QUANTITY,loss_date,GOODS_NAME, GOODS_PRICE, GOODS_TYPE from scott.loss,scott.goods where loss.goods_id=goods.goods_id and goo_status>0 and los_status>0 with read only";
+    $statement = oci_parse($conn, $sql_create_view);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else {
+        echo "n";
+    }
 
-$sql_create_view = "create or replace view tabRead as select * FROM SCOTT.res_table WHERE tab_status>0 with read only";
-$statement = oci_parse($conn, $sql_create_view);
-if (oci_execute($statement)) {
-    echo "y";
-} else
-    echo "n";
+    $sql_create_view = "create or replace view ordRead as select order_id,scott.res_table.table_number,dish_list,total_price,pay_method,pay_time,order_note,pay_status FROM SCOTT.ORDER_LIST,SCOTT.RES_TABLE WHERE ORD_STATUS=1 AND TAB_STATUS=1 AND SCOTT.ORDER_LIST.TABLE_ID=SCOTT.RES_TABLE.TABLE_ID with read only";
+    $statement = oci_parse($conn, $sql_create_view);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else {
+        echo "n";
+    }
+
+    $sql_create_view = "create or replace view purRead as select * FROM SCOTT.overhead WHERE ove_status>0 with read only";
+    $statement = oci_parse($conn, $sql_create_view);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else {
+        echo "n";
+    }
+
+    $sql_create_view = "create or replace view porRead as select preorder_id,preorder_time,arrive_time,order_id,dish_list,table_number FROM SCOTT.pre_order,scott.res_table WHERE res_table.table_id=pre_order.table_id AND pre_status>0 AND tab_status>0 with read only";
+    $statement = oci_parse($conn, $sql_create_view);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else {
+        echo "n";
+    }
+
+    $sql_create_view = "create or replace view tabRead as select * FROM SCOTT.res_table WHERE tab_status>0 with read only";
+    $statement = oci_parse($conn, $sql_create_view);
+    if (oci_execute($statement)) {
+        echo "y";
+    } else {
+        echo "n";
+    }
 
     $sql_create_view = "create or replace view preRead as select EMPLOYEE.EMPLOYEE_ID,NAME,GENDER,PHONE_NUM,EMPLOYEE_TYPE,PRESENCE_ID,SIGN_TIME,HASPRESENTED FROM SCOTT.PRESENCE,SCOTT.EMPLOYEE WHERE EMPLOYEE.EMPLOYEE_ID=PRESENCE.EMPLOYEE_ID AND EMP_STATUS>0 AND PRE_STATUS>0 with read only";
     $statement = oci_parse($conn, $sql_create_view);
     if (oci_execute($statement)) {
         echo "y";
-    } else
+    } else {
         echo "n";
-    
+    }
 
-$sql = "grant select on scott.empRead to emp_admin;
+
+
+    $sql = "grant select on scott.empRead to emp_admin;
 grant select on scott.disRead to dis_admin;
 grant select on scott.finRead to fin_admin;
 grant select on scott.invRead to inv_admin;
@@ -824,26 +852,15 @@ grant select on scott.tabRead to tab_admin;
 grant select on scott.preRead to emp_admin
 ";
 
-$sql_grant = explode(";", $sql);
-foreach ($sql_grant as $k => $v) {
-    $statement = oci_parse($conn, $sql_grant[$k]);
-    if (oci_execute($statement)) {
-        echo "y";
-    } else
-        echo "n";
-}
-oci_free_statement($statement);
-oci_close($conn);
-    $sql_create_tab = "CREATE TABLE employee(" .
-            "employee_id VARCHAR(20) NOT NULL PRIMARY KEY," .
-            "name VARCHAR(20) NOT NULL," .
-            "gender NUMERIC(1,0) NOT NULL," .
-            "working_year NUMBER(2,1) NOT NULL," .
-            "age NUMERIC(2,0) NOT NULL," .
-            "salary NUMERIC(10,2) NOT NULL," .
-            "phone_num VARCHAR(11)," .
-            "employee_type NUMERIC(1,0) NOT NULL," .
-            "employ_time VARCHAR(10) NOT NULL," .
-            "employee_pic VARCHAR(100) NOT NULL," .
-            "emp_status NUMERIC(1,0) DEFAULT 1 NOT NULL)";
+    $sql_grant = explode(";", $sql);
+    foreach ($sql_grant as $k => $v) {
+        $statement = oci_parse($conn, $sql_grant[$k]);
+        if (oci_execute($statement)) {
+            echo "y";
+        } else {
+            echo "n";
+        }
+    }
+    oci_free_statement($statement);
+    oci_close($conn);
 }
