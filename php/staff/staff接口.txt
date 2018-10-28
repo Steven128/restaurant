@@ -47,18 +47,18 @@ message:success
 
 需要：
 request:deleteDish
-order:id
+order:
 dish:id
 返回：
 message:success  or  error
 
 需要:
 request:getOrder
-table:id
+table:
 返回：
 message:success
-order{order_id,table_id,total_price}
-dishes:{dish_id}//(dish_id的数组)
+order:
+dishes:{id，name,price}
 
 需要：
 request:payOrder
@@ -73,7 +73,7 @@ request:preOrder
 
 需要：
 request:deleteOrder
-order:{order_id}
+order:
 返回：
 message:success  or  error
 

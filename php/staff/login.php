@@ -33,32 +33,32 @@ if (!$conn) { //未连接成功，终止脚本并返回错误信息
 //     return $obj;
 // }
 
-function login($conn,$data)
-{
-    $employee_id = $data->id;
-    $sql_select = "SELECT EMPLOYEE_TYPE FROM SCOTT.EMPLOYEE WHERE EMPLOYEE_ID='" . $employee_id . "'";
-    $statement = oci_parse($conn, $sql_select);
+// function login($conn,$data)
+// {
+//     $employee_id = $data->id;
+//     $sql_select = "SELECT EMPLOYEE_TYPE FROM SCOTT.EMPLOYEE WHERE EMPLOYEE_ID='".$employee_id."'";
+//     $statement = oci_parse($conn, $sql_select);
+//     oci_execute($statement);
+//     $row = oci_fetch_array($statement,OCI_RETURN_NULLS);
+//     if ($row == null) {
+//         echo json_encode(array("message"=>"error","data"=>$row[0]));
+//     } else {
+//         echo json_encode(array("message" => "success", "data" => $row[0]));
+//     }
+// }
+
+
+// 使用员工姓名和电话号进行登陆的login
+function login($conn,$data){
+    $employee_name=$data->id;
+    $employee_tel=$data->password;
+    $sql_select = "SELECT EMPLOYEE_TYPE FROM SCOTT.EMPLOYEE WHERE NAME='" . $employee_name . "' AND PHONE_NUM='".$employee_tel."'";
+    $statement=oci_parse($conn,$sql_select);
     oci_execute($statement);
-    $row = oci_fetch_array($statement);
+    $row=oci_fetch_array($statement);
     if ($row == null) {
         echo json_encode(array("message"=>"error"));
     } else {
         echo json_encode(array("message" => "success", "data" => $row[0]));
     }
 }
-
-
-//使用员工姓名和电话号进行登陆的login
-// function login($conn,$data){
-//     $employee_name=$data->name;
-//     $employee_tel=$data->tel;
-//     $sql_select = "SELECT EMPLOYEE_TYPE FROM SCOTT.EMPLOYEE WHERE NAME='" . $employee_name . "' AND PHONE_NUM='".$employee_tel."'";
-//     $statement=oci_parse($conn,$sql_select);
-//     oci_execute($statement);
-//     $row=oci_fetch_array($statement);
-//     if ($row == null) {
-//         echo json_encode(array("message"=>"error"));
-//     } else {
-//         echo json_encode(array("message" => "success", "data" => $row[0]));
-//     }
-// }
