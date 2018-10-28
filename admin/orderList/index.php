@@ -226,14 +226,13 @@ session_start();
                                             <th>是否付款</th>
                                             <th>付款时间</th>
                                             <th>付款方式</th>
-                                            <th>菜单</th>
                                             <th>餐桌</th>
                                             <th>备注</th>
                                         </tr>
                                     </thead>
                                     <tbody class="orderListTableBody">
                                         <?php
-                                        $sql_query = "SELECT order_id,table_number,dish_list,total_price,pay_method,pay_time,order_note,pay_status FROM SCOTT.ordRead WHERE  SUBSTR(ORDER_ID,9,8)='".date("Ymd")."' ORDER BY pay_time DESC";
+                                        $sql_query = "SELECT order_id,table_number,total_price,pay_method,pay_time,order_note,pay_status FROM SCOTT.ordRead WHERE  SUBSTR(ORDER_ID,9,8)='".date("Ymd")."' ORDER BY pay_time DESC";
                                         $statement = oci_parse($conn, $sql_query);
                                         oci_execute($statement);
                                         $count = 0;
@@ -242,9 +241,8 @@ session_start();
                                             $order_id = $row[0];
                                             $order_time=substr($order_id, 8, 4)."-".substr($order_id, 12, 2)."-".substr($order_id, 14, 2);
                                             $table_number = $row[1];
-                                            $dish_list = $row[2];
-                                            $total_price = $row[3];
-                                            $pay_method = $row[4];
+                                            $total_price = $row[2];
+                                            $pay_method = $row[3];
                                             if ($pay_method==1) {
                                                 $pay_method = "现金";
                                             } elseif ($pay_method==2) {
@@ -252,11 +250,11 @@ session_start();
                                             } elseif ($pay_method==3) {
                                                 $pay_method="微信";
                                             } else {
-                                                $pay_method="未知方式";
+                                                $pay_method="-- --";
                                             }
-                                            $pay_time = $row[5];
-                                            $order_note = $row[6];
-                                            $pay_status = $row[7];
+                                            $pay_time = $row[4];
+                                            $order_note = $row[5];
+                                            $pay_status = $row[6];
                                             if ($pay_status==1) {
                                                 $pay_status="已付款";
                                             } elseif ($pay_status==0) {
@@ -264,7 +262,7 @@ session_start();
                                             } else {
                                                 $pay_status="未知";
                                             }
-                                            echo "<tr><td class='display-info'><i class=\"iconfont icon-down-arrow\"></i></td><td class='order_id'>$order_id</td><td>$order_time</td><td>$total_price</td><td>$pay_status</td><td>$pay_time</td><td>$pay_method</td><td>详情</td><td>$table_number</td><td>$order_note</td></tr>";
+                                            echo "<tr><td class='display-info'><i class=\"iconfont icon-down-arrow\"></i></td><td class='order_id'>$order_id</td><td>$order_time</td><td>$total_price</td><td>$pay_status</td><td>$pay_time</td><td>$pay_method</td><td>$table_number</td><td>$order_note</td></tr>";
                                         }
                                         ?>
                                         <script>

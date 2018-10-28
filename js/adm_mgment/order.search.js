@@ -99,11 +99,11 @@ function fetchHTML($dataArray) {
             '<td>' + count + '</td>' +
             '<td>' + $dataArray[i].order_id + '</td>' +
             '<td>' + $dataArray[i].table_num + '</td>' +
-            '<td>' + ($dataArray[i].tol_price == 0 ? "-- --" : $dataArray[i].tol_price) + '</td>' +
+            '<td>' + ($dataArray[i].tol_price == null ? "-- --" : $dataArray[i].tol_price) + '</td>' +
             '<td>' + ($dataArray[i].pay_status == 1 ? "已付款" : "未付款") + '</td>' +
             '<td>' + ($dataArray[i].pay_method == 1 ? "现金" : $dataArray[i].pay_method == 2 ? "支付宝" : $dataArray[i].pay_method == 3 ? "微信" : "-- --") + '</td>' +
-            '<td>' + $dataArray[i].pay_time + '</td>' +
-            '<td>' + $dataArray[i].order_note + '</td>' +
+            '<td>' + $dataArray[i].pay_time == null ? "-- --" : $dataArray[i].pay_time + '</td>' +
+            '<td>' + $dataArray[i].order_note == null ? "-- --" : $dataArray[i].order_note + '</td>' +
             '</tr>';
         i++;
     }

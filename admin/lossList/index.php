@@ -36,7 +36,7 @@ session_start();
 
 <body>
     <?php
-    $conn = oci_connect('inv_admin', '123456', '47.95.212.18/ORCL', "AL32UTF8"); //连接oracle数据库
+    $conn = oci_connect('scott', '123456', '47.95.212.18/ORCL', "AL32UTF8"); //连接oracle数据库
     ?>
     <div class="container">
         <header class="head-content">
@@ -221,7 +221,7 @@ session_start();
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-                            <table class="lossListTable" style="display: none;">
+                                <table class="lossListTable" style="display: none;">
                                     <thead>
                                         <tr>
                                             <th>序号</th>

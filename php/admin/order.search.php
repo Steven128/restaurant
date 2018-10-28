@@ -38,7 +38,7 @@ function islegalid($str)
 
 function searchByCurrent($conn)
 {
-    $sql_query = "SELECT ORDER_ID,TABLE_NUMBER,TOTAL_PRICE,PAY_STATUS,PAY_METHOD,PAY_TIME,ORDER_NOTE FROM SCOTT.ORDER_LIST,SCOTT.RES_TABLE WHERE ORDER_LIST.TABLE_ID=RES_TABLE.TABLE_ID AND ORD_STATUS>0 AND TAB_STATUS>0 AND SUBSTR(ORDER_ID,9,8)='".date("ymd", time())."' AND PAY_STATUS=0 ORDER BY PAY_STATUS,ORDER_ID";
+    $sql_query = "SELECT ORDER_ID,TABLE_NUMBER,TOTAL_PRICE,PAY_STATUS,PAY_METHOD,PAY_TIME,ORDER_NOTE FROM SCOTT.ORDER_LIST,SCOTT.RES_TABLE WHERE ORDER_LIST.TABLE_ID=RES_TABLE.TABLE_ID AND ORD_STATUS>0 AND TAB_STATUS>0  AND PAY_STATUS=0 ORDER BY PAY_STATUS,ORDER_ID";
     $data = array();
     $statement = oci_parse($conn, $sql_query);
     oci_execute($statement);
@@ -50,7 +50,7 @@ function searchByCurrent($conn)
         $pay_method=$row[4];
         $pay_time=$row[5];
         $order_note=$row[6];
-        $single = array("order_id"=> $order_id, "table_num"=> $table_num, "tol_price"=> $tol_price, "pay_status"=> $pay_status, "pay_method"=> $pay_method, "pay_time"=> $pay_time, "order_note"=> $order_note);
+        $single = array("order_id"=> $order_id, "table_num"=> $table_num, "tol_price"=> ($tol_price == null? "-- --":$tol_price), "pay_status"=> $pay_status, "pay_method"=> $pay_method, "pay_time"=> $pay_time == null? "-- --":$pay_time, "order_note"=> $order_note == null? "-- --":$order_note);
         array_push($data, $single);
     }
     echo json_encode(array("message"=>"success","data"=>$data));
