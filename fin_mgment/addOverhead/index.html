@@ -10,6 +10,10 @@
     <link type="text/css" rel="stylesheet" href="../../css/iconfont.css" />
     <link type="text/css" rel="stylesheet" href="../../css/page.css" />
     <link type="text/css" rel="stylesheet" href="../../css/sidebar-menu.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/search.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/cropper.css" />
+    <link type="text/css" rel="stylesheet" href="../../css/form.css" />
+
 
     <script type="text/javascript" src="../../js/jQuery/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
@@ -44,21 +48,6 @@
                     </div>
                     <section class="sidebar">
                         <ul class="sidebar-menu">
-                            <li class="treeview">
-                                <a href="javascript:void(0);">
-                                    <i class="iconfont icon-overview"></i>
-                                    <span>总览</span>
-                                    <span class="pull-right">
-                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li>
-                                        <a id="menu-finOverview-item" href="javascript:void(0);">
-                                            <i class="iconfont icon-list"></i>财务总览</a>
-                                    </li>
-                                </ul>
-                            </li>
                             <li class="treeview active">
                                 <a href="javascript:void(0);">
                                     <i class="iconfont icon-finance"></i>
@@ -138,39 +127,116 @@
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-
+                                <div class="col-xs-0 col-sm-1 col-md-2 col-lg-3"></div>
+                                <form id="addOverhead-form" class="form-horizontal col-xs-12 col-sm-10 col-md-8 col-lg-6" method="post" action="">
+                                    <div class="subform">
+                                        <div class="form-group">
+                                            <div class="section_title">开销类型</div>
+                                            <select name="type" id="type" class="form-control">
+                                                <option value="1">进货</option>
+                                                <option value="2">水电费</option>
+                                                <option value="3">房租</option>
+                                                <option value="4">其他</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="section_title">总金额</div>
+                                            <input id="price" type="text" class="input-text form-control" name="price" placeholder="请输入金额" maxlength="15" />
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="section_title">开销日期</div>
+                                            <input id="date" type="date" class="input-text form-control" name="date" placeholder="请输入日期" maxlength="15" />
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="section_title">上传发票图片（可选）</div>
+                                            <div class="clip-box" style="text-align: center;padding: 20px 10px 0 10px;">
+                                                <a href="javascript:void(0);" class="a-upload" style="width: 295px;">
+                                                    <input type="file" id="file" onclick="start()" /> 点击选择图片
+                                                </a>
+                                                <div id="view" style="width: 295px; height: 210px;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="btn-area">
+                                        <button id="submit" name="submit" type="submit" class="submit">添加</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
-                    <script>
-                        $(document).ready(() => {
-                            function changeMainBar(itemName) {
-                                $("#menu-" + itemName + "-item").click(() => {
-                                    $.pjax({
-                                        url: "../" + itemName,
-                                        container: '.main-bar'
-                                    });
-                                });
-                            }
-                            //
-                            changeMainBar("finOverview");
-                            changeMainBar("overheadList");
-                            changeMainBar("overheadHistory");
-                            changeMainBar("orderList");
-                            changeMainBar("orderHistory");
-                            changeMainBar("salaryList");
-                        });
-                    </script>
                 </div>
+                <script>
+                    $(document).ready(() => {
+                        function changeMainBar(itemName) {
+                            $("#menu-" + itemName + "-item").click(() => {
+                                $.pjax({
+                                    url: "../" + itemName,
+                                    container: '.main-bar'
+                                });
+                            });
+                        }
+                        //                        
+                        changeMainBar("overheadList");
+                        changeMainBar("overheadHistory");
+                        changeMainBar("orderList");
+                        changeMainBar("orderHistory");
+                        changeMainBar("salaryList");
+                    });
+                </script>
             </div>
         </div>
-        <footer class="foot-content">
-            <div class="copyright">
-                <h5 class="copyright-text">&copy;&nbsp;餐饮店管理系统&nbsp;&nbsp;2018</h5>
-            </div>
-        </footer>
     </div>
+    <footer class="foot-content">
+        <div class="copyright">
+            <h5 class="copyright-text">&copy;&nbsp;餐饮店管理系统&nbsp;&nbsp;2018</h5>
+        </div>
+    </footer>
+    </div>
+
+    <div class="clip-wrapper">
+        <div class="clipArea-head">
+            <button id="cancelBtn" onclick="clipCancel()">取消</button>
+            <button id="clipBtn" onclick="clipFinish()">截取</button>
+        </div>
+        <div id="clipArea">
+            <p class="clip-tip">提示：触摸操作请用双指缩放或旋转；<br>&nbsp;&nbsp;鼠标操作请用滚轮缩放、双击旋转。</p>
+        </div>
+    </div>
+    <script src="../../js/plugins/cropper/hammer.min.js"></script>
+    <script src="../../js/plugins/cropper/iscroll-zoom-min.js"></script>
+    <script src="../../js/plugins/cropper/lrz.all.bundle.js"></script>
+    <script src="../../js/plugins/cropper/PhotoClip.js"></script>
+    <script>
+        var picData = "";
+        var pc = new PhotoClip('#clipArea', {
+            outputSize: 640,
+            file: '#file',
+            view: '#view',
+            ok: '#clipBtn',
+            done: function(dataURL) {
+                picData = dataURL;
+            },
+            fail: function(err) {
+                window.wxc.xcConfirm(err, window.wxc.xcConfirm.typeEnum.error);
+            }
+        });
+
+        pc.size(590, 420);
+
+        function start() {
+            $(".clip-wrapper").fadeIn();
+        }
+
+        function clipCancel() {
+            $(".clip-wrapper").fadeOut();
+        }
+
+        function clipFinish() {
+            $(".clip-wrapper").fadeOut();
+        }
+    </script>
+    <script type="text/javascript" src="../../js/plugins/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="../../js/fin_mgment/fin.add.validate.js"></script>
 </body>
-<script type="text/javascript" src="../../js/fin_mgment/fin.add.validate.js"></script>
 
 </html>

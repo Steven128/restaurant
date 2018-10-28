@@ -72,21 +72,6 @@ session_start();
                     </div>
                     <section class="sidebar">
                         <ul class="sidebar-menu">
-                            <li class="treeview">
-                                <a href="javascript:void(0);">
-                                    <i class="iconfont icon-overview"></i>
-                                    <span>总览</span>
-                                    <span class="pull-right">
-                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li>
-                                        <a id="menu-invOverview-item" href="javascript:void(0);">
-                                            <i class="iconfont icon-list"></i>库存总览</a>
-                                    </li>
-                                </ul>
-                            </li>
                             <li class="treeview active">
                                 <a href="javascript:void(0);">
                                     <i class="iconfont icon-inventory"></i>
@@ -97,11 +82,11 @@ session_start();
                                 </a>
                                 <ul class="treeview-menu menu-open">
                                     <li>
-                                        <a id="menu-inventoryList-item" href="javascript:void(0);">
+                                        <a id="menu-inventoryList-item" href="javascript:void(0);" class="innerActive">
                                             <i class="iconfont icon-search"></i>当前库存查询</a>
                                     </li>
                                     <li>
-                                        <a id="menu-inventoryWarring-item" href="javascript:void(0);" class="innerActive">
+                                        <a id="menu-inventoryWarring-item" href="javascript:void(0);">
                                             <i class="iconfont icon-warning"></i>库存预警</a>
                                     </li>
                                 </ul>
@@ -140,14 +125,15 @@ session_start();
                 </aside>
                 <div class="mask"></div>
                 <div class="main-bar">
-                <div class="title">
-                        <h4 class="title-left">库存预警</h4>
+
+                    <div class="title">
+                        <h4 class="title-left">查看仓库信息</h4>
                     </div>
                     <div class="box-wrap">
                         <div class="box">
                             <div class="inner-top-wrap"></div>
                             <div class="inner-box">
-                                <table class="inventoryListTable" style="display: none;">
+                                <table class="inventoryListTable">
                                     <thead>
                                         <tr>
                                             <th>序号</th>
@@ -159,17 +145,19 @@ session_start();
                                     </thead>
                                     <tbody class="inventoryListTableBody">
                                         <?php
-                                        $sql_query = "SELECT GOODS_ID,GOODS_NAME,goods_price,goods_type,QUANTITY FROM SCOTT.GOORead WHERE quantity<100";
+                                       
+
+                                        $sql_query = "SELECT GOODS_ID,GOODS_NAME,goods_price,goods_type,QUANTITY FROM SCOTT.gooRead";
                                         $statement = oci_parse($conn, $sql_query);
                                         oci_execute($statement);
                                         $count = 0;
                                         while ($row = oci_fetch_array($statement, OCI_RETURN_NULLS)) { //查询结果集
                                             $count++;
-                                            $goods_id = $row[0];
-                                            $goods_name = $row[1];
-                                            $goods_price = $row[2];
-                                            $goods_type = $row[3];
-                                            $quantity = $row[4];
+                                            $goods_id=$row[0];
+                                            $goods_name=$row[1];
+                                            $goods_price=$row[2];
+                                            $goods_type=$row[3];
+                                            $quantity=$row[4];
                                             if ($goods_type == 1) {
                                                 $goods_type = "粮食";
                                             } elseif ($goods_type == 2) {
@@ -196,6 +184,7 @@ session_start();
                         </div>
                     </div>
 
+
                     <script>
                         $(document).ready(() => {
 
@@ -208,8 +197,7 @@ session_start();
                                 });
                             }
                             //
-                            changeMainBar("invOverview");
-                            changeMainBar("inventoryList");
+                            changeMainBar("inventoryWarring");
                             changeMainBar("addPurchase");
                             changeMainBar("purchaseHistory");
                         });

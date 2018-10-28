@@ -82,7 +82,7 @@ session_start();
                                 </a>
                                 <ul class="treeview-menu">
                                     <li>
-                                        <a id="menu-employeeList-item" href="javascript:void(0);" class="innerActive">
+                                        <a id="menu-employeeList-item" href="javascript:void(0);">
                                             <i class="iconfont icon-list"></i>员工列表</a>
                                     </li>
                                     <li>

@@ -49,3 +49,16 @@
     padding: 10px 30px;
     color: rgb(201, 5, 5);
 }
+
+td img {
+    width: 130px;
+    height: 100px;
+}
+
+.order-id {
+    color: #1286db;
+}
+
+.order-info-box {
+    padding: 10px 20px;
+}

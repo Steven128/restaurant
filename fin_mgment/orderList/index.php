@@ -76,21 +76,6 @@ session_start();
                         <ul class="sidebar-menu">
                             <li class="treeview">
                                 <a href="javascript:void(0);">
-                                    <i class="iconfont icon-overview"></i>
-                                    <span>总览</span>
-                                    <span class="pull-right">
-                                        <i class="iconfont icon-down-arrow" style="font-size:12px;"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li>
-                                        <a id="menu-finOverview-item" href="javascript:void(0);">
-                                            <i class="iconfont icon-list"></i>财务总览</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="treeview">
-                                <a href="javascript:void(0);">
                                     <i class="iconfont icon-finance"></i>
                                     <span>开销管理</span>
                                     <span class="pull-right">
