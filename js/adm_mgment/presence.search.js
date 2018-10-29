@@ -38,8 +38,9 @@ $(document).ready(() => {
                 } else {
                     $date = $(".search-top .date-select").val();
                     if ($date == "") {
-                        window.wxc.xcConfirm("请选择日期", window.wxc.xcConfirm.typeEnum.warning);
+                        $(".date-select").addClass("error");
                     } else {
+                        $(".date-select").removeClass("error");
                         searchByDate($param, $date);
                     }
                 }
@@ -60,8 +61,9 @@ $(document).ready(() => {
                 } else {
                     $month = $(".search-top .month-select").val();
                     if ($month == "") {
-                        window.wxc.xcConfirm("请选择月份", window.wxc.xcConfirm.typeEnum.warning);
+                        $(".month-select").addClass("error");
                     } else {
+                        $(".month-select").removeClass("error");
                         searchByMonth($param, $month);
                     }
                 }
@@ -71,8 +73,14 @@ $(document).ready(() => {
             var $param = $("input:radio[name=season]:checked").val()
             searchBySeason($param);
         } else if (presenceTypeSelect == "employee") {
-            var $employee_name = $("input.employee-input").val()
-            searchByEmployee($employee_name)
+            var $employee_name = $("input.employee-input").val();
+            if ($employee_name == "") {
+                $(".employee-input").addClass("error");
+            } else {
+                $(".employee-input").removeClass("error");
+                searchByEmployee($employee_name);
+            }
+
         }
     });
 });

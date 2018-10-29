@@ -29,7 +29,7 @@ session_start();
     <script type="text/javascript" src="../../js/plugins/dataTables/jquery.tabledisplay.js"></script>
     <script type="text/javascript" src="../../js/adm_mgment/order.search.js"></script>
     <style>
-    #order-type-select {
+        #order-type-select {
         width:120px;
     }
     </style>
@@ -227,7 +227,7 @@ session_start();
                     <div class="title">
                         <h4 class="title-left">历史订单查询</h4>
                     </div>
-                    
+
                     <div class="box-wrap">
                         <div class="box">
                             <div class="inner-top-wrap"></div>
@@ -241,7 +241,7 @@ session_start();
                                                 <option value="order">按订单号</option>
                                             </select>
                                         </label>
-                                        
+
                                         <label class="search-radio-wrap"></label>
                                         <label>
                                             <button type="button" class="search-btn order-search-btn">查询</button>
@@ -268,6 +268,7 @@ session_start();
                                 });
                             }
                             //
+                            changeMainBar('employeeList');
                             changeMainBar('addEmployee');
                             changeMainBar('presenceList');
                             changeMainBar("financeList");
@@ -277,7 +278,6 @@ session_start();
                             changeMainBar("lossList");
                             changeMainBar("preOrderList");
                             changeMainBar("orderList");
-                            changeMainBar("orderHistory");
                             changeMainBar("dishList");
                             changeMainBar("addDish");
                             changeMainBar("tableList");
