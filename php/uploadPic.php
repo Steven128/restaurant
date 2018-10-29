@@ -1,20 +1,20 @@
 <?php
 session_start();
 @header("content-type:text/html;charset=utf8");
-if (isset($_SERVER['HTTP_REFERER']))
-    $ref = $_SERVER['HTTP_REFERER'];
-else
-    $ref = "";
-if ($ref == "") {
-    echo "不允许从地址栏访问";
-    exit();
-} else {
-    $url = parse_url($ref);
-    if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" &&$url['host']!="localhost") {
-        echo "get out";
-        exit();
-    }
-}
+// if (isset($_SERVER['HTTP_REFERER']))
+//     $ref = $_SERVER['HTTP_REFERER'];
+// else
+//     $ref = "";
+// if ($ref == "") {
+//     echo "不允许从地址栏访问";
+//     exit();
+// } else {
+//     $url = parse_url($ref);
+//     if ($url['host'] != "127.0.0.1" && $url['host'] != "localhost" &&$url['host']!="localhost") {
+//         echo "get out";
+//         exit();
+//     }
+// }
 $request = $_POST['request'];
 $base64_image_content = $_POST['PicData'];
 if ($request == "upload_admin_pic") {
